@@ -924,6 +924,25 @@ h3 {
 /* line 30, ../../Arafath/CL/December/233. Startup/HTML/scss/_header.scss */
 .header-area .main-header-area .logo-img {
   text-align: left;
+  font-size: 32px;
+  color: white;
+}
+.logo-img{
+width: 300px !important;
+font-family: 'Gulim';
+}
+.logo-img a{
+display: inline-block;
+vertical-align: middle;
+}
+.logo-img img{
+width: 50px;
+vertical-align: middle;
+}
+.logo-img span{
+display: inline-block;
+font-size: 48px;
+vertical-align: middle;
 }
 
 @media (max-width: 767px) {
