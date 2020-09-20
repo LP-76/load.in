@@ -1171,6 +1171,11 @@ vertical-align: middle;
   background-image: url(../img/moving_truck.jpg);
 }
 
+.apa-citation{
+    padding-left: 24px;
+    text-indent:-24px;
+}
+
 /* line 4, ../../Arafath/CL/December/233. Startup/HTML/scss/_slider.scss */
 .slider_bg_2 {
   background-image: url(../img/moving_truck.jpg);
