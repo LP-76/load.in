@@ -927,6 +927,11 @@ h3 {
   font-size: 32px;
   color: white;
 }
+.footer  .logo-img {
+  text-align: left;
+  font-size: 32px;
+  color: white;
+}
 .logo-img{
 width: 300px !important;
 font-family: 'Gulim';
@@ -1163,12 +1168,12 @@ vertical-align: middle;
 
 /* line 1, ../../Arafath/CL/December/233. Startup/HTML/scss/_slider.scss */
 .slider_bg_1 {
-  background-image: url(../img/banner/banner.png);
+  background-image: url(../img/moving_truck.jpg);
 }
 
 /* line 4, ../../Arafath/CL/December/233. Startup/HTML/scss/_slider.scss */
 .slider_bg_2 {
-  background-image: url(../img/banner/banner2.png);
+  background-image: url(../img/moving_truck.jpg);
 }
 
 /* line 9, ../../Arafath/CL/December/233. Startup/HTML/scss/_slider.scss */
