@@ -2900,14 +2900,15 @@ vertical-align: middle;
 @media (max-width: 767px) {
   /* line 29, ../../Arafath/CL/December/233. Startup/HTML/scss/_portfolio.scss */
   .portfolio_image_area .single_Portfolio .portfolio_thumb {
-    height: auto;
+     height: 350px;
   }
 }
 
 /* line 36, ../../Arafath/CL/December/233. Startup/HTML/scss/_portfolio.scss */
 .portfolio_image_area .single_Portfolio .portfolio_thumb img {
-  max-height: 100%;
-      width: auto;
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
      margin-left: auto;
      margin-right: auto;
      display: block;
