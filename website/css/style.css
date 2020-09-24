@@ -2671,6 +2671,16 @@ vertical-align: middle;
   padding-bottom: 130px;
 }
 
+.padded{
+    padding-top: 155px;
+  padding-bottom: 130px;
+}
+
+.solution_area {
+  padding-top: 155px;
+  padding-bottom: 130px;
+}
+
 @media (max-width: 767px) {
   /* line 1, ../../Arafath/CL/December/233. Startup/HTML/scss/_service.scss */
   .service_area {
