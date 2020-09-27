@@ -1734,6 +1734,12 @@ vertical-align: middle;
   width: 50%;
 }
 
+.about_area img{
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+
 /* line 29, ../../Arafath/CL/December/233. Startup/HTML/scss/_about.scss */
 .about_area .about_thumb img {
   width: 100%;
