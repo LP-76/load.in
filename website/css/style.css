@@ -1734,6 +1734,12 @@ vertical-align: middle;
   width: 50%;
 }
 
+.fit-image{
+object-fit: contain;
+    width: 100%;
+
+}
+
 .about_area img{
     object-fit: contain;
     width: 100%;
