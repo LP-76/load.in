@@ -13,6 +13,10 @@ body {
   font-style: normal;
 }
 
+.branded-background{
+background: #6DD1A1
+}
+
 /* line 12, ../../Arafath/CL/December/233. Startup/HTML/scss/theme-default.scss */
 .img {
   max-width: 100%;
