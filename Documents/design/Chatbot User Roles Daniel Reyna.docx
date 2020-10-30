@@ -1,0 +1,16 @@
+As a chatbot user I want to:    
+
+Be able to type questions into a text box
+Be able to submit questions into a text box by pressing a “Submit” button
+Be able to receive detailed responses back to my questions
+Be able to be provided links to articles and or posts related to my question’s root focus
+Be able to receive answers related to loading questions
+Be able to receive answers related to packing questions
+Be able to receive answers related to driving questions
+Be able to receive answers related to unloading questions
+Be able to receive answers related to safety questions
+Be able to be directed to the chatbot if none of the FAQ posts are useful by pressing “Chatbot” button
+Be able to be provided links to FAQ posts related to my questions 
+Be able to provide feedback on individual responses
+Be able to switch between FAQ and chatbot without losing state
+
