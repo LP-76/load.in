@@ -3002,7 +3002,7 @@ object-fit: contain;
   -moz-transform: scale(1);
   -ms-transform: scale(1);
   transform: scale(1);
-  opacity: 1;
+  opacity: 0.8;
 }
 
 /* line 90, ../../Arafath/CL/December/233. Startup/HTML/scss/_portfolio.scss */

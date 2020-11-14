@@ -13,7 +13,10 @@ $(window).on('scroll', function () {
 });
 
 
-
+var vmModelFactory = function(){
+    var self = this;
+    self.deliverableSections = ko.observableArray();
+};
 
 
 $(document).ready(function(){
@@ -386,6 +389,19 @@ $(document).ready(function() {
   wow.init();
 });
 
+//adding knockout functionality for the deliverables management section
+$(document).ready(function(){
+
+
+    $.getJSON('deliverables/deliverables.json').then(function(d){
+
+        var vm = new vmModelFactory();
+        vm.deliverableSections(d);
+        ko.applyBindings(vm);
+
+    });
+
+});
 
 
 //------- Mailchimp js --------//  
