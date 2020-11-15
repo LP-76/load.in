@@ -1,5 +1,9 @@
 CREATE TABLE `users` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
+  `id` int AUTO_INCREMENT,
+  `move_plan_id` int,
+  `feedback_id` int,
+  `log_id` int,
+  `location_id` int,
   `first_name` varchar(255),
   `last_name` varchar(255),
   `email` varchar(255),
@@ -16,7 +20,8 @@ CREATE TABLE `users` (
   `last_login` timestamp,
   `created_at` timestamp,
   `deleted_at` timestamp,
-  `updated_at` timestamp
+  `updated_at` timestamp,
+  PRIMARY KEY (`id`, `move_plan_id`, `feedback_id`, `log_id`, `location_id`)
 );
 
 CREATE TABLE `user_roles` (
@@ -30,22 +35,22 @@ CREATE TABLE `user_inventory_items` (
   `id` int,
   `move_plan_id` int,
   `loaded_boxes_id` int,
+  `item_detail_id` int,
   `weight` double,
   `fragility` varchar(255),
   `measurements` varchar(255),
   `box_dimenstions` varchar(255),
-  PRIMARY KEY (`id`, `move_plan_id`, `loaded_boxes_id`)
+  PRIMARY KEY (`id`, `move_plan_id`, `loaded_boxes_id`, `item_detail_id`)
 );
 
 CREATE TABLE `location` (
-  `id` int,
-  `user_id` int,
+  `id` int PRIMARY KEY,
   `start_location` varchar(255),
   `end_location` varchar(255),
+  `total_trips` int,
   `start` timestamp,
   `end` timestamp,
-  `distance_traveled` int,
-  PRIMARY KEY (`id`, `user_id`)
+  `distance_traveled` int
 );
 
 CREATE TABLE `roles` (
@@ -80,16 +85,16 @@ CREATE TABLE `role_permissions` (
 
 CREATE TABLE `feedback` (
   `id` int,
-  `user_id` int,
   `expert_tips_id` int,
   `rental_company_id` int,
   `move_plan_id` int,
+  `move_cost_id` int,
   `rating` boolean,
   `description` varchar(255),
   `feedback_responds` varchar(255),
   `created_at` timestamp,
   `updated_at` timestamp,
-  PRIMARY KEY (`id`, `user_id`, `expert_tips_id`, `rental_company_id`, `move_plan_id`)
+  PRIMARY KEY (`id`, `expert_tips_id`, `rental_company_id`, `move_plan_id`, `move_cost_id`)
 );
 
 CREATE TABLE `box_sizes` (
@@ -141,11 +146,13 @@ CREATE TABLE `expert_tips` (
 
 CREATE TABLE `move_plan` (
   `id` int,
-  `user_id` int,
   `movers_id` int,
+  `truck_sizes_id` int,
+  `location_id` int,
+  `move_cost_id` int,
   `created_at` timestamp,
   `updated_at` timestamp,
-  PRIMARY KEY (`id`, `user_id`, `movers_id`)
+  PRIMARY KEY (`id`, `movers_id`, `truck_sizes_id`, `location_id`, `move_cost_id`)
 );
 
 CREATE TABLE `movers` (
@@ -183,22 +190,23 @@ CREATE TABLE `post_help` (
 
 CREATE TABLE `log` (
   `id` int,
-  `user_id` int,
   `heat_map_event_id` int,
+  `cost_analysis_id` int,
+  `time_trials_id` int,
   `log_time` timestamp,
-  PRIMARY KEY (`id`, `user_id`, `heat_map_event_id`)
+  PRIMARY KEY (`id`, `heat_map_event_id`, `cost_analysis_id`, `time_trials_id`)
 );
 
 CREATE TABLE `event_type` (
   `id` int PRIMARY KEY,
-  `value` varchar(255)
+  `description` varchar(255)
 );
 
 CREATE TABLE `log_detail` (
   `id` int,
   `log_id` int,
   `event_type_id` int,
-  `value` varchar(255),
+  `description` varchar(255),
   PRIMARY KEY (`id`, `log_id`, `event_type_id`)
 );
 
@@ -210,6 +218,37 @@ CREATE TABLE `heat_map_event_type` (
 CREATE TABLE `screen_type` (
   `id` int PRIMARY KEY,
   `description` varchar(255)
+);
+
+CREATE TABLE `move_cost` (
+  `id` int PRIMARY KEY,
+  `gas_cost` double,
+  `rental_cost` double,
+  `supply_cost` double,
+  `description` varchar(255),
+  `created_at` timestamp,
+  `updated_at` timestamp
+);
+
+CREATE TABLE `cost_analysis` (
+  `id` int PRIMARY KEY,
+  `average_gas` double,
+  `average_rental` double,
+  `average_supply` double,
+  `created_at` timestamp,
+  `updated_at` timestamp
+);
+
+CREATE TABLE `item_detail` (
+  `id` int PRIMARY KEY,
+  `description` varchar(255)
+);
+
+CREATE TABLE `time_trials` (
+  `id` int PRIMARY KEY,
+  `average_load_time` timestamp,
+  `average_moving_time` timestamp,
+  `average_drive_time` timestamp
 );
 
 ALTER TABLE `users` ADD FOREIGN KEY (`id`) REFERENCES `user_roles` (`user_id`);
@@ -224,13 +263,7 @@ ALTER TABLE `roles` ADD FOREIGN KEY (`id`) REFERENCES `role_permissions` (`role_
 
 ALTER TABLE `permission` ADD FOREIGN KEY (`id`) REFERENCES `role_permissions` (`permission_id`);
 
-ALTER TABLE `users` ADD FOREIGN KEY (`id`) REFERENCES `feedback` (`user_id`);
-
-ALTER TABLE `users` ADD FOREIGN KEY (`id`) REFERENCES `location` (`user_id`);
-
 ALTER TABLE `move_plan` ADD FOREIGN KEY (`id`) REFERENCES `user_inventory_items` (`move_plan_id`);
-
-ALTER TABLE `users` ADD FOREIGN KEY (`id`) REFERENCES `move_plan` (`user_id`);
 
 ALTER TABLE `users` ADD FOREIGN KEY (`id`) REFERENCES `movers` (`user_id`);
 
@@ -244,8 +277,6 @@ ALTER TABLE `rental_companys` ADD FOREIGN KEY (`id`) REFERENCES `truck_sizes` (`
 
 ALTER TABLE `user_inventory_items` ADD FOREIGN KEY (`loaded_boxes_id`) REFERENCES `loaded_boxes` (`id`);
 
-ALTER TABLE `users` ADD FOREIGN KEY (`id`) REFERENCES `log` (`user_id`);
-
 ALTER TABLE `log` ADD FOREIGN KEY (`id`) REFERENCES `log_detail` (`log_id`);
 
 ALTER TABLE `heat_map_event` ADD FOREIGN KEY (`heat_map_event_type_id`) REFERENCES `heat_map_event_type` (`id`);
@@ -257,4 +288,26 @@ ALTER TABLE `log` ADD FOREIGN KEY (`heat_map_event_id`) REFERENCES `heat_map_eve
 ALTER TABLE `heat_map_event` ADD FOREIGN KEY (`screen_type_id`) REFERENCES `screen_type` (`id`);
 
 ALTER TABLE `move_plan` ADD FOREIGN KEY (`id`) REFERENCES `feedback` (`move_plan_id`);
+
+ALTER TABLE `users` ADD FOREIGN KEY (`log_id`) REFERENCES `log` (`id`);
+
+ALTER TABLE `users` ADD FOREIGN KEY (`move_plan_id`) REFERENCES `move_plan` (`id`);
+
+ALTER TABLE `users` ADD FOREIGN KEY (`feedback_id`) REFERENCES `feedback` (`id`);
+
+ALTER TABLE `users` ADD FOREIGN KEY (`location_id`) REFERENCES `location` (`id`);
+
+ALTER TABLE `move_plan` ADD FOREIGN KEY (`location_id`) REFERENCES `location` (`id`);
+
+ALTER TABLE `move_plan` ADD FOREIGN KEY (`move_cost_id`) REFERENCES `move_cost` (`id`);
+
+ALTER TABLE `move_plan` ADD FOREIGN KEY (`truck_sizes_id`) REFERENCES `truck_sizes` (`id`);
+
+ALTER TABLE `feedback` ADD FOREIGN KEY (`move_cost_id`) REFERENCES `move_cost` (`id`);
+
+ALTER TABLE `log` ADD FOREIGN KEY (`cost_analysis_id`) REFERENCES `cost_analysis` (`id`);
+
+ALTER TABLE `user_inventory_items` ADD FOREIGN KEY (`item_detail_id`) REFERENCES `item_detail` (`id`);
+
+ALTER TABLE `log` ADD FOREIGN KEY (`time_trials_id`) REFERENCES `time_trials` (`id`);
 
