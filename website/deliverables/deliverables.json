@@ -43,7 +43,7 @@
     ]
   },
   {
-    "section": "Design",
+    "section": "Design - Main",
     "deliverables": [
       {
         "name": "Work Breakdown Structure",
@@ -62,6 +62,42 @@
         "description": "",
         "thumbnail": "img/deliverables/Loan in Database Schema.png",
         "downloadTarget": "img/deliverables/Loan in Database Schema.png"
+      }
+
+    ]
+  },
+  {
+    "section": "Design - Algorithms",
+    "deliverables": [
+      {
+        "name": "3D Model Generation",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_1-3D-Modeling.png",
+        "downloadTarget": "deliverables/Algorithms_1-3D-Modeling.png"
+      },
+      {
+        "name": "Analytics Training",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_1-Analytics-Training.png",
+        "downloadTarget": "deliverables/Algorithms_1-Analytics-Training.png"
+      },
+      {
+        "name": "Analytics Prediction",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_1-Analytics-Prediction.png",
+        "downloadTarget": "deliverables/Algorithms_1-Analytics-Prediction.png"
+      },
+      {
+        "name": "Data Recording",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_1-Data-Recording.png",
+        "downloadTarget": "deliverables/Algorithms_1-Data-Recording.png"
+      },
+      {
+        "name": "Heat Mapping",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_1-Heat-Mapping.png",
+        "downloadTarget": "deliverables/Algorithms_1-Heat-Mapping.png"
       }
 
     ]
