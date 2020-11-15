@@ -101,5 +101,18 @@
       }
 
     ]
+  },
+  {
+    "section": "Design - Hardware, Software and Development Tools",
+    "deliverables": [
+      {
+        "name": "Development Tools",
+        "description": "",
+        "thumbnail": "deliverables/Developer_Tools.PNG",
+        "downloadTarget": "deliverables/Developer_Tools.PNG"
+      }
+
+
+    ]
   }
 ]
