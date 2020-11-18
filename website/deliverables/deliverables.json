@@ -48,8 +48,8 @@
       {
         "name": "Work Breakdown Structure",
         "description": "",
-        "thumbnail": "deliverables/WorkBreakdownStructure_7.0-Top_Level.png",
-        "downloadTarget": "deliverables/WorkBreakdownStructure_7.0-Top_Level.png"
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-Top_Level.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-Top_Level.png"
       },
       {
         "name": "User Roles and Stories Draft",
@@ -90,15 +90,35 @@
       {
         "name": "User Interface",
         "description": "",
-        "thumbnail": "deliverables/WorkBreakdownStructure_7.0-User_Interface.png",
-        "downloadTarget": "deliverables/WorkBreakdownStructure_7.0-User_Interface.png"
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-User_Interface.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-User_Interface.png"
       },
       {
-        "name": "3D Model Generation",
+        "name": "External Interfaces",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_1-3D-Modeling.png",
-        "downloadTarget": "deliverables/Algorithms_1-3D-Modeling.png"
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-External_Interfaces.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-External_Interfaces.png"
+      },
+      {
+        "name": "Algorithms",
+        "description": "",
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-Alogrithms.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-Alogrithms.png"
+      },
+      {
+        "name": "Database",
+        "description": "",
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-Database.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-Database.png"
+      },
+      {
+        "name": "Testing",
+        "description": "",
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-Testing.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-Testing.png"
       }
+
+
     ]
   },
   {
@@ -139,6 +159,12 @@
         "description": "",
         "thumbnail": "deliverables/Algorithms_2-Cost_Estimate.png",
         "downloadTarget": "deliverables/Algorithms_2-Cost_Estimate.png"
+      },
+      {
+        "name": "Loading",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_2-Loading.png",
+        "downloadTarget": "deliverables/Algorithms_2-Loading.png"
       }
     ]
   },
@@ -171,7 +197,7 @@
     "section": "Design - Mockups",
     "deliverables": [
       {
-        "name": "Chatbot Mockup",
+        "name": "Chatbot",
         "description": "",
         "thumbnail": "deliverables/ChatBot.png",
         "downloadTarget": "deliverables/ChatBot.png"
