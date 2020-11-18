@@ -48,8 +48,8 @@
       {
         "name": "Work Breakdown Structure",
         "description": "",
-        "thumbnail": "deliverables/WorkBreakdownStructure2.0.png",
-        "downloadTarget": "deliverables/WorkBreakdownStructure2.0.png"
+        "thumbnail": "deliverables/WorkBreakdownStructure_7.0-Top_Level.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_7.0-Top_Level.png"
       },
       {
         "name": "User Roles and Stories Draft",
@@ -60,10 +60,45 @@
       {
         "name": "Database Schema",
         "description": "",
-        "thumbnail": "img/deliverables/Loan in Database Schema.png",
-        "downloadTarget": "img/deliverables/Loan in Database Schema.png"
+        "thumbnail": "deliverables/LoadInDatabaseSchema.png",
+        "downloadTarget": "deliverables/LoadInDatabaseSchema.png"
+      },
+      {
+        "name": "Data Management",
+        "description": "Data Management Plan",
+        "thumbnail": "deliverables/DataManagement.PNG",
+        "downloadTarget": "deliverables/DataManagement.PNG"
+      },
+      {
+        "name": "Security Risks",
+        "description": "",
+        "thumbnail": "deliverables/SecurityRisks.PNG",
+        "downloadTarget": "deliverables/SecurityRisks.docx"
+      },
+      {
+        "name": "Major Functional Components V2",
+        "description": "",
+        "thumbnail": "deliverables/MFCD6.0.png",
+        "downloadTarget": "deliverables/MFCD6.0.png"
       }
 
+    ]
+  },
+  {
+    "section": "Design - Work Breakdown Structure Details",
+    "deliverables": [
+      {
+        "name": "User Interface",
+        "description": "",
+        "thumbnail": "deliverables/WorkBreakdownStructure_7.0-User_Interface.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_7.0-User_Interface.png"
+      },
+      {
+        "name": "3D Model Generation",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_1-3D-Modeling.png",
+        "downloadTarget": "deliverables/Algorithms_1-3D-Modeling.png"
+      }
     ]
   },
   {
@@ -98,8 +133,13 @@
         "description": "",
         "thumbnail": "deliverables/Algorithms_1-Heat-Mapping.png",
         "downloadTarget": "deliverables/Algorithms_1-Heat-Mapping.png"
+      },
+      {
+        "name": "Cost Estimation",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_2-Cost_Estimate.png",
+        "downloadTarget": "deliverables/Algorithms_2-Cost_Estimate.png"
       }
-
     ]
   },
   {
@@ -110,6 +150,61 @@
         "description": "",
         "thumbnail": "deliverables/Developer_Tools.PNG",
         "downloadTarget": "deliverables/Developer_Tools.PNG"
+      },
+      {
+        "name": "Client and Server Specifications",
+        "description": "",
+        "thumbnail": "deliverables/Hardware_OperatingSystems_Specs.PNG",
+        "downloadTarget": "deliverables/Hardware_OS_Architecture_Requirements.docx"
+      },
+      {
+        "name": "3rd Party Tools",
+        "description": "",
+        "thumbnail": "deliverables/3rdPartyTool.PNG",
+        "downloadTarget": "deliverables/3rdPartyTool.PNG"
+      }
+
+
+    ]
+  },
+  {
+    "section": "Design - Mockups",
+    "deliverables": [
+      {
+        "name": "Chatbot Mockup",
+        "description": "",
+        "thumbnail": "deliverables/ChatBot.png",
+        "downloadTarget": "deliverables/ChatBot.png"
+      },
+      {
+        "name": "Expert Tips",
+        "description": "",
+        "thumbnail": "deliverables/ExpertTips.PNG",
+        "downloadTarget": "deliverables/ExpertTips.PNG"
+      },
+      {
+        "name": "Rental Admin",
+        "description": "",
+        "thumbnail": "deliverables/RentalAdmin.png",
+        "downloadTarget": "deliverables/RentalAdmin.png"
+      },
+      {
+        "name": "Logistics Planner",
+        "description": "",
+        "thumbnail": "deliverables/LogisticsPlanner.png",
+        "downloadTarget": "deliverables/LogisticsPlanner.png"
+      },
+      {
+        "name": "Load Plan",
+        "description": "",
+        "thumbnail": "deliverables/LoadPlan.PNG",
+        "downloadTarget": "deliverables/LoadPlan.PNG"
+      },
+      {
+        "name": "3D Model Capturing",
+        "description": "",
+        "thumbnail": "deliverables/3DModelCapture.PNG",
+        "downloadTarget": "deliverables/3DModelCapture.PNG"
       }
 
 
