@@ -46,6 +46,12 @@
     "section": "Design - Main",
     "deliverables": [
       {
+        "name": "Design Presentation V1",
+        "description": "",
+        "thumbnail": "deliverables/LOAD_IN_Design_Presentation_Draft_4.pptx",
+        "downloadTarget": "deliverables/LOAD_IN_Design_Presentation_Draft_4.pptx"
+      },
+      {
         "name": "Work Breakdown Structure",
         "description": "",
         "thumbnail": "deliverables/WorkBreakdownStructure_8.0-Top_Level.png",
