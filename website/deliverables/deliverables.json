@@ -165,6 +165,24 @@
         "description": "",
         "thumbnail": "deliverables/Algorithms_2-Loading.png",
         "downloadTarget": "deliverables/Algorithms_2-Loading.png"
+      },
+      {
+        "name": "3rd Party Vendor API",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_2-3rdPartyVendorAPI.png",
+        "downloadTarget": "deliverables/Algorithms_2-3rdPartyVendorAPI.png"
+      },
+      {
+        "name": "Web Scraper",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_2-Webscraper.png",
+        "downloadTarget": "deliverables/Algorithms_2-Webscraper.png"
+      },
+      {
+        "name": "Chat Bot",
+        "description": "",
+        "thumbnail": "deliverables/Algorithms_2-ChatBot.png",
+        "downloadTarget": "deliverables/Algorithms_2-ChatBot.png"
       }
     ]
   },
