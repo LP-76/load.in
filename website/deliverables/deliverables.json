@@ -1,6 +1,7 @@
 [
   {
     "section": "Feasibility",
+    "id": "feasibility",
     "deliverables": [
       {
         "name": "The Problem Flow",
@@ -44,6 +45,7 @@
   },
   {
     "section": "Design - Main",
+    "id": "design-main",
     "deliverables": [
       {
         "name": "Design Presentation V1",
@@ -51,12 +53,7 @@
         "thumbnail": "deliverables/LOAD_IN_Design_Presentation_Draft_4.png",
         "downloadTarget": "deliverables/LOAD_IN_Design_Presentation_Draft_4.pptx"
       },
-      {
-        "name": "Work Breakdown Structure",
-        "description": "",
-        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-Top_Level.png",
-        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-Top_Level.png"
-      },
+
       {
         "name": "User Roles and Stories Draft",
         "description": "",
@@ -91,8 +88,15 @@
     ]
   },
   {
-    "section": "Design - Work Breakdown Structure Details",
+    "section": "Design - Work Breakdown Structure",
+    "id": "design-wbs",
     "deliverables": [
+      {
+        "name": "Top Level",
+        "description": "",
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-Top_Level.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-Top_Level.png"
+      },
       {
         "name": "User Interface",
         "description": "",
@@ -129,6 +133,7 @@
   },
   {
     "section": "Design - Algorithms",
+    "id": "design-algo",
     "deliverables": [
       {
         "name": "3D Model Generation",
@@ -194,6 +199,7 @@
   },
   {
     "section": "Design - Hardware, Software and Development Tools",
+    "id": "design-specs",
     "deliverables": [
       {
         "name": "Development Tools",
@@ -219,6 +225,7 @@
   },
   {
     "section": "Design - Mockups",
+    "id": "design-mock",
     "deliverables": [
       {
         "name": "Chatbot",

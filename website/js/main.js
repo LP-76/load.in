@@ -16,6 +16,7 @@ $(window).on('scroll', function () {
 var vmModelFactory = function(){
     var self = this;
     self.deliverableSections = ko.observableArray();
+    self.labSections = ko.observableArray();
 };
 
 
@@ -391,16 +392,15 @@ $(document).ready(function() {
 
 //adding knockout functionality for the deliverables management section
 $(document).ready(function(){
-
+    var vm = new vmModelFactory();  //construct site view model
 
     $.getJSON('deliverables/deliverables.json').then(function(d){
-
-        var vm = new vmModelFactory();
         vm.deliverableSections(d);
-        ko.applyBindings(vm);
-
     });
-
+    $.getJSON('deliverables/labDeliverables.json').then(function(d){
+            vm.labSections(d);
+        });
+    ko.applyBindings(vm); //apply the model
 });
 
 

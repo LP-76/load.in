@@ -1,0 +1,56 @@
+[
+  {
+    "section": "Lab I",
+    "id": "lab-1",
+    "deliverables": [
+      {
+        "name": "Outline",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.docx"
+      },
+      {
+        "name": "Byron",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.docx"
+      },
+      {
+        "name": "Lance",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.docx"
+      },
+      {
+        "name": "Jason",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.docx"
+      },
+      {
+        "name": "Chris",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.docx"
+      },
+      {
+        "name": "Paul",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.docx"
+      },
+      {
+        "name": "Daniel",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.docx"
+      },
+      {
+        "name": "Greg",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.docx"
+      }
+    ]
+  }
+]
