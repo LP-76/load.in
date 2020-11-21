@@ -56,8 +56,8 @@
                             <nav>
                                 <ul id="navigation">
                                     <li><a class="active" href="#the_problem">Problem</a></li>
-
-
+                                    <li><a href="#solution">The Solution</a></li>
+                                    <li><a href="#team-container">Team Yellow</a></li>
                                     <li><a href="#deliverables">Deliverables <i class="ti-angle-down"></i></a>
 
                                         <ul class="submenu">
@@ -77,8 +77,8 @@
 
                                     </li>
 
-                                    <li><a href="#team-container">Team Yellow</a></li>
-                                    <li><a href="#solution">The Solution</a></li>
+
+
                                     <li><a href="#references">References</a></li>
                                 </ul>
                             </nav>
@@ -211,110 +211,123 @@
 </div>
 <!--/problem description-->
 
-<!-- deliverables  -->
-<div class="portfolio_image_area" id="deliverables">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="section_title text-center">
-                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Deliverables</h3>
-                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Get the files you want to see
-                        about Load.In</p>
+<!--Solution Area-->
+<div class="solution_area" id="solution">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 text-center">
+                <div class="solution_info">
+                    <div class="section_title">
+
+                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">The Solution</h3>
+                        <strong>Introducing Load.In</strong>
+                        <p class="mid_text wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
+                            Load.In gives your move a game plan by helping you find the best deal on your truck rental,
+                            providing expert truck loading instructions and giving you tools to help manage the
+                            logistics of moving day: all to give you some peace of mind during a stressful life event.
+                        </p>
+
+                    </div>
                 </div>
             </div>
-        </div>
-        <!--ko foreach: deliverableSections-->
-        <div class="row justify-content-center pt-120 mb-30" data-bind="attr:{ id: id }">
-            <div class="col-xs-12">
-                <h1 class="text-center" data-bind="text: section"></h1>
-            </div>
+
         </div>
         <div class="row">
-            <!--ko foreach: deliverables-->
-            <div class="col-lg-3 col-xs-6">
-                <div class="title">
-                    <h4 class="text-center" data-bind="text: name"></h4>
-                </div>
-                <div class="single_Portfolio wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+            <div class="col-lg-12 text-center">
+                <div class="padded">
+                    <div class="section_title">
 
-                    <div class="portfolio_thumb">
-                        <img data-bind="attr: {src: thumbnail}" alt="">
-                    </div>
-
-                    <div class="portfolio_hover">
-                        <div class="title">
-                            <span data-bind="text: description"></span> <br/>
-                            <a class="boxed-btn3" data-bind="attr:{href: downloadTarget}">View</a>
-                        </div>
+                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Solution
+                            Characteristics</h3>
+                        <img src="img/deliverables/Solution_Characteristics.png" alt="">
 
                     </div>
-
-
                 </div>
             </div>
-            <!--/ko-->
         </div>
-
-
-        <!--/ko-->
-
-
     </div>
+
+    <!--consider moving the risks into a deliverable for a simpler web design-->
+<!--    &lt;!&ndash; Risks Area &ndash;&gt;-->
+
+<!--    <section class="sample-text-area">-->
+
+<!--        <div class="row">-->
+<!--            <div class="col-xs-12 col-md-6">-->
+<!--                <img class="fit-image" src="img/deliverables/Risk_Matrix.png"/>-->
+<!--            </div>-->
+<!--            <div class="col-xs-12 col-md-6">-->
+<!--                <div class="container box_1170">-->
+
+
+<!--                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Technical Risk</h3>-->
+<!--                    <ul class="unordered-list">-->
+<!--                        <li>T-1: Current technology involving computer vision is a challenge.</li>-->
+<!--                        <li>T-1 Mitigation: Conduct a prototype to mitigate risk of critical errors upon release.</li>-->
+<!--                        <br>-->
+<!--                        <li>T-2: Artificial Intelligence prone to error due to insufficient training data.</li>-->
+<!--                        <li>T-2 Mitigation: Implementing a feedback loopback in the beta phase with test users.</li>-->
+<!--                        <br>-->
+<!--                        <li>T-3: Challenge to obtain accurate and timely feedback.</li>-->
+<!--                        <li>T-3 Mitigation: Implement a feature for users to give feedback if the application operated-->
+<!--                            correctly after completing a move.-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <br>-->
+<!--                <div class="container box_1170">-->
+<!--                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Customer Risk</h3>-->
+<!--                    <ul class="unordered-list">-->
+<!--                        <li>C-1: End user is inexperienced with the application.</li>-->
+<!--                        <li>C-1 Mitigation: Implement a tutorial on how to use the application and provide a help-->
+<!--                            feature.-->
+<!--                        </li>-->
+<!--                        <br>-->
+<!--                        <li>C-2: End user finds UI challenging to operate.</li>-->
+<!--                        <li>C-2: Mitigation: Implement analytics for tracking when a user stop using the application.-->
+<!--                        </li>-->
+<!--                        <br>-->
+<!--                        <li>C-3: End users are not satisfied with the recommendations of the application.</li>-->
+<!--                        <li>C-3 Mitigation: Implement a customer feedback feature that allows the users to disclose-->
+<!--                            his/her issues with the applications.-->
+<!--                        </li>-->
+<!--                        <br>-->
+<!--                        <li>C-4: End user doesn’t follow the guidelines of the application.</li>-->
+<!--                        <li>C-4 Mitigation: Implement a feature that allows the user to repeat/reset certain steps in-->
+<!--                            the application as they progress.-->
+<!--                        </li>-->
+
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <br>-->
+<!--                <div class="container box_1170">-->
+<!--                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Security Risk</h3>-->
+<!--                    <ul class="unordered-list">-->
+<!--                        <li>S-1: End user want to ensure the pictures taken of personal information doesn’t fall into-->
+<!--                            the wrong hands.-->
+<!--                        </li>-->
+<!--                        <li>S-1 Mitigation: During the feedback stage after a move, have the end user have the ability-->
+<!--                            to delete personal information collected during the move.-->
+<!--                        </li>-->
+<!--                        <br>-->
+<!--                        <li>S-2: End user wants to ensure his/her data isn’t being collected for nefarious purposes.-->
+<!--                        </li>-->
+<!--                        <li>S-2: Mitigation: Allow the end user to opt out of the analytics program inside of the user-->
+<!--                            settings and disclose what his/her data is being used for.-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--    </section>-->
+<!--    &lt;!&ndash; End Risk Area &ndash;&gt;-->
+
+
 </div>
-<!--/ deliverables  -->
-
-
-<!-- Labs -->
-<div class="portfolio_image_area" id="labs">
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="section_title text-center">
-                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Labs</h3>
-                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Get the Lab files you want to
-                        see about Load.In</p>
-                </div>
-            </div>
-        </div>
-        <!--ko foreach: labSections-->
-        <div class="row justify-content-center pt-120 mb-30" data-bind="attr:{ id: id }">
-            <div class="col-xs-12">
-                <h1 class="text-center" data-bind="text: section"></h1>
-            </div>
-        </div>
-        <div class="row">
-            <!--ko foreach: deliverables-->
-            <div class="col-lg-3 col-xs-6">
-                <div class="title">
-                    <h4 class="text-center" data-bind="text: name"></h4>
-                </div>
-                <div class="single_Portfolio wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
-
-                    <div class="portfolio_thumb">
-                        <img data-bind="attr: {src: thumbnail}" alt="">
-                    </div>
-
-                    <div class="portfolio_hover">
-                        <div class="title">
-                            <span data-bind="text: description"></span> <br/>
-                            <a class="boxed-btn3" data-bind="attr:{href: downloadTarget}">View</a>
-                        </div>
-
-                    </div>
-
-
-                </div>
-            </div>
-            <!--/ko-->
-        </div>
-
-
-        <!--/ko-->
-
-
-    </div>
 </div>
-<!-- /Labs -->
+<!--/solution area-->
 
 <!-- team_member_start -->
 <div class="team_area " id="team-container">
@@ -513,123 +526,115 @@
 </div>
 <!--/ team_member_end -->
 
-
-<!--Solution Area-->
-<div class="solution_area" id="solution">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 offset-lg-3 text-center">
-                <div class="solution_info">
-                    <div class="section_title">
-
-                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">The Solution</h3>
-                        <strong>Introducing Load.In</strong>
-                        <p class="mid_text wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
-                            Load.In gives your move a game plan by helping you find the best deal on your truck rental,
-                            providing expert truck loading instructions and giving you tools to help manage the
-                            logistics of moving day: all to give you some peace of mind during a stressful life event.
-                        </p>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="padded">
-                    <div class="section_title">
-
-                        <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Solution
-                            Characteristics</h3>
-                        <img src="img/deliverables/Solution_Characteristics.png" alt="">
-
-                    </div>
+<!-- deliverables  -->
+<div class="portfolio_image_area" id="deliverables">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="section_title text-center">
+                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Deliverables</h3>
+                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Get the files you want to see
+                        about Load.In</p>
                 </div>
             </div>
         </div>
+        <!--ko foreach: deliverableSections-->
+        <div class="row justify-content-center pt-120 mb-30" data-bind="attr:{ id: id }">
+            <div class="col-xs-12">
+                <h1 class="text-center" data-bind="text: section"></h1>
+            </div>
+        </div>
+        <div class="row">
+            <!--ko foreach: deliverables-->
+            <div class="col-lg-3 col-xs-6">
+                <div class="title">
+                    <h4 class="text-center" data-bind="text: name"></h4>
+                </div>
+                <div class="single_Portfolio wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+
+                    <div class="portfolio_thumb">
+                        <img data-bind="attr: {src: thumbnail}" alt="">
+                    </div>
+
+                    <div class="portfolio_hover">
+                        <div class="title">
+                            <span data-bind="text: description"></span> <br/>
+                            <a class="boxed-btn3" data-bind="attr:{href: downloadTarget}">View</a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <!--/ko-->
+        </div>
+
+
+        <!--/ko-->
+
+
     </div>
-
-    <!-- Risks Area -->
-
-    <section class="sample-text-area">
-
-        <div class="row">
-            <div class="col-xs-12 col-md-6">
-                <img class="fit-image" src="img/deliverables/Risk_Matrix.png"/>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <div class="container box_1170">
+</div>
+<!--/ deliverables  -->
 
 
-                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Technical Risk</h3>
-                    <ul class="unordered-list">
-                        <li>T-1: Current technology involving computer vision is a challenge.</li>
-                        <li>T-1 Mitigation: Conduct a prototype to mitigate risk of critical errors upon release.</li>
-                        <br>
-                        <li>T-2: Artificial Intelligence prone to error due to insufficient training data.</li>
-                        <li>T-2 Mitigation: Implementing a feedback loopback in the beta phase with test users.</li>
-                        <br>
-                        <li>T-3: Challenge to obtain accurate and timely feedback.</li>
-                        <li>T-3 Mitigation: Implement a feature for users to give feedback if the application operated
-                            correctly after completing a move.
-                        </li>
-                    </ul>
-                </div>
-                <br>
-                <div class="container box_1170">
-                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Customer Risk</h3>
-                    <ul class="unordered-list">
-                        <li>C-1: End user is inexperienced with the application.</li>
-                        <li>C-1 Mitigation: Implement a tutorial on how to use the application and provide a help
-                            feature.
-                        </li>
-                        <br>
-                        <li>C-2: End user finds UI challenging to operate.</li>
-                        <li>C-2: Mitigation: Implement analytics for tracking when a user stop using the application.
-                        </li>
-                        <br>
-                        <li>C-3: End users are not satisfied with the recommendations of the application.</li>
-                        <li>C-3 Mitigation: Implement a customer feedback feature that allows the users to disclose
-                            his/her issues with the applications.
-                        </li>
-                        <br>
-                        <li>C-4: End user doesn’t follow the guidelines of the application.</li>
-                        <li>C-4 Mitigation: Implement a feature that allows the user to repeat/reset certain steps in
-                            the application as they progress.
-                        </li>
-
-                    </ul>
-                </div>
-                <br>
-                <div class="container box_1170">
-                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Security Risk</h3>
-                    <ul class="unordered-list">
-                        <li>S-1: End user want to ensure the pictures taken of personal information doesn’t fall into
-                            the wrong hands.
-                        </li>
-                        <li>S-1 Mitigation: During the feedback stage after a move, have the end user have the ability
-                            to delete personal information collected during the move.
-                        </li>
-                        <br>
-                        <li>S-2: End user wants to ensure his/her data isn’t being collected for nefarious purposes.
-                        </li>
-                        <li>S-2: Mitigation: Allow the end user to opt out of the analytics program inside of the user
-                            settings and disclose what his/her data is being used for.
-                        </li>
-                    </ul>
+<!-- Labs -->
+<div class="portfolio_image_area" id="labs">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="section_title text-center">
+                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Labs</h3>
+                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Get the Lab files you want to
+                        see about Load.In</p>
                 </div>
             </div>
         </div>
+        <!--ko foreach: labSections-->
+        <div class="row justify-content-center pt-120 mb-30" data-bind="attr:{ id: id }">
+            <div class="col-xs-12">
+                <h1 class="text-center" data-bind="text: section"></h1>
+            </div>
+        </div>
+        <div class="row">
+            <!--ko foreach: deliverables-->
+            <div class="col-lg-3 col-xs-6">
+                <div class="title">
+                    <h4 class="text-center" data-bind="text: name"></h4>
+                </div>
+                <div class="single_Portfolio wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+
+                    <div class="portfolio_thumb">
+                        <img data-bind="attr: {src: thumbnail}" alt="">
+                    </div>
+
+                    <div class="portfolio_hover">
+                        <div class="title">
+                            <span data-bind="text: description"></span> <br/>
+                            <a class="boxed-btn3" data-bind="attr:{href: downloadTarget}">View</a>
+                        </div>
+
+                    </div>
 
 
-    </section>
-    <!-- End Risk Area -->
+                </div>
+            </div>
+            <!--/ko-->
+        </div>
 
 
+        <!--/ko-->
+
+
+    </div>
 </div>
-</div>
-<!--/solution area-->
+<!-- /Labs -->
+
+
+
+
+
 
 
 <!--References-->
