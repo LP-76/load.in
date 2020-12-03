@@ -53,7 +53,18 @@
         "thumbnail": "deliverables/LOAD_IN_Design_Presentation_Draft_4.png",
         "downloadTarget": "deliverables/LOAD_IN_Design_Presentation_Draft_4.pptx"
       },
-
+      {
+        "name": "Design Presentation V2",
+        "description": "Final draft before presentation on 12/3/2020",
+        "thumbnail": "deliverables/LOAD_IN_Design_Presentation_Draft_4.png",
+        "downloadTarget": "deliverables/LOAD_IN_Design_Presentation_Draft_5.pptx"
+      },
+      {
+        "name": "Design Presentation V2 Handout",
+        "description": "A printer friendly version of the Design Presentation",
+        "thumbnail": "deliverables/Design_Handout_Screenshot.PNG",
+        "downloadTarget": "deliverables/LOAD_IN_Design_Presentation_V2_Handout.pdf"
+      },
       {
         "name": "User Roles and Stories Draft",
         "description": "",
@@ -192,8 +203,8 @@
       {
         "name": "Chat Bot",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_3-ChatBot.png",
-        "downloadTarget": "deliverables/Algorithms_3-ChatBot.png"
+        "thumbnail": "deliverables/ChatbotAlgo2.png",
+        "downloadTarget": "deliverables/ChatbotAlgo2.png"
       }
     ]
   },
