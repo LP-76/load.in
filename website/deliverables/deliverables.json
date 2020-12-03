@@ -94,20 +94,20 @@
       {
         "name": "Top Level",
         "description": "",
-        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-Top_Level.png",
-        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-Top_Level.png"
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-Top Level.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-Top Level.png"
       },
       {
         "name": "User Interface",
         "description": "",
-        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-User_Interface.png",
-        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-User_Interface.png"
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-User Interface.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-User Interface.png"
       },
       {
         "name": "External Interfaces",
         "description": "",
-        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-External_Interfaces.png",
-        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-External_Interfaces.png"
+        "thumbnail": "deliverables/WorkBreakdownStructure_8.0-External Interfaces.png",
+        "downloadTarget": "deliverables/WorkBreakdownStructure_8.0-External Interfaces.png"
       },
       {
         "name": "Algorithms",
@@ -138,62 +138,62 @@
       {
         "name": "3D Model Generation",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_1-3D-Modeling.png",
-        "downloadTarget": "deliverables/Algorithms_1-3D-Modeling.png"
+        "thumbnail": "deliverables/Algorithms_3-3D_Modeling.png",
+        "downloadTarget": "deliverables/Algorithms_3-3D_Modeling.png"
       },
       {
         "name": "Analytics Training",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_1-Analytics-Training.png",
-        "downloadTarget": "deliverables/Algorithms_1-Analytics-Training.png"
+        "thumbnail": "deliverables/Algorithms_3-Analytics_Training.png",
+        "downloadTarget": "deliverables/Algorithms_3-Analytics_Training.png"
       },
       {
         "name": "Analytics Prediction",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_1-Analytics-Prediction.png",
-        "downloadTarget": "deliverables/Algorithms_1-Analytics-Prediction.png"
+        "thumbnail": "deliverables/Algorithms_3-Analytics_Prediction.png",
+        "downloadTarget": "deliverables/Algorithms_3-Analytics_Prediction.png"
       },
       {
         "name": "Data Recording",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_1-Data-Recording.png",
-        "downloadTarget": "deliverables/Algorithms_1-Data-Recording.png"
+        "thumbnail": "deliverables/Algorithms_3-Data_Recording.png",
+        "downloadTarget": "deliverables/Algorithms_3-Data_Recording.png"
       },
       {
         "name": "Heat Mapping",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_1-Heat-Mapping.png",
-        "downloadTarget": "deliverables/Algorithms_1-Heat-Mapping.png"
+        "thumbnail": "deliverables/Algorithms_3-Heat_Mapping.png",
+        "downloadTarget": "deliverables/Algorithms_3-Heat_Mapping.png"
       },
       {
         "name": "Cost Estimation",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_2-Cost_Estimate.png",
-        "downloadTarget": "deliverables/Algorithms_2-Cost_Estimate.png"
+        "thumbnail": "deliverables/Algorithms_3-Cost_Estimate.png",
+        "downloadTarget": "deliverables/Algorithms_3-Cost_Estimate.png"
       },
       {
         "name": "Loading",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_2-Loading.png",
-        "downloadTarget": "deliverables/Algorithms_2-Loading.png"
+        "thumbnail": "deliverables/Algorithms_3-Loading.png",
+        "downloadTarget": "deliverables/Algorithms_3-Loading.png"
       },
       {
         "name": "3rd Party Vendor API",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_2-3rdPartyVendorAPI.png",
-        "downloadTarget": "deliverables/Algorithms_2-3rdPartyVendorAPI.png"
+        "thumbnail": "deliverables/Algorithms_3-3rd_Party_Vendor_API.png",
+        "downloadTarget": "deliverables/Algorithms_3-3rd_Party_Vendor_API.png"
       },
       {
         "name": "Web Scraper",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_2-Webscraper.png",
-        "downloadTarget": "deliverables/Algorithms_2-Webscraper.png"
+        "thumbnail": "deliverables/Algorithms_3-Webscraper.png",
+        "downloadTarget": "deliverables/Algorithms_3-Webscraper.png"
       },
       {
         "name": "Chat Bot",
         "description": "",
-        "thumbnail": "deliverables/Algorithms_2-ChatBot.png",
-        "downloadTarget": "deliverables/Algorithms_2-ChatBot.png"
+        "thumbnail": "deliverables/Algorithms_3-ChatBot.png",
+        "downloadTarget": "deliverables/Algorithms_3-ChatBot.png"
       }
     ]
   },
