@@ -39,7 +39,12 @@
         "thumbnail": "deliverables/MFCD4.0.png",
         "downloadTarget": "deliverables/MFCD4.0.png"
       }
-
+      ,{
+        "name": "Competition Matrix",
+        "description": "",
+        "thumbnail": "deliverables/Competition.png",
+        "downloadTarget": "deliverables/Competition.png"
+      }
 
     ]
   },
@@ -84,10 +89,10 @@
         "downloadTarget": "deliverables/DataManagement.PNG"
       },
       {
-        "name": "Security Risks",
+        "name": "Risks and Mitigations",
         "description": "",
         "thumbnail": "deliverables/SecurityRisks.PNG",
-        "downloadTarget": "deliverables/SecurityRisks.docx"
+        "downloadTarget": "deliverables/Risks_and_Mitigations.docx"
       },
       {
         "name": "Major Functional Components V2",
@@ -275,6 +280,19 @@
         "downloadTarget": "deliverables/3DModelCapture.PNG"
       }
 
+
+    ]
+  },
+  {
+    "section": "Prototype",
+    "id": "prototype",
+    "deliverables": [
+      {
+        "name": "Presentation",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.docx"
+      }
 
     ]
   }
