@@ -18,7 +18,7 @@
       {
         "name": "Lance",
         "description": "",
-        "thumbnail": "deliverables/lperdueLab1v.PNG",
+        "thumbnail": "deliverables/lperdueLab1v.png",
         "downloadTarget": "deliverables/lperdue_Lab1v.pdf"
       },
       {
@@ -48,7 +48,7 @@
       {
         "name": "Greg",
         "description": "",
-        "thumbnail": "deliverables/Lab1_GregoryKukanich.PNG",
+        "thumbnail": "deliverables/Lab1_GregoryKukanich.png",
         "downloadTarget": "deliverables/Lab1_GregoryKukanich.pdf"
       }
     ]

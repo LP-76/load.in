@@ -290,8 +290,14 @@
       {
         "name": "Presentation",
         "description": "",
-        "thumbnail": "deliverables/Placeholder.PNG",
-        "downloadTarget": "deliverables/Placeholder.docx"
+        "thumbnail": "deliverables/Load_In_Prototype_Presentation.PNG",
+        "downloadTarget": "deliverables/Load_In_Prototype_Presentation.pptx"
+      },
+      {
+        "name": "Presentation Handout",
+        "description": "",
+        "thumbnail": "deliverables/Load_In_Prototype_Presentation_Handout.PNG",
+        "downloadTarget": "deliverables/Load_In_Prototype_Presentation.pdf"
       }
 
     ]
