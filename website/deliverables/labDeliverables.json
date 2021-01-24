@@ -1,7 +1,7 @@
 [
   {
-    "section": "Lab I",
-    "id": "lab-1",
+    "section": "Lab I - Drafts",
+    "id": "lab-1-drafts",
     "deliverables": [
       {
         "name": "Outline",
@@ -50,6 +50,55 @@
         "description": "",
         "thumbnail": "deliverables/Lab1_GregoryKukanich.png",
         "downloadTarget": "deliverables/Lab1_GregoryKukanich.pdf"
+      }
+    ]
+  },
+  {
+    "section": "Lab I",
+    "id": "lab-1",
+    "deliverables": [
+      {
+        "name": "Outline",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.PNG"
+      },
+      {
+        "name": "Byron",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.PNG"
+      },
+      {
+        "name": "Lance",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.PNG"
+      },
+      {
+        "name": "Jason",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.PNG"
+      },
+      {
+        "name": "Chris",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.PNG"
+      },
+      {
+        "name": "Paul",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.PNG"
+      },
+
+      {
+        "name": "Greg",
+        "description": "",
+        "thumbnail": "deliverables/Placeholder.PNG",
+        "downloadTarget": "deliverables/Placeholder.PNG"
       }
     ]
   }

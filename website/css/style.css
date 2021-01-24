@@ -3383,6 +3383,10 @@ object-fit: contain;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   border-radius: 0px;
+  height: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  object-fit:contain;
 }
 
 /* line 26, ../../Arafath/CL/December/233. Startup/HTML/scss/_team.scss */
