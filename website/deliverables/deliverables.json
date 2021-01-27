@@ -301,5 +301,19 @@
       }
 
     ]
+  },
+  {
+    "section": "Weekly Development Reports",
+    "id": "weekly-dev-reports",
+    "deliverables": [
+      {
+        "name": "Week 1 Report",
+        "description": "",
+        "thumbnail": "deliverables/TeamWeeklyReport1.PNG",
+        "downloadTarget": "deliverables/TeamWeeklyReport1.docx"
+      }
+
+
+    ]
   }
 ]
