@@ -14,7 +14,7 @@ body {
 }
 
 .branded-background{
-background: #6DD1A1
+  background: #6DD1A1
 }
 
 /* line 12, ../../Arafath/CL/December/233. Startup/HTML/scss/theme-default.scss */
@@ -937,21 +937,21 @@ h3 {
   color: white;
 }
 .logo-img{
-width: 300px !important;
-font-family: 'Gulim';
+  width: 300px !important;
+  font-family: 'Gulim';
 }
 .logo-img a{
-display: inline-block;
-vertical-align: middle;
+  display: inline-block;
+  vertical-align: middle;
 }
 .logo-img img{
-width: 50px;
-vertical-align: middle;
+  width: 50px;
+  vertical-align: middle;
 }
 .logo-img span{
-display: inline-block;
-font-size: 48px;
-vertical-align: middle;
+  display: inline-block;
+  font-size: 48px;
+  vertical-align: middle;
 }
 
 @media (max-width: 767px) {
@@ -1176,8 +1176,8 @@ vertical-align: middle;
 }
 
 .apa-citation{
-    padding-left: 24px;
-    text-indent:-24px;
+  padding-left: 24px;
+  text-indent:-24px;
 }
 
 /* line 4, ../../Arafath/CL/December/233. Startup/HTML/scss/_slider.scss */
@@ -1739,15 +1739,15 @@ vertical-align: middle;
 }
 
 .fit-image{
-object-fit: contain;
-    width: 100%;
+  object-fit: contain;
+  width: 100%;
 
 }
 
 .about_area img{
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 
 /* line 29, ../../Arafath/CL/December/233. Startup/HTML/scss/_about.scss */
@@ -2688,7 +2688,7 @@ object-fit: contain;
 }
 
 .padded{
-    padding-top: 155px;
+  padding-top: 155px;
   padding-bottom: 130px;
 }
 
@@ -2916,18 +2916,18 @@ object-fit: contain;
 @media (max-width: 767px) {
   /* line 29, ../../Arafath/CL/December/233. Startup/HTML/scss/_portfolio.scss */
   .portfolio_image_area .single_Portfolio .portfolio_thumb {
-     height: 350px;
+    height: 350px;
   }
 }
 
 /* line 36, ../../Arafath/CL/December/233. Startup/HTML/scss/_portfolio.scss */
 .portfolio_image_area .single_Portfolio .portfolio_thumb img {
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
-     margin-left: auto;
-     margin-right: auto;
-     display: block;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -4396,7 +4396,7 @@ h6 {
 
 /* line 357, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
 .progress-table {
-  background: #f9f9ff;
+  background: lime;
   padding: 15px 0px 30px 0px;
   min-width: 800px;
 }
@@ -4408,31 +4408,29 @@ h6 {
 }
 
 /* line 365, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .country {
-  width: 28.07%;
+.progress-table .feature {
 }
 
 /* line 368, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .visit {
-  width: 19.74%;
+.progress-table .description {
 }
 
 /* line 371, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .percentage {
-  width: 40.36%;
-  padding-right: 50px;
+.progress-table .function {
 }
 
 /* line 375, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
 .progress-table .table-head {
   display: flex;
+  justify-content: space-evenly;
+
 }
 
 /* line 377, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
 .progress-table .table-head .serial,
-.progress-table .table-head .country,
-.progress-table .table-head .visit,
-.progress-table .table-head .percentage {
+.progress-table .table-head .feature,
+.progress-table .table-head .description,
+.progress-table .table-head .function {
   color: #415094;
   line-height: 40px;
   text-transform: uppercase;
@@ -4444,72 +4442,75 @@ h6 {
   padding: 15px 0;
   border-top: 1px solid #edf3fd;
   display: flex;
+  justify-content: space-evenly;
+
 }
 
 /* line 391, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
 .progress-table .table-row .serial,
-.progress-table .table-row .country,
-.progress-table .table-row .visit,
-.progress-table .table-row .percentage {
+.progress-table .table-row .feature,
+.progress-table .table-row .description,
+.progress-table .table-row .function {
   display: flex;
   align-items: center;
+  width: 27%;
 }
 
 /* line 399, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .country img {
+.progress-table .table-row .feature img {
   margin-right: 15px;
 }
 
 /* line 404, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress {
+.progress-table .table-row .function .progress {
   width: 80%;
   border-radius: 0px;
   background: transparent;
 }
 
 /* line 408, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress .progress-bar {
+.progress-table .table-row .function .progress .progress-bar {
   height: 5px;
   line-height: 5px;
 }
 
 /* line 411, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress .progress-bar.color-1 {
+.progress-table .table-row .function .progress .progress-bar.color-1 {
   background-color: #6382e6;
 }
 
 /* line 414, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress .progress-bar.color-2 {
+.progress-table .table-row .function .progress .progress-bar.color-2 {
   background-color: #e66686;
 }
 
 /* line 417, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress .progress-bar.color-3 {
+.progress-table .table-row .function .progress .progress-bar.color-3 {
   background-color: #f09359;
 }
 
 /* line 420, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress .progress-bar.color-4 {
+.progress-table .table-row .function .progress .progress-bar.color-4 {
   background-color: #73fbaf;
 }
 
 /* line 423, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress .progress-bar.color-5 {
+.progress-table .table-row .function .progress .progress-bar.color-5 {
   background-color: #73fbaf;
 }
 
 /* line 426, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress .progress-bar.color-6 {
+.progress-table .table-row .function .progress .progress-bar.color-6 {
   background-color: #6382e6;
 }
 
 /* line 429, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress .progress-bar.color-7 {
+.progress-table .table-row .function .progress .progress-bar.color-7 {
   background-color: #a367e7;
 }
 
 /* line 432, ../../Arafath/CL/December/233. Startup/HTML/scss/_elements.scss */
-.progress-table .table-row .percentage .progress .progress-bar.color-8 {
+.progress-table .table-row .function .progress .progress-bar.color-8 {
   background-color: #e66686;
 }
 
