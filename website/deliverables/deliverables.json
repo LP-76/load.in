@@ -284,6 +284,18 @@
     ]
   },
   {
+    "section": "User Stories",
+    "id": "user-stories",
+    "deliverables": [
+      {
+        "name": "User Stories",
+        "description": "",
+        "thumbnail": "deliverables/UserStories.png",
+        "downloadTarget": "deliverables/UserRolesandUserStoriesV5.docx"
+      }
+    ]
+  },
+  {
     "section": "Prototype",
     "id": "prototype",
     "deliverables": [
@@ -314,6 +326,18 @@
       }
 
 
+    ]
+  },
+  {
+    "section": "Glossary",
+    "id": "glossary",
+    "deliverables": [
+      {
+        "name": "Glossary",
+        "description": "",
+        "thumbnail": "deliverables/Glossary.png",
+        "downloadTarget": "deliverables/Glossary.docx"
+      }
     ]
   }
 ]
