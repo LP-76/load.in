@@ -323,6 +323,12 @@
         "description": "",
         "thumbnail": "deliverables/TeamWeeklyReport1.PNG",
         "downloadTarget": "deliverables/TeamWeeklyReport1.docx"
+      },
+      {
+        "name": "Week 2 Report",
+        "description": "",
+        "thumbnail": "deliverables/TeamWeeklyReport2.PNG",
+        "downloadTarget": "deliverables/TeamWeeklyReport2.docx"
       }
 
 
