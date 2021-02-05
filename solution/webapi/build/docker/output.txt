@@ -1,0 +1,1 @@
+HELLO, if you are seeing this then I have been read from within a container
