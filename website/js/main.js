@@ -13,11 +13,7 @@ $(window).on('scroll', function () {
 });
 
 
-var vmModelFactory = function(){
-    var self = this;
-    self.deliverableSections = ko.observableArray();
-    self.labSections = ko.observableArray();
-};
+
 
 
 $(document).ready(function(){
@@ -390,14 +386,29 @@ $(document).ready(function() {
   wow.init();
 });
 
+var vmModelFactory = function(){
+    var self = this;
+    self.feasibilitySections = ko.observableArray();
+    self.designSections = ko.observableArray();
+    self.prototypeSections = ko.observableArray();
+    self.labSections = ko.observableArray();
+};
+
 //adding knockout functionality for the deliverables management section
 $(document).ready(function(){
     var vm = new vmModelFactory();  //construct site view model
 
-    $.getJSON('deliverables/deliverables.json').then(function(d){
-        vm.deliverableSections(d);
+    $.getJSON('deliverables/design/deliverables.json').then(function(d){
+        vm.designSections(d);
     });
-    $.getJSON('deliverables/labDeliverables.json').then(function(d){
+    $.getJSON('deliverables/feasibility/deliverables.json').then(function(d){
+            vm.feasibilitySections(d);
+        });
+        $.getJSON('deliverables/prototype/deliverables.json').then(function(d){
+                vm.prototypeSections(d);
+            });
+
+    $.getJSON('deliverables/labs/deliverables.json').then(function(d){
             vm.labSections(d);
         });
     ko.applyBindings(vm); //apply the model

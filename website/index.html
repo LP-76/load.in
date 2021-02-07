@@ -51,22 +51,46 @@
                                 </span>
                         </div>
                     </div>
-                    <div class="col-xl-8 col-lg-8">
+                    <div class="col-xl-10 col-lg-10">
                         <div class="main-menu  d-none d-lg-block text-center">
                             <nav>
                                 <ul id="navigation">
                                     <li><a class="active" href="#the_problem">Problem</a></li>
                                     <li><a href="#solution">The Solution</a></li>
                                     <li><a href="#team-container">Team Yellow</a></li>
-                                    <li><a href="#deliverables">Deliverables <i class="ti-angle-down"></i></a>
+
+
+
+
+                                    <li><a href="#feasibility">Feasibility <i class="ti-angle-down"></i></a>
 
                                         <ul class="submenu">
-                                            <!--ko foreach: deliverableSections-->
+                                            <!--ko foreach: feasibilitySections-->
                                             <li><a data-bind="text: section, attr:{href: '#' + id}"></a></li>
                                             <!--/ko-->
                                         </ul>
 
                                     </li>
+
+                                    <li><a href="#design">Design <i class="ti-angle-down"></i></a>
+
+                                        <ul class="submenu">
+                                            <!--ko foreach: designSections-->
+                                            <li><a data-bind="text: section, attr:{href: '#' + id}"></a></li>
+                                            <!--/ko-->
+                                        </ul>
+
+                                    </li>
+                                    <li><a href="#prototype">Prototype <i class="ti-angle-down"></i></a>
+
+                                        <ul class="submenu">
+                                            <!--ko foreach: prototypeSections-->
+                                            <li><a data-bind="text: section, attr:{href: '#' + id}"></a></li>
+                                            <!--/ko-->
+                                        </ul>
+
+                                    </li>
+
                                     <li><a href="#labs">Labs <i class="ti-angle-down"></i></a>
 
                                         <ul class="submenu">
@@ -500,19 +524,19 @@
 </div>
 <!--/ team_member_end -->
 
-<!-- deliverables  -->
-<div class="portfolio_image_area" id="deliverables">
+<!-- feasibility  -->
+<div class="portfolio_image_area" id="feasibility">
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-lg-6">
                 <div class="section_title text-center">
-                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Deliverables</h3>
+                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Feasibility</h3>
                     <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Get the files you want to see
-                        about Load.In</p>
+                        about feasibility</p>
                 </div>
             </div>
         </div>
-        <!--ko foreach: deliverableSections-->
+        <!--ko foreach: feasibilitySections-->
         <div class="row justify-content-center pt-120 mb-30" data-bind="attr:{ id: id }">
             <div class="col-xs-12">
                 <h1 class="text-center" data-bind="text: section"></h1>
@@ -550,8 +574,131 @@
 
     </div>
 </div>
-<!--/ deliverables  -->
+<!--/ feasibility  -->
 
+<!-- design  -->
+<div class="portfolio_image_area" id="design">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="section_title text-center">
+                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Design</h3>
+                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Get the files you want to see
+                        about design</p>
+                </div>
+            </div>
+        </div>
+        <!--ko foreach: designSections-->
+        <div class="row justify-content-center pt-120 mb-30" data-bind="attr:{ id: id }">
+            <div class="col-xs-12">
+                <h1 class="text-center" data-bind="text: section"></h1>
+            </div>
+        </div>
+        <div class="row">
+            <!--ko foreach: deliverables-->
+            <div class="col-lg-3 col-xs-6">
+                <div class="title">
+                    <h4 class="text-center" data-bind="text: name"></h4>
+                </div>
+                <div class="single_Portfolio wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+
+                    <div class="portfolio_thumb">
+                        <img data-bind="attr: {src: thumbnail}" alt="">
+                    </div>
+
+                    <div class="portfolio_hover">
+                        <div class="title">
+                            <span data-bind="text: description"></span> <br/>
+                            <a class="boxed-btn3" data-bind="attr:{href: downloadTarget}">View</a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+            <!--/ko-->
+        </div>
+
+
+        <!--/ko-->
+
+
+    </div>
+</div>
+<!--/ design  -->
+
+<!-- prototype  -->
+<div class="portfolio_image_area" id="prototype">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="section_title text-center">
+                    <h3 class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">Prototype</h3>
+                    <p class="wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">Get the files you want to see
+                        about the prototype</p>
+                </div>
+            </div>
+        </div>
+        <!--ko foreach: prototypeSections-->
+        <div class="row justify-content-center pt-120 mb-30" data-bind="attr:{ id: id }">
+            <div class="col-xs-12">
+                <h1 class="text-center" data-bind="text: section"></h1>
+            </div>
+        </div>
+        <div class="row">
+            <!--ko foreach: deliverables-->
+            <!--ko if: thumbnail  -->
+            <div class="col-lg-3 col-xs-6">
+                <div class="title">
+                    <h4 class="text-center" data-bind="text: name"></h4>
+                </div>
+
+                <div class="single_Portfolio wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+
+                    <div class="portfolio_thumb">
+                        <img data-bind="attr: {src: thumbnail}" alt="">
+                    </div>
+
+                    <div class="portfolio_hover">
+                        <div class="title">
+                            <span data-bind="text: description"></span> <br/>
+                            <a class="boxed-btn3" data-bind="attr:{href: downloadTarget}">View</a>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+            <!-- /ko -->
+
+
+            <!-- ko if: template -->
+            <div class="col-lg-12">
+                <div class="title">
+                    <h4 class="text-center" data-bind="text: name"></h4>
+                </div>
+            <div class="single_Portfolio wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
+                <!-- ko template: template -->
+                <!--/ko-->
+            </div>
+                </div>
+            <!--/ko-->
+
+
+            <!--/ko-->
+        </div>
+
+
+        <!--/ko-->
+
+
+    </div>
+</div>
+<!--/ prototype  -->
 
 <!-- Labs -->
 <div class="portfolio_image_area" id="labs">
@@ -608,128 +755,132 @@
 
 <!-- Prototype Feature Table -->
 
-<div class="whole-wrap">
-    <div class="container box_1170">
-        <div class="section-top-border">
-            <h3 class="mb-30">Prototype Features Table</h3>
-            <div class="progress-table-wrap">
-                <div class="progress-table table-bordered">
-                    <div class="table-head">
-                        <div class="feature">Feature</div>
-                        <div class="description">Description</div>
-                        <div class="function">Implementation</div>
-                    </div>
-                    <div class="progress-table">UI</div>
-                    <div class="table-row">
-                        <div class="feature">Login Page</div>
-                        <div class="description">Create a landing page for the login screen.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">Guess User Interface</div>
-                        <div class="description">Ability for a new user to view the application without being logged in.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">Admin User Interface</div>
-                        <div class="description">Ability to have super user privileges when interaction with the application.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">DIY User Interface</div>
-                        <div class="description">Create a user role for the end user with normal privileges.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
+<script type="text/html" id="features-table">
+    <div class="whole-wrap">
+        <div class="container box_1170">
+            <div class="section-top-border">
 
-                    <div class="progress-table">Authentication</div>
-                    <div class="table-row">
-                        <div class="feature">User Registration</div>
-                        <div class="description">Create an account inside of the load.in application.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">User Login</div>
-                        <div class="description">Authenticate with the server that an account exist.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">Reset Login</div>
-                        <div class="description">End user to be able to reset his/her own password inside of load.in application.</div>
-                        <div class="function">Partial</div>
-                    </div>
+                <div class="progress-table-wrap">
+                    <div class="progress-table table-bordered">
+                        <div class="table-head">
+                            <div class="feature">Feature</div>
+                            <div class="description">Description</div>
+                            <div class="function">Implementation</div>
+                        </div>
+                        <div class="progress-table">UI</div>
+                        <div class="table-row">
+                            <div class="feature">Login Page</div>
+                            <div class="description">Create a landing page for the login screen.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">Guess User Interface</div>
+                            <div class="description">Ability for a new user to view the application without being logged in.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">Admin User Interface</div>
+                            <div class="description">Ability to have super user privileges when interaction with the application.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">DIY User Interface</div>
+                            <div class="description">Create a user role for the end user with normal privileges.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
 
-                    <div class="progress-table">
-                        Move Inventory</div>
+                        <div class="progress-table">Authentication</div>
+                        <div class="table-row">
+                            <div class="feature">User Registration</div>
+                            <div class="description">Create an account inside of the load.in application.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">User Login</div>
+                            <div class="description">Authenticate with the server that an account exist.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">Reset Login</div>
+                            <div class="description">End user to be able to reset his/her own password inside of load.in application.</div>
+                            <div class="function">Partial</div>
+                        </div>
 
-                    <div class="table-row">
-                        <div class="feature">Furniture/Item Measurement</div>
-                        <div class="description">Ability to measure items using the phone camera.</div>
-                        <div class="function">Partial</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">3D Model Generation</div>
-                        <div class="description">Generate a 3D Model based on item measurements</div>
-                        <div class="function">Partial</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">Box Locator search feature</div>
-                        <div class="description">Ability for the user to search</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
+                        <div class="progress-table">
+                            Move Inventory</div>
 
-                    <div class="progress-table">
-                        Move Plan
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">Loan Plan</div>
-                        <div class="description">Generated plan that shows the users where and how to place items.</div>
-                        <div class="function">Partial</div>
-                    </div>
+                        <div class="table-row">
+                            <div class="feature">Furniture/Item Measurement</div>
+                            <div class="description">Ability to measure items using the phone camera.</div>
+                            <div class="function">Partial</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">3D Model Generation</div>
+                            <div class="description">Generate a 3D Model based on item measurements</div>
+                            <div class="function">Partial</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">Box Locator search feature</div>
+                            <div class="description">Ability for the user to search</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
 
-                    <div class="progress-table">
-                        Logistics Planning
-                    </div>
+                        <div class="progress-table">
+                            Move Plan
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">Loan Plan</div>
+                            <div class="description">Generated plan that shows the users where and how to place items.</div>
+                            <div class="function">Partial</div>
+                        </div>
 
-                    <div class="table-row">
-                        <div class="feature">Estimated number of trips</div>
-                        <div class="description">Calculate the number of trips one will take based on the truck size.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
+                        <div class="progress-table">
+                            Logistics Planning
+                        </div>
 
-                    <div class="progress-table">
-                        Expert Help
-                    </div>
+                        <div class="table-row">
+                            <div class="feature">Estimated number of trips</div>
+                            <div class="description">Calculate the number of trips one will take based on the truck size.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
 
-                    <div class="table-row">
-                        <div class="feature">Packing Tips and suggestions</div>
-                        <div class="description">A list of tips will be suggested to the user on how to load the truck properly.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">Tips Search</div>
-                        <div class="description">Ability to search items a end user need additional help loading.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">Move expert articles</div>
-                        <div class="description">Expert level tips written by professionals.</div>
-                        <div class="function">Full Functionality</div>
-                    </div>
+                        <div class="progress-table">
+                            Expert Help
+                        </div>
 
-                    <div class="progress-table">
-                        Analytics
-                    </div>
-                    <div class="table-row">
-                        <div class="feature">Feedback data</div>
-                        <div class="description">Ability for the end user to provide feedback for a move.</div>
-                        <div class="function">Partial</div>
+                        <div class="table-row">
+                            <div class="feature">Packing Tips and suggestions</div>
+                            <div class="description">A list of tips will be suggested to the user on how to load the truck properly.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">Tips Search</div>
+                            <div class="description">Ability to search items a end user need additional help loading.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">Move expert articles</div>
+                            <div class="description">Expert level tips written by professionals.</div>
+                            <div class="function">Full Functionality</div>
+                        </div>
+
+                        <div class="progress-table">
+                            Analytics
+                        </div>
+                        <div class="table-row">
+                            <div class="feature">Feedback data</div>
+                            <div class="description">Ability for the end user to provide feedback for a move.</div>
+                            <div class="function">Partial</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
+
+
+</script>
 
 
 

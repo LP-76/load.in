@@ -1,0 +1,64 @@
+[
+  {
+    "section": "Flow Diagrams",
+    "id": "feasibility-flow",
+    "deliverables": [
+      {
+        "name": "The Problem Flow",
+        "description": "Flow chart of each step involved with a DIY move with identified problems.",
+        "thumbnail": "deliverables/feasibility/Problem_Flow_Complete.png",
+        "downloadTarget": "deliverables/feasibility/Problem_Flow_Complete.png"
+      },
+      {
+        "name": "The Solution Flow",
+        "description": "Flow chart of DIY move with identified solutions using Load.In",
+        "thumbnail": "deliverables/feasibility/Solution_Flow_Complete.png",
+        "downloadTarget": "deliverables/feasibility/Solution_Flow_Complete.png"
+      }
+    ]
+  },
+  {
+    "section": "Presentations",
+    "id": "feasibility-presentations",
+    "deliverables": [
+      {
+        "name": "Societal Presentation",
+        "description": "Original Idea Presentation by Jason Moran",
+        "thumbnail": "deliverables/feasibility/Presentation_Snapshot.PNG",
+        "downloadTarget": "deliverables/feasibility/jmora_LOAD_IN_CS410_Fall_2020_Presentation1.pptx"
+      },
+      {
+        "name": "Feasibility Presentation",
+        "description": "Version 5 of the Feasibility Presentation",
+        "thumbnail": "deliverables/feasibility/Feasibility_Presentation.PNG",
+        "downloadTarget": "deliverables/feasibility/LOAD_IN_feasibility_presentation_5.pptx"
+      },
+      {
+        "name": "Feasibility Presentation Handout Pdf",
+        "description": "Printer Friendly Version 5 of the Feasibility Presentation",
+        "thumbnail": "deliverables/feasibility/Handout_Snip.PNG",
+        "downloadTarget": "deliverables/feasibility/LOAD_IN_feasibility_presentation_5_handout.pdf"
+      }
+    ]
+  },
+  {
+    "section": "Deliverables",
+    "id": "feasibility-deliverables",
+    "deliverables": [
+
+      {
+        "name": "Major Functional Components",
+        "description": "",
+        "thumbnail": "deliverables/feasibility/MFCD4.0.png",
+        "downloadTarget": "deliverables/feasibility/MFCD4.0.png"
+      }
+    ,{
+        "name": "Competition Matrix",
+        "description": "",
+        "thumbnail": "deliverables/feasibility/Competition.png",
+        "downloadTarget": "deliverables/feasibility/Competition.png"
+      }
+
+    ]
+  }
+]

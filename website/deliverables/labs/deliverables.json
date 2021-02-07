@@ -1,0 +1,58 @@
+
+[
+  {
+    "section": "Lab I",
+    "id": "lab-1",
+    "deliverables": [
+      {
+        "name": "Outline",
+        "description": "",
+        "thumbnail": "deliverables/labs/Placeholder.PNG",
+        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+      },
+      {
+        "name": "Glossary",
+        "description": "",
+        "thumbnail": "deliverables/labs/Glossary.png",
+        "downloadTarget": "deliverables/labs/Glossary.docx"
+      },
+      {
+        "name": "Byron",
+        "description": "",
+        "thumbnail": "deliverables/labs/Placeholder.PNG",
+        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+      },
+      {
+        "name": "Lance",
+        "description": "",
+        "thumbnail": "deliverables/labs/Placeholder.PNG",
+        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+      },
+      {
+        "name": "Jason",
+        "description": "",
+        "thumbnail": "deliverables/labs/Placeholder.PNG",
+        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+      },
+      {
+        "name": "Chris",
+        "description": "",
+        "thumbnail": "deliverables/labs/Placeholder.PNG",
+        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+      },
+      {
+        "name": "Paul",
+        "description": "",
+        "thumbnail": "deliverables/labs/Placeholder.PNG",
+        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+      },
+
+      {
+        "name": "Greg",
+        "description": "",
+        "thumbnail": "deliverables/labs/Placeholder.PNG",
+        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+      }
+    ]
+  }
+]
