@@ -7,8 +7,8 @@
       {
         "name": "Outline",
         "description": "",
-        "thumbnail": "deliverables/labs/Placeholder.PNG",
-        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+        "thumbnail": "deliverables/labs/Lab1_Outline.PNG",
+        "downloadTarget": "deliverables/labs/Lab1_Outline.docx"
       },
       {
         "name": "Glossary",
@@ -19,8 +19,8 @@
       {
         "name": "Byron",
         "description": "",
-        "thumbnail": "deliverables/labs/Placeholder.PNG",
-        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+        "thumbnail": "deliverables/labs/ByronAquilino_Lab1_V1_Submittal.PNG",
+        "downloadTarget": "deliverables/labs/ByronAquilino_LabI_V1_Submittal.docx"
       },
       {
         "name": "Lance",
@@ -43,15 +43,15 @@
       {
         "name": "Paul",
         "description": "",
-        "thumbnail": "deliverables/labs/Placeholder.PNG",
-        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+        "thumbnail": "deliverables/labs/prodriguez_lab1_V1.png",
+        "downloadTarget": "deliverables/labs/prodriguez_lab1_V1.pdf"
       },
 
       {
         "name": "Greg",
         "description": "",
-        "thumbnail": "deliverables/labs/Placeholder.PNG",
-        "downloadTarget": "deliverables/labs/Placeholder.PNG"
+        "thumbnail": "deliverables/labs/Lab1GregoryKukanich_V2.png",
+        "downloadTarget": "deliverables/labs/Lab1GregoryKukanich_V2.pdf"
       }
     ]
   }
