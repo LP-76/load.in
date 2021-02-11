@@ -37,6 +37,13 @@
         "template": "features-table",
         "thumbnail": null,
         "downloadTarget": null
+      },
+      {
+        "name": "Prototype Sprint Plan",
+        "description": "",
+        "thumbnail": "deliverables/prototype/Load_in_prototype_sprint_plan",
+        "downloadTarget": "deliverables/prototype/Load_in_prototype_sprint_plan",
+        "template": null
       }
     ]
   },
