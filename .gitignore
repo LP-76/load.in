@@ -3,3 +3,4 @@
 /solution/webapi/.gradle/
 **/.gradle/**
 **/.idea/**
+**/build/**
