@@ -23,20 +23,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:sec="http://cxf.apache.org/configuration/security"
+       xmlns:util="http://www.springframework.org/schema/util"
     xmlns:http="http://cxf.apache.org/transports/http/configuration"
     xmlns:httpj="http://cxf.apache.org/transports/http-jetty/configuration"
     xsi:schemaLocation="http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd http://cxf.apache.org/transports/http-jetty/configuration http://cxf.apache.org/schemas/configuration/http-jetty.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <httpj:engine-factory bus="cxf">
-        <httpj:engine port="9000">
-            <httpj:tlsServerParameters>
-                <sec:keyManagers keyPassword="skpass">
-                    <sec:keyStore file="src/main/config/serviceKeystore.jks" password="sspass" type="JKS"/>
-                </sec:keyManagers>
-                <sec:trustManagers>
-                    <sec:keyStore file="src/main/config/serviceKeystore.jks" password="sspass" type="JKS"/>
-                </sec:trustManagers>
-                <sec:clientAuthentication want="true" required="true"/>
-            </httpj:tlsServerParameters>
-        </httpj:engine>
-    </httpj:engine-factory>
+
+    <!--
+    <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider">
+        <property name="namespaceMap" ref="jsonNamespaceMap"/>
+    </bean>
+
+    <util:map id="jsonNamespaceMap" map-class="java.util.Hashtable">
+        <entry key="http://www.example.org/books" value="b"/>
+    </util:map>
+    -->
 </beans>

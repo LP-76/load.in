@@ -29,9 +29,9 @@ public class Server {
 
     static {
         // set the configuration file
-        //SpringBusFactory factory = new SpringBusFactory();
-        //Bus bus = factory.createBus("ServerConfig.xml");
-        //BusFactory.setDefaultBus(bus);
+        SpringBusFactory factory = new SpringBusFactory();
+        Bus bus = factory.createBus("ServerConfig.xml");
+        BusFactory.setDefaultBus(bus);
     }
 
     protected Server() throws Exception {

@@ -24,6 +24,7 @@ repositories {
 }
 
 dependencies {
+    compile 'org.apache.cxf:cxf-core:3.4.2'
     compile 'org.apache.cxf:cxf-rt-frontend-jaxrs:3.+'
     compile 'org.apache.cxf:cxf-rt-rs-client:3.+'
     compile 'org.apache.cxf:cxf-rt-transports-http-jetty:3.+'
@@ -40,7 +41,10 @@ dependencies {
     compile 'org.glassfish.jaxb:jaxb-runtime:3.+'
     compile 'org.glassfish.jaxb:jaxb-xjc:3.+'
     compile 'org.glassfish.corba:glassfish-corba-orb:4.2.2'
-
+    compile 'org.apache.cxf:cxf-rt-rs-extension-providers:3.4.2'
+    compile 'org.codehaus.jettison:jettison:1.4.0'
+    //compile 'jakarta.ws.rs:jakarta.ws.rs-api:2.1.6'
+    compile 'javax.ws.rs:javax.ws.rs-api:2.1.1'
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add

@@ -32,77 +32,72 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.ssl.SSLContexts;
 import httpsdemo.common.Customer;
 import httpsdemo.common.CustomerService;
+import org.apache.http.util.EntityUtils;
 
 public final class Client {
 
-    private static final String CLIENT_CONFIG_FILE = "ClientConfig.xml";
-    private static final String BASE_SERVICE_URL =
-        "http://localhost:9000/customerservice/customers";
+
 
     private Client() {
     }
 
     public static void main(String[] args) throws Exception {
-        String keyStoreLoc = "src/main/config/clientKeystore.jks";
+        // Sent HTTP GET request to query customer info, expect XML
+        System.out.println("Sent HTTP GET request to query customer info, expect XML");
+        HttpGet get = new HttpGet("http://localhost:9000/customerservice/customers/123");
+        get.addHeader("Accept", "application/xml");
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
-        KeyStore keyStore = KeyStore.getInstance("JKS");
-        keyStore.load(new FileInputStream(keyStoreLoc), "cspass".toCharArray());
+        try {
+            CloseableHttpResponse response = httpClient.execute(get);
+            System.out.println("Response status code: " + response.getStatusLine().getStatusCode());
+            System.out.println("Response body: ");
+            System.out.println(EntityUtils.toString(response.getEntity()));
+        } finally {
+            get.releaseConnection();
+        }
 
-        SSLContext sslcontext = SSLContexts.custom()
-                .loadTrustMaterial(keyStore, null)
-                .loadKeyMaterial(keyStore, "ckpass".toCharArray())
-                .useProtocol("TLSv1.2")
-                .build();
+        // Sent HTTP GET request to query customer info, expect JSON.
+        System.out.println("\n");
+        System.out.println("Sent HTTP GET request to query customer info, expect JSON");
+        get = new HttpGet("http://localhost:9000/customerservice/customers/123");
+        get.addHeader("Accept", "application/json");
+        httpClient = HttpClientBuilder.create().build();
 
-        /*
-         * Send HTTP GET request to query customer info using portable HttpClient
-         * object from Apache HttpComponents
-         */
-        SSLConnectionSocketFactory sf = new SSLConnectionSocketFactory(sslcontext);
+        try {
+            CloseableHttpResponse response = httpClient.execute(get);
+            System.out.println("Response status code: " + response.getStatusLine().getStatusCode());
+            System.out.println("Response body: ");
+            System.out.println(EntityUtils.toString(response.getEntity()));
+        } finally {
+            get.releaseConnection();
+        }
 
-        System.out.println("Sending HTTPS GET request to query customer info");
-        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sf).build();
-        HttpGet httpget = new HttpGet(BASE_SERVICE_URL + "/123");
-        BasicHeader bh = new BasicHeader("Accept", "text/xml");
-        httpget.addHeader(bh);
-        CloseableHttpResponse response = httpclient.execute(httpget);
-        HttpEntity entity = response.getEntity();
-        entity.writeTo(System.out);
-        response.close();
-        httpclient.close();
+        System.out.println("\n");
+        System.out.println("Sent HTTP GET request to query customer info, expect XML");
+        //The default behavior without setting Accept header explicitly is depending on your client.
+        //In the case of  HTTP Client, the Accept header will be absent. The CXF server will treat this
+        //as "*/*", XML format is returned
+        get = new HttpGet("http://localhost:9000/customerservice/customers/123");
+        httpClient = HttpClientBuilder.create().build();
 
-        /*
-         *  Send HTTP PUT request to update customer info, using CXF WebClient method
-         *  Note: if need to use basic authentication, use the WebClient.create(baseAddress,
-         *  username,password,configFile) variant, where configFile can be null if you're
-         *  not using certificates.
-         */
-        System.out.println("\n\nSending HTTPS PUT to update customer name");
-        WebClient wc = WebClient.create(BASE_SERVICE_URL, CLIENT_CONFIG_FILE);
-        Customer customer = new Customer();
-        customer.setId(123);
-        customer.setName("Mary");
-        Response resp = wc.put(customer);
-
-        /*
-         *  Send HTTP POST request to add customer, using JAXRSClientProxy
-         *  Note: if need to use basic authentication, use the JAXRSClientFactory.create(baseAddress,
-         *  username,password,configFile) variant, where configFile can be null if you're
-         *  not using certificates.
-         */
-        System.out.println("\n\nSending HTTPS POST request to add customer");
-        CustomerService proxy = JAXRSClientFactory.create(BASE_SERVICE_URL, CustomerService.class,
-              CLIENT_CONFIG_FILE);
-        customer = new Customer();
-        customer.setName("Jack");
-        resp = wc.post(customer);
+        try {
+            CloseableHttpResponse response = httpClient.execute(get);
+            System.out.println("Response status code: " + response.getStatusLine().getStatusCode());
+            System.out.println("Response body: ");
+            System.out.println(EntityUtils.toString(response.getEntity()));
+        } finally {
+            get.releaseConnection();
+        }
 
         System.out.println("\n");
         System.exit(0);
+
     }
 }
