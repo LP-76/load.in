@@ -29,9 +29,9 @@ public class Server {
 
     static {
         // set the configuration file
-        SpringBusFactory factory = new SpringBusFactory();
-        Bus bus = factory.createBus("ServerConfig.xml");
-        BusFactory.setDefaultBus(bus);
+        //SpringBusFactory factory = new SpringBusFactory();
+        //Bus bus = factory.createBus("ServerConfig.xml");
+        //BusFactory.setDefaultBus(bus);
     }
 
     protected Server() throws Exception {
@@ -39,8 +39,9 @@ public class Server {
         sf.setResourceClasses(CustomerServiceImpl.class);
         sf.setResourceProvider(CustomerServiceImpl.class,
             new SingletonResourceProvider(new CustomerServiceImpl()));
-        sf.setAddress("https://localhost:9000/");
+        //sf.setAddress("https://localhost:9000/");
 
+        sf.setAddress("http://localhost:9000/");
         sf.create();
     }
 

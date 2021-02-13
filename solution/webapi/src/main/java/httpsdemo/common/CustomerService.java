@@ -35,6 +35,7 @@ public interface CustomerService {
 
     @GET
     @Path("/customers/{id}/")
+
     Customer getCustomer(@PathParam("id") String id);
 
     @PUT

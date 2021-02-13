@@ -42,7 +42,7 @@ public final class Client {
 
     private static final String CLIENT_CONFIG_FILE = "ClientConfig.xml";
     private static final String BASE_SERVICE_URL =
-        "https://localhost:9000/customerservice/customers";
+        "http://localhost:9000/customerservice/customers";
 
     private Client() {
     }
