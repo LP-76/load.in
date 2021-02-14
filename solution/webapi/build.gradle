@@ -45,6 +45,8 @@ dependencies {
     compile 'org.codehaus.jettison:jettison:1.4.0'
     //compile 'jakarta.ws.rs:jakarta.ws.rs-api:2.1.6'
     compile 'javax.ws.rs:javax.ws.rs-api:2.1.1'
+    compile 'mysql:mysql-connector-java:8.0.23'
+
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add

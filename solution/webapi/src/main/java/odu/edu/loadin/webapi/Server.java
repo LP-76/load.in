@@ -36,9 +36,14 @@ public class Server {
 
     protected Server() throws Exception {
         JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
-        sf.setResourceClasses(CustomerServiceImpl.class);
+        sf.setResourceClasses(CustomerServiceImpl.class, BoxSizeServiceImpl.class);
         sf.setResourceProvider(CustomerServiceImpl.class,
-            new SingletonResourceProvider(new CustomerServiceImpl()));
+            new SingletonResourceProvider(new CustomerServiceImpl())
+
+        );
+        sf.setResourceProvider(BoxSizeServiceImpl.class,
+                new SingletonResourceProvider(new BoxSizeServiceImpl())
+        );
         //sf.setAddress("https://localhost:9000/");
 
         sf.setAddress("http://localhost:9000/");
@@ -48,6 +53,10 @@ public class Server {
     public static void main(String[] args) throws Exception {
         new Server();
         System.out.println("Server ready...");
+
+
+
+
 
         Thread.sleep(5 * 60 * 1000);
         System.out.println("Server exiting");

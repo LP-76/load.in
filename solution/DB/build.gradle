@@ -25,7 +25,7 @@ task composeStart (type: Exec){
 
 task composeDown (type: Exec){
     executable 'docker-compose'
-    args 'down'
+    args 'down', '-v'
 }
 
 

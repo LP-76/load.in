@@ -10,3 +10,12 @@ CREATE TABLE IF NOT EXISTS USERS (
     PRIMARY KEY (`ID`)
     );
 
+
+
+CREATE TABLE IF NOT EXISTS BOX_SIZES (
+     `ID` int PRIMARY KEY,
+     `DESCRIPTION` varchar(255),
+     `DIMENSIONS` varchar(255),
+     `CREATED_AT` timestamp,
+     `UPDATED_AT` timestamp
+);
