@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * This class represents a pre-configured box size from the database
  */
-public class BoxSize implements  IMapResultSet {
+public class BoxSize  {
     private int id;
     private String description;
     private String dimensions;
@@ -71,12 +71,6 @@ public class BoxSize implements  IMapResultSet {
         this.updatedAt = updatedAt;
     }
 
-    public void map(ResultSet rs) throws SQLException {
-        setId(rs.getInt("ID"));
-        setDescription(rs.getString("DESCRIPTION"));
-        setDimensions(rs.getString("DIMENSIONS"));
-        setCreatedAt(rs.getDate("CREATED_AT"));
-        setUpdatedAt(rs.getDate("UPDATED_AT"));
-    }
+
 
 }

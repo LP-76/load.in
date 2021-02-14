@@ -21,13 +21,17 @@ package odu.edu.loadin.webapi;
 
 import odu.edu.loadin.common.*;
 
+import javax.swing.plaf.nimbus.State;
 import javax.ws.rs.core.Response;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * This is  the actual implementation of the box service interface
+ * This class contains one or more methods to manipulate box sizes in the database
+ */
 public class BoxSizeServiceImpl implements BoxService {
 
 
@@ -35,17 +39,40 @@ public class BoxSizeServiceImpl implements BoxService {
 
     }
 
-
+    /**
+     * Returns back all box sizes from the database that are currently loaded into the BOX_SIZES table
+     * @return  The collection of all box sizes
+     */
     @Override
-    public ArrayList<BoxSize> getBoxSizes() throws SQLException {
+
+    public ArrayList<BoxSize> getBoxSizes()  {
 
         //we get a connection here
-         Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection();
-         PreparedStatement statement = conn.prepareStatement("SELECT * FROM BOX_SIZES");
-        ArrayList<BoxSize> results = Clippy.getResults(statement, () -> new BoxSize());
-        conn.close();
 
-        return results;
+        try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
+                                                                                    //this will auto-close the connection
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM BOX_SIZES");
+
+            //this is more of a transparent method.  person who is performing the query can decide how it gets mapped back to
+            //individual objects
+            ArrayList<BoxSize> results = StatementHelper.getResults(statement, (ResultSet rs) -> {
+                BoxSize s = new BoxSize();
+                s.setId(rs.getInt("ID"));
+                s.setDescription(rs.getString("DESCRIPTION"));
+                s.setDimensions(rs.getString("DIMENSIONS"));
+                s.setCreatedAt(rs.getDate("CREATED_AT"));
+                s.setUpdatedAt(rs.getDate("UPDATED_AT"));
+                return s;
+            });
+            return results;
+        }
+        catch (SQLException ex){
+            //TODO: exception logging
+            System.out.println(ex);
+        }
+
+
+        return new ArrayList<BoxSize>();
     }
 
 

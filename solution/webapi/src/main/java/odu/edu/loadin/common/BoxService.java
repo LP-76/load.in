@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * This interface describes a JAX-RS root resource. All the JAXRS annotations (except those overridden) will
  * be inherited by classes implementing it.
  *
- * This service is the service for interfacing with the boxes
+ * This service is the service for interfacing with the boxes sizes in the database
  */
 @Path("/boxservice/")
 public interface BoxService {
