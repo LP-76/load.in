@@ -9,7 +9,7 @@ import com.example.loadin_app.ui.login.LoginActivity;
 
 public class SplashScreen extends AppCompatActivity
 {
-    private int splashScreenDurationInMillis = 6003;
+    private int splashScreenDurationInMillis = 4099;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
