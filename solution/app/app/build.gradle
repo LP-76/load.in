@@ -2,6 +2,12 @@ plugins {
     id 'com.android.application'
 }
 
+repositories {
+    flatDir {
+        dirs '../webapi/build/libs'
+    }
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -29,6 +35,8 @@ android {
 }
 
 dependencies {
+    implementation fileTree(dir: '../webapi/build/libs', include: ['*.jar'])
+    //implementation (':webapi-all:1.0.0')
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'

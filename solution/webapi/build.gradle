@@ -100,14 +100,24 @@ dockerRun{
 }
 
 
-jar{
+//jar{
+//    manifest {
+//        attributes(
+//                'Main-Class': "odu.edu.loadin.webapi.Server"
+//        )
+//    }
+//    //includes the jar files of third party libraries
+//    from {
+//        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+//    }
+//}
+task fatJar(type: Jar) {
     manifest {
-        attributes(
-                'Main-Class': "odu.edu.loadin.webapi.Server"
-        )
+        attributes 'Implementation-Title': 'Load.In Web Api',
+                'Implementation-Version': '1.0.0',
+                'Main-Class': 'odu.edu.loadin.webapi.Server'
     }
-    //includes the jar files of third party libraries
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }
