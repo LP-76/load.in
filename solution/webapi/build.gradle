@@ -37,6 +37,7 @@ dependencies {
     compile 'jakarta.activation:jakarta.activation-api:1.2.2'
     compile 'jakarta.jws:jakarta.jws-api:1.1.1'
     compile 'com.sun.xml.messaging.saaj:saaj-impl:1.5.2'
+    compile 'com.sun.xml.bind:jaxb-impl:2.2.1'
     compile 'org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1'
     compile 'org.glassfish.jaxb:jaxb-runtime:3.+'
     compile 'org.glassfish.jaxb:jaxb-xjc:3.+'
