@@ -78,7 +78,7 @@ dependencies {
 
 
 application {
-    mainClass = 'httpsdemo.server.Server'
+    mainClass = 'odu.edu.loadin.webapi.Server'
 }
 
 
@@ -100,7 +100,7 @@ dockerRun{
 jar{
     manifest {
         attributes(
-                'Main-Class': "httpsdemo.server.Server"
+                'Main-Class': "odu.edu.loadin.webapi.Server"
         )
     }
     //includes the jar files of third party libraries

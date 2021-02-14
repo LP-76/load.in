@@ -16,28 +16,34 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package httpsdemo.common;
+package odu.edu.loadin.common;
 
-import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name = "Customer")
-public class Customer {
-    private long id;
-    private String name;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 
-    public long getId() {
-        return id;
-    }
+/**
+ * This interface describes a JAX-RS root resource. All the JAXRS annotations (except those overridden) will
+ * be inherited by classes implementing it.
+ */
+@Path("/customerservice/")
+public interface CustomerService {
 
-    public void setId(long id) {
-        this.id = id;
-    }
+    @GET
+    @Path("/customers/{id}/")
+    @Produces( "application/json" )
+    Customer getCustomer(@PathParam("id") String id);
 
-    public String getName() {
-        return name;
-    }
+    @PUT
+    @Path("/customers/")
+    Response updateCustomer(Customer customer);
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @POST
+    @Path("/customers/")
+    Response addCustomer(Customer customer);
+
+    @DELETE
+    @Path("/customers/{id}/")
+    Response deleteCustomer(@PathParam("id") String id);
+
 }
