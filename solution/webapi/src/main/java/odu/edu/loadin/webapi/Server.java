@@ -17,7 +17,7 @@
  * under the License.
  */
 
-package httpsdemo.server;
+package odu.edu.loadin.webapi;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;

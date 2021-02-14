@@ -16,14 +16,18 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package httpsdemo.server;
+package odu.edu.loadin.webapi;
+
+
+import odu.edu.loadin.common.Customer;
+import odu.edu.loadin.common.CustomerService;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.core.Response;
-import httpsdemo.common.Customer;
-import httpsdemo.common.CustomerService;
+
+
 
 public class CustomerServiceImpl implements CustomerService {
     long currentId = 123;
@@ -37,6 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.println("----invoking getCustomer, Customer id is: " + id);
         long idNumber = Long.parseLong(id);
         return customers.get(idNumber);
+        //code would be here to connect to data
     }
 
     public Response updateCustomer(Customer customer) {

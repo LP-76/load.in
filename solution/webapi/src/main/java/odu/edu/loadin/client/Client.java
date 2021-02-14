@@ -17,7 +17,8 @@
  * under the License.
  */
 
-package httpsdemo.client;
+package odu.edu.loadin.client;
+
 
 import java.io.FileInputStream;
 import java.security.KeyStore;
@@ -36,8 +37,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.ssl.SSLContexts;
-import httpsdemo.common.Customer;
-import httpsdemo.common.CustomerService;
 import org.apache.http.util.EntityUtils;
 
 public final class Client {
