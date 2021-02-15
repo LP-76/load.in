@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-@XmlRootElement(name="BoxSize")
+@XmlRootElement(name="Data")
 /**
  * This class represents a pre-configured box size from the database
  */

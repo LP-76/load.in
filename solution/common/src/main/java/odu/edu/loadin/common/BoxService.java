@@ -35,10 +35,13 @@ import java.util.ArrayList;
 public interface BoxService {
 
     @GET
-
     @Path("/boxSizes/")
     @Produces( "application/json" )
     ArrayList<BoxSize> getBoxSizes() throws SQLException;
+
+    @POST
+    @Path("/boxSizes/")
+    public Response addBoxSize(BoxSize boxSize);
 
 
 

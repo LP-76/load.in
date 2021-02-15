@@ -19,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
 
-        setContentView(R.layout.activity_login);
+        //setContentView(R.layout.activity_login);
         //setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_box_input);
+
     }
 }

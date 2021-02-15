@@ -19,6 +19,7 @@
 package odu.edu.loadin.webapi;
 
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import odu.edu.loadin.common.*;
 import odu.edu.loadin.helpers.*;
 
@@ -76,6 +77,34 @@ public class BoxSizeServiceImpl implements BoxService {
         return new ArrayList<BoxSize>();
     }
 
+    @Override
+    public Response addBoxSize(BoxSize boxSize) {
+        System.out.println("----invoking addBoxSize, Box name is: " + boxSize.getDescription());
+
+        try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){
+            //first we have to find the previous id
+            Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT ID FROM BOX_SIZES ORDER BY ID DESC LIMIT 1"),
+                    (ResultSet rs) -> {  return rs.getInt("ID"); }).stream().findFirst().orElse(0);
+
+            boxSize.setId(lastId + 1);  //set the new id here
+
+            String query = "INSERT INTO BOX_SIZES (ID, DESCRIPTION, DIMENSIONS, CREATED_AT, UPDATED_AT)"
+                    +" VALUES (?, ?, ?, NOW(), NOW() )";
+
+            PreparedStatement insertStatement = conn.prepareStatement(query);
+            insertStatement.setInt(1, boxSize.getId());
+            insertStatement.setString(2, boxSize.getDescription());
+            insertStatement.setString(3, boxSize.getDimensions());
+            System.out.println(insertStatement);
+            insertStatement.executeUpdate();
+
+        }
+        catch (SQLException ex){
+
+        }
+
+        return Response.ok(boxSize).build();
+    }
 
 
 }
