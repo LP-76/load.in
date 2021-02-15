@@ -3,16 +3,19 @@ package com.example.loadin_app;
 
 
 import com.example.loadin_app.data.services.BoxServiceImpl;
+import com.example.loadin_app.data.services.UserServiceImpl;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import odu.edu.loadin.common.BoxSize;
+import odu.edu.loadin.common.User;
 
 import static org.junit.Assert.*;
 
@@ -41,6 +44,18 @@ public class WebApiTests {
 
         Assert.assertEquals(result.getDescription(), test.getDescription());
         Assert.assertEquals(result.getDimensions(), test.getDimensions());
+
+    }
+
+    @Test
+    public void TestLogin() throws IOException {
+
+        UserServiceImpl sc = new UserServiceImpl();
+        User profile = null;
+
+       UserServiceImpl.UserLoginStatus status =  sc.login("john.smith@test.net", "BlueMango@1", profile );
+
+
 
     }
 

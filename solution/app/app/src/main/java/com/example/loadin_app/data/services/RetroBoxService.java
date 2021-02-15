@@ -1,6 +1,8 @@
 package com.example.loadin_app.data;
 
 
+import com.example.loadin_app.data.services.DataWrapper;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -15,17 +17,15 @@ public interface RetroBoxService {
 
     @GET("/boxservice/boxSizes")
     @Headers( "accept: application/json" )
-    CompletableFuture<BoxSizeResult<List<BoxSize>>> getBoxSizes();
+    CompletableFuture<DataWrapper<List<BoxSize>>> getBoxSizes();
 
     @POST("/boxservice/boxSizes")
     @Headers({
             "accept: application/json",
             "contentType: application/json"
     })
-    CompletableFuture<BoxSizeResult<BoxSize>> addBoxSize(@Body BoxSizeResult<BoxSize> boxSize);
+    CompletableFuture<DataWrapper<BoxSize>> addBoxSize(@Body DataWrapper<BoxSize> boxSize);
 
-    public class BoxSizeResult<T>{
-        public T Data;
-    }
+
 }
 

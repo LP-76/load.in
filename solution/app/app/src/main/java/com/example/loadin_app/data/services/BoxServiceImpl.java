@@ -33,16 +33,16 @@ public class BoxServiceImpl {
 
     public List<BoxSize> getBoxSizes() throws ExecutionException, InterruptedException {
 
-            CompletableFuture<RetroBoxService.BoxSizeResult<List<BoxSize>>> sizesPromise = retroService.getBoxSizes();
-            RetroBoxService.BoxSizeResult<List<BoxSize>> sizes = sizesPromise.get();
+            CompletableFuture<DataWrapper<List<BoxSize>>> sizesPromise = retroService.getBoxSizes();
+        DataWrapper<List<BoxSize>> sizes = sizesPromise.get();
             return sizes.Data;
 
     }
 
    public BoxSize addBoxSize(BoxSize boxSize) throws ExecutionException, InterruptedException {
-       RetroBoxService.BoxSizeResult<BoxSize> wrapper = new  RetroBoxService.BoxSizeResult<BoxSize>();
+       DataWrapper<BoxSize> wrapper = new  DataWrapper<BoxSize>();
        wrapper.Data  = boxSize;
-       CompletableFuture<RetroBoxService.BoxSizeResult<BoxSize>> addPromise = retroService.addBoxSize(wrapper);
+       CompletableFuture<DataWrapper<BoxSize>> addPromise = retroService.addBoxSize(wrapper);
        BoxSize result = addPromise.get().Data;
        return result;
    }

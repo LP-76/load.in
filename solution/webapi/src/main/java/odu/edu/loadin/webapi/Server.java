@@ -43,13 +43,20 @@ public class Server {
         sf.getFeatures().add(logging);
 
 
-        sf.setResourceClasses(CustomerServiceImpl.class, BoxSizeServiceImpl.class);
+        sf.setResourceClasses(
+                CustomerServiceImpl.class,
+                BoxSizeServiceImpl.class,
+                UserServiceImpl.class
+        );
+
         sf.setResourceProvider(CustomerServiceImpl.class,
             new SingletonResourceProvider(new CustomerServiceImpl())
-
         );
         sf.setResourceProvider(BoxSizeServiceImpl.class,
                 new SingletonResourceProvider(new BoxSizeServiceImpl())
+        );
+        sf.setResourceProvider(UserServiceImpl.class,
+                new SingletonResourceProvider(new UserServiceImpl())
         );
         //sf.setAddress("https://localhost:9000/");
 
