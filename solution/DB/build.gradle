@@ -34,12 +34,13 @@ task composeUp (type: Exec){
     args 'up', '-d'
 }
 
-
+task deleteTables (type: Exec){
+    commandLine 'sh', '-c', 'cat DeleteTables.sql | docker exec -i db_db_1 /usr/bin/mysql -u root --password=password loadin'
+}
 
 task cleanData (type: Exec){
     dependsOn 'loadSchema'
     commandLine 'sh', '-c', 'cat CleanData.sql | docker exec -i db_db_1 /usr/bin/mysql -u root --password=password loadin'
-
 }
 
 task loadData (type:Exec){
