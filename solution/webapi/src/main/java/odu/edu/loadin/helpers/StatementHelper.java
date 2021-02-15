@@ -1,4 +1,4 @@
-package odu.edu.loadin.common;
+package odu.edu.loadin.helpers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
