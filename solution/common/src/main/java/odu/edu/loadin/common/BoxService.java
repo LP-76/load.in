@@ -19,6 +19,7 @@
 package odu.edu.loadin.common;
 
 
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.sql.SQLException;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 public interface BoxService {
 
     @GET
+
     @Path("/boxSizes/")
     @Produces( "application/json" )
     ArrayList<BoxSize> getBoxSizes() throws SQLException;

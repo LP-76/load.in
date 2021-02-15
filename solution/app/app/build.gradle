@@ -1,12 +1,21 @@
 plugins {
     id 'com.android.application'
 }
+repositories {
+    flatDir {
+        dirs '../../webapi/build/libs', '../../common/build/libs'
+    }
+}
+
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
+
+
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.example.loadin_app"
         minSdkVersion 29
         targetSdkVersion 30
@@ -29,7 +38,9 @@ android {
 }
 
 dependencies {
-
+    //implementation fileTree(dir: '../webapi/build/libs', include: ['*.jar'])
+    implementation ':loadin.common-all:1.0'
+    implementation 'com.android.support:multidex:1.0.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
