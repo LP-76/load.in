@@ -53,7 +53,7 @@ public class BoxSizeServiceImpl implements BoxService {
 
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
                                                                                     //this will auto-close the connection
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM BOX_SIZES");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM BOX_SIZE");
 
             //this is more of a transparent method.  person who is performing the query can decide how it gets mapped back to
             //individual objects
@@ -83,7 +83,7 @@ public class BoxSizeServiceImpl implements BoxService {
 
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){
             //first we have to find the previous id
-            Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT ID FROM BOX_SIZES ORDER BY ID DESC LIMIT 1"),
+            Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT ID FROM BOX_SIZE ORDER BY ID DESC LIMIT 1"),
                     (ResultSet rs) -> {  return rs.getInt("ID"); }).stream().findFirst().orElse(0);
 
             boxSize.setId(lastId + 1);  //set the new id here
