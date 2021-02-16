@@ -53,8 +53,9 @@ public class WebApiTests {
         UserServiceImpl sc = new UserServiceImpl();
         User profile = null;
 
-       UserServiceImpl.UserLoginStatus status =  sc.login("john.smith@test.net", "BlueMango@1", profile );
+       UserServiceImpl.LoginResult result =  sc.login("john.smith@test.net", "BlueMango@1" );
 
+       Assert.assertTrue(result.status == UserServiceImpl.UserLoginStatus.Ok);
 
 
     }

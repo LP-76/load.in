@@ -88,7 +88,7 @@ public class BoxSizeServiceImpl implements BoxService {
 
             boxSize.setId(lastId + 1);  //set the new id here
 
-            String query = "INSERT INTO BOX_SIZES (ID, DESCRIPTION, DIMENSIONS, CREATED_AT, UPDATED_AT)"
+            String query = "INSERT INTO BOX_SIZE (ID, DESCRIPTION, DIMENSIONS, CREATED_AT, UPDATED_AT)"
                     +" VALUES (?, ?, ?, NOW(), NOW() )";
 
             PreparedStatement insertStatement = conn.prepareStatement(query);

@@ -41,7 +41,9 @@ public class UserServiceImpl {
         return promise.get().Data;
     }
 
-    public UserLoginStatus login(String email, String password,  User user) throws IOException {
+    public LoginResult login(String email, String password) throws IOException {
+        LoginResult result = new LoginResult();
+
         UserLoginRequest request = new UserLoginRequest();
         request.setEmail(email);
         request.setPassword(password);
@@ -53,25 +55,34 @@ public class UserServiceImpl {
 
         if(!response.isSuccessful()){
             //TODO: how do we get the response back to a json object
-            user = null;
+
             switch (response.code()){
                 case 404:  //not found
-                    return UserLoginStatus.NotFound;
+                    result.status = UserLoginStatus.NotFound;
+                    break;
 
                 case 403: //invalid password ; forbidden
-                    return UserLoginStatus.InvalidPassword;
+                    result.status = UserLoginStatus.InvalidPassword;
+                    break;
 
             }
+            return result;
         }
 
-
-        user = response.body().Data;
-        return UserLoginStatus.Ok;
+        result.status = UserLoginStatus.Ok;
+        result.userProfile = response.body().Data;
+        return result;
 
     }
     public enum UserLoginStatus{
         NotFound,
         InvalidPassword,
         Ok
+    }
+
+    public class LoginResult{
+        public UserLoginStatus status;
+        public User userProfile;
+
     }
 }

@@ -17,12 +17,12 @@ public class LoginDataSource {
     public Result<User> login(String username, String password) {
 
         UserServiceImpl userService = new UserServiceImpl("http://10.0.2.2:9000/");
-        User userProfile = null;
+        UserServiceImpl.LoginResult result = null;
 
         try{
-            UserServiceImpl.UserLoginStatus status = userService.login(username, password, userProfile);
+            result = userService.login(username, password);
 
-            switch(status){
+            switch(result.status){
                 case InvalidPassword:
                     return new Result.Error(new AuthenticatorException("Password is incorrect"));
 
@@ -30,7 +30,7 @@ public class LoginDataSource {
                     return new Result.Error(new AuthenticatorException("User not found"));
 
                 case Ok:
-                    return new Result.Success<User>(userProfile);
+                    return new Result.Success<User>(result.userProfile);
 
 
             }

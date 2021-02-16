@@ -73,7 +73,8 @@ public class BoxInputActivity extends AppCompatActivity
             //ooops we had an error
             //TODO: make the user aware
         }
-
+        //TODO: figure out what happens
+        //what happens here?
     }
 
     // Menu icons are inflated just as they were with actionbar
