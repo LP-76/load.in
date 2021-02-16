@@ -1,7 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.LoadIn_App" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand logo -->
+    <style name="Theme.LoadIn_App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!--item name=“android:actionBarStyle”>@styleWidget.action</item-->        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/load_in_green</item>
         <item name="colorPrimaryVariant">@color/load_in_darkgreen</item>

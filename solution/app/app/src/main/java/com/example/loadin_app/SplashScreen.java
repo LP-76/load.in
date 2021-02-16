@@ -21,7 +21,7 @@ public class SplashScreen extends AppCompatActivity
         //https://youtu.be/Q0gRqbtFLcw
         //https://abhiandroid.com/programming/splashscreen
 
-        getSupportActionBar().hide(); //hides the top bar, giving the splash screen more ...splash -Jason
+        //getSupportActionBar().hide(); //hides the top bar, giving the splash screen more ...splash -Jason
 
         new Handler().postDelayed(new Runnable()
         {

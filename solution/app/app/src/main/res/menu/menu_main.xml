@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuDropdown"
+        android:icon="@drawable/menu_dropdown"
+        app:showAsAction="ifRoom|withText"
+        android:title="Dropdown">
+        <menu>
+            <item
+                android:id="@+id/action_main_menu"
+                android:title="@string/title_activity_main_menu"
+                android:icon="@drawable/loadin_logo_green"/>
+            <item
+                android:id="@+id/action_tips_and_tricks"
+                android:title="@string/title_activity_tips_and_tricks"
+                android:icon="@drawable/tips_logo"/>
+            <item
+                android:id="@+id/action_box_input"
+                android:title="@string/title_activity_box_input"
+                android:icon="@drawable/box_input_logo"/>
+            <item
+                android:id="@+id/action_move_inventory"
+                android:title="@string/title_activity_move_inventory"
+                android:icon="@drawable/move_inventory_logo"/>
+            <item
+                android:id="@+id/action_load_plan"
+                android:title="@string/title_activity_load_plan"
+                android:icon="@drawable/load_plan_logo"/>
+            <item
+                android:id="@+id/action_feedback"
+                android:title="@string/title_activity_feedback"
+                android:icon="@drawable/feedback_logo"/>/>
+            <item
+                android:id="@+id/action_account"
+                android:title="@string/title_activity_account"
+                android:icon="@drawable/profile_logo"/>/>
+
+        </menu>
+    </item>
+</menu>
