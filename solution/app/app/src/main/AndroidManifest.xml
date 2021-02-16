@@ -16,54 +16,39 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoadIn_App"
         android:usesCleartextTraffic="true">
-        <uses-library
-            android:name="com.google.android.wearable"
-            android:required="true" />
-
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
-        <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
 
         <activity
             android:name=".LoadPlanActivity"
             android:label="@string/title_activity_load_plan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MoveInventoryActivity"
             android:label="@string/title_activity_move_inventory">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".TipsAndTricksActivity"
             android:label="@string/title_activity_tips_and_tricks">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".MainMenuActivity"
             android:label="@string/title_activity_main_menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".BoxInputActivity"
             android:exported="true"
@@ -72,10 +57,11 @@
         <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <!-- This will designate the first page that is launched -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
