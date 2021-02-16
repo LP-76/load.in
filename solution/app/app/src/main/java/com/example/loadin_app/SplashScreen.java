@@ -27,8 +27,8 @@ public class SplashScreen extends AppCompatActivity
         {
             public void run()
             {
-                Intent switchToLogin = new Intent(SplashScreen.this, LoginActivity.class);
-                startActivity(switchToLogin);
+                Intent switchToMainMenu = new Intent(SplashScreen.this, MainMenuActivity.class);
+                startActivity(switchToMainMenu);
                 finish();
             }
         }, splashScreenDurationInMillis);

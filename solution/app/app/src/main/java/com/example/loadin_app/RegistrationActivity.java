@@ -29,63 +29,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.login_toolbar, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_main_menu:
-                Intent switchToMainMenu = new Intent(RegistrationActivity.this, MainMenuActivity.class);
-                startActivity(switchToMainMenu);
-                finish();
-                return true;
-
-            case R.id.action_tips_and_tricks:
-                Intent switchToTips = new Intent(RegistrationActivity.this, TipsAndTricksActivity.class);
-                startActivity(switchToTips);
-                finish();
-                return true;
-
-            case R.id.action_box_input:
-                Intent switchToBoxInput = new Intent(RegistrationActivity.this, BoxInputActivity.class);
-                startActivity(switchToBoxInput);
-                finish();
-                return true;
-
-            case R.id.action_move_inventory:
-                Intent switchToMoveInventory = new Intent(RegistrationActivity.this, MoveInventoryActivity.class);
-                startActivity(switchToMoveInventory);
-                finish();
-                return true;
-
-            case R.id.action_load_plan:
-                Intent switchToLoadPlan = new Intent(RegistrationActivity.this, LoadPlanActivity.class);
-                startActivity(switchToLoadPlan);
-                finish();
-                return true;
-
-            case R.id.action_feedback:
-                /*
-                Intent switchToFeedback = new Intent(RegistrationActivity.this, FeedbackActivity.class);
-                startActivity(switchToFeedback);
-                finish();
-                */
-                return true;
-
-            case R.id.action_account:
-                /*
-                Intent switchToAccount = new Intent(RegistrationActivity.this, AccountActivity.class);
-                startActivity(switchToAccount);
-                finish();
-                */
-                return true;
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

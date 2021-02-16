@@ -1,34 +1,27 @@
 package com.example.loadin_app;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-public class LoadPlanActivity extends AppCompatActivity {
-
-    private TextView mTextView;
+public class FeedbackActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_load_plan);
+        setContentView(R.layout.activity_feedback);
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
-
-        mTextView = (TextView) findViewById(R.id.text);
-
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -44,38 +37,38 @@ public class LoadPlanActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_main_menu:
-                Intent switchToMainMenu = new Intent(LoadPlanActivity.this, MainMenuActivity.class);
+                Intent switchToMainMenu = new Intent(FeedbackActivity.this, MainMenuActivity.class);
                 startActivity(switchToMainMenu);
                 finish();
                 return true;
 
             case R.id.action_tips_and_tricks:
-                Intent switchToTips = new Intent(LoadPlanActivity.this, TipsAndTricksActivity.class);
+                Intent switchToTips = new Intent(FeedbackActivity.this, TipsAndTricksActivity.class);
                 startActivity(switchToTips);
                 finish();
                 return true;
 
             case R.id.action_box_input:
-                Intent switchToBoxInput = new Intent(LoadPlanActivity.this, BoxInputActivity.class);
+                Intent switchToBoxInput = new Intent(FeedbackActivity.this, BoxInputActivity.class);
                 startActivity(switchToBoxInput);
                 finish();
                 return true;
 
             case R.id.action_move_inventory:
-                Intent switchToMoveInventory = new Intent(LoadPlanActivity.this, MoveInventoryActivity.class);
+                Intent switchToMoveInventory = new Intent(FeedbackActivity.this, MoveInventoryActivity.class);
                 startActivity(switchToMoveInventory);
                 finish();
                 return true;
 
             case R.id.action_load_plan:
-                Intent switchToLoadPlan = new Intent(LoadPlanActivity.this, LoadPlanActivity.class);
+                Intent switchToLoadPlan = new Intent(FeedbackActivity.this, LoadPlanActivity.class);
                 startActivity(switchToLoadPlan);
                 finish();
                 return true;
 
             case R.id.action_feedback:
 
-                Intent switchToFeedback = new Intent(LoadPlanActivity.this, FeedbackActivity.class);
+                Intent switchToFeedback = new Intent(FeedbackActivity.this, FeedbackActivity.class);
                 startActivity(switchToFeedback);
                 finish();
 
@@ -83,7 +76,7 @@ public class LoadPlanActivity extends AppCompatActivity {
 
             case R.id.action_account:
 
-                Intent switchToAccount = new Intent(LoadPlanActivity.this, AccountActivity.class);
+                Intent switchToAccount = new Intent(FeedbackActivity.this, AccountActivity.class);
                 startActivity(switchToAccount);
                 finish();
 
