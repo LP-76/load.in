@@ -4,7 +4,10 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-    <uses-feature android:name="android.hardware.type.watch" />
+    <!--<uses-feature android:name="android.hardware.type.watch" android:required="false" />-->
+    <uses-feature
+        android:glEsVersion="0x00030000"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,7 +19,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoadIn_App"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AccountActivity"></activity>
+
+
+        <activity
+            android:name=".TestOpenGLActivity"
+            android:label="@string/title_activity_test_open_g_l">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AccountActivity" />
         <activity android:name=".FeedbackActivity" />
         <activity
             android:name=".LoadPlanActivity"

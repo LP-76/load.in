@@ -15,7 +15,7 @@ import com.example.loadin_app.ui.login.LoginActivity;
 
 public class MainMenuActivity extends AppCompatActivity
 {
-    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton;
+    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, openGLTestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -74,6 +74,18 @@ public class MainMenuActivity extends AppCompatActivity
                 startActivity(switchToLogin);
             }
         });
+        openGLTestButton = (Button) findViewById(R.id.open_gl_test_button);
+        openGLTestButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent switchToLogin = new Intent(MainMenuActivity.this, TestOpenGLActivity.class);
+                startActivity(switchToLogin);
+            }
+        });
+
+
     }
 
     // Menu icons are inflated just as they were with actionbar
