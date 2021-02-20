@@ -20,7 +20,7 @@ import odu.edu.loadin.common.BoxSize;
 
 public class BoxInputActivity extends AppCompatActivity
 {
-    private EditText widthInput, depthInput, heightInput;
+    private EditText descriptionInput, widthInput, depthInput, heightInput;
     private Button addBoxSizeButton;
 
     //used this video a bit for reference here https://youtu.be/V0AETAjxqLI -jason
@@ -37,6 +37,7 @@ public class BoxInputActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
+        descriptionInput = (EditText) findViewById(R.id.BoxDescriptionField);
         widthInput = (EditText) findViewById(R.id.BoxWidthField);
         depthInput = (EditText) findViewById(R.id.BoxDepthField);
         heightInput = (EditText) findViewById(R.id.BoxHeightField);
@@ -46,14 +47,14 @@ public class BoxInputActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                AddBoxSizeToDB(Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()), Float.parseFloat(heightInput.getText().toString()));
+                AddBoxSizeToDB(descriptionInput.getText().toString(), Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()), Float.parseFloat(heightInput.getText().toString()));
             }
         });
     }
 
-    private void AddBoxSizeToDB( float inputWidth, float inputDepth, float inputHeight)
+    private void AddBoxSizeToDB(String inputDescription, float inputWidth, float inputDepth, float inputHeight)
     {
-        System.out.println("Creating a box of width: " + inputWidth + ", depth: " + inputDepth +", height: " + inputHeight + "!");
+        System.out.println("Creating a box of width: " + inputWidth + ", depth: " + inputDepth +", height: " + inputHeight + ", description: " + inputDescription + "!");
         //beep boop do DB stuff or whatever
 
         String dimension = inputWidth + "x" + inputHeight + "x" + inputDepth;
@@ -61,7 +62,7 @@ public class BoxInputActivity extends AppCompatActivity
 
         //we're going to use the box service implementation to acheive this
         BoxSize bs = new BoxSize();
-        bs.setDescription("Test box from UI");
+        bs.setDescription(inputDescription);
         bs.setDimensions(dimension);
 
         BoxServiceImpl service = new BoxServiceImpl("http://10.0.2.2:9000/");

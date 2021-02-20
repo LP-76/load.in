@@ -46,11 +46,28 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/BoxWidthField"
+
+        android:id="@+id/BoxDescriptionField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
         android:layout_marginTop="164dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="12dp"
+        android:ems="10"
+        android:hint="Box Description"
+        android:inputType="textShortMessage"
+        app:layout_constraintBottom_toTopOf="@+id/BoxWidthField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/BoxWidthField"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="12dp"
         android:ems="10"
@@ -60,7 +77,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/BoxDescriptionField" />
 
     <EditText
         android:id="@+id/BoxHeightField"
