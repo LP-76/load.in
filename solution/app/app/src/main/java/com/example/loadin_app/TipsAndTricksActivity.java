@@ -2,17 +2,29 @@ package com.example.loadin_app;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.URLUtil;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+//TODO: Paul: Add Documentation to video playback methods.
 public class TipsAndTricksActivity extends AppCompatActivity {
 
     private TextView mTextView;
+    private static final String VIDEO_SAMPLE = "eric_andre";
+    private VideoView mVideoView;
+    private TextView mBufferingTextView;
+    private int mCurrentPosition = 0;
+    private static final String PLAYBACK_TIME = "play_time";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +39,16 @@ public class TipsAndTricksActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
-        mTextView = (TextView) findViewById(R.id.text);
+        mVideoView = findViewById(R.id.videoview);
+
+        if(savedInstanceState != null)
+        {
+            mCurrentPosition = savedInstanceState.getInt(PLAYBACK_TIME);
+        }
+        MediaController controller = new MediaController(this);
+        controller.setMediaPlayer(mVideoView);
+        mVideoView.setMediaController(controller);
+        mBufferingTextView = findViewById(R.id.buffering_textview);
 
     }
 
@@ -92,6 +113,74 @@ public class TipsAndTricksActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
+
+
+        }
+    }
+
+    private Uri getMedia(String mediaName) {
+        if(URLUtil.isValidUrl(mediaName)) {
+            return Uri.parse(mediaName);
+        }else {
+            return Uri.parse("android.resource://" + getPackageName() + "/raw/" + mediaName);
+        }
+    }
+
+    private void initializePlayer() {
+        Uri videoUri = getMedia(VIDEO_SAMPLE);
+        mBufferingTextView.setVisibility(VideoView.VISIBLE);
+        mVideoView.setVideoURI(videoUri);
+
+        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mBufferingTextView.setVisibility(VideoView.INVISIBLE);
+
+                if(mCurrentPosition > 0){
+                    mVideoView.seekTo(mCurrentPosition);
+                }
+                else
+                {
+                    mVideoView.seekTo(1);
+                }
+                mVideoView.start();
+            }
+        });
+        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Toast.makeText(TipsAndTricksActivity.this, "Playback completed", Toast.LENGTH_SHORT).show();
+                mVideoView.seekTo(1);
+            }
+        });
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+
+        outState.putInt(PLAYBACK_TIME, mVideoView.getCurrentPosition());
+    }
+    private void releasePlayer(){
+        mVideoView.stopPlayback();
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        initializePlayer();
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        releasePlayer();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            mVideoView.pause();
         }
     }
 }

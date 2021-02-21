@@ -43,8 +43,34 @@
         <!-- Layout for content is here. This can be a RelativeLayout  -->
     </LinearLayout>
 
+    <!-- Paul: Add Documentation -->
     <TextView
-        android:id="@+id/placeHolderAccount"
+    android:id="@+id/buffering_textview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:text="Buffering..."
+    android:textSize="18sp"
+    android:textStyle="bold"
+    android:textColor="@android:color/white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"/>
+    <!-- Paul: Add Documentation -->
+    <VideoView
+        android:id="@+id/videoview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="4:3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <!-- Paul: Add Documentation -->
+    <TextView
+        android:id="@+id/eric_andre_let_me_IN"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -52,7 +78,7 @@
         android:layout_marginEnd="24dp"
         android:backgroundTint="@color/white"
         android:selectAllOnFocus="true"
-        android:text="Placeholder Tips"
+        android:text="Let me in, LET ME INNNNNNNNNNNNNNNN"
         android:textSize="24sp"
         android:textColor="@color/load_in_green"
         app:layout_constraintEnd_toEndOf="parent"

@@ -35,30 +35,46 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public void onDrawFrame(GL10 unused) {
+      //  float[] scratch = new float[16];
+
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
+
+
         // Set the camera position (View matrix)
-        Matrix.setLookAtM(viewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.setLookAtM(viewMatrix, 0, -1, -1, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 
         // Calculate the projection and view transformation
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
 
-        float[] scratch = new float[16];
+
+        //Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
+        //experiment, what happens when we apply the rotation to the viewMatrix
+        //Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0);
+
         // Create a rotation transformation for the triangle
         long time = SystemClock.uptimeMillis() % 4000L;
         //float angle = 0.090f * ((int) time);
-        Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
+        //Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
 
         // Combine the rotation matrix with the projection and camera view
         // Note that the vPMatrix factor *must be first* in order
         // for the matrix multiplication product to be correct.
-        Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0);
+      //  Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0);
 
 
 
-        Triangle test = new Triangle();
-        test.draw(scratch);
+        //GLTriangleExample test = new GLTriangleExample();
+        //test.draw(scratch);
+
+        Box test = new Box(0.3f,0.3f,0.3f);
+        test.draw(vPMatrix);
+
+        Box test2 = new Box(0.6f,0.3f,0.9f);
+        test2.place(new Vector(-0.5f, -0.5f, 0));
+        test2.draw(vPMatrix);
+
 
     }
 
