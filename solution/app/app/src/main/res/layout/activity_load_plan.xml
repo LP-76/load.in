@@ -8,7 +8,7 @@
     tools:context=".LoadPlanActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/generate_load_plan"
         android:layout_width="253dp"
         android:layout_height="wrap_content"
         android:text="Generate Load Plan"

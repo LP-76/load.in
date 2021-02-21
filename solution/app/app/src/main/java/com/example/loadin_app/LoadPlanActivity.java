@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +15,8 @@ import androidx.appcompat.widget.Toolbar;
 public class LoadPlanActivity extends AppCompatActivity {
 
     private TextView mTextView;
+
+    private Button generateLoadPlanButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,14 @@ public class LoadPlanActivity extends AppCompatActivity {
 
         mTextView = (TextView) findViewById(R.id.text);
 
+        generateLoadPlanButton = (Button) findViewById(R.id.generate_load_plan);
+        generateLoadPlanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                StartLoadPlan();
+            }
+        });
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -94,4 +106,10 @@ public class LoadPlanActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private void StartLoadPlan()
+    {
+        //TODO: Load Plan Stuff
+    }
+
 }
