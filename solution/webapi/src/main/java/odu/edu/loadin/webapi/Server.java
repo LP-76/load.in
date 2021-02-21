@@ -46,7 +46,8 @@ public class Server {
         sf.setResourceClasses(
                 CustomerServiceImpl.class,
                 BoxSizeServiceImpl.class,
-                UserServiceImpl.class
+                UserServiceImpl.class,
+                InventoryServiceImpl.class
         );
 
         sf.setResourceProvider(CustomerServiceImpl.class,
@@ -57,6 +58,9 @@ public class Server {
         );
         sf.setResourceProvider(UserServiceImpl.class,
                 new SingletonResourceProvider(new UserServiceImpl())
+        );
+        sf.setResourceProvider(InventoryServiceImpl.class,
+                new SingletonResourceProvider(new InventoryServiceImpl())
         );
         //sf.setAddress("https://localhost:9000/");
 
