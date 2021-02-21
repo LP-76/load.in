@@ -14,9 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:orientation="vertical"
-        android:padding="16dp"
-        >
+        android:orientation="vertical">
         <!-- Layout for content is here. This can be a RelativeLayout  -->
 
         <androidx.appcompat.widget.Toolbar
@@ -46,50 +44,61 @@
                 android:textSize="24sp"></TextView>
         </androidx.appcompat.widget.Toolbar>
 
-        <Button
-            android:id="@+id/open_gl_test_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Open Gl Test"
-            android:layout_marginTop="50dp"
-             />
 
-        <Button
-            android:id="@+id/tips_and_tricks_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tips And Tricks"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/move_inventory_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Move Inventory"
-            />
+    </LinearLayout>
 
-        <Button
-            android:id="@+id/load_plan_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Load Plan"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/move_inventory_button" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <Button
-            android:id="@+id/goto_login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/load_plan_button" />
+
+
+    <Button
+        android:id="@+id/open_gl_test_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Open Gl Test" />
+
+    <Button
+        android:id="@+id/tips_and_tricks_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tips And Tricks"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/move_inventory_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Move Inventory"
+        />
+
+    <Button
+        android:id="@+id/load_plan_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Load Plan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/move_inventory_button" />
+
+    <Button
+        android:id="@+id/goto_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/load_plan_button" />
 
     </LinearLayout>
 
