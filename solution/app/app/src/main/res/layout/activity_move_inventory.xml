@@ -7,57 +7,156 @@
     android:background="@color/load_in_gray"
     tools:context=".MoveInventoryActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="?attr/colorPrimary"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
-
-        <ImageView
-            android:id="@+id/loadinLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/loadin_logo"
-            android:layout_gravity="left">
-        </ImageView>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/title_activity_move_inventory"
-            android:textSize="24sp"
-            android:textColor="@color/white"
-            android:gravity="center">
-        </TextView>
-    </androidx.appcompat.widget.Toolbar>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
         <!-- Layout for content is here. This can be a RelativeLayout  -->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:minHeight="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@android:color/white"
+            android:background="?attr/colorPrimary"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/loadinLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/loadin_logo"
+                android:layout_gravity="left">
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_activity_move_inventory"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:gravity="center">
+            </TextView>
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="16dp">
+                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:stretchColumns="1">
+                    <TableRow>
+                        <TextView
+                            android:text="Item: "
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:background="@drawable/cell_shape"
+                            android:padding="3dip" />
+                        <TextView
+                            android:text="Limit Description to 30 characters"
+                            android:textColor="@color/white"
+                            android:background="@drawable/cell_shape"
+                            android:gravity="right"
+                            android:padding="3dip" />
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:text="Dimensions: "
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="@drawable/cell_shape"
+                            android:padding="3dip" />
+                        <TextView
+                            android:text="String Dimensions"
+                            android:textColor="@color/white"
+                            android:gravity="right"
+                            android:background="@drawable/cell_shape"
+                            android:padding="3dip" />
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:text="Fragility: "
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="@drawable/cell_shape"
+                            android:padding="3dip" />
+                        <TextView
+                            android:text="Fragility Int"
+                            android:textColor="@color/white"
+                            android:gravity="right"
+                            android:background="@drawable/cell_shape"
+                            android:padding="3dip" />
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:text="Weight: "
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="@drawable/cell_shape"
+                            android:padding="3dip" />
+                        <TextView
+                            android:text="Weight Int"
+                            android:textColor="@color/white"
+                            android:gravity="right"
+                            android:background="@drawable/cell_shape"
+                            android:padding="3dip" />
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:text="Date Added: "
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:background="@drawable/cell_shape"
+                            android:padding="3dip" />
+                        <TextView
+                            android:text="String"
+                            android:textColor="@color/white"
+                            android:gravity="right"
+                            android:background="@drawable/cell_shape"
+                            android:padding="3dip" />
+                    </TableRow>
+                </TableLayout>
+
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=" Edit Item"
+                    android:textColor="@color/load_in_green"
+                    android:textStyle="bold"
+                    android:clickable="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text=" Add New Item"
+                    android:textColor="@color/load_in_green"
+                    android:textStyle="bold"
+                    android:clickable="true"/>
+
+            </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/placeHolderAccount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="@color/white"
-        android:selectAllOnFocus="true"
-        android:text="Placeholder Move Inventory"
-        android:textSize="24sp"
-        android:textColor="@color/load_in_green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -94,4 +94,5 @@ public class MoveInventoryActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
 }
