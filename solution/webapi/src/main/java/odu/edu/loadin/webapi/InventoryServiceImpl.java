@@ -53,12 +53,10 @@ public class InventoryServiceImpl implements InventoryService {
         System.out.println("----invoking addInventory");
 
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){
-            //TODO Change to add to the INVENTORY table instead of BOX_SIZE
-            Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT ID FROM BOX_SIZE ORDER BY ID DESC LIMIT 1"),
+            Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT ID FROM USER_INVENTORY_ITEM ORDER BY ID DESC LIMIT 1"),
                     (ResultSet rs) -> {  return rs.getInt("ID"); }).stream().findFirst().orElse(0);
 
             inventory.setId(lastId + 1);  //set the new id here
-            //TODO Change INSERT to INVENTORY table
             String query = "INSERT INTO USER_INVENTORY_ITEM (ID, MOVE_PLAN_ID, ITEM_DESCRIPTION, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
                     +" VALUES (?, ?, ?, ?, ?, NULL ,NOW(), NOW() )";
 
