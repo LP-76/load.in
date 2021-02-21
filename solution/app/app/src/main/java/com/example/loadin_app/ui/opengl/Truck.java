@@ -4,14 +4,14 @@ import java.util.stream.Stream;
 
 public class Truck extends WorldObject
 {
-    private float lengthMeters,widthMeters,heightMeters;
+    private float lengthInches,widthInches,heightInches;
     private float costPerDayDollars, costPerMileDollars;
 
     public Truck()
     {
-        lengthMeters = 5.1308f;
-        widthMeters = 2.2098f;
-        heightMeters = 2.1844f;
+        lengthInches = 202f;
+        widthInches = 87f;
+        heightInches = 86f;
         costPerDayDollars = 39.95f;
         costPerMileDollars = 0.99f;
 
@@ -19,14 +19,15 @@ public class Truck extends WorldObject
     }
 
     @Override
-    public Stream<Shape> getShapes() {
+    public Stream<Shape> getShapes()
+    {
         //TODO: BYROOOON FIX IIIIT
         return null;
     }
 
-    public float GetAreaOfTruckMeters()
+    public float GetAreaOfTruckInches()
     {
-        return lengthMeters * widthMeters * heightMeters;
+        return lengthInches * widthInches * heightInches;
     }
 }
 
