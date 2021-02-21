@@ -1,24 +1,30 @@
 package com.example.loadin_app;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import com.example.loadin_app.data.services.BoxServiceImpl;
 
-public class MoveInventoryActivity extends AppCompatActivity {
+import odu.edu.loadin.common.BoxSize;
 
-    private TextView mTextView;
+public class EditItemActivity extends AppCompatActivity {
+
+    private EditText descriptionInput, widthInput, depthInput, heightInput, fragilityInput, weightInput;
+    private Button editItemButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_move_inventory);
+        setContentView(R.layout.activity_edit_item);
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -27,23 +33,8 @@ public class MoveInventoryActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
-
-        mTextView = (TextView) findViewById(R.id.text);
-
     }
 
-    public void editInventory(View view){
-        Intent switchToEditItem = new Intent(MoveInventoryActivity.this, EditItemActivity.class);
-        startActivity(switchToEditItem);
-        finish();
-    }
-
-
-    public void addItem(View view){
-        Intent switchToEditItem = new Intent(MoveInventoryActivity.this, AddItemActivity.class);
-        startActivity(switchToEditItem);
-        finish();
-    }
 
     // Menu icons are inflated just as they were with actionbar
     @Override
@@ -58,38 +49,38 @@ public class MoveInventoryActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_main_menu:
-                Intent switchToMainMenu = new Intent(MoveInventoryActivity.this, MainMenuActivity.class);
+                Intent switchToMainMenu = new Intent(EditItemActivity.this, MainMenuActivity.class);
                 startActivity(switchToMainMenu);
                 finish();
                 return true;
 
             case R.id.action_tips_and_tricks:
-                Intent switchToTips = new Intent(MoveInventoryActivity.this, TipsAndTricksActivity.class);
+                Intent switchToTips = new Intent(EditItemActivity.this, TipsAndTricksActivity.class);
                 startActivity(switchToTips);
                 finish();
                 return true;
 
             case R.id.action_box_input:
-                Intent switchToBoxInput = new Intent(MoveInventoryActivity.this, BoxInputActivity.class);
+                Intent switchToBoxInput = new Intent(EditItemActivity.this, BoxInputActivity.class);
                 startActivity(switchToBoxInput);
                 finish();
                 return true;
 
             case R.id.action_move_inventory:
-                Intent switchToMoveInventory = new Intent(MoveInventoryActivity.this, MoveInventoryActivity.class);
+                Intent switchToMoveInventory = new Intent(EditItemActivity.this, MoveInventoryActivity.class);
                 startActivity(switchToMoveInventory);
                 finish();
                 return true;
 
             case R.id.action_load_plan:
-                Intent switchToLoadPlan = new Intent(MoveInventoryActivity.this, LoadPlanActivity.class);
+                Intent switchToLoadPlan = new Intent(EditItemActivity.this, LoadPlanActivity.class);
                 startActivity(switchToLoadPlan);
                 finish();
                 return true;
 
             case R.id.action_feedback:
 
-                Intent switchToFeedback = new Intent(MoveInventoryActivity.this, FeedbackActivity.class);
+                Intent switchToFeedback = new Intent(EditItemActivity.this, FeedbackActivity.class);
                 startActivity(switchToFeedback);
                 finish();
 
@@ -97,7 +88,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
 
             case R.id.action_account:
 
-                Intent switchToAccount = new Intent(MoveInventoryActivity.this, AccountActivity.class);
+                Intent switchToAccount = new Intent(EditItemActivity.this, AccountActivity.class);
                 startActivity(switchToAccount);
                 finish();
 
@@ -108,5 +99,5 @@ public class MoveInventoryActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }
+
