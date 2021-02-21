@@ -7,8 +7,18 @@ public class Box extends WorldObject{
 
    private Hexahedron mHexahedron;
 
+   private Vector destination;
+
     public Box(float width, float height, float length){
        mHexahedron = new Hexahedron(width, height, length);
+        destination = new Vector(0f, 0f, 0f);
+     }
+
+     public void setDestination(Vector destination){
+        this.destination = destination;
+     }
+     public Vector getDestination(){
+        return destination;
      }
 
     @Override
