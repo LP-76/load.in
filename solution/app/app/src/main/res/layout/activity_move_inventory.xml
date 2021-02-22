@@ -42,9 +42,10 @@
             </TextView>
         </androidx.appcompat.widget.Toolbar>
 
-        <ScrollView
+        <ListView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/InventoryListView">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -155,7 +156,7 @@
 
 
             </LinearLayout>
-        </ScrollView>
+        </ListView>
 
     </LinearLayout>
 

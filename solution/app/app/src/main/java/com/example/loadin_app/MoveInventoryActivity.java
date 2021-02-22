@@ -6,10 +6,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.loadin_app.data.services.InventoryServiceImpl;
 
 public class MoveInventoryActivity extends AppCompatActivity {
 
@@ -27,6 +31,12 @@ public class MoveInventoryActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+
+        InventoryServiceImpl newInv = new InventoryServiceImpl();
+        List<Inventory> inventory = newInv.getInventory();
+        ArrayAdapter adapter = new ArrayAdapter<Inventory>(this,R.layout.ListView,Inventory);
+        ListView listView = findViewById(R.id.InventoryListView);
+        listView.setAdapter(adapter);
 
         mTextView = (TextView) findViewById(R.id.text);
 
