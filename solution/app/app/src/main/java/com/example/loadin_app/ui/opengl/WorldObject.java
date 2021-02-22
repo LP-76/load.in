@@ -2,82 +2,44 @@ package com.example.loadin_app.ui.opengl;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
+import android.os.SystemClock;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
+import java.util.Arrays;
 import java.util.stream.Stream;
+
+import static com.example.loadin_app.ui.opengl.World.StandardLightViewProgram.MVP_MATRIX;
+import static com.example.loadin_app.ui.opengl.World.StandardLightViewProgram.U_MV_MATRIX;
 
 /**
  * An object that can be displayed in the world
  */
-public abstract class  WorldObject implements IConvertToFloat {
+public abstract class  WorldObject  {
 
     private Vector offset;
-
-
-    private final String vertexShaderCode =
-            // This matrix member variable provides a hook to manipulate
-            // the coordinates of the objects that use this vertex shader
-            "uniform mat4 uMVPMatrix;" +
-                    "attribute vec4 vPosition;" +
-                    "void main() {" +
-                    // the matrix must be included as a modifier of gl_Position
-                    // Note that the uMVPMatrix factor *must be first* in order
-                    // for the matrix multiplication product to be correct.
-                    "  gl_Position = uMVPMatrix * vPosition;" +
-                    "}";
     private int vPMatrixHandle;
+    private  int mMVMatrixHandle;
 
+    private float[] mLightModelMatrix = new float[16];
 
-    private final String fragmentShaderCode =
-            "precision mediump float;" +
-                    "uniform vec4 vColor;" +
-                    "void main() {" +
-                    "  gl_FragColor = vColor;" +
-                    "}";
+    private final float[] mLightPosInModelSpace = new float[] {0.0f, 0.0f, 0.0f, 1.0f};
+    private final float[] mLightPosInWorldSpace = new float[4];
+    private final float[] mLightPosInEyeSpace = new float[4];
 
-    private int positionHandle;
-    private int colorHandle;
+    private World myWorld;
 
-    private  int vertexCount;
-    private final int vertexStride = COORDS_PER_VERTEX * 4; // 4 bytes per vertex
+    private OpenGLVariableLoader vertexBuffer;
+    private OpenGLVariableLoader colorBuffer;
+    private OpenGLVariableLoader orthogonalBuffer;
+    private OpenGLUniformMatrix3fv lightBuffer;
 
-
-    private FloatBuffer vertexBuffer;
-    private final int program;
-
-    // number of coordinates per vertex in this array
-    static final int COORDS_PER_VERTEX = 3;
-
-    // Set color with red, green, blue and alpha (opacity) values
-    float color[] = { 0.63671875f, 0.76953125f, 0.22265625f, 1.0f };
-
-    private float[] objectCoords;
-
-    public  WorldObject(){
-
-
+    public  WorldObject(World world){
         offset = new Vector(0,0,0);
-
-
-        int vertexShader = TestGLRenderer.loadShader(GLES20.GL_VERTEX_SHADER,
-                vertexShaderCode);
-        int fragmentShader = TestGLRenderer.loadShader(GLES20.GL_FRAGMENT_SHADER,
-                fragmentShaderCode);
-
-        // create empty OpenGL ES Program
-        program = GLES20.glCreateProgram();
-
-        // add the vertex shader to program
-        GLES20.glAttachShader(program, vertexShader);
-
-        // add the fragment shader to program
-        GLES20.glAttachShader(program, fragmentShader);
-
-        // creates OpenGL ES program executables
-        GLES20.glLinkProgram(program);
+        myWorld = world;
     }
+
+
+
+
 
     public void place(Vector offset){
         this.offset  = offset;
@@ -90,48 +52,46 @@ public abstract class  WorldObject implements IConvertToFloat {
         );
     }
 
-    private void loadBuffer(){
-        objectCoords = asFloatArray();
+    private void loadBuffer(float[] viewMatrix){
+        //put the items into the buffers here
+       vertexBuffer = new OpenGLVertexAttribute(getVectorCoordinates(), 3, World.StandardLightViewProgram.A_POSITION,3*4);
+       colorBuffer = new OpenGLVertexAttribute(getVectorColors(), 4, World.StandardLightViewProgram.A_COLOR, 4*4);
+       orthogonalBuffer = new OpenGLVertexAttribute(getOrthogonalVectors(), 3, World.StandardLightViewProgram.A_NORMAL, 3*4);
 
 
+        long time = SystemClock.uptimeMillis() % 10000L;
+        float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
+
+        Matrix.setIdentityM(mLightModelMatrix, 0);
+        Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, -4.0f);
+        Matrix.rotateM(mLightModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
+        Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, 2.0f);
+        Matrix.multiplyMV(mLightPosInWorldSpace, 0, mLightModelMatrix, 0, mLightPosInModelSpace, 0);
+        Matrix.multiplyMV(mLightPosInEyeSpace, 0, viewMatrix, 0, mLightPosInWorldSpace, 0);
+
+       lightBuffer = new OpenGLUniformMatrix3fv(mLightPosInEyeSpace, 4, World.StandardLightViewProgram.U_LIGHTPOS);
 
 
-
-        vertexCount = objectCoords.length / COORDS_PER_VERTEX;
-        // initialize vertex byte buffer for shape coordinates
-        ByteBuffer bb = ByteBuffer.allocateDirect(
-                // (number of coordinate values * 4 bytes per float)
-                objectCoords.length * 4);
-        // use the device hardware's native byte order
-        bb.order(ByteOrder.nativeOrder());
-
-        // create a floating point buffer from the ByteBuffer
-        vertexBuffer = bb.asFloatBuffer();
-        // add the coordinates to the FloatBuffer
-        vertexBuffer.put(objectCoords);
-        // set the buffer to read the first coordinate
-        vertexBuffer.position(0);
     }
 
     public abstract Stream<Shape> getShapes();
 
-    public Stream<Float> asFloats(){
-        return getShapes().flatMap(i -> i.getTriangles()).flatMap(i -> i.asFloats());
+    public Stream<Float> getOrthogonalVectors(){
+        return getShapes().flatMap(i -> i.getTriangles())
+                .flatMap(i -> Arrays.stream(i.getOrthogonalVectorsForPlane()))
+                .flatMap(i -> i.getCoordinates());
+
     }
 
-    public float[] asFloatArray(){
-
-        Float[] floats = asFloats().toArray(Float[]::new);
-
-        float[] results = new float[floats.length];
-        for(int x = 0; x < floats.length; x++)
-            results[x] = floats[x];
-        return results;
+    public Stream<Float> getVectorCoordinates(){
+        return getShapes().flatMap(i -> i.getTriangles()).flatMap(i -> i.getCoordinates());
     }
 
-    public void draw(float[] mvpMatrix) {
+    public Stream<Float> getVectorColors(){
+        return getShapes().flatMap(i -> i.getTriangles()).flatMap(i -> i.getColors());
+    }
 
-        loadBuffer();
+    private float[] processTranslation(float[] mvpMatrix){
 
         //apply translations here
 
@@ -146,41 +106,81 @@ public abstract class  WorldObject implements IConvertToFloat {
         float[] postTranslationMatrix = new float[16];
         //apply the translation to the objects matrix translation
         Matrix.multiplyMM(postTranslationMatrix, 0, mvpMatrix, 0, translationMatrix, 0);
+        return postTranslationMatrix;
+    }
+
+    private void uploadLightInformation(float[] viewMatrix){
 
 
-        // Add program to OpenGL ES environment
-        GLES20.glUseProgram(program);
+        lightBuffer.establishHandle(myWorld.getLightViewProgram().getProgramHandle());
 
-        // get handle to vertex shader's vPosition member
-        positionHandle = GLES20.glGetAttribLocation(program, "vPosition");
+        lightBuffer.uploadData();
 
-        // Enable a handle to the triangle vertices
-        GLES20.glEnableVertexAttribArray(positionHandle);
 
-        // Prepare the triangle coordinate data
-        GLES20.glVertexAttribPointer(positionHandle, COORDS_PER_VERTEX,
-                GLES20.GL_FLOAT, false,
-                vertexStride, vertexBuffer);
 
-        // get handle to fragment shader's vColor member
-        colorHandle = GLES20.glGetUniformLocation(program, "vColor");
+    }
+
+
+
+    private void uploadPositionInformation(){
+
+        vertexBuffer.establishHandle(myWorld.getLightViewProgram().getProgramHandle());
+        GLES20.glEnableVertexAttribArray(vertexBuffer.handle);
+        vertexBuffer.uploadData();  //load into memory
+
+    }
+
+    private void uploadColorInformation(){
+        colorBuffer.establishHandle(myWorld.getLightViewProgram().getProgramHandle());
+        GLES20.glEnableVertexAttribArray(colorBuffer.handle);
+        colorBuffer.uploadData();
+
+
+
+    }
+    private  void uploadNormalInformation(){
+        orthogonalBuffer.establishHandle(myWorld.getLightViewProgram().getProgramHandle());
+        GLES20.glEnableVertexAttribArray(orthogonalBuffer.handle);
+        orthogonalBuffer.uploadData();
+
+    }
+
+    /*
+    The mvp matrix is the matrix that has been configured as the view and the projection at a higher level
+     */
+    public void draw(float[] mvpMatrix, float[] viewMatrix) {
+        GLES20.glUseProgram(myWorld.getLightViewProgram().getProgramHandle());
+
+        loadBuffer(viewMatrix);
+
+        float[] postTranslationMatrix = processTranslation(mvpMatrix);  //here we are applying the translation to the object
+        //depending upon the world offset
+
+
+        uploadPositionInformation(); //this uploads the verticies of the object to the engine
+        uploadColorInformation();  //this uploads the necissary things for the color
+        uploadNormalInformation();  //this is the orthogonal information for the lights
+        uploadLightInformation(viewMatrix);
+
+        //int colorHandle = GLES20.glGetUniformLocation(program, "vColor");
 
         // Set color for drawing the triangle
-        GLES20.glUniform4fv(colorHandle, 1, color, 0);
+        //GLES20.glUniform4fv(colorHandle, 1, color, 0);
 
         // get handle to shape's transformation matrix
-        vPMatrixHandle = GLES20.glGetUniformLocation(program, "uMVPMatrix");
+        vPMatrixHandle = GLES20.glGetUniformLocation(myWorld.getLightViewProgram().getProgramHandle(), MVP_MATRIX);
+        mMVMatrixHandle = GLES20.glGetUniformLocation(myWorld.getLightViewProgram().getProgramHandle(), U_MV_MATRIX);
 
         // Pass the projection and view transformation to the shader
         GLES20.glUniformMatrix4fv(vPMatrixHandle, 1, false, postTranslationMatrix, 0);
 
+        GLES20.glUniformMatrix4fv(mMVMatrixHandle, 1, false, postTranslationMatrix, 0);
 
         // Draw the triangle
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexCount);
+        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexBuffer.getCount());
 
 
-        // Disable vertex array
-        GLES20.glDisableVertexAttribArray(positionHandle);
+
     }
 
 }

@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 public class Hexahedron extends Shape {
     private float mWidth, mHeight, mLength;
 
+    private Color color;
+
     public float getWidth() {
         return mWidth;
     }
@@ -22,19 +24,24 @@ public class Hexahedron extends Shape {
 
     private Triangle[] mTriangles;
 
-    public Hexahedron(float width, float height, float length){
+    public Color getColor() {
+        return color;
+    }
+
+    public Hexahedron(float width, float height, float length, Color defaultColor){
         mWidth = width;
         mHeight = height;
         mLength = length;
+        color = defaultColor;
 
-        Vector p1 = new Vector(0, 0, 0);
-        Vector p2 = new Vector(width, 0, 0);
-        Vector p3 = new Vector(width, length, 0);
-        Vector p4 = new Vector(0, length, 0);
-        Vector p5 = new Vector(0, 0, height);
-        Vector p6 = new Vector(width, 0, height);
-        Vector p7 = new Vector(width, length, height);
-        Vector p8 = new Vector(0, length, height);
+        Vector p1 = new Vector(0, 0, 0,defaultColor);
+        Vector p2 = new Vector(width, 0, 0, defaultColor);
+        Vector p3 = new Vector(width, length, 0, defaultColor);
+        Vector p4 = new Vector(0, length, 0, defaultColor);
+        Vector p5 = new Vector(0, 0, height, defaultColor);
+        Vector p6 = new Vector(width, 0, height, defaultColor);
+        Vector p7 = new Vector(width, length, height, defaultColor);
+        Vector p8 = new Vector(0, length, height, defaultColor);
 
 
         //6 sides

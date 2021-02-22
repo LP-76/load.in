@@ -25,6 +25,12 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         angle = p_angle;
     }
 
+    private World theWorld;
+
+    public TestGLRenderer(){
+
+
+    }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
@@ -36,7 +42,8 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
     public void onDrawFrame(GL10 unused) {
       //  float[] scratch = new float[16];
-
+        if(theWorld == null)
+             theWorld = new World();
         // Redraw background color
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
@@ -49,31 +56,15 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
 
 
-        //Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
-        //experiment, what happens when we apply the rotation to the viewMatrix
-        //Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0);
+        //GLTriangleExample triangle = new GLTriangleExample();
+        //triangle.draw(vPMatrix);
 
-        // Create a rotation transformation for the triangle
-        long time = SystemClock.uptimeMillis() % 4000L;
-        //float angle = 0.090f * ((int) time);
-        //Matrix.setRotateM(rotationMatrix, 0, angle, 0, 0, -1.0f);
-
-        // Combine the rotation matrix with the projection and camera view
-        // Note that the vPMatrix factor *must be first* in order
-        // for the matrix multiplication product to be correct.
-      //  Matrix.multiplyMM(scratch, 0, vPMatrix, 0, rotationMatrix, 0);
-
-
-
-        //GLTriangleExample test = new GLTriangleExample();
-        //test.draw(scratch);
-
-        Box test = new Box(0.3f,0.3f,0.3f);
-        test.draw(vPMatrix);
-
-        Box test2 = new Box(0.6f,0.3f,0.9f);
+        Box test = new Box(0.3f,0.3f,0.3f, theWorld);
+        test.draw(vPMatrix, viewMatrix);
+//
+        Box test2 = new Box(0.6f,0.3f,0.9f, theWorld);
         test2.place(new Vector(-0.5f, -0.5f, 0));
-        test2.draw(vPMatrix);
+        test2.draw(vPMatrix, viewMatrix);
 
 
     }
@@ -82,24 +73,13 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glViewport(0, 0, width, height);
 
         float ratio = (float) width / height;
-        Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
+        Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1, 1, 3, 20);
 
 
 
     }
 
-    public static int loadShader(int type, String shaderCode){
 
-        // create a vertex shader type (GLES20.GL_VERTEX_SHADER)
-        // or a fragment shader type (GLES20.GL_FRAGMENT_SHADER)
-        int shader = GLES20.glCreateShader(type);
-
-        // add the source code to the shader and compile it
-        GLES20.glShaderSource(shader, shaderCode);
-        GLES20.glCompileShader(shader);
-
-        return shader;
-    }
 
 
 
