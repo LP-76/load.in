@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.loadin_app.data.services.InventoryServiceImpl;
+
+import java.util.ArrayList;
+
+import odu.edu.loadin.common.Inventory;
 
 public class MoveInventoryActivity extends AppCompatActivity {
 
@@ -32,16 +37,32 @@ public class MoveInventoryActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
-        InventoryServiceImpl newInv = new InventoryServiceImpl();
-        List<Inventory> inventory = newInv.getInventory();
-        ArrayAdapter adapter = new ArrayAdapter<Inventory>(this,R.layout.ListView,Inventory);
-        ListView listView = findViewById(R.id.InventoryListView);
+
+        InventoryServiceImpl newInv = new InventoryServiceImpl("http://10.0.2.2:9000/");;
+        ArrayList<Inventory> inventory = new ArrayList<Inventory>();
+        try{
+            inventory.addAll(newInv.getInventory());
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+
+        int i = 0;
+        ArrayList<String> inventoryHeaders = new ArrayList<String>();
+        while(i < inventory.size()){
+            inventoryHeaders.add(inventory.get(i).getDescription());
+            i++;
+        }
+
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.simple_list_view, inventoryHeaders);
+        ListView listView = (ListView) findViewById(R.id.InventoryListView);
         listView.setAdapter(adapter);
 
         mTextView = (TextView) findViewById(R.id.text);
-
     }
 
+    /*
     public void editInventory(View view){
         Intent switchToEditItem = new Intent(MoveInventoryActivity.this, EditItemActivity.class);
         startActivity(switchToEditItem);
@@ -54,7 +75,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
         startActivity(switchToEditItem);
         finish();
     }
-
+    */
     // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
