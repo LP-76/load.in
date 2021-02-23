@@ -39,7 +39,7 @@ public class TipsAndTricksActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
-        mVideoView = findViewById(R.id.videoview);
+        mVideoView = findViewById(R.id.articleVideo);
 
         if(savedInstanceState != null)
         {
