@@ -6,6 +6,5 @@
     android:layout_below="@id/toolbar"
     android:paddingTop="16dp"
     android:textColor="@color/white"
-    android:textSize="30sp">
-
+    android:textSize="24sp">
 </TextView>

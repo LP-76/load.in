@@ -9,6 +9,7 @@ public class Truck extends WorldObject
 
     public Truck()
     {
+        super(null); //TODO: replace with an instance of world
         lengthInches = 202f;
         widthInches = 87f;
         heightInches = 86f;

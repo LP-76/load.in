@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
@@ -59,6 +60,14 @@ public class MoveInventoryActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.InventoryListView);
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent switchToItemView = new Intent(MoveInventoryActivity.this, ItemViewActivity.class);
+                startActivity(switchToItemView);
+            }
+        });
+
         mTextView = (TextView) findViewById(R.id.text);
     }
 
@@ -76,6 +85,8 @@ public class MoveInventoryActivity extends AppCompatActivity {
         finish();
     }
     */
+
+
     // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

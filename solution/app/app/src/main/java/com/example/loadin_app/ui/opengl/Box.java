@@ -9,8 +9,9 @@ public class Box extends WorldObject{
 
    private Vector destination;
 
-    public Box(float width, float height, float length){
-       mHexahedron = new Hexahedron(width, height, length);
+    public Box(float width, float height, float length, World world) {
+        super(world);
+       mHexahedron = new Hexahedron(width, height, length, new Color(0.63671875f, 0.76953125f, 0.22265625f, 1.0f));
         destination = new Vector(0f, 0f, 0f);
      }
 
@@ -27,7 +28,7 @@ public class Box extends WorldObject{
     }
 
     public void rotateLeftBy90Degrees(){
-        mHexahedron = new Hexahedron(mHexahedron.getLength(), mHexahedron.getHeight(), mHexahedron.getWidth() );
+        mHexahedron = new Hexahedron(mHexahedron.getLength(), mHexahedron.getHeight(), mHexahedron.getWidth(), mHexahedron.getColor() );
     }
 
     public boolean intersects(Box otherBox){
