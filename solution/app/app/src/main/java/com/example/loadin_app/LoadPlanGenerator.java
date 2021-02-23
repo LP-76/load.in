@@ -32,7 +32,7 @@ public class LoadPlanGenerator
     private void GetTruckSize()
     {
         //TODO: Get the size of the truck
-        movingTruck = new Truck();
+        //movingTruck = new Truck();
     }
 
     private void GenerateLoadPlan()

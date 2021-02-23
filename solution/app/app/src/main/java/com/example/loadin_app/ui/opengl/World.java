@@ -6,6 +6,8 @@ import android.opengl.GLES20;
 
 public class World {
 
+    //public static final float INCHES_TO_WORLD_SCALE = 1f/12f;  //feet essentially
+
     private OpenGLProgram lightViewProgram;
 
     public World(){
@@ -16,6 +18,8 @@ public class World {
     public OpenGLProgram getLightViewProgram(){
         return lightViewProgram;
     }
+
+
 
 
 
@@ -70,7 +74,8 @@ public class World {
                         // Attenuate the light based on distance.
                         + "   diffuse = diffuse * (1.0 / (1.0 + (0.25 * distance * distance)));  \n"
                         // Multiply the color by the illumination level. It will be interpolated across the triangle.
-                        + "   v_Color = a_Color * diffuse;                                       \n"
+                      //  + "   v_Color = a_Color * diffuse;                                       \n"
+                        + "   v_Color = a_Color ;  //just pass color off                            \n"
                         // gl_Position is a special variable used to store the final position.
                         // Multiply the vertex by the matrix to get the final point in normalized screen coordinates.
                         + "   gl_Position = u_MVPMatrix * a_Position;                            \n"

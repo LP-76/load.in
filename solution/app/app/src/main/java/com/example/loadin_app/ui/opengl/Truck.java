@@ -1,15 +1,35 @@
 package com.example.loadin_app.ui.opengl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 public class Truck extends WorldObject
 {
+    private final Color FLOOR_COLOR = new Color(161f/255f, 119f/255f,93f/255f, 1f);
+    private final Color WALL_COLOR = new Color(206f/255f, 218f/255f,210f/255f, 1f);
+
+
     private float lengthInches,widthInches,heightInches;
     private float costPerDayDollars, costPerMileDollars;
+    private ArrayList<Shape> shapes;
 
-    public Truck()
+    public float getLengthInches() {
+        return lengthInches;
+    }
+
+    public float getWidthInches() {
+        return widthInches;
+    }
+
+    public float getHeightInches() {
+        return heightInches;
+    }
+
+    public Truck(World parent)
     {
-        super(null); //TODO: replace with an instance of world
+        super(parent);
+        shapes = new ArrayList<Shape>();
         lengthInches = 202f;
         widthInches = 87f;
         heightInches = 86f;
@@ -17,13 +37,58 @@ public class Truck extends WorldObject
         costPerMileDollars = 0.99f;
 
         //TODO: Make a real constructor that takes real data from somewhere and doesn't hardwire random data from uhaul.com
+
+        recalculateShapes();
+
+    }
+
+    public void recalculateShapes(){
+        //we're going to create the truck bed, the outer left wall and the front wall of the truck bed
+
+        float wallThickness = 4f ;  //4 inch walls by default
+
+        float height = heightInches ;
+        float width = widthInches ;
+        float length = lengthInches ;
+
+        Hexahedron floor = new Hexahedron(
+                width, //we'll say approximately 4 inches thick for now
+                wallThickness,
+                length,
+                FLOOR_COLOR
+        );
+        floor.move(new Vector(0f, -wallThickness, 0f));  //move down below 0,0 line
+
+        Hexahedron leftWall = new Hexahedron(
+                wallThickness, //we'll say approximately 4 inches thick for now
+                height,
+                length,
+                WALL_COLOR
+        );
+        leftWall.move(new Vector( width, 0f, 0f));  //move to the left 4 inches
+
+        Hexahedron frontWall = new Hexahedron(
+                width, //we'll say approximately 4 inches thick for now
+                height,
+                wallThickness,
+                WALL_COLOR
+        );
+        frontWall.move(new Vector(0f, 0f, length));  //move to front of bed
+
+
+
+        shapes.clear();
+        shapes.add(frontWall);
+        shapes.add(leftWall);
+        shapes.add(floor);
+
+
     }
 
     @Override
     public Stream<Shape> getShapes()
     {
-        //TODO: BYROOOON FIX IIIIT
-        return null;
+        return shapes.stream();
     }
 
     public float GetAreaOfTruckInches()

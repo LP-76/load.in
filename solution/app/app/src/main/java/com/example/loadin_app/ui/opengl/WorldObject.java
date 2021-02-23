@@ -19,11 +19,11 @@ public abstract class  WorldObject  {
     private int vPMatrixHandle;
     private  int mMVMatrixHandle;
 
-    private float[] mLightModelMatrix = new float[16];
+    //private float[] mLightModelMatrix = new float[16];
 
-    private final float[] mLightPosInModelSpace = new float[] {0.0f, 0.0f, 0.0f, 1.0f};
-    private final float[] mLightPosInWorldSpace = new float[4];
-    private final float[] mLightPosInEyeSpace = new float[4];
+    private final float[] mLightPosInModelSpace = new float[] { 8.0f, 8.0f, 8.0f, 1.0f};
+   // private final float[] mLightPosInWorldSpace = new float[4];
+   // private final float[] mLightPosInEyeSpace = new float[4];
 
     private World myWorld;
 
@@ -59,17 +59,17 @@ public abstract class  WorldObject  {
        orthogonalBuffer = new OpenGLVertexAttribute(getOrthogonalVectors(), 3, World.StandardLightViewProgram.A_NORMAL, 3*4);
 
 
-        long time = SystemClock.uptimeMillis() % 10000L;
-        float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
+//        long time = SystemClock.uptimeMillis() % 10000L;
+//        float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
+//
+//        Matrix.setIdentityM(mLightModelMatrix, 0);
+//        Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, -4.0f);
+//        Matrix.rotateM(mLightModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
+//        Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, 2.0f);
+//        Matrix.multiplyMV(mLightPosInWorldSpace, 0, mLightModelMatrix, 0, mLightPosInModelSpace, 0);
+//        Matrix.multiplyMV(mLightPosInEyeSpace, 0, viewMatrix, 0, mLightPosInWorldSpace, 0);
 
-        Matrix.setIdentityM(mLightModelMatrix, 0);
-        Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, -4.0f);
-        Matrix.rotateM(mLightModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
-        Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, 2.0f);
-        Matrix.multiplyMV(mLightPosInWorldSpace, 0, mLightModelMatrix, 0, mLightPosInModelSpace, 0);
-        Matrix.multiplyMV(mLightPosInEyeSpace, 0, viewMatrix, 0, mLightPosInWorldSpace, 0);
-
-       lightBuffer = new OpenGLUniformMatrix3fv(mLightPosInEyeSpace, 4, World.StandardLightViewProgram.U_LIGHTPOS);
+       lightBuffer = new OpenGLUniformMatrix3fv(mLightPosInModelSpace, 4, World.StandardLightViewProgram.U_LIGHTPOS);
 
 
     }
@@ -108,6 +108,22 @@ public abstract class  WorldObject  {
         Matrix.multiplyMM(postTranslationMatrix, 0, mvpMatrix, 0, translationMatrix, 0);
         return postTranslationMatrix;
     }
+
+    private float[] processScale(float[] mvpMatrix){
+        float[] scaleMatrix = new float[16];
+
+        //set the identity matrix for translation
+        Matrix.setIdentityM(scaleMatrix, 0);
+        float scale = 1f/12f;
+        //add the translation to the matrix
+        Matrix.scaleM(scaleMatrix,0, scale, scale, scale );
+
+        float[] postScaleMatrix = new float[16];
+        //apply the translation to the objects matrix translation
+        Matrix.multiplyMM(postScaleMatrix, 0, mvpMatrix, 0, scaleMatrix, 0);
+        return postScaleMatrix;
+    }
+
 
     private void uploadLightInformation(float[] viewMatrix){
 
@@ -152,8 +168,9 @@ public abstract class  WorldObject  {
         GLES20.glUseProgram(myWorld.getLightViewProgram().getProgramHandle());
 
         loadBuffer(viewMatrix);
+        float[] postScaleMatrix = processScale(mvpMatrix);
+        float[] postTranslationMatrix = processTranslation(postScaleMatrix);  //here we are applying the translation to the object
 
-        float[] postTranslationMatrix = processTranslation(mvpMatrix);  //here we are applying the translation to the object
         //depending upon the world offset
 
 

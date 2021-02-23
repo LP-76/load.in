@@ -11,6 +11,10 @@ public class Triangle {
         values[2] = p3;
     }
 
+    public void move(Vector direction){
+        for(int x = 0; x < 3; x++)
+            values[x] = values[x].add( direction);
+    }
 
     private Vector calculateOrthogonalVectorToPoint(int originPoint){
         Vector v1 = new Vector(values[originPoint], values[(originPoint + 1) % 3]);

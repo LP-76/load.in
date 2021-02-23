@@ -32,39 +32,45 @@ public class Hexahedron extends Shape {
         mWidth = width;
         mHeight = height;
         mLength = length;
-        color = defaultColor;
+        color = defaultColor.adjust(1.50f);
 
-        Vector p1 = new Vector(0, 0, 0,defaultColor);
-        Vector p2 = new Vector(width, 0, 0, defaultColor);
-        Vector p3 = new Vector(width, length, 0, defaultColor);
-        Vector p4 = new Vector(0, length, 0, defaultColor);
-        Vector p5 = new Vector(0, 0, height, defaultColor);
-        Vector p6 = new Vector(width, 0, height, defaultColor);
-        Vector p7 = new Vector(width, length, height, defaultColor);
-        Vector p8 = new Vector(0, length, height, defaultColor);
+        //IMPORTANT, the Z axis is considered horizontal and Y is considered the up direction
+
+        float x = width;
+        float z = length;
+        float y = height;
+
+        Vector p1 = new Vector(0, 0, 0, color);
+        Vector p2 = new Vector(x, 0, 0, color.adjust(0.95f));
+        Vector p3 = new Vector(x, 0, z, color.adjust(0.85f));
+        Vector p4 = new Vector(0, 0, z,  color.adjust(0.75f));
+        Vector p5 = new Vector(0, y, 0, color.adjust(0.65f));
+        Vector p6 = new Vector(x, y, 0f, color.adjust(0.55f));
+        Vector p7 = new Vector(x, y, z, color.adjust(0.45f));
+        Vector p8 = new Vector(0, y, z,color.adjust(0.35f));
 
 
         //6 sides
         //2 triangles per side
         mTriangles = new Triangle[]{
                 //base
-                new Triangle(p4, p2, p1),
-                new Triangle(p4, p3, p2),
-                //top
-                new Triangle(p5, p6, p7),
-                new Triangle(p5, p7, p8),
-                //front
-                new Triangle(p1, p2, p6),
-                new Triangle(p1, p6, p5),
-                //back
-                new Triangle(p3, p4, p8),
-                new Triangle(p3, p8, p7),
-                //right
-                new Triangle(p2, p3, p7),
-                new Triangle(p2, p7, p6),
-                //left
-                new Triangle(p4, p1, p5),
-                new Triangle(p4, p5, p8),
+                new Triangle(p1, p4, p3),
+                new Triangle(p2, p1, p3),
+//                //top
+                new Triangle(p5, p7, p6),
+                new Triangle(p5, p8, p7),
+//                //front
+                new Triangle(p1, p6, p2),
+                new Triangle(p1, p5, p6),
+//                //back
+                new Triangle(p3, p8, p4),
+                new Triangle(p3, p7, p8),
+//                //right
+                new Triangle(p2, p7, p3),
+                new Triangle(p2, p6, p7),
+//                //left
+                new Triangle(p4, p5, p1),
+                new Triangle(p4, p8, p5),
 
         };
 
@@ -72,7 +78,15 @@ public class Hexahedron extends Shape {
     }
 
     @Override
+    public void move(Vector direction) {
+        for(Triangle t : mTriangles){
+            t.move(direction);
+        }
+    }
+
+    @Override
     public Stream<Triangle> getTriangles() {
+
         return Arrays.stream( mTriangles);
     }
 }

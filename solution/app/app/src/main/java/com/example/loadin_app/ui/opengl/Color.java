@@ -19,6 +19,14 @@ public class Color implements IConvertToFloat{
         this.alpha = alpha;
     }
 
+    public Color adjust(float percentage){
+        return new Color(
+                this.red * percentage,
+                this.green * percentage,
+                this.blue * percentage,
+                this.alpha
+        );
+    }
 
     @Override
     public Stream<Float> asFloats() {

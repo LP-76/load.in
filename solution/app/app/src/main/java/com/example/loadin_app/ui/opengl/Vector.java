@@ -29,6 +29,23 @@ public class Vector  {
         );
     }
 
+    public Vector multiply(float scalar){
+        return new Vector(
+                getX() * scalar,
+                getY() * scalar,
+                getZ() * scalar
+        );
+    }
+
+    public Vector  normalize(){
+        float length = (float)Math.sqrt(Math.pow(getX(), 2) + Math.pow(getY(), 2)+ Math.pow(getZ(), 2) );
+        return new Vector(
+                getX() / length,
+                getY() / length,
+                getZ() / length
+        );
+    }
+
 
     public float getX(){
         return values[0];
@@ -49,6 +66,15 @@ public class Vector  {
                 );
         return result;
 
+    }
+    public Vector add(Vector other){
+        Vector result = new Vector(
+                values[0] + other.values[0],
+                values[1] + other.values[1],
+                values[2] + other.values[2],
+                color //persist the color
+        );
+        return result;
     }
 
 
