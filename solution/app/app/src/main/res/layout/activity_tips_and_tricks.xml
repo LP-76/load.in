@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/load_in_gray"
     tools:context=".TipsAndTricksActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -58,31 +57,47 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"/>
     <!-- Paul: Add Documentation -->
-    <VideoView
-        android:id="@+id/videoview"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="4:3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <!-- Paul: Add Documentation -->
     <TextView
-        android:id="@+id/eric_andre_let_me_IN"
+        android:id="@+id/articleTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="55dp"
         android:layout_marginEnd="24dp"
         android:backgroundTint="@color/white"
         android:selectAllOnFocus="true"
-        android:text="Let me in, LET ME INNNNNNNNNNNNNNNN"
+        android:gravity="center"
         android:textSize="24sp"
         android:textColor="@color/load_in_green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <VideoView
+        android:id="@+id/articleVideo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintDimensionRatio="4:3"
+        app:layout_constraintEnd_toEndOf="@id/articleTitle"
+        app:layout_constraintStart_toStartOf="@id/articleTitle"
+        app:layout_constraintTop_toBottomOf="@id/articleTitle"/>
+    <!-- Paul: Add Documentation -->
+
+    <TextView
+        android:id="@+id/articleContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/white"
+        android:selectAllOnFocus="true"
+        android:textSize="24sp"
+        android:textColor="@color/load_in_green"
+        app:layout_constraintEnd_toEndOf="@id/articleVideo"
+        app:layout_constraintStart_toStartOf="@id/articleVideo"
+        app:layout_constraintTop_toBottomOf="@id/articleVideo" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
