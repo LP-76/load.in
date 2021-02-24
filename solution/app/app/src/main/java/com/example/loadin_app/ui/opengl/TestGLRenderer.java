@@ -42,7 +42,8 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         theWorld = new World();
         theCamera = new Camera();
-        theCamera.placeCamera(new Vector(0f, 0f, 2f));
+        theCamera.placeCamera(new Vector(-3f, 10f, -3f));
+        theCamera.lookAt(new Vector(3f, 0f, 3f));  //test looking at the truck right corner
 
 
 
@@ -72,6 +73,10 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         Box test = new Box(24f,24f,24f, theWorld); //a 2 foot box
         test.place(new Vector(t.getWidthInches() - 24f, 0f, t.getLengthInches() - 24f));
         test.draw(vPMatrix, viewMatrix);
+
+
+
+
 //
        // Box test2 = new Box(0.6f,0.3f,0.9f, theWorld);
        // test2.place(new Vector(-0.5f, -0.5f, 0));

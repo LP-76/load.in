@@ -35,6 +35,51 @@ public class Camera {
     }
 
 
+    public void lookAt(Vector pointOfInterest){
+        Vector toLookAt = location.add(pointOfInterest.multiply(-1f)).multiply(-1f);  //this gets us the vector to be able to change our camera view
+        //toLookAt is a vector from the center of our camera to the point of interest
+
+        //we need to figure out pitch and yaw
+        yaw = calculateNewYaw(toLookAt);
+        pitch = calculateNewPitch(toLookAt);
+
+
+        updateCameraVectors(); //apply the changes to the camera vectors from pitch and yaw
+    }
+
+    private float calculateNewYaw(Vector toLookAt){
+        //we're going to get a new yaw from this vector
+
+        //yaw is between the x and z axis
+
+
+        float length = toLookAt.getLength();
+        float a = toLookAt.getZ();  //this is just left to right
+
+        if(length == 0f)
+            return 0f;
+
+        return  (float)Math.toDegrees(Math.acos(a/length));
+
+    }
+    private float calculateNewPitch(Vector toLookAt){
+        //pitch is between the x and y axis
+        //z axis is on the same plane as x
+
+        //pitch is the angle we are trying to figure out
+
+        float length = toLookAt.getLength();
+        float b = toLookAt.getY();  //y indicates up or down from the current location
+
+        if(length == 0f)
+            return 0f;
+
+        return  (float)Math.toDegrees(Math.asin(b/length));
+
+
+
+    }
+
     public float getYaw() {
         return yaw;
     }

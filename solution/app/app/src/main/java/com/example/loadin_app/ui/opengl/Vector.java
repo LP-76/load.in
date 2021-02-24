@@ -37,8 +37,12 @@ public class Vector  {
         );
     }
 
+    public float getLength(){
+        return (float)Math.sqrt(Math.pow(getX(), 2) + Math.pow(getY(), 2)+ Math.pow(getZ(), 2) );
+    }
+
     public Vector  normalize(){
-        float length = (float)Math.sqrt(Math.pow(getX(), 2) + Math.pow(getY(), 2)+ Math.pow(getZ(), 2) );
+        float length = getLength();
         return new Vector(
                 getX() / length,
                 getY() / length,

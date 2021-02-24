@@ -30,9 +30,13 @@ public class Truck extends WorldObject
     {
         super(parent);
         shapes = new ArrayList<Shape>();
-        lengthInches = 202f;
-        widthInches = 87f;
-        heightInches = 86f;
+        //UHAUL SAMPLE TRUCK THAT's a 17 footer
+
+
+
+        lengthInches = 14f * 12f + 3f;  //14foot 3 inches
+        widthInches = 7f * 12f + 8f;
+        heightInches = 7f*12f + 2f;
         costPerDayDollars = 39.95f;
         costPerMileDollars = 0.99f;
 
