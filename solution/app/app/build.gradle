@@ -56,4 +56,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0' //Setup for Retrofit 2
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     compileOnly 'com.google.android.wearable:wearable:2.6.0'
+
+    // https://mvnrepository.com/artifact/org.apache.lucene/lucene-core
+    implementation group: 'org.apache.lucene', name: 'lucene-core', version: '8.8.1'
+
+    // https://mvnrepository.com/artifact/org.apache.lucene/lucene-queryparser
+    implementation group: 'org.apache.lucene', name: 'lucene-queryparser', version: '8.8.1'
 }

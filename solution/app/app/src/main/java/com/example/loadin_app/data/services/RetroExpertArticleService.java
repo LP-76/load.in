@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 import odu.edu.loadin.common.BoxSize;
 import odu.edu.loadin.common.ExpertArticle;
-import odu.edu.loadin.common.ExpertArticleSearch;
+//import odu.edu.loadin.common.ExpertArticleSearch;
 import odu.edu.loadin.common.User;
 import odu.edu.loadin.common.UserLoginRequest;
 import retrofit2.Call;
