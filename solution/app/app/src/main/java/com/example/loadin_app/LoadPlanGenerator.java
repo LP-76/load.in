@@ -8,7 +8,10 @@ import java.util.*;
 public class LoadPlanGenerator
 {
     private Truck movingTruck;
+
     private ArrayList<Box> moveInventory = new ArrayList<Box>();
+
+    private List<EmptySpace> emptySpace = new ArrayList<EmptySpace>();
 
     public LoadPlanGenerator()
     {
@@ -25,8 +28,6 @@ public class LoadPlanGenerator
 //            moveInventory.add(new Box(15f, 25f, 30f));
 
       //TODO: more dummy data
-
-
     }
 
     private void GetTruckSize()
@@ -37,7 +38,14 @@ public class LoadPlanGenerator
 
     private void GenerateLoadPlan()
     {
-        LoadPlan plan = new LoadPlan(movingTruck, moveInventory);
+        //To start, the truck is entirely empty, so we'll construct an empty space representing the total dimensions of the truck.
+        emptySpace.add(new EmptySpace(movingTruck.getLengthInches(), movingTruck.getWidthInches(), movingTruck.getHeightInches()));
+
+
         //TODO: some crazy math
+
+
+
+        //LoadPlan plan = new LoadPlan(movingTruck, moveInventory);
     }
 }

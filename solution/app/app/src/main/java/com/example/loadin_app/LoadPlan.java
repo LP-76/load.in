@@ -7,11 +7,10 @@ import java.util.*;
 //container of boxes, their translations, and loading order
 public class LoadPlan
 {
+    private int numberOfLoads = 0;
+
     public LoadPlan(Truck movingTruck, ArrayList<Box> moveInventory)
     {
         //TODO: Everything
-        //do things
-        //other things
-        //check for best fit
     }
 }

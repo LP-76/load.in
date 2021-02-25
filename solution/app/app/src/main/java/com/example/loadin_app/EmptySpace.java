@@ -6,7 +6,7 @@ public class EmptySpace
 {
     private float length, width, height, volume, lengthWidthArea, lengthHeightArea, widthHeightArea;
 
-    public EmptySpace(float input_width, float input_length, float input_height)
+    public EmptySpace(float input_length, float input_width, float input_height)
     {
         length = input_length;
         width = input_width;
