@@ -55,7 +55,7 @@ public class Truck extends WorldObject
         float width = widthInches ;
         float length = lengthInches ;
 
-        Hexahedron floor = new Hexahedron(
+        ColorHexahedron floor = new ColorHexahedron(
                 width, //we'll say approximately 4 inches thick for now
                 wallThickness,
                 length,
@@ -63,7 +63,7 @@ public class Truck extends WorldObject
         );
         floor.move(new Vector(0f, -wallThickness, 0f));  //move down below 0,0 line
 
-        Hexahedron leftWall = new Hexahedron(
+        ColorHexahedron leftWall = new ColorHexahedron(
                 wallThickness, //we'll say approximately 4 inches thick for now
                 height,
                 length,
@@ -71,7 +71,7 @@ public class Truck extends WorldObject
         );
         leftWall.move(new Vector( width, 0f, 0f));  //move to the left 4 inches
 
-        Hexahedron frontWall = new Hexahedron(
+        ColorHexahedron frontWall = new ColorHexahedron(
                 width, //we'll say approximately 4 inches thick for now
                 height,
                 wallThickness,
@@ -93,6 +93,11 @@ public class Truck extends WorldObject
     public Stream<Shape> getShapes()
     {
         return shapes.stream();
+    }
+
+    @Override
+    public OpenGLProgram getMyProgram() {
+        return myWorld.getLightViewProgram();
     }
 
     public float GetAreaOfTruckInches()

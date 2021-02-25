@@ -1,8 +1,15 @@
 package com.example.loadin_app.ui.opengl;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
+
+import com.example.loadin_app.R;
 
 public class TestGLSurfaceView extends GLSurfaceView {
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
@@ -19,12 +26,17 @@ public class TestGLSurfaceView extends GLSurfaceView {
         super(context);
         setEGLContextClientVersion(2);
 
-        renderer = new TestGLRenderer();
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.userstories);
+
+        renderer = new TestGLRenderer(bitmap);
         setRenderer(renderer);
         panMode = true;
 
         // Render the view only when there is a change in the drawing data
         //setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+
+
+
 
     }
 

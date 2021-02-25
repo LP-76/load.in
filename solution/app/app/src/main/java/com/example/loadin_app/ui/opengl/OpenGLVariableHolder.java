@@ -7,13 +7,17 @@ import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.stream.Stream;
 
-public abstract class OpenGLVariableLoader {
+public  class OpenGLVariableHolder {
 
     protected FloatBuffer buffer;
     protected int handle;
     protected int count;
     protected int coordinatesPerItem;
     protected String variableName;
+
+    public String getVariableName() {
+        return variableName;
+    }
 
     public int getCoordinatesPerItem() {
         return coordinatesPerItem;
@@ -31,13 +35,13 @@ public abstract class OpenGLVariableLoader {
         return count;
     }
 
-    public OpenGLVariableLoader(float[] data, int coordinatesPerItem, String variableName){
+    public OpenGLVariableHolder(float[] data, int coordinatesPerItem, String variableName){
         this.variableName = variableName;
         this.coordinatesPerItem = coordinatesPerItem;
         // initialize vertex byte buffer for shape coordinates
        setData(data);;
     }
-    public OpenGLVariableLoader(Stream<Float> data, int coordinatesPerItem, String variableName){
+    public OpenGLVariableHolder(Stream<Float> data, int coordinatesPerItem, String variableName){
         this.coordinatesPerItem = coordinatesPerItem;
         this.variableName = variableName;
 
@@ -65,9 +69,5 @@ public abstract class OpenGLVariableLoader {
         buffer.position(0);
 
     }
-
-
-    public abstract void establishHandle(int programHandle);
-    public abstract void uploadData();
 
 }

@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 
 public class Box extends WorldObject{
     private final Color BOX_COLOR =  new Color(102f/255f, 84f/255f, 74f/255f, 1f);
-   private Hexahedron mHexahedron;
+   private ColorHexahedron mHexahedron;
 
    private Vector destination;
 
@@ -13,7 +13,7 @@ public class Box extends WorldObject{
         super(world);
 
 
-       mHexahedron = new Hexahedron(
+       mHexahedron = new ColorHexahedron(
                width ,
                height ,
                length
@@ -33,8 +33,13 @@ public class Box extends WorldObject{
         return Arrays.stream(new Shape[]{ mHexahedron });
     }
 
+    @Override
+    public OpenGLProgram getMyProgram() {
+        return myWorld.getLightViewProgram();
+    }
+
     public void rotateLeftBy90Degrees(){
-        mHexahedron = new Hexahedron(mHexahedron.getLength(), mHexahedron.getHeight(), mHexahedron.getWidth(), mHexahedron.getColor() );
+        mHexahedron = new ColorHexahedron(mHexahedron.getLength(), mHexahedron.getHeight(), mHexahedron.getWidth(), mHexahedron.getColor() );
     }
 
     public boolean intersects(Box otherBox){

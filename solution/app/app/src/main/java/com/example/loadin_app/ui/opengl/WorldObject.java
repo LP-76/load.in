@@ -2,7 +2,6 @@ package com.example.loadin_app.ui.opengl;
 
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.os.SystemClock;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -25,21 +24,17 @@ public abstract class  WorldObject  {
    // private final float[] mLightPosInWorldSpace = new float[4];
    // private final float[] mLightPosInEyeSpace = new float[4];
 
-    private World myWorld;
+    protected World myWorld;
 
-    private OpenGLVariableLoader vertexBuffer;
-    private OpenGLVariableLoader colorBuffer;
-    private OpenGLVariableLoader orthogonalBuffer;
-    private OpenGLUniformMatrix3fv lightBuffer;
+    private OpenGLVariableHolder vertexBuffer;
+    private OpenGLVariableHolder colorBuffer;
+    private OpenGLVariableHolder orthogonalBuffer;
+    private OpenGLVariableHolder lightBuffer;
 
     public  WorldObject(World world){
         offset = new Vector(0,0,0);
         myWorld = world;
     }
-
-
-
-
 
     public void place(Vector offset){
         this.offset  = offset;
@@ -52,27 +47,7 @@ public abstract class  WorldObject  {
         );
     }
 
-    private void loadBuffer(float[] viewMatrix){
-        //put the items into the buffers here
-       vertexBuffer = new OpenGLVertexAttribute(getVectorCoordinates(), 3, World.StandardLightViewProgram.A_POSITION,3*4);
-       colorBuffer = new OpenGLVertexAttribute(getVectorColors(), 4, World.StandardLightViewProgram.A_COLOR, 4*4);
-       orthogonalBuffer = new OpenGLVertexAttribute(getOrthogonalVectors(), 3, World.StandardLightViewProgram.A_NORMAL, 3*4);
 
-
-//        long time = SystemClock.uptimeMillis() % 10000L;
-//        float angleInDegrees = (360.0f / 10000.0f) * ((int) time);
-//
-//        Matrix.setIdentityM(mLightModelMatrix, 0);
-//        Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, -4.0f);
-//        Matrix.rotateM(mLightModelMatrix, 0, angleInDegrees, 1.0f, 1.0f, 0.0f);
-//        Matrix.translateM(mLightModelMatrix, 0, 0.0f, 0.0f, 2.0f);
-//        Matrix.multiplyMV(mLightPosInWorldSpace, 0, mLightModelMatrix, 0, mLightPosInModelSpace, 0);
-//        Matrix.multiplyMV(mLightPosInEyeSpace, 0, viewMatrix, 0, mLightPosInWorldSpace, 0);
-
-       lightBuffer = new OpenGLUniformMatrix3fv(mLightPosInModelSpace, 4, World.StandardLightViewProgram.U_LIGHTPOS);
-
-
-    }
 
     public abstract Stream<Shape> getShapes();
 
@@ -124,65 +99,55 @@ public abstract class  WorldObject  {
         return postScaleMatrix;
     }
 
+    public abstract OpenGLProgram getMyProgram();
 
-    private void uploadLightInformation(float[] viewMatrix){
+    public  void uploadDataForShader(OpenGLProgram program){
+        uploadLightInformation(program);
+        uploadPositionInformation(program);
+        uploadColorInformation(program);
+    }
 
-
-        lightBuffer.establishHandle(myWorld.getLightViewProgram().getProgramHandle());
-
-        lightBuffer.uploadData();
-
-
-
+    public void cleanupAfterDraw(){
+        GLES20.glDisableVertexAttribArray(vertexBuffer.getHandle());
+        GLES20.glDisableVertexAttribArray(colorBuffer.getHandle());
     }
 
 
+protected void uploadLightInformation(OpenGLProgram program){
+   // lightBuffer = new OpenGLVariableHolder(mLightPosInModelSpace, 4, World.StandardLightViewProgram.U_LIGHTPOS);
+    //program.setUniformMatrix3fv(lightBuffer);  //upload the light information
+}
 
-    private void uploadPositionInformation(){
-
-        vertexBuffer.establishHandle(myWorld.getLightViewProgram().getProgramHandle());
-        GLES20.glEnableVertexAttribArray(vertexBuffer.handle);
-        vertexBuffer.uploadData();  //load into memory
+    protected void uploadPositionInformation(OpenGLProgram program){
+        vertexBuffer = new OpenGLVariableHolder(getVectorCoordinates(), 3, World.StandardLightViewProgram.A_POSITION);
+        program.setVertexAttributePointer(vertexBuffer, 3*4);
 
     }
 
-    private void uploadColorInformation(){
-        colorBuffer.establishHandle(myWorld.getLightViewProgram().getProgramHandle());
-        GLES20.glEnableVertexAttribArray(colorBuffer.handle);
-        colorBuffer.uploadData();
-
+    protected void uploadColorInformation(OpenGLProgram program){
+        colorBuffer = new OpenGLVariableHolder(getVectorColors(), 4, World.StandardLightViewProgram.A_COLOR);
+        program.setVertexAttributePointer(colorBuffer, 4*4);
 
 
     }
     private  void uploadNormalInformation(){
-        orthogonalBuffer.establishHandle(myWorld.getLightViewProgram().getProgramHandle());
-        GLES20.glEnableVertexAttribArray(orthogonalBuffer.handle);
-        orthogonalBuffer.uploadData();
-
+//        orthogonalBuffer.establishHandle(myWorld.getLightViewProgram().getProgramHandle());
+//        GLES20.glEnableVertexAttribArray(orthogonalBuffer.handle);
+//        orthogonalBuffer.uploadData();
+        //orthogonalBuffer = new OpenGLVertexAttribute(getOrthogonalVectors(), 3, World.StandardLightViewProgram.A_NORMAL, 3*4);
     }
 
     /*
     The mvp matrix is the matrix that has been configured as the view and the projection at a higher level
      */
     public void draw(float[] mvpMatrix, float[] viewMatrix) {
-        GLES20.glUseProgram(myWorld.getLightViewProgram().getProgramHandle());
+        OpenGLProgram program = getMyProgram();
+        GLES20.glUseProgram(program.getProgramHandle());
 
-        loadBuffer(viewMatrix);
-        float[] postScaleMatrix = processScale(mvpMatrix);
-        float[] postTranslationMatrix = processTranslation(postScaleMatrix);  //here we are applying the translation to the object
+        float[] postScaleMatrix = processScale(mvpMatrix);  //scale the object to size
+        float[] postTranslationMatrix = processTranslation(postScaleMatrix);  //move the object in the world
 
-        //depending upon the world offset
-
-
-        uploadPositionInformation(); //this uploads the verticies of the object to the engine
-        uploadColorInformation();  //this uploads the necissary things for the color
-        uploadNormalInformation();  //this is the orthogonal information for the lights
-        uploadLightInformation(viewMatrix);
-
-        //int colorHandle = GLES20.glGetUniformLocation(program, "vColor");
-
-        // Set color for drawing the triangle
-        //GLES20.glUniform4fv(colorHandle, 1, color, 0);
+        uploadDataForShader(program);  //establish variables for programs
 
         // get handle to shape's transformation matrix
         vPMatrixHandle = GLES20.glGetUniformLocation(myWorld.getLightViewProgram().getProgramHandle(), MVP_MATRIX);
@@ -198,6 +163,7 @@ public abstract class  WorldObject  {
 
 
 
+        //GLES20.glDisableVertexAttribArray(orthogonalBuffer.getHandle());
     }
 
 }

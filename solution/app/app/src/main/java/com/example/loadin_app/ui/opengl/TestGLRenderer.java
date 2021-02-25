@@ -1,5 +1,7 @@
 package com.example.loadin_app.ui.opengl;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
@@ -9,7 +11,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 public class TestGLRenderer implements GLSurfaceView.Renderer {
-
+    public static final Color LOAD_IN_GREEN = new Color(109, 209, 161, 1);
     private final float[] vPMatrix = new float[16];
     private final float[] projectionMatrix = new float[16];
     private  float[] viewMatrix = new float[16];
@@ -27,8 +29,9 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
     private World theWorld;
     private Camera theCamera;
-    public TestGLRenderer(){
-
+    private Bitmap testBitmap;
+    public TestGLRenderer(Bitmap source){
+        testBitmap = source;
 
     }
 
@@ -75,12 +78,14 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         test.draw(vPMatrix, viewMatrix);
 
 
+        Sign testSign = new Sign(theWorld, 12f, 12f);
+        //testSign.setMessage("Hello cruel world");
+        testSign.testBitmap(testBitmap);
+        testSign.place(new Vector(1f,1f, 1f));
+        testSign.draw(vPMatrix, viewMatrix);
 
 
 //
-       // Box test2 = new Box(0.6f,0.3f,0.9f, theWorld);
-       // test2.place(new Vector(-0.5f, -0.5f, 0));
-       // test2.draw(vPMatrix, viewMatrix);
 
 
     }
