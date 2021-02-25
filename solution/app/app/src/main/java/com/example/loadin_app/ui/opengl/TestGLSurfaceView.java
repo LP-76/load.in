@@ -25,8 +25,9 @@ public class TestGLSurfaceView extends GLSurfaceView {
     public TestGLSurfaceView(Context context){
         super(context);
         setEGLContextClientVersion(2);
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.userstories);
+        BitmapFactory.Options ops = new BitmapFactory.Options();
+        ops.inScaled = false;
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.blah, ops);
 
         renderer = new TestGLRenderer(bitmap);
         setRenderer(renderer);

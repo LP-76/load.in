@@ -34,6 +34,7 @@ public abstract class  WorldObject  {
     public  WorldObject(World world){
         offset = new Vector(0,0,0);
         myWorld = world;
+        myWorld.addObject(this);;
     }
 
     public void place(Vector offset){
@@ -150,8 +151,8 @@ protected void uploadLightInformation(OpenGLProgram program){
         uploadDataForShader(program);  //establish variables for programs
 
         // get handle to shape's transformation matrix
-        vPMatrixHandle = GLES20.glGetUniformLocation(myWorld.getLightViewProgram().getProgramHandle(), MVP_MATRIX);
-        mMVMatrixHandle = GLES20.glGetUniformLocation(myWorld.getLightViewProgram().getProgramHandle(), U_MV_MATRIX);
+        vPMatrixHandle = GLES20.glGetUniformLocation(program.getProgramHandle(), MVP_MATRIX);
+        mMVMatrixHandle = GLES20.glGetUniformLocation(program.getProgramHandle(), U_MV_MATRIX);
 
         // Pass the projection and view transformation to the shader
         GLES20.glUniformMatrix4fv(vPMatrixHandle, 1, false, postTranslationMatrix, 0);
@@ -162,6 +163,7 @@ protected void uploadLightInformation(OpenGLProgram program){
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexBuffer.getCount());
 
 
+        cleanupAfterDraw();
 
         //GLES20.glDisableVertexAttribArray(orthogonalBuffer.getHandle());
     }

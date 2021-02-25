@@ -17,13 +17,17 @@ public class Sign extends  WorldObject{
     private Bitmap renderedMessage;
     private OpenGLVariableHolder textureCoordinates;
     private TexturedHexahedron board;
+    private Texture tex;
 
     public Sign(World w, float width, float height){
         super(w);
-        message = "";
+        message = "Hello cruel world";
         renderMessage();
 
         board = new TexturedHexahedron(width, height, 1f);
+
+        GLES20.glUseProgram(getMyProgram().getProgramHandle());
+        tex = new Texture(renderedMessage, getMyProgram(), World.TextureCoordinateProgram.U_TEXTURE); //load the texture
     }
 
     public void setMessage(String message){
@@ -32,7 +36,9 @@ public class Sign extends  WorldObject{
     }
 
     public void testBitmap(Bitmap source){
+
         renderedMessage = source;
+
     }
 
     private void renderMessage(){
@@ -40,11 +46,9 @@ public class Sign extends  WorldObject{
         Bitmap bitmap = Bitmap.createBitmap(256, 256, Bitmap.Config.ARGB_4444);
 // get a canvas to paint over the bitmap
         Canvas canvas = new Canvas(bitmap);
-        bitmap.eraseColor(Color.rgb(
-                TestGLRenderer.LOAD_IN_GREEN.red,
-                TestGLRenderer.LOAD_IN_GREEN.green,
-                TestGLRenderer.LOAD_IN_GREEN.blue
-                ));
+        bitmap.eraseColor(Color.rgb(255,255,255));
+
+
 
 //// get a background image from resources
 //// note the image format must match the bitmap format
@@ -56,9 +60,19 @@ public class Sign extends  WorldObject{
         Paint textPaint = new Paint();
         textPaint.setTextSize(32);
         textPaint.setAntiAlias(true);
-        textPaint.setARGB(0xff, 0x00, 0x00, 0x00);
+        textPaint.setARGB(255, 255, 0, 0x00);
 // draw the text centered
+
+
+
+        float centerX = canvas.getWidth() /2 ;
+        float centerY = canvas.getHeight() /2;
+
+
+        canvas.rotate(180,centerX, centerY );
         canvas.drawText(message, 16,112, textPaint);
+
+
 
         //great we have text, but how the heck do we get it into something??
         if(renderedMessage!= null)
@@ -70,23 +84,20 @@ public class Sign extends  WorldObject{
     public void uploadDataForShader(OpenGLProgram program) {
 
         uploadPositionInformation(program);  //load position data in
-
-        //setup for texture
-
-        Texture tex = new Texture(renderedMessage, program, World.TextureCoordinateProgram.U_TEXTURE); //load the texture
-        program.setUniform1i(World.TextureCoordinateProgram.U_TEXTURE, tex.getHandle());  //bind the variable to the shader so it can see it
-        //GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, tex.getHandle());
-
-
-
+        uploadColorInformation(program);
         //we also need to upload the information for the texture positions
         textureCoordinates = new OpenGLVariableHolder(
                 getTextureCoordinates(),
                 2, World.TextureCoordinateProgram.A_TEX_COORD
         );
-
+//
         program.setVertexAttributePointer(textureCoordinates, 2*4);  //2 coordinates per vertex
+        //setup for texture
+
+        GLES20.glActiveTexture(GLES20.GL_TEXTURE0); //activate texture 0
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, tex.getHandle()); //tell it where the data is
+        getMyProgram().setUniform1i(World.TextureCoordinateProgram.U_TEXTURE, 0);  //bind the variable to the shader so it can see it
+
 
 
     }

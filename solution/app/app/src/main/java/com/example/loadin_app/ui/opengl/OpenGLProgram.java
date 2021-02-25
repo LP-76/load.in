@@ -6,6 +6,7 @@ public abstract class OpenGLProgram {
     private int programHandle;
 
     public OpenGLProgram(){
+
         programHandle = GLES20.glCreateProgram();
     }
 

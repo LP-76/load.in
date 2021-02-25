@@ -45,11 +45,23 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         theWorld = new World();
         theCamera = new Camera();
-        theCamera.placeCamera(new Vector(-3f, 10f, -3f));
-        theCamera.lookAt(new Vector(3f, 0f, 3f));  //test looking at the truck right corner
 
 
 
+        Truck t = new Truck(theWorld);
+        t.move(new Vector(3f, 0f, 3f));
+
+        Box test = new Box(24f,24f,24f, theWorld); //a 2 foot box
+        test.place(new Vector(t.getWidthInches() - 24f, 0f, t.getLengthInches() - 24f));
+
+
+        Sign testSign = new Sign(theWorld, 12f, 12f);
+        //testSign.setMessage("Hello cruel world");
+        testSign.testBitmap(testBitmap);
+        testSign.place(new Vector(1f,1f, 1f));
+
+        theCamera.placeCamera(new Vector(1f, 2f, -2f));
+        theCamera.lookAt(new Vector(1f, 1f, 1f));  //test looking at the truck right corner
     }
 
     public void onDrawFrame(GL10 unused) {
@@ -69,21 +81,9 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         //GLTriangleExample triangle = new GLTriangleExample();
         //triangle.draw(vPMatrix);
 
-        Truck t = new Truck(theWorld);
-        t.move(new Vector(3f, 0f, 3f));
-        t.draw(vPMatrix, viewMatrix);
-
-        Box test = new Box(24f,24f,24f, theWorld); //a 2 foot box
-        test.place(new Vector(t.getWidthInches() - 24f, 0f, t.getLengthInches() - 24f));
-        test.draw(vPMatrix, viewMatrix);
-
-
-        Sign testSign = new Sign(theWorld, 12f, 12f);
-        //testSign.setMessage("Hello cruel world");
-        testSign.testBitmap(testBitmap);
-        testSign.place(new Vector(1f,1f, 1f));
-        testSign.draw(vPMatrix, viewMatrix);
-
+        for(WorldObject wo: theWorld.getWorldObjects()){
+            wo.draw(vPMatrix, viewMatrix);
+        }
 
 //
 

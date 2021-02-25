@@ -20,15 +20,16 @@ public class TexturedHexahedron extends Hexahedron{
         float x = width;
         float z = length;
         float y = height;
+        Color white = new Color(1f,1f,1f,1f);
 
-        Vector p1 = new Vector(0, 0, 0);
-        Vector p2 = new Vector(x, 0, 0);
-        Vector p3 = new Vector(x, 0, z);
-        Vector p4 = new Vector(0, 0, z);
-        Vector p5 = new Vector(0, y, 0);
-        Vector p6 = new Vector(x, y, 0f);
-        Vector p7 = new Vector(x, y, z);
-        Vector p8 = new Vector(0, y, z);
+        Vector p1 = new Vector(0, 0, 0, white);
+        Vector p2 = new Vector(x, 0, 0, white);
+        Vector p3 = new Vector(x, 0, z, white);
+        Vector p4 = new Vector(0, 0, z, white);
+        Vector p5 = new Vector(0, y, 0, white);
+        Vector p6 = new Vector(x, y, 0f, white);
+        Vector p7 = new Vector(x, y, z, white);
+        Vector p8 = new Vector(0, y, z, white);
 
         Vector bottomLeft = new Vector(0f, 0f, 0f);
         Vector bottomRight = new Vector(1f, 0f, 0f);
