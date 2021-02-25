@@ -1,9 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/load_in_gray"
     tools:context=".AddItemActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:orientation="vertical"
+            app:titleTextColor="@android:color/white"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/loadinLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:adjustViewBounds="true"
+                android:src="@drawable/loadin_logo"></ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/title_activity_add_item"
+                android:textColor="@color/white"
+                android:textSize="24sp">
+            </TextView>
+        </androidx.appcompat.widget.Toolbar>
+
+        <EditText
+
+            android:id="@+id/BoxDescriptionField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="Box Description"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="textShortMessage"
+            app:layout_constraintBottom_toTopOf="@+id/BoxWidthField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+
+            android:id="@+id/FragilityField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="Fragility"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="textShortMessage"
+            app:layout_constraintBottom_toTopOf="@+id/WeightField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/BoxDescriptionField" />
+
+        <EditText
+
+            android:id="@+id/WeightField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="Weight"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="textShortMessage"
+            app:layout_constraintBottom_toTopOf="@+id/BoxWidthField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/FragilityField" />
+
+        <EditText
+            android:id="@+id/BoxWidthField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="Box Width (Inches)"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toTopOf="@+id/BoxHeightField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/WeightField" />
+
+        <EditText
+            android:id="@+id/BoxHeightField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="Box Height (Inches)"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toTopOf="@+id/BoxDepthField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/BoxWidthField" />
+
+        <EditText
+            android:id="@+id/BoxDepthField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="Box Depth (Inches)"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toTopOf="@+id/AddBoxSizeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/BoxHeightField" />
+
+        <Button
+            android:id="@+id/AddItemButton"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:text="Add Item To Inventory"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.75" />
+
+
+    </LinearLayout>
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

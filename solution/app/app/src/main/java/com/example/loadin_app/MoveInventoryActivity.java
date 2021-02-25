@@ -71,21 +71,6 @@ public class MoveInventoryActivity extends AppCompatActivity {
         mTextView = (TextView) findViewById(R.id.text);
     }
 
-    /*
-    public void editInventory(View view){
-        Intent switchToEditItem = new Intent(MoveInventoryActivity.this, EditItemActivity.class);
-        startActivity(switchToEditItem);
-        finish();
-    }
-
-
-    public void addItem(View view){
-        Intent switchToEditItem = new Intent(MoveInventoryActivity.this, AddItemActivity.class);
-        startActivity(switchToEditItem);
-        finish();
-    }
-    */
-
 
     // Menu icons are inflated just as they were with actionbar
     @Override

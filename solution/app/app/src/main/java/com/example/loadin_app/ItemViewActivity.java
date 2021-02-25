@@ -8,6 +8,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class ItemViewActivity extends AppCompatActivity {
 
@@ -23,6 +27,19 @@ public class ItemViewActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+    }
+
+    public void editInventory(View view){
+        Intent switchToEditItem = new Intent(ItemViewActivity.this, EditItemActivity.class);
+        startActivity(switchToEditItem);
+        finish();
+    }
+
+
+    public void addItem(View view){
+        Intent switchToAddItem = new Intent(ItemViewActivity.this, AddItemActivity.class);
+        startActivity(switchToAddItem);
+        finish();
     }
 
     // Menu icons are inflated just as they were with actionbar

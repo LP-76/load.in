@@ -57,7 +57,8 @@ public class InventoryServiceImpl implements InventoryService {
                     (ResultSet rs) -> {  return rs.getInt("ID"); }).stream().findFirst().orElse(0);
 
             inventory.setId(lastId + 1);  //set the new id here
-            String query = "INSERT INTO USER_INVENTORY_ITEM (ID, MOVE_PLAN_ID, ITEM_DESCRIPTION, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
+            inventory.setMovePlanId(1); //TODO needs to be mapped to user's ID
+            String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,MOVE_PLAN_ID, ITEM_DESCRIPTION, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
                     +" VALUES (?, ?, ?, ?, ?, NULL ,NOW(), NOW() )";
 
             PreparedStatement insertStatement = conn.prepareStatement(query);

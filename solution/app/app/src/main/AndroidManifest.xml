@@ -51,6 +51,20 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".AddItemActivity"
+            android:label="@string/title_activity_add_item">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EditItemActivity"
+            android:label="@string/title_activity_edit_item">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".TipsAndTricksActivity"
             android:label="@string/title_activity_tips_and_tricks">
             <intent-filter>
