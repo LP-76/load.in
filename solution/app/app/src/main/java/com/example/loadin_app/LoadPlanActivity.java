@@ -109,7 +109,7 @@ public class LoadPlanActivity extends AppCompatActivity {
 
     private void StartLoadPlan()
     {
-        //TODO: Load Plan Stuff
+        //LoadPlanGenerator will take it from here!
+        LoadPlanGenerator generator = new LoadPlanGenerator();
     }
-
 }
