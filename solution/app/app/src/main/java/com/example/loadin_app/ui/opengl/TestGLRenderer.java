@@ -54,6 +54,8 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         Box test = new Box(24f,24f,24f, theWorld); //a 2 foot box
         test.place(new Vector(t.getWidthInches() - 24f, 0f, t.getLengthInches() - 24f));
 
+        Box test2= new Box(48f,48f,24f, theWorld); //a 2 foot box
+        test2.place(new Vector(32f, 0f, 32f));
 
         Sign testSign = new Sign(theWorld, 12f, 12f);
         //testSign.setMessage("Hello cruel world");

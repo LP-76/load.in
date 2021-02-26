@@ -108,9 +108,9 @@ public abstract class  WorldObject  {
         uploadColorInformation(program);
     }
 
-    public void cleanupAfterDraw(){
-        GLES20.glDisableVertexAttribArray(vertexBuffer.getHandle());
-        GLES20.glDisableVertexAttribArray(colorBuffer.getHandle());
+    public void cleanupAfterDraw(OpenGLProgram program){
+       program.disableVertexAttribute(vertexBuffer.getVariableName());
+       program.disableVertexAttribute(colorBuffer.getVariableName());
     }
 
 
@@ -163,7 +163,7 @@ protected void uploadLightInformation(OpenGLProgram program){
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, vertexBuffer.getCount());
 
 
-        cleanupAfterDraw();
+        cleanupAfterDraw(program);
 
         //GLES20.glDisableVertexAttribArray(orthogonalBuffer.getHandle());
     }

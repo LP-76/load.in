@@ -102,6 +102,12 @@ public class Sign extends  WorldObject{
 
     }
 
+    @Override
+    public void cleanupAfterDraw(OpenGLProgram program) {
+        super.cleanupAfterDraw(program);
+        program.disableVertexAttribute(textureCoordinates.getVariableName());
+    }
+
     Stream<Float> getTextureCoordinates(){
         return board.getTexturedTriangles().flatMap(i -> i.getTextureCoordinates());
     }
