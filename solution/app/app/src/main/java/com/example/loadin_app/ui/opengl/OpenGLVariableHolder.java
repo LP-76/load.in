@@ -27,9 +27,7 @@ public  class OpenGLVariableHolder {
         return buffer;
     }
 
-    public int getHandle() {
-        return handle;
-    }
+
 
     public int getCount() {
         return count;

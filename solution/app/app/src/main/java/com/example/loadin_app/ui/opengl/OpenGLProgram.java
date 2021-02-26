@@ -88,5 +88,9 @@ public abstract class OpenGLProgram {
                 stride, data.getBuffer());
     }
 
+    public void disableVertexAttribute(String variableName){
+        int handle = getAttributeHandle(variableName);
+        GLES20.glDisableVertexAttribArray(handle);
+    }
 
 }
