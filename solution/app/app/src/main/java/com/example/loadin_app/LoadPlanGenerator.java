@@ -11,8 +11,6 @@ public class LoadPlanGenerator
 
     private ArrayList<Box> moveInventory = new ArrayList<Box>();
 
-    private List<EmptySpace> emptySpace = new ArrayList<EmptySpace>();
-
     public LoadPlanGenerator()
     {
         GetMoveInventory();
@@ -38,14 +36,18 @@ public class LoadPlanGenerator
 
     private void GenerateLoadPlan()
     {
-        //To start, the truck is entirely empty, so we'll construct an empty space representing the total dimensions of the truck.
-        emptySpace.add(new EmptySpace(movingTruck.getLengthInches(), movingTruck.getWidthInches(), movingTruck.getHeightInches()));
+        LoadPlan plan = new LoadPlan(movingTruck); //make an empty load plan based on the dimensions of the truck
 
+        for (Box box : moveInventory)//for each box..
+        {
+            for(Load currentLoad : plan.GetLoads()) //look in each truck...
+            {
+                for (EmptySpace currentSpace : currentLoad.GetEmptySpaces()) //through all the empty spaces in that truck...
+                {
+                    //TODO: Actual load plan figuring out
 
-        //TODO: some crazy math
-
-
-
-        //LoadPlan plan = new LoadPlan(movingTruck, moveInventory);
+                }
+            }
+        }
     }
 }
