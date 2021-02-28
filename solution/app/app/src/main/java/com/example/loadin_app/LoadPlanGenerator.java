@@ -22,8 +22,8 @@ public class LoadPlanGenerator
     {
         //TODO: Get the full Move Inventory
 
-//      for(int x = 0; x < 20; x++)
-//            moveInventory.add(new Box(15f, 25f, 30f));
+        //      for(int x = 0; x < 20; x++)
+        //            moveInventory.add(new Box(15f, 25f, 30f));
 
       //TODO: more dummy data
     }

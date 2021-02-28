@@ -38,6 +38,11 @@ public class Load
         }
     }
 
+    public boolean HasNextBox()
+    {
+        return (nextBoxIndex + 1) < boxes.size();
+    }
+
     public ArrayList<EmptySpace> GetEmptySpaces()
     {
         return emptySpaces;

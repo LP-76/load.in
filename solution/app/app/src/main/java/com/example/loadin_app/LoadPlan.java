@@ -34,17 +34,23 @@ public class LoadPlan
         loads.get(curLoad).AddBox(input_Box);
     }
 
-    public Box GetNextBox()
+    public Load GetNextLoad()
     {
-        Box nextBox = loads.get(curLoad).GetNextBox();
-
-        if(nextBox != null)
+        if(curLoad < loads.size())
         {
-            return nextBox;
+            Load nextLoad = loads.get(curLoad);
+            curLoad++;
+            return nextLoad;
         }
         else
         {
             return null;
         }
     }
+
+    public boolean HasNextLoad()
+    {
+        return ( curLoad + 1 )  < loads.size();
+    }
+
 }
