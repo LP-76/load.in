@@ -17,6 +17,10 @@ public interface UserService {
     @Path("/user/")
     Response login(UserLoginRequest requestForLogin);
 
+    @POST
+    @Path("/user/")
+    public Response addUser(User user);
+
 
 
 }

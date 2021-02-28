@@ -85,6 +85,40 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public Response addUser(User user) {
+
+        System.out.println("----invoking addUser");
+
+        try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){
+            Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT * FROM USER ORDER BY ID DESC LIMIT 1"),
+                    (ResultSet rs) -> {  return rs.getInt("ID"); }).stream().findFirst().orElse(0);
+
+            user.setId(lastId + 1);  //set the new id here
+            //user.setMovePlanId(user.getId());
+            String query = "INSERT INTO USER( ID , EMAIL, FIRST_NAME, LAST_NAME, PHONE_NUMBER, PASSWORD, CREATED_AT, UPDATED_AT)"
+                    +" VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW() )";
+
+            PreparedStatement insertStatement = conn.prepareStatement(query);
+            insertStatement.setInt(1, user.getId());
+            //insertStatement.setInt(2, user.getMovePlanId());
+            insertStatement.setString(2, user.getEmail());
+            insertStatement.setString(3, user.getFirstName());
+            insertStatement.setString(4, user.getLastName());
+            insertStatement.setString(5, user.getPhoneNumber());
+            insertStatement.setString(6, user.getPassword());
+            System.out.println(insertStatement);
+            insertStatement.executeUpdate();
+
+        }
+        catch (SQLException ex){
+
+        }
+
+        return Response.ok(user).build();
+
+    }
+
     private User mapStandardUserResult(ResultSet rs) throws SQLException {
         User r = new User();
         r.setId(rs.getInt("ID"));
@@ -96,6 +130,8 @@ public class UserServiceImpl implements UserService {
         r.setPhoneNumber(rs.getString("PHONE_NUMBER"));
         return r;
     }
+
+
 
 
 }

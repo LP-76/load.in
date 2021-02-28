@@ -30,7 +30,7 @@ public class ItemViewActivity extends AppCompatActivity {
     }
 
     public void editInventory(View view){
-        Intent switchToEditItem = new Intent(ItemViewActivity.this, EditItemActivity.class);
+        Intent switchToEditItem = new Intent(ItemViewActivity.this, RegistrationActivity.class);
         startActivity(switchToEditItem);
         finish();
     }

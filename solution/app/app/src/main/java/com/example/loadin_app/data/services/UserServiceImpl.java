@@ -41,6 +41,14 @@ public class UserServiceImpl {
         return promise.get().Data;
     }
 
+    public User addUser(User user) throws ExecutionException, InterruptedException {
+        DataWrapper<User> wrapper = new  DataWrapper<User>();
+        wrapper.Data  = user;
+        CompletableFuture<DataWrapper<User>> addPromise = retroService.addUser(wrapper);
+        User result = addPromise.get().Data;
+        return result;
+    }
+
     public LoginResult login(String email, String password) throws IOException {
         LoginResult result = new LoginResult();
 

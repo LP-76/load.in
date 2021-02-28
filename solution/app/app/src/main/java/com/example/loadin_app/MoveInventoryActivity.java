@@ -39,7 +39,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(null);
 
 
-        InventoryServiceImpl newInv = new InventoryServiceImpl("http://10.0.2.2:9000/");;
+        InventoryServiceImpl newInv = new InventoryServiceImpl("http://10.0.2.2:9000/");
         ArrayList<Inventory> inventory = new ArrayList<Inventory>();
         try{
             inventory.addAll(newInv.getInventory());

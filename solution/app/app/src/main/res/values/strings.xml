@@ -35,4 +35,7 @@
     <string name="title_activity_edit_item">Edit Item</string>
     <string name="title_activity_item_view">Item</string>
     <string name="title_activity_add_item">Add Item</string>
+    <string name="prompt_phone">Phone #</string>
+    <string name="prompt_fname">First Name</string>
+    <string name="prompt_lname">Last Name</string>
 </resources>
