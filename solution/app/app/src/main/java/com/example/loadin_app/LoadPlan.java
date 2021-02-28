@@ -11,7 +11,7 @@ public class LoadPlan
     private Truck movingTruck;
 
     private ArrayList<Load> loads = new ArrayList<Load>();
-    private int curLoad = 0;
+    private int curLoadIndex = 0;
 
     public LoadPlan(Truck input_Truck)
     {
@@ -31,26 +31,46 @@ public class LoadPlan
 
     public void AddBox(Box input_Box)
     {
-        loads.get(curLoad).AddBox(input_Box);
+        loads.get(curLoadIndex).AddBox(input_Box);
     }
 
-    public Load GetNextLoad()
+    public Load GetCurrentLoad()
     {
-        if(curLoad < loads.size())
-        {
-            Load nextLoad = loads.get(curLoad);
-            curLoad++;
-            return nextLoad;
-        }
+        if(curLoadIndex < loads.size() && curLoadIndex >= 0)
+            return loads.get(curLoadIndex);
         else
-        {
             return null;
-        }
     }
 
     public boolean HasNextLoad()
     {
-        return ( curLoad + 1 )  < loads.size();
+        return ( curLoadIndex + 1 )  < loads.size();
     }
 
+    public Load GetNextLoad()
+    {
+        if(HasNextLoad())
+        {
+            curLoadIndex++;
+            return loads.get(curLoadIndex);
+        }
+        else
+            return null;
+    }
+
+    public boolean HasPreviousLoad()
+    {
+        return ( curLoadIndex - 1 )  >= 0;
+    }
+
+    public Load GetPreviousLoad()
+    {
+        if(HasPreviousLoad())
+        {
+            curLoadIndex--;
+            return loads.get(curLoadIndex);
+        }
+        else
+            return null;
+    }
 }

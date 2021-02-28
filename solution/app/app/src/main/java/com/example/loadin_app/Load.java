@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Load
 {
-    private int nextBoxIndex = 0;
+    private int curBoxIndex = 0;
 
     private ArrayList<Box> boxes = new ArrayList<Box>();
     private ArrayList<EmptySpace> emptySpaces = new ArrayList<EmptySpace>();
@@ -24,23 +24,44 @@ public class Load
         boxes.add(input_box);
     }
 
-    public Box GetNextBox()
+    public Box GetCurrentBox()
     {
-        if(nextBoxIndex < boxes.size())
-        {
-            Box nextBox = boxes.get(nextBoxIndex);
-            nextBoxIndex++;
-            return nextBox;
-        }
+        if(curBoxIndex < boxes.size() && curBoxIndex >= 0)
+            return boxes.get(curBoxIndex);
         else
-        {
             return null;
-        }
     }
 
     public boolean HasNextBox()
     {
-        return (nextBoxIndex + 1) < boxes.size();
+        return (curBoxIndex + 1) < boxes.size();
+    }
+
+    public Box GetNextBox()
+    {
+        if(HasNextBox())
+        {
+            curBoxIndex++;
+            return boxes.get(curBoxIndex);
+        }
+        else
+            return null;
+    }
+
+    public boolean HasPreviousBox()
+    {
+        return (curBoxIndex - 1) >= 0;
+    }
+
+    public Box GetPreviousBox()
+    {
+        if(HasPreviousBox())
+        {
+            curBoxIndex--;
+            return boxes.get(curBoxIndex);
+        }
+        else
+            return null;
     }
 
     public ArrayList<EmptySpace> GetEmptySpaces()
