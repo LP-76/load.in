@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/load_in_gray"
+    tools:context=".ItemViewActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/load_in_gray"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:minHeight="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextColor="@android:color/white"
+            android:background="?attr/colorPrimary"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <ImageView
+                android:id="@+id/loadinLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/loadin_logo"
+                android:layout_gravity="left">
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_activity_item_view"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:gravity="center">
+            </TextView>
+        </androidx.appcompat.widget.Toolbar>
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/load_in_gray"
+            android:stretchColumns="1">
+            <TableRow>
+                <TextView
+                    android:text="Item: "
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Family Pictures"
+                    android:textColor="@color/white"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="right"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Dimensions: "
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="10x15x20"
+                    android:textColor="@color/white"
+                    android:gravity="right"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Fragility: "
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="2"
+                    android:textColor="@color/white"
+                    android:gravity="right"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Weight: "
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="234.5"
+                    android:textColor="@color/white"
+                    android:gravity="right"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Date Added: "
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="2/21/2021"
+                    android:textColor="@color/white"
+                    android:gravity="right"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Edit Item "
+                    android:textColor="@color/load_in_green"
+                    android:textStyle="bold"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip"
+                    android:clickable="true"
+                    android:onClick="editInventory"/>
+                <TextView
+                    android:text="Add Item"
+                    android:textColor="@color/load_in_green"
+                    android:gravity="right"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip"
+                    android:clickable="true"
+                    android:onClick="addItem"/>
+            </TableRow>
+
+        </TableLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

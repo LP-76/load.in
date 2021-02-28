@@ -6,10 +6,57 @@
  * user guide available at https://docs.gradle.org/4.4.1/userguide/tutorial_java_projects.html
  */
 plugins {
+    id 'application'
+    id 'java'
     id "com.palantir.docker" version "0.22.1"
     id "com.palantir.docker-run" version "0.22.1"
+
+}
+sourceCompatibility = 1.8
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    flatDir {
+        dirs '../../src_repo/apache_cxf/lib', '../common/build/libs'
+    }
 }
 
+dependencies {
+    implementation ':loadin.common:1.0'
+    implementation 'org.apache.cxf:cxf-core:3.4.2'
+    implementation 'org.apache.cxf:cxf-rt-frontend-jaxrs:3.+'
+    implementation 'org.apache.cxf:cxf-rt-rs-client:3.+'
+    implementation 'org.apache.cxf:cxf-rt-transports-http-jetty:3.+'
+    implementation 'org.apache.cxf:cxf-rt-rs-extension-providers:3.4.2'
+    implementation 'org.apache.cxf:cxf-rt-features-logging:3.4.2'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.+'
+    implementation 'org.springframework:spring-context:5.2.+'
+    //compile 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'
+    implementation 'javax.xml.bind:jaxb-api:2.1'
+    implementation 'jakarta.annotation:jakarta.annotation-api:1.+'
+    implementation 'jakarta.xml.ws:jakarta.xml.ws-api:2.3.3'
+    implementation 'jakarta.activation:jakarta.activation-api:1.2.2'
+    implementation 'jakarta.jws:jakarta.jws-api:1.1.1'
+    implementation 'com.sun.xml.messaging.saaj:saaj-impl:1.5.2'
+    implementation 'com.sun.xml.bind:jaxb-impl:2.2.1'
+    implementation 'org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:3.+'
+    implementation 'org.glassfish.jaxb:jaxb-xjc:3.+'
+    implementation 'org.glassfish.corba:glassfish-corba-orb:4.2.2'
+
+    implementation 'org.codehaus.jettison:jettison:1.4.0'
+    //compile 'jakarta.ws.rs:jakarta.ws.rs-api:2.1.6'
+    implementation 'javax.ws.rs:javax.ws.rs-api:2.1.1'
+    implementation 'mysql:mysql-connector-java:8.0.23'
+
+    // Declare the dependency for your favourite test framework you want to use in your tests.
+    // TestNG is also supported by the Gradle Test task. Just change the
+    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
+    // 'test.useTestNG()' to your build script.
+    testCompile 'junit:junit:4.12'
+}
 
 /*
 // Apply the java plugin to add support for Java
@@ -36,6 +83,12 @@ dependencies {
 */
 
 
+application {
+    mainClass = 'odu.edu.loadin.webapi.Server'
+}
+
+
+
 docker {
     name "webapi"
     dockerfile file('test.dockerfile')
@@ -47,4 +100,27 @@ dockerRun{
     image "webapi"
     ports '8080:8080'
     clean true
+}
+
+
+//jar{
+//    manifest {
+//        attributes(
+//                'Main-Class': "odu.edu.loadin.webapi.Server"
+//        )
+//    }
+//    //includes the jar files of third party libraries
+//    from {
+//        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+//    }
+//}
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Load.In Web Api',
+                'Implementation-Version': '1.0.0',
+                'Main-Class': 'odu.edu.loadin.webapi.Server'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
 }

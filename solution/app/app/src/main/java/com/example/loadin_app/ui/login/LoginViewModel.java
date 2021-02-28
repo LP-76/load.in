@@ -11,6 +11,8 @@ import com.example.loadin_app.data.Result;
 import com.example.loadin_app.data.model.LoggedInUser;
 import com.example.loadin_app.R;
 
+import odu.edu.loadin.common.User;
+
 public class LoginViewModel extends ViewModel {
 
     private MutableLiveData<LoginFormState> loginFormState = new MutableLiveData<>();
@@ -31,11 +33,13 @@ public class LoginViewModel extends ViewModel {
 
     public void login(String username, String password) {
         // can be launched in a separate asynchronous job
-        Result<LoggedInUser> result = loginRepository.login(username, password);
+        Result<User> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            User data = ((Result.Success<User>) result).getData();
+            String displayName = data.getFirstName() + " " + data.getLastName();
+
+            loginResult.setValue(new LoginResult(new LoggedInUserView(displayName)));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }

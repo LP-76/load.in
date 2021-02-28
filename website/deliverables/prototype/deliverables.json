@@ -37,6 +37,13 @@
         "template": "features-table",
         "thumbnail": null,
         "downloadTarget": null
+      },
+      {
+        "name": "Prototype Sprint Plan",
+        "description": "",
+        "thumbnail": "deliverables/prototype/Load_in_prototype_sprint_plan",
+        "downloadTarget": "deliverables/prototype/Load_in_prototype_sprint_plan",
+        "template": null
       }
     ]
   },
@@ -63,6 +70,20 @@
         "description": "",
         "thumbnail": "deliverables/prototype/weeklyReports/TeamWeeklyReport3.PNG",
         "downloadTarget": "deliverables/prototype/weeklyReports/TeamWeeklyReport3.docx",
+        "template": null
+      },
+      {
+        "name": "Week 4 Report",
+        "description": "",
+        "thumbnail": "deliverables/prototype/weeklyReports/TeamWeeklyReport4.PNG",
+        "downloadTarget": "deliverables/prototype/weeklyReports/TeamWeeklyReport4.docx",
+        "template": null
+      },
+      {
+        "name": "Week 5 Report",
+        "description": "",
+        "thumbnail": "deliverables/prototype/weeklyReports/TeamWeeklyReport5.PNG",
+        "downloadTarget": "deliverables/prototype/weeklyReports/TeamWeeklyReport5.pdf",
         "template": null
       }
 
