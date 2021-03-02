@@ -56,6 +56,18 @@
     ]
   },
   {
+    "section": "Lab 1 version 2",
+    "id": "lab-1-v2",
+    "deliverables": [
+      {
+        "name": "Byron Aquilino",
+        "description": "",
+        "thumbnail": "deliverables/labs/Byron_Lab1_V2.PNG",
+        "downloadTarget": "deliverables/labs/ByronAquilino_Lab1_V2.pdf"
+      }
+    ]
+  },
+  {
     "section": "Lab 2",
     "id": "lab-2",
     "deliverables": [
