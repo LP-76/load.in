@@ -3,7 +3,7 @@ package com.example.loadin_app.ui.opengl;
 import android.icu.text.MessagePattern;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
-
+import android.os.storage.StorageManager;
 
 
 public class Camera {
@@ -53,13 +53,30 @@ public class Camera {
         //yaw is between the x and z axis
 
 
-        float length = toLookAt.getLength();
-        float a = toLookAt.getZ();  //this is just left to right
+        float length = toLookAt.getLength(); //always positive
+        float a = Math.abs(toLookAt.getZ());  //this is just left to right
+
+        float x = toLookAt.getX();
+        float z = toLookAt.getZ();
+
 
         if(length == 0f)
             return 0f;
 
-        return  (float)Math.toDegrees(Math.acos(a/length));
+        //let's get the arccos as it stands without adjustment
+
+        double cosInRadians = Math.acos(a/length);
+        double cosAsAngle = Math.toDegrees(cosInRadians);
+        //if x and z are positive, make no adjustments
+
+        if(x > 0 && z < 0)
+            cosAsAngle = 180d - cosAsAngle; //second quadrant
+        else if(x < 0 && z < 0)
+            cosAsAngle += 180d; //third quadrant
+        else if(x < 0 && z > 0)
+            cosAsAngle = 360d - cosAsAngle;  //forth quadrant
+
+        return  (float)cosAsAngle;
 
     }
     private float calculateNewPitch(Vector toLookAt){
@@ -79,6 +96,18 @@ public class Camera {
 
 
     }
+
+    public void focusOn(Vector toFocusOn, float distanceInInches ){
+        //we're going to get close to the point and then look at it
+
+        Vector gotoPlace = toFocusOn.add(new Vector(-distanceInInches, distanceInInches, -distanceInInches));  //two feet above, two feet back
+
+        placeCamera(gotoPlace);  //float above the location
+        lookAt(toFocusOn); //look at that item
+
+
+    }
+
 
     public float getYaw() {
         return yaw;
@@ -104,7 +133,7 @@ public class Camera {
 
 
     public void move( Direction dir ){
-        float velocity = 0.25f;
+        float velocity = 0.25f * 12f;
         switch(dir){
             case Left:
                 location = location.add(right.multiply(-velocity));
@@ -154,12 +183,12 @@ public class Camera {
         Vector direction = location.add(front);
         // Set the camera position (View matrix)
         Matrix.setLookAtM(result, 0,
-                location.getX(),
-                location.getY(),
-                location.getZ(),
-                direction.getX(),
-                direction.getY(),
-                direction.getZ(),
+                location.getX() * World.INCHES_TO_WORLD_SCALE,
+                location.getY() * World.INCHES_TO_WORLD_SCALE,
+                location.getZ() * World.INCHES_TO_WORLD_SCALE,
+                direction.getX() * World.INCHES_TO_WORLD_SCALE,
+                direction.getY() * World.INCHES_TO_WORLD_SCALE,
+                direction.getZ() * World.INCHES_TO_WORLD_SCALE,
                 up.getX(),
                 up.getY(),
                 up.getZ());

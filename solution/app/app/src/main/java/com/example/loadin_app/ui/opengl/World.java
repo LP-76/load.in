@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class World {
 
-    //public static final float INCHES_TO_WORLD_SCALE = 1f/12f;  //feet essentially
+    public static final float INCHES_TO_WORLD_SCALE = 1f/12f;  //feet essentially
 
     private OpenGLProgram lightViewProgram;
     private OpenGLProgram textureProgram;

@@ -62,8 +62,10 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         testSign.testBitmap(testBitmap);
         testSign.place(new Vector(1f,1f, 1f));
 
-        theCamera.placeCamera(new Vector(1f, 2f, -2f));
-        theCamera.lookAt(new Vector(1f, 1f, 1f));  //test looking at the truck right corner
+        theCamera.focusOn(test2.getOffset(), 2f * 12f);  //focus at the base of the sign
+
+        //theCamera.placeCamera(new Vector(1f, 2f, -2f));
+        //theCamera.lookAt(new Vector(1f, 1f, 1f));  //test looking at the truck right corner
     }
 
     public void onDrawFrame(GL10 unused) {
