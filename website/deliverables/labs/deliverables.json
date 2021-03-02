@@ -71,6 +71,12 @@
         "description": "",
         "thumbnail": "deliverables/labs/ChrisMillerLab1V2.png",
         "downloadTarget": "deliverables/labs/cmiller_lab1_V2.pdf"
+      },
+      {
+        "name": "Paul Rodriguez",
+        "description": "",
+        "thumbnail": "deliverables/labs/prodriguez_lab1_v2.png",
+        "downloadTarget": "deliverables/labs/prodriguez_lab1_v2.pdf"
       }
     ]
   },
