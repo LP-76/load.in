@@ -18,7 +18,10 @@ public abstract class  WorldObject  {
     private int vPMatrixHandle;
     private  int mMVMatrixHandle;
 
-    //private float[] mLightModelMatrix = new float[16];
+    public Vector getOffset() {
+        return offset;
+    }
+//private float[] mLightModelMatrix = new float[16];
 
     private final float[] mLightPosInModelSpace = new float[] { 8.0f, 8.0f, 8.0f, 1.0f};
    // private final float[] mLightPosInWorldSpace = new float[4];
