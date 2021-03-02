@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 import com.example.loadin_app.data.services.ExpertArticleImpl;
+import odu.edu.loadin.common.ExpertArticle;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,7 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -158,13 +160,25 @@ public class TipsAndTricksActivity extends AppCompatActivity {
         }
     }
 
-    private void searchForArticle(String articleKeyword)
+    private void searchForArticle(String keyword)
     {
-        System.out.println("Searching for an article with keyword: " + articleKeyword + "!");
+        System.out.println("Searching for an article with keyword: " + keyword + "!");
 
         ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
+        ExpertArticle expertArticle = new ExpertArticle();
         try{
-            service.getExpertArticle(articleKeyword);
+           expertArticle = service.getExpertArticles(keyword);
+            TextView mArticleContent = findViewById(R.id.articleContent);
+            TextView mArticleTitle = findViewById(R.id.articleTitle);
+            mArticleContent.setText(expertArticle.getArticleContent());
+            mArticleTitle.setText(expertArticle.getArticleTitle());
+           System.out.println("Article Keyword is: " + expertArticle.getKeyword());
+           System.out.println("Article Content is: " + expertArticle.getArticleContent());
+           System.out.println("Article Title is: " + expertArticle.getArticleTitle());
+           System.out.println("Article File is: " + expertArticle.getVisualFile());
+           System.out.println("Article Created at: " + expertArticle.getCreatedAt());
+           System.out.println("Article Updated at: " + expertArticle.getUpdatedAt());
+
         }
         catch(Exception ex){
             System.out.println(ex);

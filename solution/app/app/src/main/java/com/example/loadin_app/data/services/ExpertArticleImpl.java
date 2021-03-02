@@ -2,6 +2,7 @@ package com.example.loadin_app.data.services;
 
 
 import com.example.loadin_app.data.RetroBoxService;
+import com.example.loadin_app.data.RetroExpertArticleService;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -9,10 +10,9 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import odu.edu.loadin.common.BoxSize;
 import odu.edu.loadin.common.ExpertArticle;
+import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.User;
-import odu.edu.loadin.common.UserLoginRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +29,7 @@ public class ExpertArticleImpl {
 
     }
 
-    public ExpertArticleImpl(String baseUrl) {
+    public ExpertArticleImpl(String baseUrl){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -37,8 +37,9 @@ public class ExpertArticleImpl {
         retroService = retrofit.create(RetroExpertArticleService.class);
     }
 
-    public ExpertArticle getExpertArticle(String keyword) throws ExecutionException, InterruptedException {
-        CompletableFuture<DataWrapper<ExpertArticle>> promise = retroService.getExpertArticle(keyword);
+    public ExpertArticle getExpertArticles(String keyword) throws ExecutionException, InterruptedException {
+        CompletableFuture<DataWrapper<ExpertArticle>> promise = retroService.getExpertArticles(keyword);
         return promise.get().Data;
     }
+
 }

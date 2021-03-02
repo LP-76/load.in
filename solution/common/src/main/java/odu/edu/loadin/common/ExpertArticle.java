@@ -2,6 +2,7 @@ package odu.edu.loadin.common;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
+
 @XmlRootElement(name="Data")
 public class ExpertArticle {
 
@@ -11,10 +12,11 @@ public class ExpertArticle {
 
     private String keyword;
     private String visualFile;
-    private String ArticleTitle;
-    private String ArticleContent;
+    private String articleTitle;
+    private String articleContent;
     private Date createdAt;
     private Date updatedAt;
+
 
     public String getKeyword() {
         return keyword;
@@ -33,19 +35,19 @@ public class ExpertArticle {
     }
 
     public String getArticleTitle() {
-        return ArticleTitle;
+        return articleTitle;
     }
 
     public void setArticleTitle(String articleTitle) {
-        ArticleTitle = articleTitle;
+        this.articleTitle = articleTitle;
     }
 
     public String getArticleContent() {
-        return ArticleContent;
+        return articleContent;
     }
 
     public void setArticleContent(String articleContent) {
-        ArticleContent = articleContent;
+        this.articleContent = articleContent;
     }
 
     public Date getCreatedAt() {

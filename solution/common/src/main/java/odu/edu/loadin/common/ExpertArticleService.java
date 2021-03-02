@@ -3,13 +3,15 @@ package odu.edu.loadin.common;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-@Path("/expertarticle/")
+@Path("/expertservice/")
 public interface ExpertArticleService {
 
     @GET
-    @Path("/articles/{keyword}")
-    @Produces("application/json")
-    ExpertArticle getExpertArticle(@PathParam("keyword") String keyword);
+    @Path("/expertArticles/{keyword}")
+    @Produces( "application/json" )
+    ExpertArticle getExpertArticles(@PathParam("keyword") String keyword) throws SQLException;
 
 }
