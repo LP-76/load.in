@@ -26,7 +26,7 @@
         "name": "Lance",
         "description": "",
         "thumbnail": "deliverables/labs/lperdue_lab1_ver2.png",
-        "downloadTarget": "deliverables/labs/lperdueLab1_ver3.pdf"
+        "downloadTarget": "deliverables/labs/lperdue_lab1_ver2.pdf"
       },
       {
         "name": "Jason",
@@ -60,19 +60,19 @@
     "id": "lab-1-v2",
     "deliverables": [
       {
-        "name": "Byron Aquilino",
+        "name": "Byron",
         "description": "",
         "thumbnail": "deliverables/labs/Byron_Lab1_V2.PNG",
         "downloadTarget": "deliverables/labs/ByronAquilino_Lab1_V2.pdf"
       },
       {
-        "name": "Chris Miller",
+        "name": "Chris",
         "description": "",
         "thumbnail": "deliverables/labs/ChrisMillerLab1V2.png",
         "downloadTarget": "deliverables/labs/cmiller_lab1_V2.pdf"
       },
       {
-        "name": "Paul Rodriguez",
+        "name": "Paul",
         "description": "",
         "thumbnail": "deliverables/labs/prodriguez_lab1_v2.png",
         "downloadTarget": "deliverables/labs/prodriguez_lab1_v2.pdf"
@@ -84,10 +84,15 @@
         "downloadTarget": "deliverables/labs/JMORA_Lab1v2.docx"
       },
       {
-        "name": "Gregory Kukanich",
+        "name": "Gregory",
         "description": "",
         "thumbnail": "deliverables/labs/Lab1V2screenshot_Greg.png",
         "downloadTarget": "deliverables/labs/Lab1V2_GregoryKukanich.pdf"
+      },{
+        "name": "Lance",
+        "description": "",
+        "thumbnail": "deliverables/labs/lperdue_lab1_ver2.png",
+        "downloadTarget": "deliverables/labs/lperdueLab1_ver3.pdf"
       }
     ]
   },
