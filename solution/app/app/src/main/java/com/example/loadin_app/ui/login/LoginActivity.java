@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -27,7 +28,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.loadin_app.MainMenuActivity;
+import com.example.loadin_app.MoveInventoryActivity;
 import com.example.loadin_app.R;
+import com.example.loadin_app.RegistrationActivity;
 import com.example.loadin_app.ui.login.LoginViewModel;
 import com.example.loadin_app.ui.login.LoginViewModelFactory;
 
@@ -58,7 +62,13 @@ public class LoginActivity extends AppCompatActivity {
         final EditText usernameEditText = findViewById(R.id.username);
         final EditText passwordEditText = findViewById(R.id.password);
         final Button loginButton = findViewById(R.id.login);
+        final Button registerButton = findViewById(R.id.register);
+        registerButton.setEnabled(true);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        //button to skip login and registration
+        final Button skipButton = findViewById(R.id.skip);
+        skipButton.setEnabled(true);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -91,8 +101,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 setResult(Activity.RESULT_OK);
 
-                //Complete and destroy login activity once successful
-                finish();
+                //when login is finished takes user to main menu
+                Intent switchToMainMenu = new Intent(LoginActivity.this, MainMenuActivity.class);
+                startActivity(switchToMainMenu);
+
             }
         });
 
@@ -131,9 +143,28 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
+            }
+        });
+
+        //new registration button, allows user to go and register instead of login
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent switchToRegistration = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(switchToRegistration);
+            }
+        });
+
+        //button to skip login so you dont have to do it for testing
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent switchToMainMenu = new Intent(LoginActivity.this, MainMenuActivity.class);
+                startActivity(switchToMainMenu);
             }
         });
     }

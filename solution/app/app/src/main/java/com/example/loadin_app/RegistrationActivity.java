@@ -11,17 +11,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import odu.edu.loadin.common.User;
 import odu.edu.loadin.common.UserService;
 
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.UserServiceImpl;
+import com.example.loadin_app.ui.login.LoginActivity;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText emailInput, passwordInput, phoneInput, fNameInput, lNameInput;
     private Button registerButton;
+    private String sUsername, sPassword, sFirstName, sLastName, sPhoneNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +43,36 @@ public class RegistrationActivity extends AppCompatActivity {
         phoneInput = (EditText) findViewById(R.id.phone_number);
         fNameInput = (EditText) findViewById(R.id.registration_fname);
         lNameInput = (EditText) findViewById(R.id.registration_lname);
+        //sets user input to strings
+        sUsername = emailInput.getText().toString();
+        sPassword = passwordInput.getText().toString();
+        sFirstName = fNameInput.getText().toString();
+        sLastName = lNameInput.getText().toString();
+        sPhoneNumber = phoneInput.getText().toString();
 
         registerButton = (Button) findViewById(R.id.registration_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                addRegistrationToDB(emailInput.getText().toString(), passwordInput.getText().toString(), fNameInput.getText().toString(),
-                        lNameInput.getText().toString(), phoneInput.getText().toString());
+                //checks to ensure all fields are filled out, pretty ugly but works
+                if (sUsername.matches("") || sPassword.matches("") || sFirstName.matches("") ||
+                        sLastName.matches("")|| sPhoneNumber.matches("")) {
+                    Toast.makeText(RegistrationActivity.this, "Please Fill Each Category", Toast.LENGTH_SHORT).show();
+                }
+
+                else{
+                    addRegistrationToDB(sUsername, sPassword, sFirstName, sLastName, sPhoneNumber);
+                    Intent switchToLogin = new Intent(RegistrationActivity.this, LoginActivity.class);
+                    startActivity(switchToLogin);
+                    Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
     }
+
 
     private void addRegistrationToDB(String inputEmail, String inputPassword, String inputFname, String inputLname, String inputPhone){
 
