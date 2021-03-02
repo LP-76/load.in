@@ -64,6 +64,13 @@
         "description": "",
         "thumbnail": "deliverables/labs/Byron_Lab1_V2.PNG",
         "downloadTarget": "deliverables/labs/ByronAquilino_Lab1_V2.pdf"
+      },
+
+      {
+        "name": "Chris Miller",
+        "description": "",
+        "thumbnail": "deliverables/labs/ChrisMillerLab1V2.png",
+        "downloadTarget": "deliverables/labs/cmiller_lab1_V2.pdf"
       }
     ]
   },
