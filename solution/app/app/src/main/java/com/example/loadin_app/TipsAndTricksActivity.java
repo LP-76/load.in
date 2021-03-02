@@ -9,11 +9,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.URLUtil;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+import com.example.loadin_app.data.services.ExpertArticleImpl;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -47,6 +52,8 @@ public class TipsAndTricksActivity extends AppCompatActivity {
     private TextView mBufferingTextView;
     private int mCurrentPosition = 0;
     private static final String PLAYBACK_TIME = "play_time";
+    private Button searchForArticle;
+    private EditText articleKeyword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +67,17 @@ public class TipsAndTricksActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+
+        articleKeyword = (EditText) findViewById(R.id.articleSearchTool);
+        searchForArticle = (Button) findViewById(R.id.searchForArticle);
+
+        searchForArticle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                searchForArticle(articleKeyword.getText().toString());
+            }
+        });
 
         mVideoView = findViewById(R.id.articleVideo);
 
@@ -140,6 +158,20 @@ public class TipsAndTricksActivity extends AppCompatActivity {
         }
     }
 
+    private void searchForArticle(String articleKeyword)
+    {
+        System.out.println("Searching for an article with keyword: " + articleKeyword + "!");
+
+        ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
+        try{
+            service.getExpertArticle(articleKeyword);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+            //ooops we had an error
+            //TODO: make the user aware
+        }
+    }
     private Uri getMedia(String mediaName) {
         if(URLUtil.isValidUrl(mediaName)) {
             return Uri.parse(mediaName);
