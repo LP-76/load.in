@@ -73,4 +73,9 @@ public class LoadPlan
         else
             return null;
     }
+
+    public Truck GetTruck()
+    {
+        return movingTruck;
+    }
 }
