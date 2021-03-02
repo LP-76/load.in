@@ -56,7 +56,7 @@
     ]
   },
   {
-    "section": "Lab 1 version 2",
+    "section": "Lab 1 Version 2",
     "id": "lab-1-v2",
     "deliverables": [
       {
@@ -65,7 +65,6 @@
         "thumbnail": "deliverables/labs/Byron_Lab1_V2.PNG",
         "downloadTarget": "deliverables/labs/ByronAquilino_Lab1_V2.pdf"
       },
-
       {
         "name": "Chris Miller",
         "description": "",
@@ -79,10 +78,10 @@
         "downloadTarget": "deliverables/labs/prodriguez_lab1_v2.pdf"
       },
       {
-        "name": "Gregory Kukanich",
+        "name": "Jason",
         "description": "",
-        "thumbnail": "deliverables/labs/Lab1V2screenshot_Greg.png",
-        "downloadTarget": "deliverables/labs/Lab1V2_GregoryKukanich.pdf"
+        "thumbnail": "deliverables/labs/JMORA_Lab1v2.PNG",
+        "downloadTarget": "deliverables/labs/JMORA_Lab1v2.docx"
       }
     ]
   },
