@@ -7,6 +7,14 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
+import com.example.loadin_app.LoadPlan;
+import com.example.loadin_app.TestingLoadPlanGenerator;
+
+import java.sql.Time;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.TemporalAmount;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
@@ -30,9 +38,58 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private World theWorld;
     private Camera theCamera;
     private Bitmap testBitmap;
+
+    private LoadPlan theLoadPlan;
+
+    private Vector boxStagingArea;
+
+    private Box currentBox;
+    private  int step;
+    private boolean advanceInProgress;
+
     public TestGLRenderer(Bitmap source){
         testBitmap = source;
+        step = 0;
+        advanceInProgress = false;
+    }
 
+    public void advance(){
+        if(advanceInProgress)
+            return;
+
+        step++;
+        if(step % 2 == 0){
+            //put the box into staging
+            if(theLoadPlan.GetCurrentLoad().HasNextBox())
+                theLoadPlan.GetCurrentLoad().GetNextBox();
+            putNextBoxIntoStaging();
+        }else{
+            moveStagedBoxIntoPosition();
+        }
+
+
+
+    }
+
+
+    private  void putNextBoxIntoStaging(){
+        if(theLoadPlan.GetCurrentLoad().HasNextBox()){
+            currentBox = theLoadPlan.GetCurrentLoad().GetCurrentBox();
+            currentBox.place(boxStagingArea);
+            currentBox.setVisible(true);
+            theCamera.placeCamera(boxStagingArea.add(new Vector(-3f*12f, 3f*12f, -3f*12f )));
+            //theCamera.lookAt(boxStagingArea);
+
+        }
+    }
+
+    private void moveStagedBoxIntoPosition(){
+        if(currentBox != null){
+            advanceInProgress = true;
+            currentBox.moveToLocationOverDuration(Duration.ofSeconds(5), currentBox.getDestination());
+
+            theCamera.placeCamera(currentBox.getDestination().add(new Vector(-3f*12f, 3f*12f, -3f*12f )));
+        }
     }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
@@ -46,29 +103,58 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         theWorld = new World();
         theCamera = new Camera();
 
+        theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
+
+        boxStagingArea = new Vector(0f, 0f, 0f);
+
+       putNextBoxIntoStaging();
 
 
-        Truck t = new Truck(theWorld);
-        t.move(new Vector(3f, 0f, 3f));
 
-        Box test = new Box(24f,24f,24f, theWorld); //a 2 foot box
-        test.place(new Vector(t.getWidthInches() - 24f, 0f, t.getLengthInches() - 24f));
 
-        Box test2= new Box(48f,48f,24f, theWorld); //a 2 foot box
-        test2.place(new Vector(32f, 0f, 32f));
 
-        Sign testSign = new Sign(theWorld, 12f, 12f);
-        //testSign.setMessage("Hello cruel world");
-        testSign.testBitmap(testBitmap);
-        testSign.place(new Vector(1f,1f, 1f));
+//        Truck t = new Truck(theWorld);
+//        t.move(new Vector(3f, 0f, 3f));
+//
+//        Box test = new Box(24f,24f,24f, theWorld); //a 2 foot box
+//        test.place(new Vector(t.getWidthInches() - 24f, 0f, t.getLengthInches() - 24f));
+//
+//         test2= new Box(48f,48f,24f, theWorld); //a 2 foot box
+//        //test2.place(new Vector(32f, 0f, 32f));
+//        test2.place(new Vector(0f, 0f, 0f));
+//
+//
+//
+//        Sign testSign = new Sign(theWorld, 12f, 12f);
+//        //testSign.setMessage("Hello cruel world");
+//        testSign.testBitmap(testBitmap);
+//        testSign.place(new Vector(1f,1f, 1f));
 
-        theCamera.focusOn(test2.getOffset(), 2f * 12f);  //focus at the base of the sign
+       // theCamera.focusOn(test2.getOffset(), 2f * 12f);  //focus at the base of the sign
 
         //theCamera.placeCamera(new Vector(1f, 2f, -2f));
         //theCamera.lookAt(new Vector(1f, 1f, 1f));  //test looking at the truck right corner
     }
 
     public void onDrawFrame(GL10 unused) {
+
+        theWorld.updateTicks();
+
+        for(Animation a : theWorld.getAnimiations().toArray(Animation[]::new)){
+            if(!a.isComplete())
+                a.performOperationPerTick();
+            else{
+                theWorld.removeAnimation(a);
+                advanceInProgress = false;
+            }
+
+         }
+
+        if(currentBox != null)
+            theCamera.lookAt(currentBox.getOffset());  //always look at the current box
+
+
+
       //  float[] scratch = new float[16];
         GLES20.glClearColor(109f/255f, 209f/255f, 161f/255f, 1f);
         // Redraw background color
@@ -86,10 +172,11 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         //triangle.draw(vPMatrix);
 
         for(WorldObject wo: theWorld.getWorldObjects()){
-            wo.draw(vPMatrix, viewMatrix);
+            if(wo.isVisible())
+                wo.draw(vPMatrix, viewMatrix);
         }
 
-//
+
 
 
     }
