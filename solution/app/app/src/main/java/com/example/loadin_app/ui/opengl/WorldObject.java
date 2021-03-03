@@ -3,6 +3,7 @@ package com.example.loadin_app.ui.opengl;
 import android.opengl.GLES20;
 import android.opengl.Matrix;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -28,6 +29,7 @@ public abstract class  WorldObject  {
    // private final float[] mLightPosInEyeSpace = new float[4];
 
     protected World myWorld;
+    private boolean visible;
 
     private OpenGLVariableHolder vertexBuffer;
     private OpenGLVariableHolder colorBuffer;
@@ -37,7 +39,16 @@ public abstract class  WorldObject  {
     public  WorldObject(World world){
         offset = new Vector(0,0,0);
         myWorld = world;
-        myWorld.addObject(this);;
+        myWorld.addObject(this);
+        visible = true;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public void place(Vector offset){
@@ -49,6 +60,11 @@ public abstract class  WorldObject  {
                 offset.getY() + direction.getY(),
                 offset.getZ() + direction.getZ()
         );
+    }
+
+
+    public void moveToLocationOverDuration(Duration timeframe,  Vector newLocation){
+        myWorld.addAnimation( new TransposeAnimation(this, timeframe, myWorld.getTick(), newLocation));
     }
 
 

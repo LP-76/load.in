@@ -4,7 +4,10 @@ package com.example.loadin_app.ui.opengl;
 
 import android.opengl.GLES20;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 public class World {
 
@@ -13,8 +16,10 @@ public class World {
     private OpenGLProgram lightViewProgram;
     private OpenGLProgram textureProgram;
 
+    private ArrayList<Animation> animations;
     private ArrayList<WorldObject> worldObjects;
-
+    private Duration tick;
+    private LocalDateTime lastDraw;
 
     public World(){
         lightViewProgram = new StandardLightViewProgram();
@@ -22,6 +27,7 @@ public class World {
         textureProgram = new TextureCoordinateProgram();
         textureProgram.load();
         worldObjects = new ArrayList<WorldObject>();
+        animations = new ArrayList<Animation>();
     }
     public OpenGLProgram getLightViewProgram(){
         return lightViewProgram;
@@ -30,12 +36,37 @@ public class World {
         return textureProgram;
     }
 
+    public Stream<Animation> getAnimiations(){
+        return animations.stream();
+    }
+
+    public void addAnimation(Animation a){
+        animations.add(a);
+    }
+
+    public void removeAnimation(Animation a){
+        animations.remove(a);
+    }
+
     public void addObject(WorldObject anObject){
         worldObjects.add(anObject);
     }
     public final ArrayList<WorldObject> getWorldObjects(){
         return worldObjects;
     }
+
+
+
+    public void updateTicks(){
+        if(lastDraw != null)
+            tick = Duration.between(lastDraw, LocalDateTime.now() );
+        lastDraw = LocalDateTime.now();
+    }
+
+    public Duration getTick(){
+        return tick;
+    }
+
 
     public class TextureCoordinateProgram extends OpenGLProgram{
 

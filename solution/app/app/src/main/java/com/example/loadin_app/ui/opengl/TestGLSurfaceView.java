@@ -34,7 +34,7 @@ public class TestGLSurfaceView extends GLSurfaceView {
         panMode = true;
 
         // Render the view only when there is a change in the drawing data
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+       // setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
 
 
@@ -51,14 +51,14 @@ public class TestGLSurfaceView extends GLSurfaceView {
         float x = e.getX();
         float y = e.getY();
 
-        if(Math.abs(x - previousX) <= 0.1f && Math.abs(y - previousY) <=0.1f){
-            clickCount++;
-        }
-
-        if(clickCount >2){
-            panMode = !panMode;
-            clickCount = 0;
-        }
+//        if(Math.abs(x - previousX) <= 0.1f && Math.abs(y - previousY) <=0.1f){
+//            clickCount++;
+//        }
+//
+//        if(clickCount >2){
+//            panMode = !panMode;
+//            clickCount = 0;
+//        }
 
         switch (e.getAction()) {
 
@@ -67,29 +67,40 @@ public class TestGLSurfaceView extends GLSurfaceView {
                 float dx = x - previousX;
                 float dy =  previousY - y;  //reversed coordinates
 
-                float sensitivity = 0.1f;
-                Camera c = renderer.getTheCamera();
-                if(panMode){
 
+                if(dy < 0)  //someone swiped to the left
+                {
+                    //next box
+                    renderer.advance();
 
-                    c.setYaw(c.getYaw() + dx * sensitivity);
-                    c.setPitch(c.getPitch() + dy * sensitivity);
-                }else{
-                    //move mode
-
-                    if(dx < 0){
-                        c.move(Camera.Direction.Left);
-                    }else if(dx > 0){
-                        c.move(Camera.Direction.Right);
-                    }
-
-                    if(dy < 0){
-                        c.move(Camera.Direction.Backward);
-                    }else if(dy > 0){
-                        c.move(Camera.Direction.Forward);
-                    }
+                }else if(dy > 0){ //someone swiped to the right
 
                 }
+
+
+                //float sensitivity = 0.1f;
+                //Camera c = renderer.getTheCamera();
+//                if(panMode){
+//
+//
+//                    c.setYaw(c.getYaw() + dx * sensitivity);
+//                    c.setPitch(c.getPitch() + dy * sensitivity);
+//                }else{
+//                    //move mode
+//
+//                    if(dx < 0){
+//                        c.move(Camera.Direction.Left);
+//                    }else if(dx > 0){
+//                        c.move(Camera.Direction.Right);
+//                    }
+//
+//                    if(dy < 0){
+//                        c.move(Camera.Direction.Backward);
+//                    }else if(dy > 0){
+//                        c.move(Camera.Direction.Forward);
+//                    }
+//
+//                }
 
 
 
