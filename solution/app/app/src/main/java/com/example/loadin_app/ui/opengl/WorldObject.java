@@ -109,9 +109,9 @@ public abstract class  WorldObject  {
 
         //set the identity matrix for translation
         Matrix.setIdentityM(scaleMatrix, 0);
-        float scale = 1f/12f;
+
         //add the translation to the matrix
-        Matrix.scaleM(scaleMatrix,0, scale, scale, scale );
+        Matrix.scaleM(scaleMatrix,0, World.INCHES_TO_WORLD_SCALE,  World.INCHES_TO_WORLD_SCALE,  World.INCHES_TO_WORLD_SCALE );
 
         float[] postScaleMatrix = new float[16];
         //apply the translation to the objects matrix translation

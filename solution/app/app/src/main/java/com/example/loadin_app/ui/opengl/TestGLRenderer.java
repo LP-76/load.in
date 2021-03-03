@@ -73,14 +73,17 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
 
     private  void putNextBoxIntoStaging(){
-        if(theLoadPlan.GetCurrentLoad().HasNextBox()){
+
             currentBox = theLoadPlan.GetCurrentLoad().GetCurrentBox();
-            currentBox.place(boxStagingArea);
-            currentBox.setVisible(true);
-            theCamera.placeCamera(boxStagingArea.add(new Vector(-3f*12f, 3f*12f, -3f*12f )));
+            if(currentBox != null){
+                currentBox.place(boxStagingArea);
+                currentBox.setVisible(true);
+
+            }
+
             //theCamera.lookAt(boxStagingArea);
 
-        }
+
     }
 
     private void moveStagedBoxIntoPosition(){
@@ -88,7 +91,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
             advanceInProgress = true;
             currentBox.moveToLocationOverDuration(Duration.ofSeconds(5), currentBox.getDestination());
 
-            theCamera.placeCamera(currentBox.getDestination().add(new Vector(-3f*12f, 3f*12f, -3f*12f )));
+
         }
     }
 
@@ -104,6 +107,9 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         theCamera = new Camera();
 
         theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
+
+        //theCamera.placeCamera(new Vector(-3f*12f, 8f*12f, -3f*12f));
+
 
         boxStagingArea = new Vector(0f, 0f, 0f);
 
@@ -150,8 +156,11 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
          }
 
-        if(currentBox != null)
+        if(currentBox != null){
+            theCamera.placeCamera(currentBox.getOffset().add(new Vector(-3f*12f, 3f*12f, -3f*12f )));
             theCamera.lookAt(currentBox.getOffset());  //always look at the current box
+        }
+
 
 
 

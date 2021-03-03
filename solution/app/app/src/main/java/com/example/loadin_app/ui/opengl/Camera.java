@@ -54,7 +54,7 @@ public class Camera {
 
 
         float length = toLookAt.getLength(); //always positive
-        float a = Math.abs(toLookAt.getZ());  //this is just left to right
+        float a = Math.abs(toLookAt.getX());  //this is just left to right
 
         float x = toLookAt.getX();
         float z = toLookAt.getZ();
@@ -69,11 +69,11 @@ public class Camera {
         double cosAsAngle = Math.toDegrees(cosInRadians);
         //if x and z are positive, make no adjustments
 
-        if(x > 0 && z < 0)
+        if(x < 0 && z > 0)
             cosAsAngle = 180d - cosAsAngle; //second quadrant
         else if(x < 0 && z < 0)
             cosAsAngle += 180d; //third quadrant
-        else if(x < 0 && z > 0)
+        else if(x > 0 && z < 0)
             cosAsAngle = 360d - cosAsAngle;  //forth quadrant
 
         return  (float)cosAsAngle;
