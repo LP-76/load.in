@@ -32,9 +32,6 @@ import javax.ws.rs.core.Response;
 
 public class ExpertArticleServiceImpl implements ExpertArticleService {
 
-
-    private Connection connection = null;
-
     @Override
     public ExpertArticle getExpertArticles(String Keyword){
 
@@ -56,20 +53,10 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
                 article.setArticleContent(resultSet.getString("CONTENT"));
                 article.setArticleTitle(resultSet.getString("TITLE"));
                 expertArticle.add(article);
-
             }
 
-            statement.close();
+            statement.close(); //TODO: Is this needed? I didn't see where this service was close in the previous code. bad practice to leave open
 
-
-
-            //this is more of a transparent method.  person who is performing the query can decide how it gets mapped back to
-            //individual objects
-            /*    ExpertArticle results = StatementHelper.getResults(statement, (ResultSet rs) -> {
-                    return mapStandardArticleResult(rs);
-                }).stream().findFirst().orElse(null);
-
-             */
             try {
                 return startLucene(Keyword, expertArticle);
             } catch (IOException e) {
@@ -85,19 +72,14 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
         return null;
     }
 
-    private ExpertArticle mapStandardArticleResult(ResultSet rs) throws SQLException {
-        ExpertArticle r = new ExpertArticle();
-        r.setKeyword(rs.getString("KEYWORD"));
-        r.setArticleContent(rs.getString("CONTENT"));
-        r.setArticleTitle(rs.getString("TITLE"));
-        r.setCreatedAt(rs.getDate("CREATED_AT"));
-        r.setUpdatedAt(rs.getDate("UPDATED_AT"));
-        r.setVisualFile(rs.getString("IMAGE"));
-        return r;
-    }
-
-
-
+    /**
+     * This is the main driver for the expert tips. The following function takes in the keyword and an array list of expert tips that will be parsed through.
+     * @param keyword - passed in through the android application
+     * @param expertArticles - generated from the database
+     * @return - a single expert tip if a keyword finds a article
+     * @throws IOException -
+     * @throws ParseException -
+     */
     private ExpertArticle startLucene(String keyword, ArrayList<ExpertArticle> expertArticles) throws IOException, ParseException {
 
         ExpertArticle results = new ExpertArticle();
@@ -160,24 +142,18 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
         ScoreDoc[] hits = docs.scoreDocs;
 
 
-        // printing off the result to the console.
-        //Log.d("test","Found " + hits.length + " hits.");
+        // looping through our results.
         for(int i=0; i < hits.length; ++i) {
-
             int docId = hits[i].doc;
             Document doc = searcher.doc(docId);
-            //Log.d("test",(i + 1) + ". Keyword: " + doc.get("keyword") + "\tExpect Tip Title: " + doc.get("title") +
-              //      "\tExpect Tip Article: " + doc.get("article"));
 
+            //grabbing each expert tip and storing it into our ADT
             results.setKeyword(doc.get("keyword"));
             results.setArticleTitle(doc.get("title"));
             results.setArticleContent(doc.get("article"));
-
         }
 
         reader.close();
-
-
         return results;
     }
 
