@@ -32,20 +32,51 @@ import javax.ws.rs.core.Response;
 
 public class ExpertArticleServiceImpl implements ExpertArticleService {
 
+
+    private Connection connection = null;
+
     @Override
     public ExpertArticle getExpertArticles(String Keyword){
 
+
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
+
             //this will auto-close the connection
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM EXPERT_TIP where KEYWORD = ?");
-            statement.setString(1, Keyword);
+            PreparedStatement statement = conn.prepareStatement("SELECT KEYWORD, CONTENT, TITLE FROM EXPERT_TIP");
+            //statement.setString(1, Keyword);
+
+            ResultSet resultSet = statement.executeQuery();
+
+            ArrayList<ExpertArticle> expertArticle = new ArrayList<>();
+
+            while(resultSet.next()){
+                ExpertArticle article = new ExpertArticle();
+
+                article.setKeyword(resultSet.getString("KEYWORD"));
+                article.setArticleContent(resultSet.getString("CONTENT"));
+                article.setArticleTitle(resultSet.getString("TITLE"));
+                expertArticle.add(article);
+
+            }
+
+            statement.close();
+
+
 
             //this is more of a transparent method.  person who is performing the query can decide how it gets mapped back to
             //individual objects
-                ExpertArticle results = StatementHelper.getResults(statement, (ResultSet rs) -> {
+            /*    ExpertArticle results = StatementHelper.getResults(statement, (ResultSet rs) -> {
                     return mapStandardArticleResult(rs);
                 }).stream().findFirst().orElse(null);
-            return results;
+
+             */
+            try {
+                return startLucene(Keyword, expertArticle);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         catch (SQLException ex){
             //TODO: exception logging
@@ -67,7 +98,10 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
 
 
 
-    private void startLucene() throws IOException, ParseException {
+    private ExpertArticle startLucene(String keyword, ArrayList<ExpertArticle> expertArticles) throws IOException, ParseException {
+
+        ExpertArticle results = new ExpertArticle();
+
         // Specify the analyzer for tokenizing text.
         //    The same analyzer should be used for indexing and searching
 
@@ -90,14 +124,14 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
 
         //An IndexWriter creates and maintains an index.
         IndexWriter w = new IndexWriter(index, config);
-        addDoc(w, "Clothes", "Roll Clothes to Keep Things Compact", "Hi");
-        addDoc(w, "Map out", "Map out the best way to get to your new home.", "Whether you’re moving to NYC, across the country, across state lines, or just to a neighboring town, you’re going to need an efficient travel route so you don’t waste your move-in day sitting in gridlock traffic or pulling over three different times to type an address into your GPS.");
-        addDoc(w, "electronics", "Check to see if you have original boxes for your electronics", "Check to see if you stashed these boxes somewhere — attic? Garage? If you don’t have them, make a list of what you’ll need to buy or borrow to properly cushion your stuff.\n Quilted blankets, bubble wrap, and sturdy tape all work well to protect TVs and similarly delicate items.");
-        addDoc(w, "heavy item", "Use small boxes for heavy items.", "It sounds obvious, but if you’ve ever known the struggle that is carrying a large cardboard box stuffed full of college textbooks across a parking lot, then you also know this advice cannot be overstated.");
+        for (ExpertArticle expertArticle : expertArticles) {
+            addDoc(w, expertArticle.getKeyword(), expertArticle.getArticleTitle(), expertArticle.getArticleContent());
+        }
+
         w.close();
 
         // the quertString is the keyword we are matching. If you look at our addDoc function, the param named keyword is what we are searching.
-        String queryString = "heavy";
+        String queryString = keyword;
 
         // the "keyword" arg below specifies the default field to use when querying data. Currently I have three fields we could use: keyword, title, and article. Either of these can replace keyword
         Query query = new QueryParser("keyword", analyzer).parse(queryString);
@@ -125,18 +159,26 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
 
         ScoreDoc[] hits = docs.scoreDocs;
 
-        /*
+
         // printing off the result to the console.
-        Log.d("test","Found " + hits.length + " hits.");
+        //Log.d("test","Found " + hits.length + " hits.");
         for(int i=0; i < hits.length; ++i) {
 
             int docId = hits[i].doc;
             Document doc = searcher.doc(docId);
-            Log.d("test",(i + 1) + ". Keyword: " + doc.get("keyword") + "\tExpect Tip Title: " + doc.get("title") +
-                    "\tExpect Tip Article: " + doc.get("article"));
+            //Log.d("test",(i + 1) + ". Keyword: " + doc.get("keyword") + "\tExpect Tip Title: " + doc.get("title") +
+              //      "\tExpect Tip Article: " + doc.get("article"));
+
+            results.setKeyword(doc.get("keyword"));
+            results.setArticleTitle(doc.get("title"));
+            results.setArticleContent(doc.get("article"));
+
         }
-        */
+
         reader.close();
+
+
+        return results;
     }
 
 

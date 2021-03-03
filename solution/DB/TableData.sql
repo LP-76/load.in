@@ -17,7 +17,13 @@ INSERT INTO USER_INVENTORY_ITEM (USER_ID, ITEM_DESCRIPTION, FRAGILITY, WEIGHT, C
 VALUES (1, 'Mothers Clothes', '2', 234.5, NOW(), NOW());
 
 INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, COMMENTS, CREATED_AT, UPDATED_AT)
-VALUES ('Heavy','HOW TO LIFT PROPERLY', 'LIFT WITH YOUR BACK!', NULL, 'THIS TIP SUCKS', NOW(), NOW());
+VALUES ('Heavy item','Use small boxes for heavy items.', 'LIFT WITH YOUR BACK!', NULL, 'THIS TIP SUCKS', NOW(), NOW());
 
 INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, COMMENTS, CREATED_AT, UPDATED_AT)
 VALUES ('Eric','LET ERIC IN', 'HE NEEDS TO SCREAMMMMMMMMMMM', NULL, 'THIS TIP SUCKS', NOW(), NOW());
+
+INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, COMMENTS, CREATED_AT, UPDATED_AT)
+VALUES ('Clothes','Roll Clothes to Keep Things Compact', 'Just buy new clothes at the new house!', NULL, 'THIS TIP SUCKS', NOW(), NOW());
+
+INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, COMMENTS, CREATED_AT, UPDATED_AT)
+VALUES ('electronics','Check to see if you have original boxes for your electronics', 'Check to see if you stashed these boxes somewhere — attic? Garage? If you don’t have them, make a list of what you’ll need to buy or borrow to properly cushion your stuff.', NULL, 'THIS TIP SUCKS', NOW(), NOW());
