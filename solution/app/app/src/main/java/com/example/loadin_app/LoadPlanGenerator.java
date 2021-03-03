@@ -42,9 +42,11 @@ public class LoadPlanGenerator
         {
             for(Load currentLoad : plan.GetLoads()) //look in each truck...
             {
+                //todo: if any empty space exists...
                 for (EmptySpace currentSpace : currentLoad.GetEmptySpaces()) //through all the empty spaces in that truck...
                 {
                     //TODO: Actual load plan figuring out
+
 
                 }
             }
