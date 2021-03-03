@@ -101,7 +101,6 @@
         android:backgroundTint="@color/white"
         android:selectAllOnFocus="true"
         android:gravity="center"
-        android:text="Eric Andre wants to be let innnnnn"
         android:textSize="24sp"
         android:textColor="@color/load_in_green"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +129,6 @@
         android:selectAllOnFocus="true"
         android:textSize="24sp"
         android:textColor="@color/load_in_green"
-        android:text="He just needs to scream LET ME INNNNNNNN"
         app:layout_constraintEnd_toEndOf="@id/articleVideo"
         app:layout_constraintStart_toStartOf="@id/articleVideo"
         app:layout_constraintTop_toBottomOf="@id/articleVideo" />

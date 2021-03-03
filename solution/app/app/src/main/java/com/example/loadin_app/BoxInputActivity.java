@@ -16,15 +16,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.concurrent.ExecutionException;
 
 import odu.edu.loadin.common.BoxSize;
+import odu.edu.loadin.common.ExpertArticle;
 
 public class BoxInputActivity extends AppCompatActivity
 {
     private EditText descriptionInput, widthInput, depthInput, heightInput;
-    private Button addBoxSizeButton;
+    private Button addBoxSizeButton, tipsButton;
+    private String keyword;
 
     //used this video a bit for reference here https://youtu.be/V0AETAjxqLI -jason
     @Override
@@ -32,6 +35,8 @@ public class BoxInputActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_box_input);
 
+        tipsButton = (Button) findViewById(R.id.tipsButton);
+        tipsButton.setVisibility(View.INVISIBLE);
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
@@ -50,11 +55,41 @@ public class BoxInputActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                searchForArticle(descriptionInput.getText().toString());
                 AddBoxSizeToDB(descriptionInput.getText().toString(), Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()), Float.parseFloat(heightInput.getText().toString()));
+            }
+        });
+
+        tipsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent switchToExpertTips = new Intent(BoxInputActivity.this, TipsAndTricksActivity.class);
+                switchToExpertTips.putExtra(keyword, descriptionInput.getText().toString());
+                startActivity(switchToExpertTips);
             }
         });
     }
 
+    private void searchForArticle(String inputDescription)
+    {
+        ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
+        ExpertArticle expertArticle = new ExpertArticle();
+        try{
+            expertArticle = service.getExpertArticles(inputDescription);
+
+            if(expertArticle.getKeyword() != null)
+            {
+                tipsButton.setVisibility(View.VISIBLE);
+
+            }
+
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+            //ooops we had an error
+            //TODO: make the user aware
+        }
+    }
     private void AddBoxSizeToDB(String inputDescription, float inputWidth, float inputDepth, float inputHeight)
     {
         System.out.println("Creating a box of width: " + inputWidth + ", depth: " + inputDepth +", height: " + inputHeight + ", description: " + inputDescription + "!");

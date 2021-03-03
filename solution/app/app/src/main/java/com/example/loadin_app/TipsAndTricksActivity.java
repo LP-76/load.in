@@ -56,11 +56,19 @@ public class TipsAndTricksActivity extends AppCompatActivity {
     private static final String PLAYBACK_TIME = "play_time";
     private Button searchForArticle;
     private EditText articleKeyword;
+    private String keyword;
+    private String value;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tips_and_tricks);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            value = extras.getString(keyword);
+            System.out.println(value);
+        }
+        searchForArticle(value);
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -91,6 +99,7 @@ public class TipsAndTricksActivity extends AppCompatActivity {
         controller.setMediaPlayer(mVideoView);
         mVideoView.setMediaController(controller);
         mBufferingTextView = findViewById(R.id.buffering_textview);
+
 
     }
 
