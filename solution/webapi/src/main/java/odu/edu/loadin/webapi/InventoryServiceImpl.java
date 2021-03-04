@@ -28,7 +28,7 @@ public class InventoryServiceImpl implements InventoryService {
             ArrayList<Inventory> results = StatementHelper.getResults(statement, (ResultSet rs) -> {
                 Inventory s = new Inventory();
                 s.setId(rs.getInt("ID"));
-                s.setMovePlanId(rs.getInt("MOVE_PLAN_ID"));
+                s.setUserID(rs.getInt("USER_ID"));
                 s.setDescription(rs.getString("ITEM_DESCRIPTION"));
                 s.setFragility(rs.getInt("FRAGILITY"));
                 s.setWeight(rs.getDouble("WEIGHT"));
@@ -57,13 +57,13 @@ public class InventoryServiceImpl implements InventoryService {
                     (ResultSet rs) -> {  return rs.getInt("ID"); }).stream().findFirst().orElse(0);
 
             inventory.setId(lastId + 1);  //set the new id here
-            inventory.setMovePlanId(1); //TODO needs to be mapped to user's ID
-            String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,MOVE_PLAN_ID, ITEM_DESCRIPTION, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
+            inventory.setUserID(1); //TODO needs to be mapped to user's ID
+            String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,USER_ID, ITEM_DESCRIPTION, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
                     +" VALUES (?, ?, ?, ?, ?, NULL ,NOW(), NOW() )";
 
             PreparedStatement insertStatement = conn.prepareStatement(query);
             insertStatement.setInt(1, inventory.getId());
-            insertStatement.setInt(2, inventory.getMovePlanId());
+            insertStatement.setInt(2, inventory.getUserID());
             insertStatement.setString(3, inventory.getDescription());
             insertStatement.setInt(4, inventory.getFragility());
             insertStatement.setDouble(5, inventory.getWeight());

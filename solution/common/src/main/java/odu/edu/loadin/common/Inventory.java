@@ -7,19 +7,20 @@ public class Inventory {
 
     }
     private int id;
-    private int movePlanId;
+    private int userID;
     private String description;
     private int fragility;
     private double weight;
     private Date createdAt;
     private Date updatedAt;
 
-    public int getMovePlanId() {
-        return movePlanId;
+
+    public int getUserID() {
+        return userID;
     }
 
-    public void setMovePlanId(int movePlanId) {
-        this.movePlanId = movePlanId;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public int getFragility() {
