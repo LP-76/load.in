@@ -1,5 +1,6 @@
 package com.example.loadin_app.ui.opengl;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.opengl.GLES20;
@@ -46,11 +47,13 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private Box currentBox;
     private  int step;
     private boolean advanceInProgress;
+    private Context context;
 
-    public TestGLRenderer(Bitmap source){
+    public TestGLRenderer(Bitmap source, Context ctx){
         testBitmap = source;
         step = 0;
         advanceInProgress = false;
+        context = ctx;
     }
 
     public void advance(){
@@ -103,7 +106,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
 
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        theWorld = new World();
+        theWorld = new World(context);
         theCamera = new Camera();
 
         theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
@@ -174,7 +177,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         viewMatrix = theCamera.getLookatMatrix();
 
         // Calculate the projection and view transformation
-        Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
+        //Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
 
 
         //GLTriangleExample triangle = new GLTriangleExample();
@@ -182,7 +185,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         for(WorldObject wo: theWorld.getWorldObjects()){
             if(wo.isVisible())
-                wo.draw(vPMatrix, viewMatrix);
+                wo.draw(viewMatrix, projectionMatrix);
         }
 
 

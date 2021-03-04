@@ -34,9 +34,9 @@ public class Truck extends WorldObject
 
 
 
-        lengthInches = 14f * 12f + 3f;  //14foot 3 inches
-        widthInches = 7f * 12f + 8f;
-        heightInches = 7f*12f + 2f;
+        lengthInches = 14f * 12f ;  //14foot 3 inches
+        widthInches = 7f * 12f ;
+        heightInches = 7f* 12f ;
         costPerDayDollars = 39.95f;
         costPerMileDollars = 0.99f;
 

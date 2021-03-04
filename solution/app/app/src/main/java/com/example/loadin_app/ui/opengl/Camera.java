@@ -34,9 +34,12 @@ public class Camera {
         updateCameraVectors();
     }
 
+    public Vector getFront() {
+        return front;
+    }
 
     public void lookAt(Vector pointOfInterest){
-        Vector toLookAt = location.add(pointOfInterest.multiply(-1f)).multiply(-1f);  //this gets us the vector to be able to change our camera view
+        Vector toLookAt = location.add(pointOfInterest.multiply(-1f)).multiply(-1f).normalize();  //this gets us the vector to be able to change our camera view
         //toLookAt is a vector from the center of our camera to the point of interest
 
         //we need to figure out pitch and yaw
@@ -51,6 +54,7 @@ public class Camera {
         //we're going to get a new yaw from this vector
 
         //yaw is between the x and z axis
+
 
 
         float length = toLookAt.getLength(); //always positive
@@ -69,7 +73,7 @@ public class Camera {
         double cosAsAngle = Math.toDegrees(cosInRadians);
         //if x and z are positive, make no adjustments
 
-        if(x < 0 && z > 0)
+        if(x < 0 && z >= 0)
             cosAsAngle = 180d - cosAsAngle; //second quadrant
         else if(x < 0 && z < 0)
             cosAsAngle += 180d; //third quadrant
@@ -164,7 +168,7 @@ public class Camera {
 
         yaw = yaw % 360f;
 
-        double yawInRadians = Math.toRadians(yaw);
+        double yawInRadians = Math.toRadians(yaw);  //why in the world are we off by 10 degrees to the left??
         double pitchInRadians = Math.toRadians(pitch);
 
         front = new Vector(
@@ -180,15 +184,19 @@ public class Camera {
 
 
         float[] result = new float[16];
-        Vector direction = location.add(front);
+
+        Vector direction = location.add(front).multiply(World.INCHES_TO_WORLD_SCALE);
+        Vector adjustedLocation = location.multiply(World.INCHES_TO_WORLD_SCALE);
+
+
         // Set the camera position (View matrix)
         Matrix.setLookAtM(result, 0,
-                location.getX() * World.INCHES_TO_WORLD_SCALE,
-                location.getY() * World.INCHES_TO_WORLD_SCALE,
-                location.getZ() * World.INCHES_TO_WORLD_SCALE,
-                direction.getX() * World.INCHES_TO_WORLD_SCALE,
-                direction.getY() * World.INCHES_TO_WORLD_SCALE,
-                direction.getZ() * World.INCHES_TO_WORLD_SCALE,
+                adjustedLocation.getX() ,
+                adjustedLocation.getY() ,
+                adjustedLocation.getZ() ,
+                direction.getX(),
+                direction.getY(),
+                direction.getZ(),
                 up.getX(),
                 up.getY(),
                 up.getZ());

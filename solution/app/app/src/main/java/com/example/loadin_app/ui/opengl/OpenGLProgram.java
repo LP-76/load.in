@@ -1,6 +1,12 @@
 package com.example.loadin_app.ui.opengl;
 
+import android.content.Context;
 import android.opengl.GLES20;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public abstract class OpenGLProgram {
     private int programHandle;
@@ -14,6 +20,21 @@ public abstract class OpenGLProgram {
         return programHandle;
     }
 
+
+    protected  static String loadShaderFile(Context context, int resId){
+        InputStream in = context.getResources().openRawResource(resId);
+        InputStreamReader inReader = new InputStreamReader(in);
+        BufferedReader reader = new BufferedReader(inReader);
+        StringBuilder text = new StringBuilder();
+        String line;
+        try{
+            while((line = reader.readLine())!= null)
+                text.append(line + "\n");
+        }catch(IOException ex){
+            return null;
+        }
+        return text.toString();
+    }
 
 
     protected static int loadShader(int type, String shaderCode){
@@ -62,7 +83,7 @@ public abstract class OpenGLProgram {
         return handle;
     }
 
-   public abstract void load();
+   public abstract void load(Context context);
 
     public void setUniform1i(String variableName, int value){
         int handle = getUniformHandle(variableName);
@@ -76,9 +97,9 @@ public abstract class OpenGLProgram {
         GLES20.glUniform3fv(handle, data.getCount(), data.getBuffer());
     }
 
-    public void setUniformMatrix4fv(OpenGLVariableHolder data){
-        int handle = getUniformHandle(data.getVariableName());
-        GLES20.glUniformMatrix4fv(handle,data.getCount(), false, data.getBuffer());
+    public void setUniformMatrix4fv(float[] data, String variableName){
+        int handle = getUniformHandle(variableName);
+        GLES20.glUniformMatrix4fv(handle,1, false, data, 0);
     }
 
     public void setVertexAttributePointer(OpenGLVariableHolder data, int stride){

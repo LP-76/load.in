@@ -29,7 +29,7 @@ public class TestGLSurfaceView extends GLSurfaceView {
         ops.inScaled = false;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.blah, ops);
 
-        renderer = new TestGLRenderer(bitmap);
+        renderer = new TestGLRenderer(bitmap, context);
         setRenderer(renderer);
         panMode = true;
 

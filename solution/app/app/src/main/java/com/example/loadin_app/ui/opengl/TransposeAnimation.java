@@ -1,18 +1,20 @@
 package com.example.loadin_app.ui.opengl;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class TransposeAnimation extends Animation {
     private Vector newLocation;
     private Vector transitPath;
     private Vector velocityVector;
+    private boolean complete;
 
     public TransposeAnimation(WorldObject theTarget, Duration targetCompletion, Duration tick, Vector newLocation) {
         super(theTarget, targetCompletion, tick);
         this.newLocation = newLocation;
         updateTransitPath();
         calculateVelocity();
-
+        complete = false;
     }
 
     private void updateTransitPath(){
@@ -33,13 +35,20 @@ public class TransposeAnimation extends Animation {
     @Override
     public void performOperationPerTick() {
 
-        Vector newLocation = target.getOffset().add(velocityVector);  //perform a move according to how much of a vector we need to do
-        target.place(newLocation);
+        Vector l = target.getOffset().add(velocityVector);  //perform a move according to how much of a vector we need to do
+        target.place(l);
         updateTransitPath();
+
+        if(LocalDateTime.now().isAfter(end) || transitPath.getLength() <= 1f){
+            complete = true;
+            target.place(newLocation);  //put it at the right spot
+        }
+
     }
 
     @Override
     public boolean isComplete() {
-        return  transitPath.getLength() <= 2f;  //close enough to count
+
+        return  complete;
     }
 }
