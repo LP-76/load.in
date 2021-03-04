@@ -3,9 +3,13 @@ package com.example.loadin_app.ui.opengl;
 //this is the world that anything can be rendered in
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
 
 import com.example.loadin_app.R;
+
+import org.w3c.dom.Text;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -17,7 +21,7 @@ public class World {
     public static final float INCHES_TO_WORLD_SCALE = 1f/12f;  //feet essentially
 
     private OpenGLProgram lightViewProgram;
-    private OpenGLProgram textureProgram;
+    private TextureCoordinateProgram textureProgram;
 
     private ArrayList<Animation> animations;
     private ArrayList<WorldObject> worldObjects;
@@ -35,7 +39,7 @@ public class World {
     public OpenGLProgram getLightViewProgram(){
         return lightViewProgram;
     }
-    public OpenGLProgram getTextureViewProgram(){
+    public TextureCoordinateProgram getTextureViewProgram(){
         return textureProgram;
     }
 
@@ -73,50 +77,31 @@ public class World {
 
     public class TextureCoordinateProgram extends OpenGLProgram{
 
-        public static final String U_MV_MATRIX = "u_MVMatrix";
+        public static final String U_MODEL = "model";
+        public static final String U_VIEW = "view";
+        public static final String U_PROJECTION = "projection";
+
+        public static final String U_TEXTURE = "u_Texture";
+
         public static final String U_LIGHTPOS = "u_LightPos";
 
         public static final String A_POSITION = "a_Position";  //vector position handle
-        public static final String MVP_MATRIX = "u_MVPMatrix";  //handle to the projection matrix
-
-        public static final String V_COLOR = "v_Color";
         public static final String A_COLOR = "a_Color";
-        public static final String A_TEX_COORD = "a_TexCoord";
-        public static final String OUT_TEX_COORD = "TexCoord";
         public static final String A_NORMAL = "a_Normal";
-        public static final String U_TEXTURE = "u_Texture";
+        public static final String A_TEX_COORD = "a_TexCoord";
 
-        private final String fragmentShaderCode =
-                "precision mediump float;       \n"		// Set the default precision to medium. We don't need as high of a
-                        // precision in the fragment shader.
-                        + "uniform sampler2D u_Texture;          \n"		// the texture reference
-                        + "varying vec4 v_Color;          \n"		// This is the color from the vertex shader interpolated across the
-                        + "varying vec2 TexCoord;          \n"		// the coordinate from the other shader
-                        // triangle per fragment.
-                        + "void main()                    \n"		// The entry point for our fragment shader.
-                        + "{                              \n"
-                        + "   gl_FragColor = v_Color * texture2D(u_Texture,TexCoord);     \n"		// Pass the texture to the color mapper
+        private Texture cardboard;
 
-                        + "} ";
-        private final String vertexShaderCode =
-                "uniform mat4 u_MVPMatrix;      \n"		// A constant representing the combined model/view/projection matrix.
-                        + "uniform mat4 u_MVMatrix;       \n"		// A constant representing the combined model/view matrix.
+        public TextureCoordinateProgram(){
 
-                        + "attribute vec4 a_Position;     \n"		// Per-vertex position information we will pass in.
-                        + "attribute vec4 a_Color;        \n"		// Per-vertex color information we will pass in.
-                        + "attribute vec2 a_TexCoord;      \n"       //per-vertex x-y coordinate of the texture
-                        + "varying vec4 v_Color;          \n"		// This will be passed into the fragment shader.
-                        + "varying vec2 TexCoord;"
-                        + "void main()                    \n" 	// The entry point for our vertex shader.
-                        + "{                              \n"
-                        + "   v_Color = a_Color;                              \n"
-                        // gl_Position is a special variable used to store the final position.
-                        // Multiply the vertex by the matrix to get the final point in normalized screen coordinates.
-                        + "   gl_Position = u_MVPMatrix * a_Position;                            \n"
-                        + "   TexCoord = a_TexCoord;"
-                        + "}                                                   ";
+        }
+
+
         @Override
         public void load(Context context) {
+            String vertexShaderCode = loadShaderFile(context, R.raw.texture_vertex_shader);
+            String fragmentShaderCode = loadShaderFile(context, R.raw.texture_fragment_shader);
+
             int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER,
                     vertexShaderCode);
             int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER,
@@ -130,9 +115,22 @@ public class World {
 
             // creates OpenGL ES program executables
             GLES20.glLinkProgram(getProgramHandle());
+
+
+            loadCardboard(context);
         }
 
+        private void loadCardboard(Context ctx){
+            BitmapFactory.Options ops = new BitmapFactory.Options();
+            ops.inScaled = false;
+            Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.cardboard, ops);
+            cardboard = new Texture(bitmap, this, U_TEXTURE);
 
+        }
+
+        public Texture getCardboard() {
+            return cardboard;
+        }
     }
 
 

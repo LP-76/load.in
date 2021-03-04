@@ -167,21 +167,15 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
 
 
-      //  float[] scratch = new float[16];
-        GLES20.glClearColor(109f/255f, 209f/255f, 161f/255f, 1f);
         // Redraw background color
+        GLES20.glClearColor(109f/255f, 209f/255f, 161f/255f, 1f);
+
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT);
 
 
         viewMatrix = theCamera.getLookatMatrix();
 
-        // Calculate the projection and view transformation
-        //Matrix.multiplyMM(vPMatrix, 0, projectionMatrix, 0, viewMatrix, 0);
-
-
-        //GLTriangleExample triangle = new GLTriangleExample();
-        //triangle.draw(vPMatrix);
 
         for(WorldObject wo: theWorld.getWorldObjects()){
             if(wo.isVisible())

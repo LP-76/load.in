@@ -1,11 +1,13 @@
 package com.example.loadin_app.ui.opengl;
 
+import android.opengl.GLES20;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Box extends WorldObject{
-    private final Color BOX_COLOR =  new Color(102f/255f, 84f/255f, 74f/255f, 1f);
-   private ColorHexahedron mHexahedron;
+public class Box extends TexturedWorldObject{
+   //private final Color BOX_COLOR =  new Color(102f/255f, 84f/255f, 74f/255f, 1f);
+   private TexturedHexahedron mHexahedron;
 
    private Vector destination;
 
@@ -13,11 +15,12 @@ public class Box extends WorldObject{
         super(world);
 
 
-       mHexahedron = new ColorHexahedron(
+       mHexahedron = new TexturedHexahedron(
                width ,
                height ,
-               length
-               , BOX_COLOR);
+               length );
+
+
         destination = new Vector(0f, 0f, 0f);
      }
 
@@ -33,13 +36,15 @@ public class Box extends WorldObject{
         return Arrays.stream(new Shape[]{ mHexahedron });
     }
 
+
+
     @Override
-    public OpenGLProgram getMyProgram() {
-        return myWorld.getLightViewProgram();
+    protected Stream<Float> getTextureCoordinates() {
+        return mHexahedron.getTexturedTriangles().flatMap(i -> i.getTextureCoordinates());
     }
 
     public void rotateLeftBy90Degrees(){
-        mHexahedron = new ColorHexahedron(mHexahedron.getLength(), mHexahedron.getHeight(), mHexahedron.getWidth(), mHexahedron.getColor() );
+        mHexahedron = new TexturedHexahedron(mHexahedron.getLength(), mHexahedron.getHeight(), mHexahedron.getWidth() );
     }
 
     public boolean intersects(Box otherBox){
@@ -49,5 +54,15 @@ public class Box extends WorldObject{
     public Vector getOffsetToLeftOf(){
         return null;
     }
+
+
+
+    @Override
+    public Texture getTexture() {
+        return myWorld.getTextureViewProgram().getCardboard();
+    }
+
+
+
 
 }
