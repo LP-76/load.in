@@ -34,104 +34,94 @@
             android:gravity="center">
         </TextView>    </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
-        <!-- Layout for content is here. This can be a RelativeLayout  -->
-    </LinearLayout>
 
-    <!-- Paul: Add Documentation -->
-    <TextView
-    android:id="@+id/buffering_textview"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:text="Buffering..."
-    android:textSize="18sp"
-    android:textStyle="bold"
-    android:textColor="@android:color/white"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
-    <!-- Paul: Add Documentation -->
+        <TextView
+            android:id="@+id/buffering_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buffering..."
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white" />
 
-    <EditText
-        android:id="@+id/articleSearchTool"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="130dp"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Enter a keyword to search"
-        android:inputType="textShortMessage"
-        app:layout_constraintBottom_toTopOf="@+id/articleTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <EditText
+            android:id="@+id/articleSearchTool"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="130dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="Enter a keyword to search"
+            android:inputType="textShortMessage"
+            app:layout_constraintBottom_toTopOf="@+id/articleTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/searchForArticle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
-        android:text="Search"
-        app:layout_constraintBottom_toBottomOf="@id/articleSearchTool"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/articleSearchTool"
-        app:layout_constraintTop_toTopOf="@id/articleSearchTool"
-        app:layout_constraintVertical_bias="0.75" />
+        <Button
+            android:id="@+id/searchForArticle"
+            android:layout_width="150dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="0dp"
+            android:text="Search"
+            android:layout_alignParentRight="true"/>
 
-    <TextView
-        android:id="@+id/articleTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="55dp"
-        android:layout_marginEnd="0dp"
-        android:backgroundTint="@color/white"
-        android:selectAllOnFocus="true"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:textColor="@color/load_in_green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/articleSearchTool" />
+        <TextView
+            android:id="@+id/articleTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:backgroundTint="@color/white"
+            android:selectAllOnFocus="true"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textColor="@color/load_in_green"
+            android:layout_below="@id/articleSearchTool"
+            android:text="LET ERIC ANDRE IN" />
 
-    <VideoView
-        android:id="@+id/articleVideo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="0dp"
-        app:layout_constraintDimensionRatio="4:3"
-        app:layout_constraintEnd_toEndOf="@id/articleTitle"
-        app:layout_constraintStart_toStartOf="@id/articleTitle"
-        app:layout_constraintTop_toBottomOf="@id/articleTitle"/>
-    <!-- Paul: Add Documentation -->
+        <VideoView
+            android:id="@+id/articleVideo"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            app:layout_constraintDimensionRatio="4:3"
+            android:layout_below="@id/articleTitle"
+            android:visibility="invisible"/>
 
-    <TextView
-        android:id="@+id/articleContent"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="0dp"
-        android:backgroundTint="@color/white"
-        android:selectAllOnFocus="true"
-        android:textSize="24sp"
-        android:textColor="@color/load_in_green"
-        app:layout_constraintEnd_toEndOf="@id/articleVideo"
-        app:layout_constraintStart_toStartOf="@id/articleVideo"
-        app:layout_constraintTop_toBottomOf="@id/articleVideo" />
+        <ImageView
+            android:id="@+id/articleImage"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_below="@id/articleTitle"
+            android:visibility="invisible"/>
 
 
+        <TextView
+            android:id="@+id/articleContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="0dp"
+            android:backgroundTint="@color/white"
+            android:selectAllOnFocus="true"
+            android:textSize="24sp"
+            android:textColor="@color/load_in_green"
+            android:layout_below="@id/articleVideo"
+            android:text="LET ERIC ANDRE IN"/>
+
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

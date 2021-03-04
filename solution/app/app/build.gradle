@@ -62,4 +62,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/org.apache.lucene/lucene-queryparser
     implementation group: 'org.apache.lucene', name: 'lucene-queryparser', version: '8.8.1'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }
