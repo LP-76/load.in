@@ -247,4 +247,46 @@ public class World {
         }
     }
 
+    public class CubeMapProgram extends OpenGLProgram{
+
+        //required uniforms
+        public static final String U_MODEL = "model";
+        public static final String U_VIEW = "view";
+        public static final String U_PROJECTION = "projection";
+
+        public static final String U_CUBE = "u_cube"; //uniform handle to the cubemap
+
+        //to be supplied for calculations
+        public static final String A_POSITION = "a_Position";  //vector position handle
+        public static final String A_COLOR = "a_Color";
+        public static final String A_TEX_DIRECTION = "a_tex_direction";
+
+
+
+        @Override
+        public void load(Context context) {
+            String vertexShaderCode = loadShaderFile(context, R.raw.cubemap_vertex_shader);
+            String fragmentShaderCode = loadShaderFile(context, R.raw.cubemap_frag_shader);
+
+            int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER,
+                    vertexShaderCode);
+            int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER,
+                    fragmentShaderCode);
+
+            // add the vertex shader to program
+            GLES20.glAttachShader(getProgramHandle(), vertexShader);
+
+            // add the fragment shader to program
+            GLES20.glAttachShader(getProgramHandle(), fragmentShader);
+
+            // creates OpenGL ES program executables
+            GLES20.glLinkProgram(getProgramHandle());
+
+
+        }
+
+
+
+    }
+
 }

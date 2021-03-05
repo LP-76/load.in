@@ -105,6 +105,8 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
 
+
+
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         theWorld = new World(context);
         theCamera = new Camera();
@@ -160,8 +162,12 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
          }
 
         if(currentBox != null){
-            theCamera.placeCamera(currentBox.getOffset().add(new Vector(-3f*12f, 3f*12f, -3f*12f )));
-            theCamera.lookAt(currentBox.getOffset());  //always look at the current box
+
+            Vector boxCenter = currentBox.getCenter();
+            Vector pointOfView = boxCenter.add(new Vector(-3f*12, 3f*12f, -3f*12f));
+
+            theCamera.placeCamera(pointOfView);
+            theCamera.lookAt(boxCenter);  //always look at the current box
         }
 
 

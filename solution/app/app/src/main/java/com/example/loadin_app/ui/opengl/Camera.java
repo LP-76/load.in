@@ -39,7 +39,10 @@ public class Camera {
     }
 
     public void lookAt(Vector pointOfInterest){
-        Vector toLookAt = location.add(pointOfInterest.multiply(-1f)).multiply(-1f).normalize();  //this gets us the vector to be able to change our camera view
+        Vector toCenterWorld = location.multiply(-1f);
+        Vector toObjectFromCamera = toCenterWorld.add(pointOfInterest);
+        Vector toLookAt = toObjectFromCamera.normalize();
+        //Vector toLookAt = location.multiply(-1f).add(pointOfInterest).normalize();  //this gets us the vector to be able to change our camera view
         //toLookAt is a vector from the center of our camera to the point of interest
 
         //we need to figure out pitch and yaw
@@ -54,33 +57,39 @@ public class Camera {
         //we're going to get a new yaw from this vector
 
         //yaw is between the x and z axis
+        //need to use tangent
 
 
 
-        float length = toLookAt.getLength(); //always positive
-        float a = Math.abs(toLookAt.getX());  //this is just left to right
+
 
         float x = toLookAt.getX();
         float z = toLookAt.getZ();
 
 
-        if(length == 0f)
-            return 0f;
+        if(x == 0f){
+            if(z > 0)
+                return 90f;
+            else
+                return 270f;
+        }
+
 
         //let's get the arccos as it stands without adjustment
 
-        double cosInRadians = Math.acos(a/length);
-        double cosAsAngle = Math.toDegrees(cosInRadians);
+        double tanInRadians = Math.atan(Math.abs(z/x));
+        double tanAsAngle = Math.toDegrees(tanInRadians);
+
         //if x and z are positive, make no adjustments
 
         if(x < 0 && z >= 0)
-            cosAsAngle = 180d - cosAsAngle; //second quadrant
+            tanAsAngle = 180d - tanAsAngle; //second quadrant
         else if(x < 0 && z < 0)
-            cosAsAngle += 180d; //third quadrant
+            tanAsAngle += 180d; //third quadrant
         else if(x > 0 && z < 0)
-            cosAsAngle = 360d - cosAsAngle;  //forth quadrant
+            tanAsAngle = 360d - tanAsAngle;  //forth quadrant
 
-        return  (float)cosAsAngle;
+        return  (float)tanAsAngle;
 
     }
     private float calculateNewPitch(Vector toLookAt){
@@ -89,13 +98,20 @@ public class Camera {
 
         //pitch is the angle we are trying to figure out
 
-        float length = toLookAt.getLength();
-        float b = toLookAt.getY();  //y indicates up or down from the current location
+        float x = Math.abs(toLookAt.getX());
+        float y = toLookAt.getY();
 
-        if(length == 0f)
-            return 0f;
+        if(x == 0f){
+            if(y > 0f)
+                return 90f;
+            else
+                return -90f;
+        }
 
-        return  (float)Math.toDegrees(Math.asin(b/length));
+        double asRadians = Math.atan(y / x);  //if negative, should be a negative value
+        double asDegrees = Math.toDegrees(asRadians);
+
+        return  (float)asDegrees;
 
 
 

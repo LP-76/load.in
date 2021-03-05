@@ -39,6 +39,24 @@ public class Box extends TexturedWorldObject{
      }
 
 
+     public float getWidth(){
+        return hexahedron.getWidth();
+     }
+
+     public float getHeight(){
+        return hexahedron.getHeight();
+     }
+     public float getLength(){
+        return hexahedron.getLength();
+     }
+
+     public Vector getCenter(){
+        float x = getWidth() / 2f;
+        float z = getLength() / 2f;
+        float y = getHeight() / 2f;
+        return getOffset().add( new Vector(x,y,z));
+
+     }
 
 
     public void rotateLeftBy90Degrees(){

@@ -51,6 +51,17 @@ public class Vector  {
     }
 
 
+    public void setX(float x){
+         values[0] = x;
+    }
+    public void setY(float y){
+         values[1] = y;
+    }
+    public void setZ(float z){
+         values[2] = z;
+    }
+
+
     public float getX(){
         return values[0];
     }
