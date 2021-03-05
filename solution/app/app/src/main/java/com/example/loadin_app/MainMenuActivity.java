@@ -1,6 +1,7 @@
 package com.example.loadin_app;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,12 +17,22 @@ import com.example.loadin_app.ui.login.LoginActivity;
 public class MainMenuActivity extends AppCompatActivity
 {
     private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, openGLTestButton;
+    public static SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
+        sp = getSharedPreferences("login", MODE_PRIVATE);
+        if(sp.getInt("loginID", 0) == 0){
+            Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
+            startActivity(switchToLogin);
+        }
+        */
+
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
