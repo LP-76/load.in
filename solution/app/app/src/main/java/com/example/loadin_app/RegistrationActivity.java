@@ -43,18 +43,18 @@ public class RegistrationActivity extends AppCompatActivity {
         phoneInput = (EditText) findViewById(R.id.phone_number);
         fNameInput = (EditText) findViewById(R.id.registration_fname);
         lNameInput = (EditText) findViewById(R.id.registration_lname);
-        //sets user input to strings
-        sUsername = emailInput.getText().toString();
-        sPassword = passwordInput.getText().toString();
-        sFirstName = fNameInput.getText().toString();
-        sLastName = lNameInput.getText().toString();
-        sPhoneNumber = phoneInput.getText().toString();
 
         registerButton = (Button) findViewById(R.id.registration_button);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
+                //sets user input to strings
+                sUsername = emailInput.getText().toString();
+                sPassword = passwordInput.getText().toString();
+                sFirstName = fNameInput.getText().toString();
+                sLastName = lNameInput.getText().toString();
+                sPhoneNumber = phoneInput.getText().toString();
                 //checks to ensure all fields are filled out, pretty ugly but works
                 if (sUsername.matches("") || sPassword.matches("") || sFirstName.matches("") ||
                         sLastName.matches("")|| sPhoneNumber.matches("")) {

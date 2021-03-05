@@ -18,7 +18,7 @@ public interface UserService {
     Response login(UserLoginRequest requestForLogin);
 
     @POST
-    @Path("/user/")
+    @Path("/user/add")
     public Response addUser(User user);
 
 

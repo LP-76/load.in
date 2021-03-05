@@ -31,7 +31,7 @@ public interface RetroUserService {
     })
     Call<DataWrapper<User>> login(@Body DataWrapper<UserLoginRequest> loginRequest);
 
-    @POST("/users/user")
+    @POST("/users/user/add")
     @Headers({
             "accept: application/json",
             "contentType: application/json"
