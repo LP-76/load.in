@@ -1,10 +1,9 @@
 package com.example.loadin_app.ui.opengl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Truck extends WorldObject
+public class Truck extends ColorWorldObject
 {
     private final Color FLOOR_COLOR = new Color(161f/255f, 119f/255f,93f/255f, 1f);
     private final Color WALL_COLOR = new Color(206f/255f, 218f/255f,210f/255f, 1f);
@@ -95,10 +94,7 @@ public class Truck extends WorldObject
         return shapes.stream();
     }
 
-    @Override
-    public OpenGLProgram getMyProgram() {
-        return myWorld.getLightViewProgram();
-    }
+
 
     public float GetAreaOfTruckInches()
     {

@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 public class Box extends TexturedWorldObject{
    //private final Color BOX_COLOR =  new Color(102f/255f, 84f/255f, 74f/255f, 1f);
-   private TexturedHexahedron mHexahedron;
+   private TexturedHexahedron hexahedron;
 
    private Vector destination;
 
@@ -15,10 +15,17 @@ public class Box extends TexturedWorldObject{
         super(world);
 
 
-       mHexahedron = new TexturedHexahedron(
+        hexahedron = new TexturedHexahedron(
                width ,
                height ,
                length );
+
+        hexahedron.setBackTexture(world.getTextureViewProgram().getCardboard());
+        hexahedron.setFrontTexture(world.getTextureViewProgram().getCardboard());
+        hexahedron.setBottomTexture(world.getTextureViewProgram().getCardboard());
+        hexahedron.setLeftTexture(world.getTextureViewProgram().getCardboard());
+        hexahedron.setRightTexture(world.getTextureViewProgram().getCardboard());
+        hexahedron.setTopTexture(world.getTextureViewProgram().getCardboard());
 
 
         destination = new Vector(0f, 0f, 0f);
@@ -31,20 +38,11 @@ public class Box extends TexturedWorldObject{
         return destination;
      }
 
-    @Override
-    public Stream<Shape> getShapes() {
-        return Arrays.stream(new Shape[]{ mHexahedron });
-    }
 
 
-
-    @Override
-    protected Stream<Float> getTextureCoordinates() {
-        return mHexahedron.getTexturedTriangles().flatMap(i -> i.getTextureCoordinates());
-    }
 
     public void rotateLeftBy90Degrees(){
-        mHexahedron = new TexturedHexahedron(mHexahedron.getLength(), mHexahedron.getHeight(), mHexahedron.getWidth() );
+        hexahedron = new TexturedHexahedron(hexahedron.getLength(), hexahedron.getHeight(), hexahedron.getWidth() );
     }
 
     public boolean intersects(Box otherBox){
@@ -56,13 +54,8 @@ public class Box extends TexturedWorldObject{
     }
 
 
-
     @Override
-    public Texture getTexture() {
-        return myWorld.getTextureViewProgram().getCardboard();
+    public Stream<IDrawable> getDrawableShapes() {
+        return Arrays.stream(new IDrawable[]{hexahedron});
     }
-
-
-
-
 }

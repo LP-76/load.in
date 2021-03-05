@@ -27,7 +27,7 @@ public class Texture {
 
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, source, 0);  //send the image to this newly bound texture
             //checkError();
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
+           // GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
         }
         else
             throw new RuntimeException("Did not load texture as expected");

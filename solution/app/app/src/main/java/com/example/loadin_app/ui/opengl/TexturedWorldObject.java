@@ -6,7 +6,6 @@ import java.util.stream.Stream;
 
 public abstract class TexturedWorldObject extends  WorldObject {
 
-    protected OpenGLVariableHolder textureCoordinates;
 
     public TexturedWorldObject(World world) {
         super(world);
@@ -17,36 +16,34 @@ public abstract class TexturedWorldObject extends  WorldObject {
         return myWorld.getTextureViewProgram(); //this will use the texture view
     }
 
-    protected abstract Stream<Float> getTextureCoordinates();
+
 
     @Override
-    public void cleanupAfterDraw(OpenGLProgram program) {
-        super.cleanupAfterDraw(program);
-        program.disableVertexAttribute(textureCoordinates.getVariableName());
-    }
+    public void draw(float[] view, float[] projection) {
+        OpenGLProgram program = myWorld.getTextureViewProgram(); //textured view program
+        GLES20.glUseProgram(program.getProgramHandle()); //activate the program
 
-    @Override
-    public void uploadDataForShader(OpenGLProgram program) {
+        //calculate model
 
-        uploadPositionInformation(program);  //load position data in
-        uploadColorInformation(program);
-        //we also need to upload the information for the texture positions
-        textureCoordinates = new OpenGLVariableHolder(
-                getTextureCoordinates(),
-                2, World.TextureCoordinateProgram.A_TEX_COORD
-        );
-//
-        program.setVertexAttributePointer(textureCoordinates, 2*4);  //2 coordinates per vertex
-        //setup for texture
+        float[] postScaleMatrix = processScale();  //scale the object to size
+        float[] postTranslationMatrix = processTranslation(postScaleMatrix);  //move the object in the world
 
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0); //activate texture 0
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, getTexture().getHandle()); //tell it where the data is
-        getMyProgram().setUniform1i(World.TextureCoordinateProgram.U_TEXTURE, 0);  //bind the variable to the shader so it can see it
+        //upload model
+        program.setUniformMatrix4fv(postTranslationMatrix, World.TextureCoordinateProgram.U_MODEL); //this is the model scale and transpose info
+        //upload view
+        program.setUniformMatrix4fv(view, World.TextureCoordinateProgram.U_VIEW);
+        //upload projection
+        program.setUniformMatrix4fv(projection, World.TextureCoordinateProgram.U_PROJECTION);
 
+        //foreach shape, draw the shapes
+        for(IDrawable item: getDrawableShapes().toArray(IDrawable[]::new)){
+            item.draw(myWorld);
+        }
 
 
     }
 
-    public abstract Texture getTexture();
+    public abstract Stream<IDrawable> getDrawableShapes();
+
 
 }

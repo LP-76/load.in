@@ -92,7 +92,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private void moveStagedBoxIntoPosition(){
         if(currentBox != null){
             advanceInProgress = true;
-            currentBox.moveToLocationOverDuration(Duration.ofSeconds(5), currentBox.getDestination());
+            currentBox.moveToLocationOverDuration(Duration.ofSeconds(2), currentBox.getDestination());
 
 
         }

@@ -12,7 +12,7 @@ import com.example.loadin_app.R;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Sign extends  WorldObject{
+public class Sign extends  TexturedWorldObject{
     private String message;
     private Bitmap renderedMessage;
     private OpenGLVariableHolder textureCoordinates;
@@ -26,13 +26,12 @@ public class Sign extends  WorldObject{
 
         board = new TexturedHexahedron(width, height, 1f);
 
-        GLES20.glUseProgram(getMyProgram().getProgramHandle());
-        tex = new Texture(renderedMessage, getMyProgram(), World.TextureCoordinateProgram.U_TEXTURE); //load the texture
+
     }
 
     public void setMessage(String message){
         this.message = message;
-       // renderMessage();
+        renderMessage();
     }
 
     public void testBitmap(Bitmap source){
@@ -78,47 +77,47 @@ public class Sign extends  WorldObject{
         if(renderedMessage!= null)
             renderedMessage.recycle();
         renderedMessage = bitmap;
+
+        GLES20.glUseProgram(getMyProgram().getProgramHandle());
+        tex = new Texture(renderedMessage, getMyProgram(), World.TextureCoordinateProgram.U_TEXTURE); //load the texture
+        board.setFrontTexture(tex);
+        board.setBottomTexture(tex);
+        board.setTopTexture(tex);
+        board.setLeftTexture(tex);
+        board.setRightTexture(tex);
+        board.setBackTexture(tex);
     }
 
-    @Override
-    public void uploadDataForShader(OpenGLProgram program) {
-
-        uploadPositionInformation(program);  //load position data in
-        uploadColorInformation(program);
-        //we also need to upload the information for the texture positions
-        textureCoordinates = new OpenGLVariableHolder(
-                getTextureCoordinates(),
-                2, World.TextureCoordinateProgram.A_TEX_COORD
-        );
+//    @Override
+//    public void uploadDataForShader(OpenGLProgram program) {
 //
-        program.setVertexAttributePointer(textureCoordinates, 2*4);  //2 coordinates per vertex
-        //setup for texture
+//        uploadPositionInformation(program);  //load position data in
+//        uploadColorInformation(program);
+//        //we also need to upload the information for the texture positions
+//        textureCoordinates = new OpenGLVariableHolder(
+//                getTextureCoordinates(),
+//                2, World.TextureCoordinateProgram.A_TEX_COORD
+//        );
+////
+//        program.setVertexAttributePointer(textureCoordinates, 2*4);  //2 coordinates per vertex
+//        //setup for texture
+//
+//        GLES20.glActiveTexture(GLES20.GL_TEXTURE0); //activate texture 0
+//        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, tex.getHandle()); //tell it where the data is
+//        getMyProgram().setUniform1i(World.TextureCoordinateProgram.U_TEXTURE, 0);  //bind the variable to the shader so it can see it
+//
+//
+//
+//    }
 
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0); //activate texture 0
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, tex.getHandle()); //tell it where the data is
-        getMyProgram().setUniform1i(World.TextureCoordinateProgram.U_TEXTURE, 0);  //bind the variable to the shader so it can see it
-
-
-
-    }
-
-    @Override
-    public void cleanupAfterDraw(OpenGLProgram program) {
-        super.cleanupAfterDraw(program);
-        program.disableVertexAttribute(textureCoordinates.getVariableName());
-    }
-
-    Stream<Float> getTextureCoordinates(){
-        return board.getTexturedTriangles().flatMap(i -> i.getTextureCoordinates());
-    }
-
-    @Override
-    public Stream<Shape> getShapes() {
-        return Arrays.stream(new Shape[]{ board  });
-    }
 
     @Override
     public OpenGLProgram getMyProgram() {
         return myWorld.getTextureViewProgram(); //this will use the texture view
+    }
+
+    @Override
+    public Stream<IDrawable> getDrawableShapes() {
+        return Arrays.stream(new IDrawable[]{ board  });
     }
 }
