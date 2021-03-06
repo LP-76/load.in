@@ -23,7 +23,10 @@ public class World {
     private OpenGLProgram lightViewProgram;
     private TextureCoordinateProgram textureProgram;
     private CubeMapProgram cubeMapProgram;
+    private HudProgram hudProgram;
 
+
+    private Context context;
 
     private ArrayList<Animation> animations;
     private ArrayList<WorldObject> worldObjects;
@@ -31,6 +34,7 @@ public class World {
     private LocalDateTime lastDraw;
 
     public World(Context context){
+        this.context = context;
         lightViewProgram = new AlternateLightViewProgram();
         lightViewProgram.load(context);
         textureProgram = new TextureCoordinateProgram();
@@ -38,9 +42,17 @@ public class World {
         cubeMapProgram = new CubeMapProgram();
         cubeMapProgram.load(context);
 
+        hudProgram = new HudProgram();
+        hudProgram.load(context);
+
         worldObjects = new ArrayList<WorldObject>();
         animations = new ArrayList<Animation>();
     }
+
+    public Context getContext() {
+        return context;
+    }
+
     public OpenGLProgram getLightViewProgram(){
         return lightViewProgram;
     }
@@ -77,6 +89,10 @@ public class World {
         lastDraw = LocalDateTime.now();
     }
 
+    public HudProgram getHudProgram() {
+        return hudProgram;
+    }
+
     public Duration getTick(){
         return tick;
     }
@@ -98,6 +114,8 @@ public class World {
         public static final String A_TEX_COORD = "a_TexCoord";
 
         private Texture cardboard;
+        private Texture floor;
+        private Texture wall;
 
         public TextureCoordinateProgram(){
 
@@ -124,20 +142,75 @@ public class World {
             GLES20.glLinkProgram(getProgramHandle());
 
 
-            loadCardboard(context);
+            cardboard = loadTexture(context, R.drawable.cardboard);
+            floor = loadTexture(context, R.drawable.wood_floor);
+            wall = loadTexture(context, R.drawable.corrugated_metal_texture_7);
         }
 
-        private void loadCardboard(Context ctx){
+        private Texture loadTexture(Context ctx, int resourceId){
             BitmapFactory.Options ops = new BitmapFactory.Options();
             ops.inScaled = false;
-            Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), R.drawable.cardboard, ops);
-            cardboard = new Texture(bitmap, this, U_TEXTURE);
+            Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), resourceId, ops);
+            return new Texture(bitmap, this, U_TEXTURE);
+        }
 
+        public Texture getFloor() {
+            return floor;
+        }
+
+        public Texture getWall() {
+            return wall;
         }
 
         public Texture getCardboard() {
             return cardboard;
         }
+    }
+
+
+    public class HudProgram extends OpenGLProgram{
+
+        public static final String U_MODEL = "model";
+        public static final String U_VIEW = "view";
+        public static final String U_PROJECTION = "projection";
+
+        public static final String U_TEXTURE = "u_Texture";
+
+
+        public static final String A_POSITION = "a_Position";  //vector position handle
+        public static final String A_TEX_COORD = "a_TexCoord";
+
+
+
+        public HudProgram(){
+
+        }
+
+
+        @Override
+        public void load(Context context) {
+            String vertexShaderCode = loadShaderFile(context, R.raw.hud_vertex_shader);
+            String fragmentShaderCode = loadShaderFile(context, R.raw.hud_fragment_shader);
+
+            int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER,
+                    vertexShaderCode);
+            int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER,
+                    fragmentShaderCode);
+
+            // add the vertex shader to program
+            GLES20.glAttachShader(getProgramHandle(), vertexShader);
+
+            // add the fragment shader to program
+            GLES20.glAttachShader(getProgramHandle(), fragmentShader);
+
+            // creates OpenGL ES program executables
+            GLES20.glLinkProgram(getProgramHandle());
+
+
+        }
+
+
+
     }
 
 

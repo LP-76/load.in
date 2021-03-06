@@ -81,8 +81,7 @@ public class CubeMappedHexahedron extends Hexahedron implements IDrawable {
                 getLength()/2f
         ).multiply(-1f);  //reverse direction
 
-//        for(Triangle t: triangles)
-//            t.move(center);  //offset all vectors around the center
+
 
         texDirections = new OpenGLVariableHolder(
                 Arrays.stream(triangles).map(i -> i.moveAndCopy(center)).flatMap(i -> i.getCoordinates()),
