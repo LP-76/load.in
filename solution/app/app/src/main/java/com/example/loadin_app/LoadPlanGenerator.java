@@ -46,21 +46,67 @@ public class LoadPlanGenerator
         }
     }
 
-    private void PlaceBox(LoadQualities input_Info, Box input_Box)
+    private void PlaceBox(LoadStatistics input_Info, Box input_Box)
     {
-        //TODO: actually place the box in the space
+        EmptySpace idealSpace = plan.GetLoads().get(input_Info.GetLoadIndex()).GetEmptySpaces().get(input_Info.GetEmptySpaceIndex());
+
+        switch(input_Info.GetNumberOfMatchingDimensions())
+        {
+
+            case 3:
+                //the box is the exact same size as the space
+                //we need to completely delete the space and put the box in its place
+
+                input_Box.setDestination(idealSpace.GetOffset());
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
+                plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
+                break;
+            case 2:
+                //the box matches the space in 2 dimensions
+                //divide the space in 2 in the dimension that doesn't max, replace
+                //the filled space with a box
+                // |---------------|
+                // |      box      |
+                // |_______________|
+                // | updated space |
+                // |_______________|
+
+                break;
+            case 1:
+                //the box matches the width, height, or length of the space and nothing else.
+                //the space will need to be divided in to 3 pieces
+                // |-------|-----------|
+                // |  box  | new space |
+                // |_______|___________|
+                // | new space         |
+                // |___________________|
+
+                break;
+            case 0:
+                //we will need to create 5 spaces
+                // - one that will be replaced with the box
+                // - one the width of the box that represents the difference in length
+                // - one the length of the box that represents the difference in width
+                // - one the height of the box that represents the difference in height
+                // - one that fills in the rest of the space diagonal to the box, only sharing a single edge with the box
+                // this is essentially a 3D version of the case 1 break-up
+                break;
+            default:
+                //we should never hit this code.
+                break;
+        }
     }
 
 
-    private LoadQualities FindPlaceForBox(Box input_Box)
+    private LoadStatistics FindPlaceForBox(Box input_Box)
     {
         boolean placeForBoxExists = true;
 
-        ArrayList<LoadQualities> options = new ArrayList<LoadQualities>();
+        ArrayList<LoadStatistics> options = new ArrayList<LoadStatistics>();
 
         for (int loadIndex = 0; loadIndex < plan.GetLoads().size(); loadIndex++) //look in each truck...
         {
-            LoadQualities currentOption = FindCandidateSpotForBoxInLoad(input_Box, plan.GetLoads().get(loadIndex), loadIndex);
+            LoadStatistics currentOption = FindCandidateSpotForBoxInLoad(input_Box, plan.GetLoads().get(loadIndex), loadIndex);
 
             if(currentOption != null)
             {
@@ -79,7 +125,7 @@ public class LoadPlanGenerator
         }
     }
 
-     private LoadQualities FindCandidateSpotForBoxInLoad(Box input_Box, Load input_Load, int input_LoadIndex)
+     private LoadStatistics FindCandidateSpotForBoxInLoad(Box input_Box, Load input_Load, int input_LoadIndex)
      {
 
          int numberOfMatchingDimensionsInBestFit = -1;
@@ -107,18 +153,18 @@ public class LoadPlanGenerator
 
              if(sizeAtLeastAsLargeAsBoxFound)
              {
-                 return new LoadQualities(input_LoadIndex, bestFitSpaceIndex, numberOfMatchingDimensionsInBestFit, input_Load.GetEmptyArea() );
+                 return new LoadStatistics(input_LoadIndex, bestFitSpaceIndex, numberOfMatchingDimensionsInBestFit, input_Load.GetEmptyArea() );
              }
          }
 
          return null;
      }
 
-    private LoadQualities DetermineBestBoxPlacementOption(ArrayList<LoadQualities> input_Options)
+    private LoadStatistics DetermineBestBoxPlacementOption(ArrayList<LoadStatistics> input_Options)
     {
-        LoadQualities answer = input_Options.get(0);
+        LoadStatistics answer = input_Options.get(0);
 
-        for(LoadQualities currentOption : input_Options)
+        for(LoadStatistics currentOption : input_Options)
         {
             if(currentOption.GetNumberOfMatchingDimensions() >= answer.GetNumberOfMatchingDimensions() && currentOption.GetEmptyArea() <= answer.GetEmptyArea())
             {
@@ -158,52 +204,7 @@ public class LoadPlanGenerator
 
                 int dimensionsMatched =  CheckIfEmptySpaceMatchesBoxDimensions(currentBox,currentSpace);
 
-                switch(dimensionsMatched)
-                {
-                    case 3:
-                        //the box is the exact same size as the space
-                        //we need to completely delete the space and put the box in its place
 
-                        currentBox.setDestination(currentSpace.GetOffset());
-                        plan.GetLoads().get(loadIndex).AddBox(currentBox);
-                        plan.GetLoads().get(loadIndex).RemoveSpace(currentSpace);
-                        break;
-                    case 2:
-                        //the box matches the space in 2 dimensions
-                        //divide the space in 2 in the dimension that doesn't max, replace
-                        //the filled space with a box
-                        // |---------------|
-                        // |      box      |
-                        // |_______________|
-                        // | updated space |
-                        // |_______________|
-
-                        break;
-                    case 1:
-                        //the box matches the width, height, or length of the space and nothing else.
-                        //the space will need to be divided in to 3 pieces
-                        // |-------|-----------|
-                        // |  box  | new space |
-                        // |_______|___________|
-                        // | new space         |
-                        // |___________________|
-
-                        break;
-                    case 0:
-                        //we will need to create 5 spaces
-                        // - one that will be replaced with the box
-                        // - one the width of the box that represents the difference in length
-                        // - one the length of the box that represents the difference in width
-                        // - one the height of the box that represents the difference in height
-                        // - one that fills in the rest of the space diagonal to the box, only sharing a single edge with the box
-                        // this is essentially a 3D version of the case 1 break-up
-                        break;
-                    default:
-                        //we should never hit this code.
-                        break;
-
-
-                }
             }
         }
     }
