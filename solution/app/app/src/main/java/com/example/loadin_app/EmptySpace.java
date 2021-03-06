@@ -1,16 +1,21 @@
 package com.example.loadin_app;
 
 
+import com.example.loadin_app.ui.opengl.Vector;
+
 //this class represents an empty space, which will be used in the load plan algorithm to represent some or all of the empty space in the truck.
 public class EmptySpace
 {
     private float length, width, height, volume, lengthWidthArea, lengthHeightArea, widthHeightArea;
 
-    public EmptySpace(float input_length, float input_width, float input_height)
+    private Vector offset;
+
+    public EmptySpace(float input_length, float input_width, float input_height, Vector input_offset)
     {
         length = input_length;
         width = input_width;
         height = input_height;
+        offset = input_offset;
 
         lengthWidthArea = length * width;
         lengthHeightArea = length * height;
@@ -47,4 +52,16 @@ public class EmptySpace
     {
         return widthHeightArea;
     }
+
+    public Vector GetOffset()
+    {
+        return offset;
+    }
+
+    public void SetOffset(Vector input)
+    {
+        offset = input;
+    }
+
+
 }

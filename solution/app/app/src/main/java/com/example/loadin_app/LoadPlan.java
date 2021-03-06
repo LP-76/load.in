@@ -1,7 +1,7 @@
 package com.example.loadin_app;
 import com.example.loadin_app.ui.opengl.Box;
 import com.example.loadin_app.ui.opengl.Truck;
-
+import com.example.loadin_app.ui.opengl.Vector;
 import java.util.*;
 
 //container of boxes, their translations, and loading order
@@ -21,7 +21,7 @@ public class LoadPlan
 
     public void AddLoad()
     {
-        loads.add(new Load(new EmptySpace(movingTruck.getLengthInches(), movingTruck.getWidthInches(), movingTruck.getHeightInches())));
+        loads.add(new Load(new EmptySpace(movingTruck.getLengthInches(), movingTruck.getWidthInches(), movingTruck.getHeightInches(), new Vector(0,0,0))));
     }
 
     public ArrayList<Load> GetLoads()

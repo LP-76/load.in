@@ -46,6 +46,12 @@ public class Box extends WorldObject{
         return hexahedron.getLength();
      }
 
+     public float getArea()
+     {
+         return hexahedron.getWidth() * hexahedron.getLength() * hexahedron.getHeight();
+     }
+
+
      public Vector getCenter(){
         float x = getWidth() / 2f;
         float z = getLength() / 2f;
