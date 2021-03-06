@@ -89,7 +89,7 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
         );
 
         faces = new Face[]{
-                front, top, right, left, bottom, back
+               right, left, top, bottom, back, front
         };
 
 

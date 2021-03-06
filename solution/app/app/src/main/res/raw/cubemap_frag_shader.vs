@@ -1,4 +1,4 @@
-
+precision mediump float;
 
 uniform samplerCube u_cube;
 
@@ -7,5 +7,6 @@ varying vec3 direction;
 
 void main()
 {
-    gl_FragColor = v_Color * texture(u_cube, direction);
+    gl_FragColor = v_Color * textureCube(u_cube, direction);
+   // gl_FragColor = v_Color ;
 }

@@ -24,6 +24,13 @@ public class Triangle {
         return v1.crossProduct(v2);  //taking the cross product gives us this answer
     }
 
+    public Triangle moveAndCopy(Vector direction){
+        Triangle copy = new Triangle(values[0], values[1], values[2]);
+        copy.move(direction);
+        return copy;
+    }
+
+
     public Vector[] getOrthogonalVectorsForPlane(){
         Vector[] orthogonalVectors = new Vector[3];
         for(int x = 0; x < 3; x++)

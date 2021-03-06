@@ -8,6 +8,8 @@ import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
 import android.os.SystemClock;
 
+import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+
 import com.example.loadin_app.LoadPlan;
 import com.example.loadin_app.TestingLoadPlanGenerator;
 
@@ -48,6 +50,8 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private  int step;
     private boolean advanceInProgress;
     private Context context;
+
+    private Box largeBox;
 
     public TestGLRenderer(Bitmap source, Context ctx){
         testBitmap = source;
@@ -114,6 +118,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
 
         //theCamera.placeCamera(new Vector(-3f*12f, 8f*12f, -3f*12f));
+
 
 
         boxStagingArea = new Vector(0f, 0f, 0f);

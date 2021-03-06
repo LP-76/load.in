@@ -5,9 +5,12 @@ import android.opengl.GLES20;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Box extends TexturedWorldObject{
+public class Box extends WorldObject{
    //private final Color BOX_COLOR =  new Color(102f/255f, 84f/255f, 74f/255f, 1f);
-   private TexturedHexahedron hexahedron;
+
+
+
+    private CubeMappedHexahedron hexahedron;
 
    private Vector destination;
 
@@ -15,18 +18,11 @@ public class Box extends TexturedWorldObject{
         super(world);
 
 
-        hexahedron = new TexturedHexahedron(
+        hexahedron = new CubeMappedHexahedron(
                width ,
                height ,
                length );
-
-        hexahedron.setBackTexture(world.getTextureViewProgram().getCardboard());
-        hexahedron.setFrontTexture(world.getTextureViewProgram().getCardboard());
-        hexahedron.setBottomTexture(world.getTextureViewProgram().getCardboard());
-        hexahedron.setLeftTexture(world.getTextureViewProgram().getCardboard());
-        hexahedron.setRightTexture(world.getTextureViewProgram().getCardboard());
-        hexahedron.setTopTexture(world.getTextureViewProgram().getCardboard());
-
+        hexahedron.setMap(world.getCubeMapProgram().getBox());//the global box map
 
         destination = new Vector(0f, 0f, 0f);
      }
@@ -60,7 +56,7 @@ public class Box extends TexturedWorldObject{
 
 
     public void rotateLeftBy90Degrees(){
-        hexahedron = new TexturedHexahedron(hexahedron.getLength(), hexahedron.getHeight(), hexahedron.getWidth() );
+        hexahedron = new CubeMappedHexahedron(hexahedron.getLength(), hexahedron.getHeight(), hexahedron.getWidth() );
     }
 
     public boolean intersects(Box otherBox){
@@ -72,8 +68,29 @@ public class Box extends TexturedWorldObject{
     }
 
 
+
+
     @Override
-    public Stream<IDrawable> getDrawableShapes() {
-        return Arrays.stream(new IDrawable[]{hexahedron});
+    public OpenGLProgram getMyProgram() {
+        return myWorld.getCubeMapProgram();
+    }
+
+    @Override
+    public void draw(float[] view, float[] projection) {
+        OpenGLProgram program = myWorld.getCubeMapProgram(); //textured view program
+        GLES20.glUseProgram(program.getProgramHandle()); //activate the program
+
+        //calculate model
+        float[] postScaleMatrix = processScale();  //scale the object to size
+        float[] postTranslationMatrix = processTranslation(postScaleMatrix);  //move the object in the world
+
+        //upload model
+        program.setUniformMatrix4fv(postTranslationMatrix, World.TextureCoordinateProgram.U_MODEL); //this is the model scale and transpose info
+        //upload view
+        program.setUniformMatrix4fv(view, World.TextureCoordinateProgram.U_VIEW);
+        //upload projection
+        program.setUniformMatrix4fv(projection, World.TextureCoordinateProgram.U_PROJECTION);
+
+        hexahedron.draw(myWorld); //pass off the responsibility to one layer down
     }
 }
