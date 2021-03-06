@@ -31,8 +31,6 @@ public class LoginDataSource {
 
                 case Ok:
                     return new Result.Success<User>(result.userProfile);
-
-
             }
 
 
