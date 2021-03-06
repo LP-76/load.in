@@ -18,7 +18,7 @@ public class TransposeAnimation extends Animation {
     }
 
     private void updateTransitPath(){
-        transitPath = target.getOffset().add(newLocation.multiply(-1f)).multiply(-1f);
+        transitPath = target.getWorldOffset().add(newLocation.multiply(-1f)).multiply(-1f);
     }
 
     private void calculateVelocity(){
@@ -35,7 +35,7 @@ public class TransposeAnimation extends Animation {
     @Override
     public void performOperationPerTick() {
 
-        Vector l = target.getOffset().add(velocityVector);  //perform a move according to how much of a vector we need to do
+        Vector l = target.getWorldOffset().add(velocityVector);  //perform a move according to how much of a vector we need to do
         target.place(l);
         updateTransitPath();
 

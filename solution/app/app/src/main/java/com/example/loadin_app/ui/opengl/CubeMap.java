@@ -5,6 +5,8 @@ import android.opengl.GLES20;
 import android.opengl.GLES30;
 import android.opengl.GLUtils;
 
+import com.example.loadin_app.ui.opengl.programs.OpenGLProgram;
+
 public class CubeMap {
     public static final int RIGHT = GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_X;
     public static final int LEFT = GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_X;

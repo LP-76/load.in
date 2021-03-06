@@ -2,10 +2,15 @@ package com.example.loadin_app.ui.opengl;
 
 import android.opengl.GLES20;
 
+import com.example.loadin_app.ui.opengl.programs.IColorable;
+import com.example.loadin_app.ui.opengl.programs.ICubeMappable;
+import com.example.loadin_app.ui.opengl.programs.IPlaceable;
+import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class CubeMappedHexahedron extends Hexahedron implements IDrawable {
+public class CubeMappedHexahedron extends Hexahedron implements IColorable, ICubeMappable {
 
     private  Triangle[] triangles;
 
@@ -15,8 +20,8 @@ public class CubeMappedHexahedron extends Hexahedron implements IDrawable {
     private CubeMap map;
 
 
-    public CubeMappedHexahedron(float width, float height, float length){
-        super(width, height, length);
+    public CubeMappedHexahedron(float width, float height, float length, IPlaceable parent){
+        super(width, height, length, parent);
 
 
         //IMPORTANT, the Z axis is considered horizontal and Y is considered the up direction
@@ -69,11 +74,11 @@ public class CubeMappedHexahedron extends Hexahedron implements IDrawable {
     private void setupVariables(){
         positions = new OpenGLVariableHolder(
                 Arrays.stream(triangles).flatMap(i -> i.getCoordinates()),
-                3, World.CubeMapProgram.A_POSITION
+                3
         );
         colors = new OpenGLVariableHolder(
                 Arrays.stream(triangles).flatMap(i -> i.getColors()),
-                4, World.CubeMapProgram.A_COLOR
+                4
         );
         Vector center = new Vector(
                 getWidth()/2f,
@@ -81,57 +86,16 @@ public class CubeMappedHexahedron extends Hexahedron implements IDrawable {
                 getLength()/2f
         ).multiply(-1f);  //reverse direction
 
-
-
         texDirections = new OpenGLVariableHolder(
                 Arrays.stream(triangles).map(i -> i.moveAndCopy(center)).flatMap(i -> i.getCoordinates()),
-                3, World.CubeMapProgram.A_TEX_DIRECTION
+                3
         );
     }
 
 
     @Override
-    public void move(Vector direction) {
-          for(Triangle t : triangles){
-                t.move(direction);
-            }
-    }
-
-    @Override
-    public Stream<Triangle> getTriangles() {
-        return Arrays.stream( triangles);
-    }
-
-
-    @Override
-    public void draw(World worldContext) {
-        World.CubeMapProgram program = worldContext.getCubeMapProgram();
-        GLES20.glUseProgram(program.getProgramHandle()); //set this the active program
-
-        //upload position information
-        program.setVertexAttributePointer(positions, 3*4);  //conduct upload
-
-        //upload color information
-        program.setVertexAttributePointer(colors, 4*4);
-
-        //upload texture information
-        program.setVertexAttributePointer(texDirections, 3*4);
-
-        //bind the cubemap
-        GLES20.glActiveTexture(GLES20.GL_TEXTURE0);//I think this tells the program to bind the the variable for the cube
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, map.getHandle());
-        program.setUniform1i(World.CubeMapProgram.U_CUBE, 0);
-
-
-
-
-        //conduct the render
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, positions.getCount());
-
-        //cleanup
-        program.disableVertexAttribute(World.CubeMapProgram.A_TEX_DIRECTION);
-        program.disableVertexAttribute(World.CubeMapProgram.A_COLOR);
-        program.disableVertexAttribute(World.CubeMapProgram.A_POSITION);
+    public OpenGLVariableHolder getCubeTextureDirections() {
+        return texDirections;
     }
 
     public CubeMap getMap() {
@@ -140,5 +104,20 @@ public class CubeMappedHexahedron extends Hexahedron implements IDrawable {
 
     public void setMap(CubeMap map) {
         this.map = map;
+    }
+
+    @Override
+    public void draw(World worldContext, float[] view, float[] projection) {
+        worldContext.getCubeMapProgram().render(this, view, projection);
+    }
+
+    @Override
+    public OpenGLVariableHolder getPositions() {
+      return positions;
+    }
+
+    @Override
+    public OpenGLVariableHolder getColors() {
+        return colors;
     }
 }

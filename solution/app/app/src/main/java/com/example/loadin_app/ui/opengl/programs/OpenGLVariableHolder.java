@@ -1,4 +1,4 @@
-package com.example.loadin_app.ui.opengl;
+package com.example.loadin_app.ui.opengl.programs;
 
 import android.opengl.GLES20;
 
@@ -13,11 +13,7 @@ public  class OpenGLVariableHolder {
     protected int handle;
     protected int count;
     protected int coordinatesPerItem;
-    protected String variableName;
 
-    public String getVariableName() {
-        return variableName;
-    }
 
     public int getCoordinatesPerItem() {
         return coordinatesPerItem;
@@ -33,15 +29,15 @@ public  class OpenGLVariableHolder {
         return count;
     }
 
-    public OpenGLVariableHolder(float[] data, int coordinatesPerItem, String variableName){
-        this.variableName = variableName;
+    public OpenGLVariableHolder(float[] data, int coordinatesPerItem){
+
         this.coordinatesPerItem = coordinatesPerItem;
         // initialize vertex byte buffer for shape coordinates
        setData(data);;
     }
-    public OpenGLVariableHolder(Stream<Float> data, int coordinatesPerItem, String variableName){
+    public OpenGLVariableHolder(Stream<Float> data, int coordinatesPerItem){
         this.coordinatesPerItem = coordinatesPerItem;
-        this.variableName = variableName;
+
 
         Float[] floats = data.toArray(Float[]::new);
 

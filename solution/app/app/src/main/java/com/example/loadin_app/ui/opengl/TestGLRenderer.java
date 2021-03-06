@@ -191,14 +191,14 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         for(WorldObject wo: theWorld.getWorldObjects()){
             if(wo.isVisible())
-                wo.draw(viewMatrix, projectionMatrix);
+                wo.draw(theWorld, viewMatrix, projectionMatrix);
         }
     }
     private void renderHud(){
 
-        theHud.setMessage(LocalDateTime.now().toString());
+        //theHud.setMessage(LocalDateTime.now().toString());
 
-        theHud.draw(hudViewMatrix, orthoMatrix);
+        theHud.draw(theWorld, hudViewMatrix, orthoMatrix);
 
     }
 
@@ -211,7 +211,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         Matrix.orthoM(orthoMatrix, 0, -ratio, ratio, -1f, 1f, 0.1f, 100f );  //close field of vision
 
-        Matrix.setLookAtM(hudViewMatrix,0, 0f, 0f, -1f, 0f, 0f, 0f, 0f, 1f, 0f );
+        Matrix.setLookAtM(hudViewMatrix,0, 0f, 0f, -0.2f, 0f, 0f, 0f, 0f, 1f, 0f );
 
 
     }

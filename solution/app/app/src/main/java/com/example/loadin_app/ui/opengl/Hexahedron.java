@@ -2,12 +2,14 @@ package com.example.loadin_app.ui.opengl;
 
 import android.graphics.Point;
 
+import com.example.loadin_app.ui.opengl.programs.IPlaceable;
+import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 public abstract class Hexahedron extends Shape {
     private float mWidth, mHeight, mLength;
-
 
     public float getWidth() {
         return mWidth;
@@ -23,9 +25,8 @@ public abstract class Hexahedron extends Shape {
 
 
 
-
-
-    public Hexahedron(float width, float height, float length){
+    public Hexahedron(float width, float height, float length, IPlaceable parent){
+        super(parent);
         mWidth = width;
         mHeight = height;
         mLength = length;
@@ -33,5 +34,7 @@ public abstract class Hexahedron extends Shape {
 
 
     }
+
+
 
 }

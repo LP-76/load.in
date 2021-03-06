@@ -1,9 +1,13 @@
 package com.example.loadin_app.ui.opengl;
 
+import com.example.loadin_app.ui.opengl.programs.IColorable;
+import com.example.loadin_app.ui.opengl.programs.IPlaceable;
+import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class ColorHexahedron extends Hexahedron {
+public class ColorHexahedron extends Hexahedron implements IColorable {
 
     private Color color;
     private Triangle[] mTriangles;
@@ -11,8 +15,11 @@ public class ColorHexahedron extends Hexahedron {
         return color;
     }
 
-    public ColorHexahedron(float width, float height, float length, Color defaultColor){
-        super(width, height, length);
+    OpenGLVariableHolder positions;
+    OpenGLVariableHolder colors;
+
+    public ColorHexahedron(float width, float height, float length, Color defaultColor, IPlaceable parent){
+        super(width, height, length, parent);
 
         color = defaultColor.adjust(1.50f);
 
@@ -57,6 +64,14 @@ public class ColorHexahedron extends Hexahedron {
         };
 
 
+        positions = new OpenGLVariableHolder(
+               Arrays.stream(mTriangles).flatMap(i -> i.getCoordinates()), 3
+        );
+
+        colors = new OpenGLVariableHolder(
+                Arrays.stream(mTriangles).flatMap(i -> i.getColors()), 4
+        );
+
     }
 
 
@@ -67,9 +82,22 @@ public class ColorHexahedron extends Hexahedron {
         }
     }
 
-    @Override
-    public Stream<Triangle> getTriangles() {
 
-        return Arrays.stream( mTriangles);
+
+
+
+    @Override
+    public OpenGLVariableHolder getPositions() {
+       return positions;
+    }
+
+    @Override
+    public void draw(World worldContext, float[] view, float[] projection) {
+        worldContext.getLightViewProgram().render(this, view, projection);
+    }
+
+    @Override
+    public OpenGLVariableHolder getColors() {
+        return colors;
     }
 }

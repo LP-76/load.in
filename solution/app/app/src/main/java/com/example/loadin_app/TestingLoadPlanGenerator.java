@@ -24,7 +24,7 @@ public class TestingLoadPlanGenerator
                 for(int widthIndex = (int) sampleLoadPlan.GetTruck().getWidthInches()/12 ; widthIndex >= 0  ; widthIndex--)
                 {
                     Box newBox = new Box(12,12,12,theWorld);
-                    newBox.setDestination( t.getOffset().add(   new Vector(widthIndex*12 - 12f, heightIndex*12, lengthIndex*12 - 12f)));
+                    newBox.setDestination( t.getWorldOffset().add(   new Vector(widthIndex*12 - 12f, heightIndex*12, lengthIndex*12 - 12f)));
                     sampleLoadPlan.AddBox(newBox);
                     newBox.setVisible(false);
                 }
@@ -42,7 +42,7 @@ public class TestingLoadPlanGenerator
         LoadPlan sampleLoadPlan = new LoadPlan(t);
 
         Box newBox = new Box(t.getWidthInches(),t.getHeightInches(),t.getLengthInches(),theWorld);
-        newBox.setDestination( t.getOffset().add(   new Vector(0f, 0, 0f)));
+        newBox.setDestination( t.getWorldOffset().add(   new Vector(0f, 0, 0f)));
         newBox.setVisible(false);
         sampleLoadPlan.AddBox(newBox);
 

@@ -2,10 +2,12 @@ package com.example.loadin_app.ui.opengl;
 
 import android.opengl.GLES20;
 
+import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
+
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-public class Truck extends TexturedWorldObject
+public class Truck extends WorldObject
 {
     private final Color FLOOR_COLOR = new Color(161f/255f, 119f/255f,93f/255f, 1f);
     private final Color WALL_COLOR = new Color(206f/255f, 218f/255f,210f/255f, 1f);
@@ -47,10 +49,7 @@ public class Truck extends TexturedWorldObject
 
     }
 
-    @Override
-    public Stream<IDrawable> getDrawableShapes() {
-        return shapes.stream().map(i -> (IDrawable)i);
-    }
+
 
 
     public void recalculateShapes(){
@@ -65,7 +64,8 @@ public class Truck extends TexturedWorldObject
         TexturedHexahedron floor = new TexturedHexahedron(
                 width, //we'll say approximately 4 inches thick for now
                 wallThickness,
-                length
+                length,
+                this
         );
         Texture floorTex = myWorld.getTextureViewProgram().getFloor();
 
@@ -85,7 +85,8 @@ public class Truck extends TexturedWorldObject
         TexturedHexahedron leftWall = new TexturedHexahedron(
                 wallThickness, //we'll say approximately 4 inches thick for now
                 height,
-                length
+                length,
+                this
         );
         leftWall.move(new Vector( width, 0f, 0f));  //move to the left 4 inches
         leftWall.setAllSides(myWorld.getTextureViewProgram().getWall());
@@ -94,7 +95,8 @@ public class Truck extends TexturedWorldObject
         TexturedHexahedron frontWall = new TexturedHexahedron(
                 width, //we'll say approximately 4 inches thick for now
                 height,
-                wallThickness
+                wallThickness,
+                this
         );
         frontWall.move(new Vector(0f, 0f, length));  //move to front of bed
         frontWall.setAllSides(myWorld.getTextureViewProgram().getWall());
@@ -112,6 +114,17 @@ public class Truck extends TexturedWorldObject
     public float GetAreaOfTruckInches()
     {
         return lengthInches * widthInches * heightInches;
+    }
+
+    @Override
+    public void draw(World worldContext, float[] view, float[] projection) {
+        for(Shape s: shapes)
+            s.draw(worldContext, view, projection);
+    }
+
+    @Override
+    public OpenGLVariableHolder getPositions() {
+        return null;
     }
 }
 

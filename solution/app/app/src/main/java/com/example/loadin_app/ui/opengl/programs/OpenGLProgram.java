@@ -1,7 +1,11 @@
-package com.example.loadin_app.ui.opengl;
+package com.example.loadin_app.ui.opengl.programs;
 
 import android.content.Context;
 import android.opengl.GLES20;
+import android.opengl.Matrix;
+
+import com.example.loadin_app.ui.opengl.Vector;
+import com.example.loadin_app.ui.opengl.World;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -92,8 +96,8 @@ public abstract class OpenGLProgram {
 
 
 
-    public void setUniformMatrix3fv(OpenGLVariableHolder data){
-        int handle = getUniformHandle(data.getVariableName());
+    public void setUniformMatrix3fv(OpenGLVariableHolder data, String variableName){
+        int handle = getUniformHandle(variableName);
         GLES20.glUniform3fv(handle, data.getCount(), data.getBuffer());
     }
 
@@ -102,16 +106,44 @@ public abstract class OpenGLProgram {
         GLES20.glUniformMatrix4fv(handle,1, false, data, 0);
     }
 
-    public void setVertexAttributePointer(OpenGLVariableHolder data, int stride){
-        int handle = getAttributeHandle(data.getVariableName());
+    public void setVertexAttributePointer(OpenGLVariableHolder data, String variableName){
+        int handle = getAttributeHandle(variableName);
         GLES20.glEnableVertexAttribArray(handle);
         GLES20.glVertexAttribPointer(handle, data.getCoordinatesPerItem(), GLES20.GL_FLOAT, false,
-                stride, data.getBuffer());
+                data.getCoordinatesPerItem() * 4, data.getBuffer());
     }
 
     public void disableVertexAttribute(String variableName){
         int handle = getAttributeHandle(variableName);
         GLES20.glDisableVertexAttribArray(handle);
+    }
+
+    protected <T extends IPlaceable> float[] processTranslation(T item){
+
+        //apply translations here
+
+        Vector worldOffset = item.getWorldOffset();
+
+        float[] translationMatrix = new float[16];
+
+        //set the identity matrix for translation
+        Matrix.setIdentityM(translationMatrix, 0);
+        //add the translation to the matrix
+        Matrix.translateM(translationMatrix,0, worldOffset.getX(), worldOffset.getY(), worldOffset.getZ() );
+
+        return translationMatrix;
+    }
+
+    protected float[] processScale(){
+        float[] scaleMatrix = new float[16];
+
+        //set the identity matrix for translation
+        Matrix.setIdentityM(scaleMatrix, 0);
+
+        //add the translation to the matrix
+        Matrix.scaleM(scaleMatrix,0, World.INCHES_TO_WORLD_SCALE,  World.INCHES_TO_WORLD_SCALE,  World.INCHES_TO_WORLD_SCALE );
+
+        return scaleMatrix;
     }
 
 }

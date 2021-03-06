@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.opengl.GLES20;
 import android.opengl.GLUtils;
 
+import com.example.loadin_app.ui.opengl.programs.OpenGLProgram;
+
 public class Texture {
     //a wrapper class for loading a texture
 
@@ -13,7 +15,7 @@ public class Texture {
     private int sourceWidth;
     private  int sourceHeight;
 
-    public Texture( Bitmap source, OpenGLProgram program, String variableName){
+    public Texture(Bitmap source, OpenGLProgram program, String variableName){
 
         GLES20.glGenTextures(1, handle, 0);
         this.source = source;

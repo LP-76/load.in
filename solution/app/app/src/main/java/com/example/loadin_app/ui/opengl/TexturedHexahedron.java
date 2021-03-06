@@ -2,12 +2,14 @@ package com.example.loadin_app.ui.opengl;
 
 import android.opengl.GLES20;
 
-import org.w3c.dom.Text;
+import com.example.loadin_app.ui.opengl.programs.IPlaceable;
+import com.example.loadin_app.ui.opengl.programs.OpenGLProgram;
+import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class TexturedHexahedron extends Hexahedron implements IDrawable{
+public class TexturedHexahedron extends Hexahedron {
 
 
     private Face[] faces;
@@ -24,8 +26,8 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
     private Vector topRight;
     private Vector topLeft;
 
-    public TexturedHexahedron(float width, float height, float length){
-        super(width, height, length);
+    public TexturedHexahedron(float width, float height, float length, IPlaceable parent){
+        super(width, height, length, parent);
 
 
         //IMPORTANT, the Z axis is considered horizontal and Y is considered the up direction
@@ -54,21 +56,22 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
                         //front
                         new TexturedTriangle(p1, p6, p2, bottomLeft, topRight, bottomRight),
                         new TexturedTriangle(p1, p5, p6, bottomLeft, topLeft, topRight)
-                }
+                },
+                this
         );
         bottom = new Face(
                 new TexturedTriangle[]{
                         //base
                         new TexturedTriangle(p1, p4, p3, topLeft, bottomLeft, bottomRight),
                         new TexturedTriangle(p2, p1, p3, topRight, topLeft, bottomRight)
-                }
+                }, this
         );
         top = new Face(
                 new TexturedTriangle[]{
                         //top
                         new TexturedTriangle(p5, p7, p6, bottomLeft, topRight, bottomRight),
                         new TexturedTriangle(p5, p8, p7, bottomLeft, topLeft, topRight)
-                }
+                }, this
         );
 
         back = new Face(
@@ -76,21 +79,21 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
                         //back
                         new TexturedTriangle(p3, p8, p4, bottomLeft, topRight, bottomRight),
                         new TexturedTriangle(p3, p7, p8, bottomLeft, topLeft, topRight)
-                }
+                }, this
         );
         right = new Face(
                 new TexturedTriangle[]{
                         //right
                         new TexturedTriangle(p2, p7, p3, bottomLeft, topRight, bottomRight),
                         new TexturedTriangle(p2, p6, p7, bottomLeft, topLeft, topRight)
-                }
+                }, this
         );
         left = new Face(
                 new TexturedTriangle[]{
                         //left
                         new TexturedTriangle(p4, p5, p1, bottomLeft, topRight, bottomRight),
                         new TexturedTriangle(p4, p8, p5, bottomLeft, topLeft, topRight)
-                }
+                }, this
         );
 
         faces = new Face[]{
@@ -133,19 +136,11 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
         return top;
     }
 
-    @Override
-    public void move(Vector direction) {
-        for(Face f: faces){
-           f.move(direction);
-        }
-
-    }
-
     public void scaleFace(Face f, float scaleX, float scaleY){
         if(scaleX <= 0 || scaleY <= 0)
             throw new IllegalArgumentException("Scales must be > 0");
 
-       for(TexturedTriangle t : f.getTexturedTriangles().toArray(TexturedTriangle[]::new)){
+       for(TexturedTriangle t : f.getTriangles().toArray(TexturedTriangle[]::new)){
            t.setScaleX(scaleX);
            t.setScaleY(scaleY);
        }
@@ -154,28 +149,16 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
 
     }
 
-    @Override
-    public Stream<Triangle> getTriangles() {
-        return Arrays.stream( faces).flatMap(i -> i.getTriangles());
-    }
-
-    public Stream<TexturedTriangle> getTexturedTriangles(){
-        return Arrays.stream( faces).flatMap(i -> i.getTexturedTriangles());
-    }
 
     @Override
-    public void draw(World worldContext) {
-        OpenGLProgram program = worldContext.getTextureViewProgram();
-        GLES20.glUseProgram(program.getProgramHandle()); //set this the active program
-
-        Face[] faces = {front, back, left, right, bottom, top};
-
-        for(Face f: faces){
-            f.draw(worldContext);
+    public void draw(World worldContext, float[] view, float[] projection) {
+        for(Face f : faces){
+            f.draw(worldContext, view, projection);  //just pass things through to the faces
         }
-
     }
 
-
-
+    @Override
+    public OpenGLVariableHolder getPositions() {
+        return null;
+    }
 }

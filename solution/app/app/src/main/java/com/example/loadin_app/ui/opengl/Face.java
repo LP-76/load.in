@@ -2,10 +2,16 @@ package com.example.loadin_app.ui.opengl;
 
 import android.opengl.GLES20;
 
+import com.example.loadin_app.ui.opengl.programs.IColorable;
+import com.example.loadin_app.ui.opengl.programs.IPlaceable;
+import com.example.loadin_app.ui.opengl.programs.ITexturable;
+import com.example.loadin_app.ui.opengl.programs.OpenGLProgram;
+import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
+
 import java.util.Arrays;
 import java.util.stream.Stream;
 
-public class Face extends Shape implements IDrawable{
+public class Face extends Shape implements IColorable, ITexturable {
     private TexturedTriangle[] triangles;
     private Texture texture;
 
@@ -13,32 +19,32 @@ public class Face extends Shape implements IDrawable{
     private OpenGLVariableHolder colors;
     private OpenGLVariableHolder textureCoordinates;
 
+    public Stream<TexturedTriangle> getTriangles() {
+        return Arrays.stream(triangles);
+    }
+
     public Texture getTexture() {
         return texture;
+    }
+
+    @Override
+    public OpenGLVariableHolder getTextureCoordiantes() {
+        return textureCoordinates;
     }
 
     public void setTexture(Texture texture) {
         this.texture = texture;
     }
 
-    public OpenGLVariableHolder getPositions() {
-        return positions;
-    }
 
-    public OpenGLVariableHolder getColors() {
-        return colors;
-    }
 
-    public OpenGLVariableHolder getTextureCoordinates() {
-        return textureCoordinates;
-    }
-
-    public Face(TexturedTriangle[] triangles){
+    public Face(TexturedTriangle[] triangles, IPlaceable parent){
+        super(parent);
         this.triangles = triangles;
 
         colors = new OpenGLVariableHolder(
                 Arrays.stream(triangles).flatMap(i -> i.getColors()),
-                4, World.TextureCoordinateProgram.A_COLOR
+                4
         );
 
         refreshPositions();
@@ -48,55 +54,30 @@ public class Face extends Shape implements IDrawable{
     public void refreshTextureCoordinates(){
         textureCoordinates = new OpenGLVariableHolder(
                 Arrays.stream(triangles).flatMap(i -> i.getTextureCoordinates()),
-                2, World.TextureCoordinateProgram.A_TEX_COORD
+                2
         );
     }
     public void refreshPositions(){
         positions = new OpenGLVariableHolder(
                 Arrays.stream(triangles).flatMap(i -> i.getCoordinates()),
-                3, World.TextureCoordinateProgram.A_POSITION
+                3
         );
     }
 
+
+
     @Override
-    public void move(Vector direction) {
-        for(Triangle t: triangles)
-            t.move(direction);
-        refreshPositions();
+    public void draw(World worldContext, float[] view, float[] projection) {
+        worldContext.getTextureViewProgram().render(this, view, projection);
     }
 
     @Override
-    public Stream<Triangle> getTriangles() {
-        return Arrays.stream(triangles);
-    }
-
-    public Stream<TexturedTriangle> getTexturedTriangles() {
-        return Arrays.stream(triangles);
+    public OpenGLVariableHolder getColors() {
+        return colors;
     }
 
     @Override
-    public void draw(World worldContext) {
-        //upload position information
-        OpenGLProgram program = worldContext.getTextureViewProgram();
-
-
-        program.setVertexAttributePointer(getPositions(), 3*4);  //conduct upload
-
-        //upload color information
-        program.setVertexAttributePointer(getColors(), 4*4);
-
-        //upload texture information
-        program.setVertexAttributePointer(getTextureCoordinates(), 2*4);
-
-        //set the texture
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, getTexture().getHandle());  //bind to the handle
-
-        //draw
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, getPositions().getCount());
-
-        //cleanup
-        program.disableVertexAttribute(World.TextureCoordinateProgram.A_TEX_COORD);
-        program.disableVertexAttribute(World.TextureCoordinateProgram.A_COLOR);
-        program.disableVertexAttribute(World.TextureCoordinateProgram.A_POSITION);
+    public OpenGLVariableHolder getPositions() {
+        return positions;
     }
 }
