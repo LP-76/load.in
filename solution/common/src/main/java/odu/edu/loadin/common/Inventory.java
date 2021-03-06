@@ -9,6 +9,9 @@ public class Inventory {
     private int id;
     private int userID;
     private String description;
+    private float width;
+    private float height;
+    private float length;
     private int fragility;
     private double weight;
     private Date createdAt;
@@ -70,5 +73,29 @@ public class Inventory {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public void setWidth(float width) {
+        this.width = width;
+    }
+
+    public float getHeight() {
+        return height;
+    }
+
+    public void setHeight(float height) {
+        this.height = height;
+    }
+
+    public float getLength() {
+        return length;
+    }
+
+    public void setLength(float length) {
+        this.length = length;
     }
 }

@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * An object that can be displayed in the world
  */
-public abstract class  WorldObject  {
+public abstract class  WorldObject implements  IBaseDrawable {
 
     private Vector offset;
 

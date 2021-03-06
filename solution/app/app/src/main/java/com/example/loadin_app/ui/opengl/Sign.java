@@ -80,12 +80,7 @@ public class Sign extends  TexturedWorldObject{
 
         GLES20.glUseProgram(getMyProgram().getProgramHandle());
         tex = new Texture(renderedMessage, getMyProgram(), World.TextureCoordinateProgram.U_TEXTURE); //load the texture
-        board.setFrontTexture(tex);
-        board.setBottomTexture(tex);
-        board.setTopTexture(tex);
-        board.setLeftTexture(tex);
-        board.setRightTexture(tex);
-        board.setBackTexture(tex);
+        board.setAllSides(tex);
     }
 
 //    @Override

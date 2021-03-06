@@ -10,6 +10,9 @@ public class Texture {
     private final int[] handle = new int[1];
     private final Bitmap source;
 
+    private int sourceWidth;
+    private  int sourceHeight;
+
     public Texture( Bitmap source, OpenGLProgram program, String variableName){
 
         GLES20.glGenTextures(1, handle, 0);
@@ -26,14 +29,24 @@ public class Texture {
 
 
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, source, 0);  //send the image to this newly bound texture
+            GLES20.glGenerateMipmap(handle[0]);
             //checkError();
            // GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
         }
         else
             throw new RuntimeException("Did not load texture as expected");
 
+        sourceHeight = source.getHeight();
+        sourceWidth = source.getWidth();
 
+    }
 
+    public int getSourceWidth() {
+        return sourceWidth;
+    }
+
+    public int getSourceHeight() {
+        return sourceHeight;
     }
 
     private void checkError(){
@@ -45,5 +58,11 @@ public class Texture {
     public int getHandle(){
         return handle[0];
     }
+
+    public void delete(){  //delete the texture from memory when no longer needed
+       GLES20.glDeleteTextures(1, handle, 0);
+       GLES20.glFlush();
+    }
+
 
 }

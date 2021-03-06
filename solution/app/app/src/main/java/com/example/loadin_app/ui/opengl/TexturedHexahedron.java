@@ -19,6 +19,11 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
     private Face bottom;
     private Face top;
 
+    private Vector bottomLeft;  //these represent the 2d texture map coordinates
+    private Vector bottomRight;
+    private Vector topRight;
+    private Vector topLeft;
+
     public TexturedHexahedron(float width, float height, float length){
         super(width, height, length);
 
@@ -39,10 +44,10 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
         Vector p7 = new Vector(x, y, z, white);
         Vector p8 = new Vector(0, y, z, white);
 
-        Vector bottomLeft = new Vector(0f, 0f, 0f);
-        Vector bottomRight = new Vector(1f, 0f, 0f);
-        Vector topRight = new Vector(1f, 1f, 0f);
-        Vector topLeft = new Vector(0f, 1f, 0f);
+         bottomLeft = new Vector(0f, 0f, 0f);
+         bottomRight = new Vector(1f, 0f, 0f);
+         topRight = new Vector(1f, 1f, 0f);
+         topLeft = new Vector(0f, 1f, 0f);
 
         front = new Face(
                 new TexturedTriangle[]{
@@ -98,41 +103,64 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
     }
 
 
+    public void setAllSides(Texture texture){
+        for(Face f: faces)
+            f.setTexture(texture);
+    }
 
-    public void setFrontTexture(Texture front) {
-        this.front.texture = front;
+
+    public Face getFront() {
+        return front;
     }
-    public void setBackTexture(Texture back) {
-        this.back.texture = back;
+
+    public Face getBack() {
+        return back;
     }
-    public void setLeftTexture(Texture left) {
-        this.left.texture = left;
+
+    public Face getLeft() {
+        return left;
     }
-    public void setRightTexture(Texture right) {
-        this.right.texture = right;
+
+    public Face getRight() {
+        return right;
     }
-    public void setBottomTexture(Texture bottom) {
-        this.bottom.texture = bottom;
+
+    public Face getBottom() {
+        return bottom;
     }
-    public void setTopTexture(Texture top) {
-        this.top.texture = top;
+
+    public Face getTop() {
+        return top;
     }
 
     @Override
     public void move(Vector direction) {
-        for(Face f: faces)
-            for(Triangle t : f.triangles){
-                t.move(direction);
-            }
+        for(Face f: faces){
+           f.move(direction);
+        }
+
+    }
+
+    public void scaleFace(Face f, float scaleX, float scaleY){
+        if(scaleX <= 0 || scaleY <= 0)
+            throw new IllegalArgumentException("Scales must be > 0");
+
+       for(TexturedTriangle t : f.getTexturedTriangles().toArray(TexturedTriangle[]::new)){
+           t.setScaleX(scaleX);
+           t.setScaleY(scaleY);
+       }
+
+       f.refreshTextureCoordinates();
+
     }
 
     @Override
     public Stream<Triangle> getTriangles() {
-        return Arrays.stream( faces).flatMap(i -> Arrays.stream(i.triangles));
+        return Arrays.stream( faces).flatMap(i -> i.getTriangles());
     }
 
     public Stream<TexturedTriangle> getTexturedTriangles(){
-        return Arrays.stream( faces).flatMap(i -> Arrays.stream(i.triangles));
+        return Arrays.stream( faces).flatMap(i -> i.getTexturedTriangles());
     }
 
     @Override
@@ -143,62 +171,11 @@ public class TexturedHexahedron extends Hexahedron implements IDrawable{
         Face[] faces = {front, back, left, right, bottom, top};
 
         for(Face f: faces){
-
-            //upload position information
-
-            program.setVertexAttributePointer(f.positions, 3&4);  //conduct upload
-
-            //upload color information
-            program.setVertexAttributePointer(f.colors, 4*4);
-
-            //upload texture information
-            program.setVertexAttributePointer(f.textureCoordinates, 2*4);
-
-            //set the texture
-            GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, f.texture.getHandle());  //bind to the handle
-
-            //draw
-            GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, f.positions.getCount());
-
-            //cleanup
-            program.disableVertexAttribute(World.TextureCoordinateProgram.A_TEX_COORD);
-            program.disableVertexAttribute(World.TextureCoordinateProgram.A_COLOR);
-            program.disableVertexAttribute(World.TextureCoordinateProgram.A_POSITION);
-
-        }
-
-
-
-
-    }
-
-    public class Face{
-        private TexturedTriangle[] triangles;
-        private Texture texture;
-
-        OpenGLVariableHolder positions;
-        OpenGLVariableHolder colors;
-        OpenGLVariableHolder textureCoordinates;
-
-
-
-
-        public Face(TexturedTriangle[] triangles){
-            this.triangles = triangles;
-             positions = new OpenGLVariableHolder(
-                    Arrays.stream(triangles).flatMap(i -> i.getCoordinates()),
-                    3, World.TextureCoordinateProgram.A_POSITION
-            );
-             colors = new OpenGLVariableHolder(
-                    Arrays.stream(triangles).flatMap(i -> i.getColors()),
-                    4, World.TextureCoordinateProgram.A_COLOR
-            );
-            textureCoordinates = new OpenGLVariableHolder(
-                    Arrays.stream(triangles).flatMap(i -> i.getTextureCoordinates()),
-                    2, World.TextureCoordinateProgram.A_TEX_COORD
-            );
+            f.draw(worldContext);
         }
 
     }
+
+
 
 }

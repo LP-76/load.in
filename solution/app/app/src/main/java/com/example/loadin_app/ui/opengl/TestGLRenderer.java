@@ -23,16 +23,15 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class TestGLRenderer implements GLSurfaceView.Renderer {
     public static final Color LOAD_IN_GREEN = new Color(109, 209, 161, 1);
-    private final float[] vPMatrix = new float[16];
+
+    private final float[] orthoMatrix = new float[16];
     private final float[] projectionMatrix = new float[16];
     private  float[] viewMatrix = new float[16];
-    private float[] rotationMatrix = new float[16];
+    private float[] hudViewMatrix = new float[16];
 
     public volatile float angle;
 
-    public float getAngle() {
-        return angle;
-    }
+
 
     public Camera getTheCamera(){
         return theCamera;
@@ -41,6 +40,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private World theWorld;
     private Camera theCamera;
     private Bitmap testBitmap;
+    private Hud theHud;
 
     private LoadPlan theLoadPlan;
 
@@ -113,6 +113,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         theWorld = new World(context);
+        theHud = new Hud(theWorld); //setup the hud
         theCamera = new Camera();
 
         theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
@@ -125,37 +126,37 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
        putNextBoxIntoStaging();
 
-
-
-
-
-//        Truck t = new Truck(theWorld);
-//        t.move(new Vector(3f, 0f, 3f));
-//
-//        Box test = new Box(24f,24f,24f, theWorld); //a 2 foot box
-//        test.place(new Vector(t.getWidthInches() - 24f, 0f, t.getLengthInches() - 24f));
-//
-//         test2= new Box(48f,48f,24f, theWorld); //a 2 foot box
-//        //test2.place(new Vector(32f, 0f, 32f));
-//        test2.place(new Vector(0f, 0f, 0f));
-//
-//
-//
-//        Sign testSign = new Sign(theWorld, 12f, 12f);
-//        //testSign.setMessage("Hello cruel world");
-//        testSign.testBitmap(testBitmap);
-//        testSign.place(new Vector(1f,1f, 1f));
-
-       // theCamera.focusOn(test2.getOffset(), 2f * 12f);  //focus at the base of the sign
-
-        //theCamera.placeCamera(new Vector(1f, 2f, -2f));
-        //theCamera.lookAt(new Vector(1f, 1f, 1f));  //test looking at the truck right corner
     }
 
     public void onDrawFrame(GL10 unused) {
 
         theWorld.updateTicks();
 
+        prepareWorld();
+        renderWorld();
+
+        prepareHud();
+        renderHud();
+
+
+
+
+    }
+    private void prepareWorld(){
+        GLES20.glEnable(GLES20.GL_DEPTH_TEST);  //depth test enabled
+        GLES20.glDisable(GLES20.GL_BLEND);
+
+    }
+    private void prepareHud(){
+
+        GLES20.glDisable(GLES20.GL_DEPTH_TEST);  //we don't depth test for hud
+        GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT);
+        GLES20.glEnable(GLES20.GL_BLEND);
+        //GLES20.glBlendColor(0f, 0f, 0f, 1f);
+        GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
+
+    }
+    private void renderWorld(){
         for(Animation a : theWorld.getAnimiations().toArray(Animation[]::new)){
             if(!a.isComplete())
                 a.performOperationPerTick();
@@ -164,12 +165,12 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
                 advanceInProgress = false;
             }
 
-         }
+        }
 
         if(currentBox != null){
 
             Vector boxCenter = currentBox.getCenter();
-            Vector pointOfView = boxCenter.add(new Vector(-3f*12, 3f*12f, -3f*12f));
+            Vector pointOfView = boxCenter.add(new Vector(-3f*12, 2f*12f, -3f*12f));
 
             theCamera.placeCamera(pointOfView);
             theCamera.lookAt(boxCenter);  //always look at the current box
@@ -192,11 +193,15 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
             if(wo.isVisible())
                 wo.draw(viewMatrix, projectionMatrix);
         }
+    }
+    private void renderHud(){
 
+        theHud.setMessage(LocalDateTime.now().toString());
 
-
+        theHud.draw(hudViewMatrix, orthoMatrix);
 
     }
+
 
     public void onSurfaceChanged(GL10 unused, int width, int height) {
         GLES20.glViewport(0, 0, width, height);
@@ -204,6 +209,9 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         float ratio = (float) width / height;
         Matrix.frustumM(projectionMatrix, 0, -ratio, ratio, -1f, 1f, 1f, 100f);
 
+        Matrix.orthoM(orthoMatrix, 0, -ratio, ratio, -1f, 1f, 0.1f, 100f );  //close field of vision
+
+        Matrix.setLookAtM(hudViewMatrix,0, 0f, 0f, -1f, 0f, 0f, 0f, 0f, 1f, 0f );
 
 
     }
