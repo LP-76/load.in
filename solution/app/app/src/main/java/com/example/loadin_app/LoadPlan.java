@@ -1,7 +1,7 @@
 package com.example.loadin_app;
 import com.example.loadin_app.ui.opengl.Box;
-import com.example.loadin_app.ui.opengl.Truck;
 import com.example.loadin_app.ui.opengl.Vector;
+import com.example.loadin_app.ui.opengl.Truck;
 import java.util.*;
 
 //container of boxes, their translations, and loading order

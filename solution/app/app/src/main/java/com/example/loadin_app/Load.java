@@ -27,7 +27,7 @@ public class Load
     public void AddBox(Box input_box)
     {
         boxes.add(input_box);
-        emptyArea -= input_box.getArea();
+        emptyArea -= input_box.getVolume();
     }
 
     public Box GetCurrentBox()
@@ -75,13 +75,18 @@ public class Load
         return emptySpaces;
     }
 
-    public void RemoveSpace(EmptySpace input)
+    public void RemoveSpace(EmptySpace input_Space)
     {
-        //TODO: this
+        emptySpaces.remove(input_Space);
     }
 
     public float GetEmptyArea()
     {
         return emptyArea;
+    }
+
+    public void AddSpace(EmptySpace input_Space)
+    {
+        emptySpaces.add(input_Space);
     }
 }

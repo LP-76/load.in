@@ -62,6 +62,4 @@ public class EmptySpace
     {
         offset = input;
     }
-
-
 }

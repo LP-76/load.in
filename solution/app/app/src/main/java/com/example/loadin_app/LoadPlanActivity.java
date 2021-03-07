@@ -1,5 +1,6 @@
 package com.example.loadin_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -22,7 +23,7 @@ public class LoadPlanActivity extends AppCompatActivity {
     private Button generateLoadPlanButton;
 
     public static SharedPreferences sp;
-
+    private LoadPlanGenerator generator = new LoadPlanGenerator();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +124,7 @@ public class LoadPlanActivity extends AppCompatActivity {
     private void StartLoadPlan()
     {
         //LoadPlanGenerator will take it from here!
-        LoadPlanGenerator generator = new LoadPlanGenerator();
+        generator.StartLoadPlan();
+
     }
 }
