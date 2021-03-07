@@ -3,12 +3,23 @@ package com.example.loadin_app;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.accounts.Account;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.data.services.UserServiceImpl;
+import com.example.loadin_app.ui.login.LoginActivity;
+
+import java.util.ArrayList;
+
+import odu.edu.loadin.common.User;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -19,13 +30,23 @@ public class AccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
 
-        /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
+        // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         if(sp.getInt("loginID", 0) == 0){
-            Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
+            Intent switchToLogin = new Intent(AccountActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-        */
+
+        UserServiceImpl service = new UserServiceImpl("http://10.0.2.2:9000/");
+        User user = new User();
+        int j = sp.getInt("loginID", 0);
+        try{
+            user = service.getUser(j);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
+
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -34,6 +55,41 @@ public class AccountActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+
+
+        TextView emailH = (TextView) findViewById(R.id.account_email_header);
+        emailH.setText("Email:");
+        TextView emailV = (TextView) findViewById(R.id.account_email__value);
+        emailV.setText(user.getEmail());
+
+        TextView fNameH = (TextView) findViewById(R.id.account_fname_header);
+        fNameH.setText("First Name:");
+        TextView fNameV = (TextView) findViewById(R.id.account_fname_value);
+        fNameV.setText(user.getFirstName());
+
+        TextView lNameH = (TextView) findViewById(R.id.account_lname_header);
+        lNameH.setText("Last Name:");
+        TextView lNameV = (TextView) findViewById(R.id.account_lname_value);
+        lNameV.setText(user.getLastName());
+
+        TextView phoneH = (TextView) findViewById(R.id.account_phone_header);
+        phoneH.setText("Phone Number:");
+        TextView phoneV = (TextView) findViewById(R.id.account_phone_value);
+        phoneV.setText(user.getPhoneNumber());
+
+    }
+
+    public void editAccount(View view){
+        Intent switchToEditItem = new Intent(AccountActivity.this, MainMenuActivity.class);
+        startActivity(switchToEditItem);
+        finish();
+    }
+
+
+    public void changePassword(View view){
+        Intent switchToAddItem = new Intent(AccountActivity.this, MainMenuActivity.class);
+        startActivity(switchToAddItem);
+        finish();
     }
 
     // Menu icons are inflated just as they were with actionbar

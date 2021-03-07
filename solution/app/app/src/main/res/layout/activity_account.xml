@@ -7,57 +7,143 @@
     android:background="@color/load_in_gray"
     tools:context=".AccountActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="?attr/colorPrimary"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@color/load_in_gray"
         tools:ignore="MissingConstraints">
 
-        <ImageView
-            android:id="@+id/loadinLogo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:src="@drawable/loadin_logo"
-            android:layout_gravity="left">
-        </ImageView>
-
-        <TextView
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:minHeight="?attr/actionBarSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/title_activity_account"
-            android:textSize="24sp"
-            android:textColor="@color/white"
-            android:gravity="center">
-        </TextView>
-    </androidx.appcompat.widget.Toolbar>
+            app:titleTextColor="@android:color/white"
+            android:background="?attr/colorPrimary"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:orientation="vertical">
-        <!-- Layout for content is here. This can be a RelativeLayout  -->
+            <ImageView
+                android:id="@+id/loadinLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:src="@drawable/loadin_logo"
+                android:layout_gravity="left">
+            </ImageView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_activity_account"
+                android:textSize="24sp"
+                android:textColor="@color/white"
+                android:gravity="center">
+            </TextView>
+        </androidx.appcompat.widget.Toolbar>
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/item_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/load_in_gray"
+            android:stretchColumns="1">
+            <TableRow>
+                <TextView
+                    android:id="@+id/account_email_header"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+                <TextView
+                    android:id="@+id/account_email__value"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="right"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/account_fname_header"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+                <TextView
+                    android:id="@+id/account_fname_value"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:gravity="right"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/account_lname_header"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+                <TextView
+                    android:id="@+id/account_lname_value"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:gravity="right"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/account_phone_header"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+                <TextView
+                    android:id="@+id/account_phone_value"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:gravity="right"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip" />
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:text="Change Password"
+                    android:textColor="@color/load_in_green"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip"
+                    android:clickable="true"
+                    android:onClick="changePassword"/>
+                <TextView
+                    android:text="Edit Account"
+                    android:textColor="@color/load_in_green"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:gravity="right"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip"
+                    android:clickable="true"
+                    android:onClick="editAccount"/>
+            </TableRow>
+
+
+        </TableLayout>
+
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/placeHolderAccount"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="@color/white"
-        android:selectAllOnFocus="true"
-        android:text="Placeholder Account"
-        android:textSize="24sp"
-        android:textColor="@color/load_in_green"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

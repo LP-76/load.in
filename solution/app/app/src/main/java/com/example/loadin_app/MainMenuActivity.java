@@ -59,7 +59,7 @@ public class MainMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent switchToMoveInventory = new Intent(MainMenuActivity.this, MoveInventoryActivity.class);
+                Intent switchToMoveInventory = new Intent(MainMenuActivity.this, AddItemActivity.class);
                 startActivity(switchToMoveInventory);
             }
         });
