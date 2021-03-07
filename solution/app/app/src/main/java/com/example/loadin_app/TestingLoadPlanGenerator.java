@@ -10,7 +10,8 @@ public class TestingLoadPlanGenerator
     public static LoadPlan GenerateBasicSampleLoadPlan(World theWorld)
     {
         //World sampleWorld = new World();
-        Truck t = new Truck(theWorld);
+        Truck t = new Truck();
+        t.setMyWorld(theWorld);
         t.place(new Vector(2f*12f, 0f, 2f*12f));
 
 
@@ -24,7 +25,8 @@ public class TestingLoadPlanGenerator
             {
                 for(int widthIndex = (int) (sampleLoadPlan.GetTruck().getWidthInches()/boxSize) ; widthIndex >= 0  ; widthIndex--)
                 {
-                    Box newBox = new Box(boxSize,boxSize,boxSize,theWorld);
+                    Box newBox = new Box(boxSize,boxSize,boxSize);
+                    newBox.setMyWorld(theWorld);
                     newBox.setDestination( t.getWorldOffset().add(   new Vector(widthIndex*boxSize - boxSize, heightIndex*boxSize, lengthIndex*boxSize - boxSize)));
                     sampleLoadPlan.AddBox(newBox);
                     newBox.setVisible(false);
@@ -37,12 +39,14 @@ public class TestingLoadPlanGenerator
 
     public static LoadPlan GenerateOneBigBox(World theWorld)
     {
-        Truck t = new Truck(theWorld);
+        Truck t = new Truck();
+        t.setMyWorld(theWorld);
         t.place(new Vector(2f*12f, 0f, 2f*12f));
 
         LoadPlan sampleLoadPlan = new LoadPlan(t);
 
-        Box newBox = new Box(t.getWidthInches(),t.getHeightInches(),t.getLengthInches(),theWorld);
+        Box newBox = new Box(t.getWidthInches(),t.getHeightInches(),t.getLengthInches());
+        newBox.setMyWorld(theWorld);
         newBox.setDestination( t.getWorldOffset().add(   new Vector(0f, 0, 0f)));
         newBox.setVisible(false);
         sampleLoadPlan.AddBox(newBox);

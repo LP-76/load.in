@@ -29,9 +29,9 @@ public class Truck extends WorldObject
         return heightInches;
     }
 
-    public Truck(World parent)
+    public Truck()
     {
-        super(parent);
+        super();
         shapes = new ArrayList<TexturedHexahedron>();
         //UHAUL SAMPLE TRUCK THAT's a 17 footer
 
@@ -44,15 +44,12 @@ public class Truck extends WorldObject
         costPerMileDollars = 0.99f;
 
         //TODO: Make a real constructor that takes real data from somewhere and doesn't hardwire random data from uhaul.com
-
-        recalculateShapes();
-
+        //detached by default
     }
 
 
-
-
-    public void recalculateShapes(){
+    @Override
+    protected void recalculateShapes(){
         //we're going to create the truck bed, the outer left wall and the front wall of the truck bed
 
         float wallThickness = 4f ;  //4 inch walls by default

@@ -25,11 +25,19 @@ public abstract class  WorldObject implements  IDrawable, IPlaceable {
 
 
 
-    public  WorldObject(World world){
+    public  WorldObject(){
         offset = new Vector(0,0,0);
-        myWorld = world;
-        myWorld.addObject(this);
         visible = true;
+    }
+
+    public World getMyWorld() {
+        return myWorld;
+    }
+
+    public void setMyWorld(World myWorld) {
+        this.myWorld = myWorld;
+        myWorld.addObject(this);
+        recalculateShapes();
     }
 
     public boolean isVisible() {
@@ -45,7 +53,7 @@ public abstract class  WorldObject implements  IDrawable, IPlaceable {
     }
 
 
-
+    protected abstract void recalculateShapes();
 
 
 
