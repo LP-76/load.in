@@ -27,5 +27,11 @@ public interface RetroInventoryService {
     })
     CompletableFuture<DataWrapper<Inventory>> addInventory(@Body DataWrapper<Inventory> inventory);
 
+    @POST("/inventoryservice/inventory/edit")
+    @Headers({
+            "accept: application/json",
+            "contentType: application/json"
+    })
+    CompletableFuture<DataWrapper<Inventory>> editInventory(@Body DataWrapper<Inventory> inventory);
 }
 

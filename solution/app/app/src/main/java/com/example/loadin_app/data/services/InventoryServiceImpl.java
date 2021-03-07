@@ -44,4 +44,11 @@ public class InventoryServiceImpl {
         Inventory result = addPromise.get().Data;
         return result;
     }
+    public Inventory editInventory(Inventory inventory) throws ExecutionException, InterruptedException {
+        DataWrapper<Inventory> wrapper = new  DataWrapper<Inventory>();
+        wrapper.Data  = inventory;
+        CompletableFuture<DataWrapper<Inventory>> addPromise = retroService.editInventory(wrapper);
+        Inventory result = addPromise.get().Data;
+        return result;
+    }
 }

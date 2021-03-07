@@ -98,4 +98,43 @@ public class InventoryServiceImpl implements InventoryService {
         return Response.ok(inventory).build();
 
     }
+
+    public Response editInventory(Inventory inventory) {
+
+        System.out.println("----invoking editInventory");
+
+        try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){
+           /* PreparedStatement statement = conn.prepareStatement("SELECT * FROM USER_INVENTORY_ITEM where ID = ? AND BOX_ID = ?");
+            statement.setInt(1,loginID);
+            statement.setInt(2,boxID);
+            Integer lastBoxId = StatementHelper.getResults(statement,
+                    (ResultSet rs) -> {  return rs.getInt("BOX_ID"); }).stream().findFirst().orElse(0);
+
+            //set the new id here
+            inventory.setBoxID(lastBoxId + 1);*/
+            //inventory.setUserID(1);
+            String query = "UPDATE USER_INVENTORY_ITEM SET USER_ID=?, BOX_ID=?, ITEM_DESCRIPTION=?, BOX_WIDTH=?, BOX_HEIGHT=?," +
+                    "BOX_LENGTH=?, FRAGILITY=?, WEIGHT=?, IMAGE=NULL,UPDATED_AT=NOW() WHERE ID =?;";
+
+            PreparedStatement insertStatement = conn.prepareStatement(query);
+            insertStatement.setInt(1, inventory.getUserID());
+            insertStatement.setInt(2, inventory.getBoxID());
+            insertStatement.setString(3, inventory.getDescription());
+            insertStatement.setFloat(4,inventory.getWidth());
+            insertStatement.setFloat(5,inventory.getHeight());
+            insertStatement.setFloat(6,inventory.getLength());
+            insertStatement.setInt(7, inventory.getFragility());
+            insertStatement.setDouble(8, inventory.getWeight());
+            insertStatement.setInt(9,inventory.getId());
+            System.out.println(insertStatement);
+            insertStatement.executeUpdate();
+
+        }
+        catch (SQLException ex){
+
+        }
+
+        return Response.ok(inventory).build();
+
+    }
 }
