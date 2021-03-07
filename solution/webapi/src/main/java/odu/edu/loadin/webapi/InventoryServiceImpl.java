@@ -16,12 +16,13 @@ public class InventoryServiceImpl implements InventoryService {
 
 
     @Override
-    public ArrayList<Inventory> getInventory() throws SQLException {
+    public ArrayList<Inventory> getInventory(int loginID) throws SQLException {
         //we get a connection here
 
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
             //this will auto-close the connection
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM USER_INVENTORY_ITEM");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM USER_INVENTORY_ITEM where USER_ID = ?");
+            statement.setInt(1,loginID);
 
             //this is more of a transparent method.  person who is performing the query can decide how it gets mapped back to
             //individual objects

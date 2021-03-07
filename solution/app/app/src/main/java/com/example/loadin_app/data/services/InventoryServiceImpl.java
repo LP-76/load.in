@@ -31,11 +31,9 @@ public class InventoryServiceImpl {
         retroService = retrofit.create(RetroInventoryService.class);
     }
 
-    public List<Inventory> getInventory() throws ExecutionException, InterruptedException {
-
-        CompletableFuture<DataWrapper<List<Inventory>>> sizesPromise = retroService.getInventory();
-        DataWrapper<List<Inventory>> sizes = sizesPromise.get();
-        return sizes.Data;
+    public List<Inventory> getInventory(int loginID) throws ExecutionException, InterruptedException {
+        CompletableFuture<DataWrapper<List<Inventory>>> newInv = retroService.getInventory(loginID);
+        return newInv.get().Data;
 
     }
 

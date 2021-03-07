@@ -59,8 +59,9 @@ public class MoveInventoryActivity extends AppCompatActivity {
 
         InventoryServiceImpl newInv = new InventoryServiceImpl("http://10.0.2.2:9000/");
         ArrayList<Inventory> inventory = new ArrayList<Inventory>();
+        int j = sp.getInt("loginID", 0);
         try{
-            inventory.addAll(newInv.getInventory());
+            inventory.addAll(newInv.getInventory(j));
         }
         catch(Exception ex){
             System.out.println(ex);
