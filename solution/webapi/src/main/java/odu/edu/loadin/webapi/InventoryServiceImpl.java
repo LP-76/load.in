@@ -29,6 +29,7 @@ public class InventoryServiceImpl implements InventoryService {
                 Inventory s = new Inventory();
                 s.setId(rs.getInt("ID"));
                 s.setUserID(rs.getInt("USER_ID"));
+                s.setBoxID(rs.getInt("BOX_ID"));
                 s.setWidth(rs.getFloat("BOX_WIDTH"));
                 s.setHeight(rs.getFloat("BOX_HEIGHT"));
                 s.setLength(rs.getFloat("BOX_LENGTH"));
@@ -65,18 +66,19 @@ public class InventoryServiceImpl implements InventoryService {
             TODO BOX_ID defaults to null in database; need to set a check so that the first box in
             a user's inventory is set to 1 if the select comes back null
             */
-            String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,USER_ID, ITEM_DESCRIPTION, BOX_WIDTH, BOX_HEIGHT, BOX_LENGTH, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
-                    +" VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL ,NOW(), NOW() )";
+            String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,USER_ID, BOX_ID, ITEM_DESCRIPTION, BOX_WIDTH, BOX_HEIGHT, BOX_LENGTH, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
+                    +" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NULL ,NOW(), NOW() )";
 
             PreparedStatement insertStatement = conn.prepareStatement(query);
             insertStatement.setInt(1, inventory.getId());
             insertStatement.setInt(2, inventory.getUserID());
-            insertStatement.setString(3, inventory.getDescription());
-            insertStatement.setFloat(4,inventory.getWidth());
-            insertStatement.setFloat(5,inventory.getHeight());
-            insertStatement.setFloat(6,inventory.getLength());
-            insertStatement.setInt(7, inventory.getFragility());
-            insertStatement.setDouble(8, inventory.getWeight());
+            insertStatement.setInt(3,inventory.getBoxID());
+            insertStatement.setString(4, inventory.getDescription());
+            insertStatement.setFloat(5,inventory.getWidth());
+            insertStatement.setFloat(6,inventory.getHeight());
+            insertStatement.setFloat(7,inventory.getLength());
+            insertStatement.setInt(8, inventory.getFragility());
+            insertStatement.setDouble(9, inventory.getWeight());
             System.out.println(insertStatement);
             insertStatement.executeUpdate();
 

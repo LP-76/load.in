@@ -8,6 +8,7 @@ public class Inventory {
     }
     private int id;
     private int userID;
+    private int boxID;
     private String description;
     private float width;
     private float height;
@@ -97,5 +98,13 @@ public class Inventory {
 
     public void setLength(float length) {
         this.length = length;
+    }
+
+    public int getBoxID() {
+        return boxID;
+    }
+
+    public void setBoxID(int boxID) {
+        this.boxID = boxID;
     }
 }
