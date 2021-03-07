@@ -39,7 +39,7 @@ public class BoxInputActivity extends AppCompatActivity
         setContentView(R.layout.activity_box_input);
 
         /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
-        sp = getSharedPreferences("login", MODE_PRIVATE);
+        sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         if(sp.getInt("loginID", 0) == 0){
             Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
             startActivity(switchToLogin);

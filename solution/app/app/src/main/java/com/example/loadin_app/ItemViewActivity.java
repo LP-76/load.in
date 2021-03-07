@@ -23,13 +23,22 @@ public class ItemViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_view);
 
-        /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
-        sp = getSharedPreferences("login", MODE_PRIVATE);
+        // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
+        sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        /*
         if(sp.getInt("loginID", 0) == 0){
             Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
         */
+
+        System.out.println(sp.getString("itemDescription", ""));
+        System.out.println(sp.getString("itemBoxID", ""));
+        System.out.println(sp.getString("itemWidth", ""));
+        System.out.println(sp.getString("itemLength", ""));
+        System.out.println(sp.getString("itemHeight", ""));
+        System.out.println(sp.getString("itemWeight", ""));
+        System.out.println(sp.getString("itemFragility", ""));
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

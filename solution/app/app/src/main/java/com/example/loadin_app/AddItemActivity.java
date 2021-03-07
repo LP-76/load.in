@@ -29,7 +29,7 @@ public class AddItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_item);
 
         /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
-        sp = getSharedPreferences("login", MODE_PRIVATE);
+        sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         if(sp.getInt("loginID", 0) == 0){
             Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
@@ -47,24 +47,29 @@ public class AddItemActivity extends AppCompatActivity {
         descriptionInput = (EditText) findViewById(R.id.BoxDescriptionField);
         weightInput = (EditText) findViewById(R.id.WeightField);
         fragilityInput = (EditText) findViewById(R.id.FragilityField) ;
-        //widthInput = (EditText) findViewById(R.id.BoxWidthField);
-        //depthInput = (EditText) findViewById(R.id.BoxDepthField);
-        //heightInput = (EditText) findViewById(R.id.BoxHeightField);
+        widthInput = (EditText) findViewById(R.id.BoxWidthField);
+        depthInput = (EditText) findViewById(R.id.BoxDepthField);
+        heightInput = (EditText) findViewById(R.id.BoxHeightField);
 
         addItemButton = (Button) findViewById(R.id.AddItemButton);
         addItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                addItemToDB(descriptionInput.getText().toString(), Float.parseFloat(weightInput.getText().toString()), Integer.parseInt(fragilityInput.getText().toString()));
+                addItemToDB(descriptionInput.getText().toString(), Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()),
+                        Float.parseFloat(heightInput.getText().toString()), Float.parseFloat(weightInput.getText().toString()), Integer.parseInt(fragilityInput.getText().toString()));
             }
         });
     }
 
-    private void addItemToDB(String inputDescription, float inputWeight, int inputFragility){
+    private void addItemToDB(String inputDescription, float inputWidth,  float inputDepth, float inputHeight,
+                             float inputWeight, int inputFragility){
 
         Inventory inv = new Inventory();
         inv.setDescription(inputDescription);
+        inv.setWidth(inputWidth);
+        inv.setLength(inputDepth);
+        inv.setHeight(inputHeight);
         inv.setWeight(inputWeight);
         inv.setFragility(inputFragility);
 

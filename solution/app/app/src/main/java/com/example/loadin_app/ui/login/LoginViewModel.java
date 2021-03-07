@@ -43,8 +43,8 @@ public class LoginViewModel extends ViewModel {
             User data = ((Result.Success<User>) result).getData();
             String displayName = data.getFirstName() + " " + data.getLastName();
 
-            sp = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-            sp.edit().putInt("loginID", data.getId()).commit();
+            sp = context.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
+            sp.edit().putInt("loginID", data.getId()).apply();
 
             loginResult.setValue(new LoginResult(new LoggedInUserView(displayName)));
         } else {

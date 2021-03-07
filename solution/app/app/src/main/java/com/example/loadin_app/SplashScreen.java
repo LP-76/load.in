@@ -18,8 +18,8 @@ public class SplashScreen extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        sp = getSharedPreferences("login", MODE_PRIVATE);
-        sp.edit().putInt("loginID", 0).commit();
+        sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        sp.edit().putInt("loginID", 0).apply();
 
         //used these resources as reference here -Jason
         //https://youtu.be/Q0gRqbtFLcw

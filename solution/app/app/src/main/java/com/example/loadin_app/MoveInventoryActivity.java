@@ -27,16 +27,26 @@ public class MoveInventoryActivity extends AppCompatActivity {
 
     private TextView mTextView;
     public static SharedPreferences sp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_move_inventory);
 
-        sp = getSharedPreferences("login", MODE_PRIVATE);
+        sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         if(sp.getInt("loginID", 0) == 0){
             Intent switchToLogin = new Intent(MoveInventoryActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
+
+        sp.edit().putString("itemDescription", "").apply();
+        sp.edit().putString("itemBoxID", "Box ID").apply();
+        sp.edit().putString("itemWidth", "").apply();
+        sp.edit().putString("itemLength", "").apply();
+        sp.edit().putString("itemHeight", "").apply();
+        sp.edit().putString("itemFragility", "").apply();
+        sp.edit().putString("itemWeight", "").apply();
+
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -64,6 +74,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
         }
 
 
+
         ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.simple_list_view, inventoryHeaders);
         ListView listView = (ListView) findViewById(R.id.InventoryListView);
         listView.setAdapter(adapter);
@@ -71,6 +82,15 @@ public class MoveInventoryActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                sp.edit().putString("itemDescription", inventory.get(position).getDescription()).apply();
+                //sp.edit().putString("itemBoxID", Integer.toString(inventory.get(position).getBoxId())).apply();
+                sp.edit().putString("itemWidth", Float.toString(inventory.get(position).getWidth())).apply();
+                sp.edit().putString("itemLength", Float.toString(inventory.get(position).getLength())).apply();
+                sp.edit().putString("itemHeight", Float.toString(inventory.get(position).getHeight())).apply();
+                sp.edit().putString("itemWeight", Double.toString(inventory.get(position).getWeight())).apply();
+                sp.edit().putString("itemFragility", Integer.toString(inventory.get(position).getFragility())).apply();
+
                 Intent switchToItemView = new Intent(MoveInventoryActivity.this, ItemViewActivity.class);
                 startActivity(switchToItemView);
             }

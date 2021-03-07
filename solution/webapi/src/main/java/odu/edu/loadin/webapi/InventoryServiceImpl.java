@@ -61,6 +61,10 @@ public class InventoryServiceImpl implements InventoryService {
 
             inventory.setId(lastId + 1);  //set the new id here
             inventory.setUserID(1); //TODO needs to be mapped to user's ID
+            /*
+            TODO BOX_ID defaults to null in database; need to set a check so that the first box in
+            a user's inventory is set to 1 if the select comes back null
+            */
             String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,USER_ID, ITEM_DESCRIPTION, BOX_WIDTH, BOX_HEIGHT, BOX_LENGTH, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
                     +" VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL ,NOW(), NOW() )";
 
