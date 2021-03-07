@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.InventoryService;
@@ -79,6 +80,10 @@ public class AddItemActivity extends AppCompatActivity {
         InventoryServiceImpl service = new InventoryServiceImpl("http://10.0.2.2:9000/");
         try{
             service.addInventory(inv);
+
+            Toast.makeText(AddItemActivity.this, "Item Added To Inventory", Toast.LENGTH_SHORT).show();
+            Intent switchToInventoryView = new Intent(AddItemActivity.this, AddItemActivity.class);
+            startActivity(switchToInventoryView);
         }
         catch(Exception ex){
             System.out.println(ex);

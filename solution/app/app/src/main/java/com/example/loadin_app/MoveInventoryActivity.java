@@ -40,13 +40,13 @@ public class MoveInventoryActivity extends AppCompatActivity {
         }
 
         sp.edit().putString("itemDescription", "").apply();
-        sp.edit().putString("itemBoxID", "Box ID").apply();
+        sp.edit().putString("itemBoxID", "").apply();
         sp.edit().putString("itemWidth", "").apply();
         sp.edit().putString("itemLength", "").apply();
         sp.edit().putString("itemHeight", "").apply();
         sp.edit().putString("itemFragility", "").apply();
         sp.edit().putString("itemWeight", "").apply();
-
+        sp.edit().putString("itemID", "").apply();
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -91,6 +91,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
                 sp.edit().putString("itemHeight", Float.toString(inventory.get(position).getHeight())).apply();
                 sp.edit().putString("itemWeight", Double.toString(inventory.get(position).getWeight())).apply();
                 sp.edit().putString("itemFragility", Integer.toString(inventory.get(position).getFragility())).apply();
+                sp.edit().putInt("itemID", inventory.get(position).getId()).apply();
 
                 Intent switchToItemView = new Intent(MoveInventoryActivity.this, ItemViewActivity.class);
                 startActivity(switchToItemView);

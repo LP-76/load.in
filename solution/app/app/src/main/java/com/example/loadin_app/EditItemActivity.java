@@ -12,8 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.loadin_app.data.services.BoxServiceImpl;
+import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.ui.login.LoginActivity;
+
+import odu.edu.loadin.common.Inventory;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import odu.edu.loadin.common.BoxSize;
 
@@ -21,6 +29,7 @@ public class EditItemActivity extends AppCompatActivity {
 
     private EditText descriptionInput, widthInput, depthInput, heightInput, fragilityInput, weightInput;
     private Button editItemButton;
+    private String description, width, length, height, weight, fragility;
 
     public static SharedPreferences sp;
 
@@ -29,13 +38,13 @@ public class EditItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_item);
 
-        /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
+        //THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         if(sp.getInt("loginID", 0) == 0){
-            Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
+            Intent switchToLogin = new Intent(EditItemActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-        */
+
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -44,6 +53,80 @@ public class EditItemActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+
+
+        descriptionInput = (EditText) findViewById(R.id.BoxDescriptionField2);
+        weightInput = (EditText) findViewById(R.id.WeightField2);
+        fragilityInput = (EditText) findViewById(R.id.FragilityField2) ;
+        widthInput = (EditText) findViewById(R.id.BoxWidthField2);
+        depthInput = (EditText) findViewById(R.id.BoxDepthField2);
+        heightInput = (EditText) findViewById(R.id.BoxHeightField2);
+
+        editItemButton = (Button) findViewById(R.id.editItemButton);
+        editItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+                description = descriptionInput.getText().toString();
+                width = widthInput.getText().toString();
+                length = depthInput.getText().toString();
+                height = heightInput.getText().toString();
+                weight = weightInput.getText().toString();
+                fragility = fragilityInput.getText().toString();
+
+                InventoryServiceImpl service = new InventoryServiceImpl("http://10.0.2.2:9000/");
+
+                ArrayList<Inventory> item = new ArrayList<Inventory>();
+                try {
+                    item.add(service.getInventory(sp.getInt("loginID", 0)).get(Integer.parseInt(sp.getString("itemBoxID", ""))));
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(!description.matches("")) {
+                    item.get(0).setDescription(description);
+                }
+                if(!width.matches("")){
+                    item.get(0).setWidth(Float.parseFloat(width));
+                }
+                if(!length.matches("")){
+                    item.get(0).setLength(Float.parseFloat(length));
+                }
+                if(!height.matches("")){
+                    item.get(0).setHeight(Float.parseFloat(height));
+                }
+                if(!fragility.matches("")){
+                    item.get(0).setFragility(Integer.parseInt(fragility));
+                }
+                if(!weight.matches("")){
+                    item.get(0).setWeight(Float.parseFloat(weight));
+                }
+
+
+
+
+                updateItemToDB(item.get(0), service);
+            }
+        });
+
+
+    }
+
+    private void updateItemToDB(Inventory item, InventoryServiceImpl service){
+
+
+        try{
+            service.editInventory(item);
+
+            Toast.makeText(EditItemActivity.this, "Edit Successful", Toast.LENGTH_SHORT).show();
+            Intent switchToInventoryView = new Intent(EditItemActivity.this, MoveInventoryActivity.class);
+            startActivity(switchToInventoryView);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+        }
     }
 
 
