@@ -10,13 +10,18 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 public class ItemViewActivity extends AppCompatActivity {
 
     public static SharedPreferences sp;
+    private TableLayout table;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +37,6 @@ public class ItemViewActivity extends AppCompatActivity {
         }
         */
 
-        System.out.println(sp.getString("itemDescription", ""));
-        System.out.println(sp.getString("itemBoxID", ""));
-        System.out.println(sp.getString("itemWidth", ""));
-        System.out.println(sp.getString("itemLength", ""));
-        System.out.println(sp.getString("itemHeight", ""));
-        System.out.println(sp.getString("itemWeight", ""));
-        System.out.println(sp.getString("itemFragility", ""));
-
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
@@ -47,6 +44,35 @@ public class ItemViewActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+
+        String dimensions = sp.getString("itemWidth", "") + " x " + sp.getString("itemLength", "") + " x " + sp.getString("itemHeight", "");
+
+        TextView descH = (TextView) findViewById(R.id.item_description_header);
+        descH.setText("Descritpion:");
+        TextView descV = (TextView) findViewById(R.id.item_description_value);
+        descV.setText(sp.getString("itemDescription", ""));
+
+        TextView idH = (TextView) findViewById(R.id.item_boxID_header);
+        idH.setText("Box Number:");
+        TextView idV = (TextView) findViewById(R.id.item_boxID_value);
+        idV.setText(sp.getString("itemBoxID", ""));
+
+        TextView dimH = (TextView) findViewById(R.id.item_dimensions_header);
+        dimH.setText("Dimensions:");
+        TextView dimV = (TextView) findViewById(R.id.item_dimensions_value);
+        dimV.setText(dimensions);
+
+        TextView wH = (TextView) findViewById(R.id.item_weight_header);
+        wH.setText("Weight:");
+        TextView wV = (TextView) findViewById(R.id.item_weight_value);
+        wV.setText(sp.getString("itemWeight", ""));
+
+        TextView fH = (TextView) findViewById(R.id.item_fragility_header);
+        fH.setText("Fragility:");
+        TextView fV = (TextView) findViewById(R.id.item_fragility_value);
+        fV.setText(sp.getString("itemFragility", ""));
+
+
     }
 
     public void editInventory(View view){

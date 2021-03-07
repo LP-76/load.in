@@ -45,20 +45,23 @@
         </androidx.appcompat.widget.Toolbar>
 
         <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/item_table"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/load_in_gray"
             android:stretchColumns="1">
             <TableRow>
                 <TextView
-                    android:text="Item: "
+                    android:id="@+id/item_description_header"
                     android:textStyle="bold"
                     android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip" />
                 <TextView
-                    android:text="Family Pictures"
+                    android:id="@+id/item_description_value"
                     android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
                     android:gravity="right"
                     android:padding="3dip" />
@@ -66,14 +69,16 @@
 
             <TableRow>
                 <TextView
-                    android:text="Dimensions: "
+                    android:id="@+id/item_boxID_header"
                     android:textColor="@color/white"
                     android:textStyle="bold"
+                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip" />
                 <TextView
-                    android:text="10x15x20"
+                    android:id="@+id/item_boxID_value"
                     android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:gravity="right"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip" />
@@ -81,14 +86,16 @@
 
             <TableRow>
                 <TextView
-                    android:text="Fragility: "
+                    android:id="@+id/item_dimensions_header"
                     android:textColor="@color/white"
                     android:textStyle="bold"
+                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip" />
                 <TextView
-                    android:text="2"
+                    android:id="@+id/item_dimensions_value"
                     android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:gravity="right"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip" />
@@ -96,14 +103,16 @@
 
             <TableRow>
                 <TextView
-                    android:text="Weight: "
+                    android:id="@+id/item_weight_header"
                     android:textColor="@color/white"
                     android:textStyle="bold"
+                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip" />
                 <TextView
-                    android:text="234.5"
+                    android:id="@+id/item_weight_value"
                     android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:gravity="right"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip" />
@@ -111,14 +120,16 @@
 
             <TableRow>
                 <TextView
-                    android:text="Date Added: "
+                    android:id="@+id/item_fragility_header"
                     android:textColor="@color/white"
                     android:textStyle="bold"
+                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip" />
                 <TextView
-                    android:text="2/21/2021"
+                    android:id="@+id/item_fragility_value"
                     android:textColor="@color/white"
+                    android:textSize="20sp"
                     android:gravity="right"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip" />
@@ -126,9 +137,10 @@
 
             <TableRow>
                 <TextView
-                    android:text="Edit Item "
+                    android:text="Edit Item"
                     android:textColor="@color/load_in_green"
                     android:textStyle="bold"
+                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip"
                     android:clickable="true"
@@ -136,12 +148,15 @@
                 <TextView
                     android:text="Add Item"
                     android:textColor="@color/load_in_green"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
                     android:gravity="right"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip"
                     android:clickable="true"
                     android:onClick="addItem"/>
             </TableRow>
+            
 
         </TableLayout>
 

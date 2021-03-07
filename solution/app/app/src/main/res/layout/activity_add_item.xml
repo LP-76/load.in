@@ -30,7 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
                 android:adjustViewBounds="true"
-                android:src="@drawable/loadin_logo"></ImageView>
+                android:src="@drawable/loadin_logo">
+            </ImageView>
 
             <TextView
                 android:layout_width="match_parent"
