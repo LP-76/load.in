@@ -59,9 +59,16 @@ public class InventoryServiceImpl implements InventoryService {
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){
             Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT ID FROM USER_INVENTORY_ITEM ORDER BY ID DESC LIMIT 1"),
                     (ResultSet rs) -> {  return rs.getInt("ID"); }).stream().findFirst().orElse(0);
+            inventory.setId(lastId + 1);
 
-            inventory.setId(lastId + 1);  //set the new id here
-            inventory.setUserID(1); //TODO needs to be mapped to user's ID
+            PreparedStatement statement = conn.prepareStatement("SELECT BOX_ID FROM USER_INVENTORY_ITEM where ID = ? ORDER BY ID DESC LIMIT 1");
+            statement.setString(1, String.valueOf(inventory.getId()));
+            Integer lastBoxId = StatementHelper.getResults(statement,
+                    (ResultSet rs) -> {  return rs.getInt("BOX_ID"); }).stream().findFirst().orElse(0);
+
+             //set the new id here
+            inventory.setBoxID(lastBoxId + 1);
+            //inventory.setUserID(1); //TODO needs to be mapped to user's ID
             /*
             TODO BOX_ID defaults to null in database; need to set a check so that the first box in
             a user's inventory is set to 1 if the select comes back null

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.InventoryService;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.ui.login.LoginActivity;
 
 public class AddItemActivity extends AppCompatActivity {
 
@@ -29,13 +30,13 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-        /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
+        // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         if(sp.getInt("loginID", 0) == 0){
-            Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
+            Intent switchToLogin = new Intent(AddItemActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-        */
+
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -73,6 +74,7 @@ public class AddItemActivity extends AppCompatActivity {
         inv.setHeight(inputHeight);
         inv.setWeight(inputWeight);
         inv.setFragility(inputFragility);
+        inv.setUserID(sp.getInt("loginID", 0));
 
         InventoryServiceImpl service = new InventoryServiceImpl("http://10.0.2.2:9000/");
         try{

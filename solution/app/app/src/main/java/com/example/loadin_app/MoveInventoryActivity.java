@@ -84,7 +84,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 sp.edit().putString("itemDescription", inventory.get(position).getDescription()).apply();
-                //sp.edit().putString("itemBoxID", Integer.toString(inventory.get(position).getBoxId())).apply();
+                sp.edit().putString("itemBoxID", Integer.toString(inventory.get(position).getBoxID())).apply();
                 sp.edit().putString("itemWidth", Float.toString(inventory.get(position).getWidth())).apply();
                 sp.edit().putString("itemLength", Float.toString(inventory.get(position).getLength())).apply();
                 sp.edit().putString("itemHeight", Float.toString(inventory.get(position).getHeight())).apply();

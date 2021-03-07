@@ -117,11 +117,30 @@
             android:textColorHint="@color/white"
             android:backgroundTint="@color/white"
             android:inputType="numberDecimal"
-            app:layout_constraintBottom_toTopOf="@+id/BoxHeightField"
+            app:layout_constraintBottom_toTopOf="@+id/BoxDepthField"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/WeightField" />
+
+        <EditText
+            android:id="@+id/BoxDepthField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="Box Length (Inches)"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="numberDecimal"
+            app:layout_constraintBottom_toTopOf="@+id/BoxHeightField"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/BoxWidthField" />
 
         <EditText
             android:id="@+id/BoxHeightField"
@@ -136,30 +155,11 @@
             android:textColorHint="@color/white"
             android:backgroundTint="@color/white"
             android:inputType="numberDecimal"
-            app:layout_constraintBottom_toTopOf="@+id/BoxDepthField"
+            app:layout_constraintBottom_toTopOf="@+id/AddItemButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BoxWidthField" />
-
-        <EditText
-            android:id="@+id/BoxDepthField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginEnd="100dp"
-            android:layout_marginBottom="12dp"
-            android:ems="10"
-            android:hint="Box Depth (Inches)"
-            android:textColor="@color/load_in_green"
-            android:textColorHint="@color/white"
-            android:backgroundTint="@color/white"
-            android:inputType="numberDecimal"
-            app:layout_constraintBottom_toTopOf="@+id/AddBoxSizeButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/BoxHeightField" />
+            app:layout_constraintTop_toBottomOf="@+id/BoxDepthField" />
 
         <Button
             android:id="@+id/AddItemButton"
