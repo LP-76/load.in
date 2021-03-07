@@ -16,15 +16,16 @@ public class TestingLoadPlanGenerator
 
         LoadPlan sampleLoadPlan = new LoadPlan(t);
 
+        float boxSize = 24f;
 
-        for(int lengthIndex = (int) sampleLoadPlan.GetTruck().getLengthInches()/12 ; lengthIndex >= 0 ; lengthIndex--)
+        for(int lengthIndex = (int) (sampleLoadPlan.GetTruck().getLengthInches()/boxSize ); lengthIndex >= 0 ; lengthIndex--)
         {
-            for(int heightIndex = 0 ; heightIndex < sampleLoadPlan.GetTruck().getHeightInches()/12 ; heightIndex++)
+            for(int heightIndex = 0 ; heightIndex < sampleLoadPlan.GetTruck().getHeightInches()/boxSize ; heightIndex++)
             {
-                for(int widthIndex = (int) sampleLoadPlan.GetTruck().getWidthInches()/12 ; widthIndex >= 0  ; widthIndex--)
+                for(int widthIndex = (int) (sampleLoadPlan.GetTruck().getWidthInches()/boxSize) ; widthIndex >= 0  ; widthIndex--)
                 {
-                    Box newBox = new Box(12,12,12,theWorld);
-                    newBox.setDestination( t.getWorldOffset().add(   new Vector(widthIndex*12 - 12f, heightIndex*12, lengthIndex*12 - 12f)));
+                    Box newBox = new Box(boxSize,boxSize,boxSize,theWorld);
+                    newBox.setDestination( t.getWorldOffset().add(   new Vector(widthIndex*boxSize - boxSize, heightIndex*boxSize, lengthIndex*boxSize - boxSize)));
                     sampleLoadPlan.AddBox(newBox);
                     newBox.setVisible(false);
                 }

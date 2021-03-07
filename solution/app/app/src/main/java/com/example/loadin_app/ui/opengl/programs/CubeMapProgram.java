@@ -82,7 +82,7 @@ public class CubeMapProgram extends OpenGLProgram{
         GLES20.glUseProgram(getProgramHandle());  //activate this program
 
         float[] transpose = processTranslation(item);
-        float[] scale = processScale();
+        float[] scale = processScale(World.WORLD_SCALE_VECTOR);
 
         float[] model = new float[16];
         Matrix.multiplyMM(model, 0, scale, 0, transpose, 0);  //model is the mix of the two

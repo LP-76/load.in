@@ -2,19 +2,22 @@ package com.example.loadin_app.ui.opengl;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.function.Consumer;
 
 public class TransposeAnimation extends Animation {
     private Vector newLocation;
     private Vector transitPath;
     private Vector velocityVector;
     private boolean complete;
+    private Consumer<TransposeAnimation> onComplete;
 
-    public TransposeAnimation(WorldObject theTarget, Duration targetCompletion, Duration tick, Vector newLocation) {
+    public TransposeAnimation(WorldObject theTarget, Duration targetCompletion, Duration tick, Vector newLocation, Consumer<TransposeAnimation> onComplete) {
         super(theTarget, targetCompletion, tick);
         this.newLocation = newLocation;
         updateTransitPath();
         calculateVelocity();
         complete = false;
+        this.onComplete = onComplete;
     }
 
     private void updateTransitPath(){
@@ -42,6 +45,7 @@ public class TransposeAnimation extends Animation {
         if(LocalDateTime.now().isAfter(end) || transitPath.getLength() <= 1f){
             complete = true;
             target.place(newLocation);  //put it at the right spot
+            onComplete.accept(this);
         }
 
     }

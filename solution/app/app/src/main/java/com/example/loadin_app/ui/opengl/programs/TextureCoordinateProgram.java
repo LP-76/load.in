@@ -8,6 +8,7 @@ import android.opengl.Matrix;
 
 import com.example.loadin_app.R;
 import com.example.loadin_app.ui.opengl.Texture;
+import com.example.loadin_app.ui.opengl.World;
 
 public class TextureCoordinateProgram extends OpenGLProgram{
 
@@ -62,7 +63,7 @@ public class TextureCoordinateProgram extends OpenGLProgram{
         BitmapFactory.Options ops = new BitmapFactory.Options();
         ops.inScaled = false;
         Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), resourceId, ops);
-        return new Texture(bitmap, this, U_TEXTURE);
+        return new Texture(bitmap, this, U_TEXTURE, true);
     }
 
     public Texture getFloor() {
@@ -82,7 +83,7 @@ public class TextureCoordinateProgram extends OpenGLProgram{
         GLES20.glUseProgram(getProgramHandle());  //activate this program
 
         float[] transpose = processTranslation(item);
-        float[] scale = processScale();
+        float[] scale = processScale(World.WORLD_SCALE_VECTOR);
 
         float[] model = new float[16];
         Matrix.multiplyMM(model, 0, scale, 0, transpose, 0);  //model is the mix of the two

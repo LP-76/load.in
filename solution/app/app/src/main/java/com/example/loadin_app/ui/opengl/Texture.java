@@ -15,7 +15,7 @@ public class Texture {
     private int sourceWidth;
     private  int sourceHeight;
 
-    public Texture(Bitmap source, OpenGLProgram program, String variableName){
+    public Texture(Bitmap source, OpenGLProgram program, String variableName, boolean generateMipmap){
 
         GLES20.glGenTextures(1, handle, 0);
         this.source = source;
@@ -31,7 +31,8 @@ public class Texture {
 
 
             GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, source, 0);  //send the image to this newly bound texture
-            GLES20.glGenerateMipmap(handle[0]);
+            if(generateMipmap)
+                GLES20.glGenerateMipmap(handle[0]);
             //checkError();
            // GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, 0);
         }

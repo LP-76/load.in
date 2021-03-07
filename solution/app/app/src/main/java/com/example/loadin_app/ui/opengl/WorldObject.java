@@ -46,9 +46,7 @@ public abstract class  WorldObject implements  IDrawable, IPlaceable {
 
 
 
-    public void moveToLocationOverDuration(Duration timeframe,  Vector newLocation){
-        myWorld.addAnimation( new TransposeAnimation(this, timeframe, myWorld.getTick(), newLocation));
-    }
+
 
 
 }

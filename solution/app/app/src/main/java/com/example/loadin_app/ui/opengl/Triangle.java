@@ -42,7 +42,14 @@ public class Triangle {
         return Arrays.stream(values).flatMap(i -> i.getCoordinates());
     }
 
+
+
     public Stream<Float> getColors(){
         return  Arrays.stream(values).flatMap(i -> i.getColors());
     }
+
+
+
+
+
 }

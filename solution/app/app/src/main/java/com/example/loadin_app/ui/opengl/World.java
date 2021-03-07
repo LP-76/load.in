@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 public class World {
 
     public static final float INCHES_TO_WORLD_SCALE = 1f/12f;  //feet essentially
+    public static final Vector WORLD_SCALE_VECTOR = new Vector(INCHES_TO_WORLD_SCALE, INCHES_TO_WORLD_SCALE, INCHES_TO_WORLD_SCALE);
 
     private AlternateLightViewProgram lightViewProgram;
     private TextureCoordinateProgram textureProgram;

@@ -1,10 +1,16 @@
 package com.example.loadin_app.ui.opengl.programs;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
+import android.opengl.Matrix;
 
 import com.example.loadin_app.R;
 import com.example.loadin_app.ui.opengl.CubeMap;
+import com.example.loadin_app.ui.opengl.Texture;
+
+import org.w3c.dom.Text;
 
 public class HudProgram extends OpenGLProgram{
 
@@ -18,7 +24,7 @@ public class HudProgram extends OpenGLProgram{
     public static final String A_POSITION = "a_Position";  //vector position handle
     public static final String A_TEX_COORD = "a_TexCoord";
 
-
+    private Texture stainlessSteel;
 
     public HudProgram(){
 
@@ -44,13 +50,34 @@ public class HudProgram extends OpenGLProgram{
         // creates OpenGL ES program executables
         GLES20.glLinkProgram(getProgramHandle());
 
+        stainlessSteel = loadTexture(context, R.drawable.stainless_steel);
 
     }
 
-    public <T extends IPlaceable & ITexturable > void render(T item, float[] view, float[] projection){
+    public Texture getStainlessSteel() {
+        return stainlessSteel;
+    }
+
+    private Texture loadTexture(Context ctx, int resourceId){
+        BitmapFactory.Options ops = new BitmapFactory.Options();
+        ops.inScaled = false;
+        Bitmap bitmap = BitmapFactory.decodeResource(ctx.getResources(), resourceId, ops);
+        return new Texture(bitmap, this, U_TEXTURE, true);
+    }
+
+    public <T extends IPlaceable & ITexturable & IScalable & IRotatable > void render(T item, float[] view, float[] projection){
         GLES20.glUseProgram(getProgramHandle());  //activate this program
 
-        float[] model = processTranslation(item);  //model is translatable but not scalable
+        float[] translation = processTranslation(item);  //model is translatable and scalable
+        float[] scale = processScale(item.getScale());
+        float[] rotation = processRotation(item);
+
+        float[] modelTS = new float[16];
+        Matrix.multiplyMM(modelTS, 0, translation, 0, scale, 0);
+        float[] model = new float[16];
+        Matrix.multiplyMM(model, 0, modelTS, 0, rotation, 0);
+
+
 
         //upload model matrix
         setUniformMatrix4fv(model, U_MODEL);

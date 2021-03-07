@@ -134,16 +134,32 @@ public abstract class OpenGLProgram {
         return translationMatrix;
     }
 
-    protected float[] processScale(){
+    protected float[] processScale(Vector scale){
         float[] scaleMatrix = new float[16];
 
         //set the identity matrix for translation
         Matrix.setIdentityM(scaleMatrix, 0);
 
         //add the translation to the matrix
-        Matrix.scaleM(scaleMatrix,0, World.INCHES_TO_WORLD_SCALE,  World.INCHES_TO_WORLD_SCALE,  World.INCHES_TO_WORLD_SCALE );
+        Matrix.scaleM(scaleMatrix,0, scale.getX(),  scale.getY(), scale.getZ());
 
         return scaleMatrix;
     }
+
+    protected  float[] processRotation(IRotatable item){
+        float yaw = item.getYaw();
+        float pitch = item.getPitch();
+        return processRotation(yaw, pitch);
+    }
+    protected float[] processRotation(float yaw, float pitch){
+        float[] rotationMatrix = new float[16];
+        Matrix.setIdentityM(rotationMatrix, 0);
+
+        Matrix.rotateM(rotationMatrix, 0, yaw, 0f, 1f, 0f);
+        Matrix.rotateM(rotationMatrix, 0, pitch, 1f, 0f, 0f);
+
+        return rotationMatrix;
+    }
+
 
 }

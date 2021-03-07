@@ -93,6 +93,9 @@ public class Vector  {
     }
 
 
+
+
+
     public Stream<Float> getCoordinates() {
         return Arrays.stream(values);
     }

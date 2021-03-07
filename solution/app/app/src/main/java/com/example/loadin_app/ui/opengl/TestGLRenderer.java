@@ -10,6 +10,7 @@ import android.os.SystemClock;
 
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
+import com.example.loadin_app.Load;
 import com.example.loadin_app.LoadPlan;
 import com.example.loadin_app.TestingLoadPlanGenerator;
 
@@ -17,6 +18,9 @@ import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAmount;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -28,9 +32,26 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private final float[] projectionMatrix = new float[16];
     private  float[] viewMatrix = new float[16];
     private float[] hudViewMatrix = new float[16];
+    private  Vector upperLeftScreenCorner;
 
-    public volatile float angle;
+    private enum LoadPlanDisplayerState{
+        Stopped,
+        Advancing,
+        Reversing,
+        FastFoward,
+        FastRewind,
+        BoxStaged,
+        BoxAnimating,
+        BoxAtDestination
+    }
 
+    private enum SignalState{
+        None,
+        Advancing
+    }
+
+    private SignalState signal;
+    private LoadPlanDisplayerState state;
 
 
     public Camera getTheCamera(){
@@ -47,60 +68,129 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private Vector boxStagingArea;
 
     private Box currentBox;
-    private  int step;
-    private boolean advanceInProgress;
+    private Box lastRenderCheckBox;
+
+
     private Context context;
 
-    private Box largeBox;
+    private Object signalLock = new Object();
+
+
 
     public TestGLRenderer(Bitmap source, Context ctx){
         testBitmap = source;
-        step = 0;
-        advanceInProgress = false;
+        state = LoadPlanDisplayerState.Stopped;
+        signal = SignalState.None;
         context = ctx;
+
     }
+
+    private  SignalState getSignal() {
+        synchronized (signalLock){
+            return signal;
+        }
+    }
+
+    private  void setSignal(SignalState signal) {
+        synchronized (signalLock){
+            this.signal = signal;
+        }
+    }
+
+   public void reverse(){
+       //setSignal(SignalState.Advancing.Reversing);
+   }
 
     public void advance(){
-        if(advanceInProgress)
-            return;
+        switch(getSignal()){
+            case None:   //we can only raise the flag once until the system is ready to respond to another request
+                setSignal(SignalState.Advancing);
+                break;
+        }
 
-        step++;
-        if(step % 2 == 0){
-            //put the box into staging
-            if(theLoadPlan.GetCurrentLoad().HasNextBox())
-                theLoadPlan.GetCurrentLoad().GetNextBox();
-            putNextBoxIntoStaging();
-        }else{
-            moveStagedBoxIntoPosition();
+    }
+
+    private void updateState(){
+
+        switch(state){
+            case Stopped:
+                switch(getSignal()){
+                    case Advancing:
+                        //we want to advance to the next box
+                        state = LoadPlanDisplayerState.Advancing; //go ahead and move to next state
+                        updateState();
+                        break;
+                }
+
+                break;
+            case Advancing:
+                putNextBoxIntoStaging(false);
+                setSignal(SignalState.None); //we're ready for the next signal
+                state = LoadPlanDisplayerState.BoxStaged;
+
+                break;
+            case BoxStaged:
+                switch (getSignal()){
+                    case Advancing:
+                        //we've got the green light to go ahead
+                        state = LoadPlanDisplayerState.BoxAnimating;
+                       TransposeAnimation animation = new TransposeAnimation(
+                                currentBox,
+                                Duration.ofSeconds(2),
+                                theWorld.getTick(),
+                                currentBox.getDestination(),
+                                i -> {
+                                    setSignal(SignalState.None);
+                                    state = LoadPlanDisplayerState.BoxAtDestination;
+                                }
+                        ) ;
+                        theWorld.addAnimation(animation); //add this so it gets processed
+                        break;
+                }
+                break;
+            case BoxAtDestination:
+                //we're at the destination... now we wait for a signal
+                switch(getSignal()){
+                    case Advancing:
+                        //we want to advance to the next box
+                        state = LoadPlanDisplayerState.Advancing; //go ahead and move to next state
+                        updateState();
+                        break;
+                }
+
+                break;
+
         }
 
 
+    }
+
+
+
+
+    private  void putNextBoxIntoStaging(boolean useCurrentBox){
+       if(theLoadPlan.GetCurrentLoad() != null){
+           Load current = theLoadPlan.GetCurrentLoad();
+
+           if(useCurrentBox && current.GetCurrentBox() != null){
+               currentBox = current.GetCurrentBox();
+           }
+           else if(current.HasNextBox()){
+               currentBox = current.GetNextBox();
+
+           }
+
+       }
+
+       if(currentBox != null){
+           currentBox.place(boxStagingArea);
+           currentBox.setVisible(true);
+       }
+
 
     }
 
 
-    private  void putNextBoxIntoStaging(){
-
-            currentBox = theLoadPlan.GetCurrentLoad().GetCurrentBox();
-            if(currentBox != null){
-                currentBox.place(boxStagingArea);
-                currentBox.setVisible(true);
-
-            }
-
-            //theCamera.lookAt(boxStagingArea);
-
-
-    }
-
-    private void moveStagedBoxIntoPosition(){
-        if(currentBox != null){
-            advanceInProgress = true;
-            currentBox.moveToLocationOverDuration(Duration.ofSeconds(2), currentBox.getDestination());
-
-
-        }
-    }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
@@ -124,7 +214,8 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         boxStagingArea = new Vector(0f, 0f, 0f);
 
-       putNextBoxIntoStaging();
+        putNextBoxIntoStaging(true);
+        state = LoadPlanDisplayerState.BoxStaged;
 
     }
 
@@ -157,14 +248,13 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
     }
     private void renderWorld(){
+        updateState(); //we need to update and check on the state of the world
         for(Animation a : theWorld.getAnimiations().toArray(Animation[]::new)){
             if(!a.isComplete())
                 a.performOperationPerTick();
             else{
                 theWorld.removeAnimation(a);
-                advanceInProgress = false;
             }
-
         }
 
         if(currentBox != null){
@@ -194,11 +284,32 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
                 wo.draw(theWorld, viewMatrix, projectionMatrix);
         }
     }
+    private void onBoxChanged(){
+        String stepMessage = "Step 1 of 10000";
+        String loadMessage = "Load 1 of 10";
+        String boxMessage = null;
+        if(currentBox != null){
+            boxMessage = "Box #" + 1 + "\n"+  //TODO: get the unique number
+                    "Contents:\n"+
+                    "Fine China and other dishware\n"+  //TODO: get box description
+                    currentBox.getWidth() + " x " + currentBox.getHeight() + " x " + currentBox.getLength();
+        }else{
+            boxMessage = "";
+        }
+
+        theHud.getStepDisplay().setMessage(stepMessage);
+        theHud.getLoadDisplay().setMessage(loadMessage);
+        theHud.getBoxDisplay().setMessage(boxMessage);
+    }
+
     private void renderHud(){
+        if(currentBox != lastRenderCheckBox) //don't re-render textures unless we detect a change
+            onBoxChanged();
+        lastRenderCheckBox = currentBox;
 
-        //theHud.setMessage(LocalDateTime.now().toString());
-
+        theHud.setUpperLeftScreenCorner(upperLeftScreenCorner);
         theHud.draw(theWorld, hudViewMatrix, orthoMatrix);
+
 
     }
 
@@ -213,6 +324,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         Matrix.setLookAtM(hudViewMatrix,0, 0f, 0f, -0.2f, 0f, 0f, 0f, 0f, 1f, 0f );
 
+        upperLeftScreenCorner = new Vector(ratio, 1f, 0f);
 
     }
 
