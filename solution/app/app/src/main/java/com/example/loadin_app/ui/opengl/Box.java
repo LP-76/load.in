@@ -6,24 +6,19 @@ import com.example.loadin_app.ui.opengl.programs.OpenGLProgram;
 import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
 
 public class Box extends WorldObject{
-
-
     private CubeMappedHexahedron hexahedron;
+    protected float width, height, length;
 
    private Vector destination;
 
-    public Box(float width, float height, float length, World world) {
-        super(world);
-
-
-        hexahedron = new CubeMappedHexahedron(
-               width ,
-               height ,
-               length , this);
-        hexahedron.setMap(world.getCubeMapProgram().getBox());//the global box map
-
-        destination = new Vector(0f, 0f, 0f);
+    public Box(float width, float height, float length) {
+        super();
+        this.width = width;
+        this.height = height;
+        this.length = length;
      }
+
+
 
      public void setDestination(Vector destination){
         this.destination = destination;
@@ -32,21 +27,21 @@ public class Box extends WorldObject{
         return destination;
      }
 
+    public float getWidth() {
+        return width;
+    }
 
-     public float getWidth(){
-        return hexahedron.getWidth();
-     }
+    public float getHeight() {
+        return height;
+    }
 
-     public float getHeight(){
-        return hexahedron.getHeight();
-     }
-     public float getLength(){
-        return hexahedron.getLength();
-     }
+    public float getLength() {
+        return length;
+    }
 
-     public float getArea()
+    public float getArea()
      {
-         return hexahedron.getWidth() * hexahedron.getLength() * hexahedron.getHeight();
+         return getWidth() * getLength() * getHeight();
      }
 
 
@@ -60,7 +55,10 @@ public class Box extends WorldObject{
 
 
     public void rotateLeftBy90Degrees(){
-        hexahedron = new CubeMappedHexahedron(hexahedron.getLength(), hexahedron.getHeight(), hexahedron.getWidth(), this );
+        width = getLength();
+        height = getHeight();
+        length = getWidth();
+        recalculateShapes();
     }
 
     public boolean intersects(Box otherBox){
@@ -83,5 +81,16 @@ public class Box extends WorldObject{
     @Override
     public OpenGLVariableHolder getPositions() {
         return null;
+    }
+
+    @Override
+    protected void recalculateShapes() {
+        hexahedron = new CubeMappedHexahedron(
+                width ,
+                height ,
+                length , this);
+        hexahedron.setMap(myWorld.getCubeMapProgram().getBox());//the global box map
+
+        destination = new Vector(0f, 0f, 0f);
     }
 }
