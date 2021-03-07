@@ -16,9 +16,9 @@ import retrofit2.http.*;
 
 public interface RetroInventoryService {
 
-    @GET("/inventoryservice/inventory")
+    @GET("/inventoryservice/inventory/{loginID}")
     @Headers( "accept: application/json" )
-    CompletableFuture<DataWrapper<List<Inventory>>> getInventory();
+    CompletableFuture<DataWrapper<List<Inventory>>> getInventory(@Path("loginID") int loginID);
 
     @POST("/inventoryservice/inventory")
     @Headers({

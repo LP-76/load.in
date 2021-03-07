@@ -29,9 +29,9 @@ import java.util.ArrayList;
 public interface InventoryService {
 
     @GET
-    @Path("/inventory/")
+    @Path("/inventory/{loginID}")
     @Produces( "application/json" )
-    ArrayList<Inventory> getInventory() throws SQLException;
+    ArrayList<Inventory> getInventory(@PathParam("loginID") int loginID) throws SQLException;
 
     @POST
     @Path("/inventory/")
