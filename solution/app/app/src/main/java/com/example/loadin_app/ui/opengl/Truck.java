@@ -108,7 +108,7 @@ public class Truck extends WorldObject
     }
 
 
-    public float GetAreaOfTruckInches()
+    public float GetVolumeOfTruckInches()
     {
         return lengthInches * widthInches * heightInches;
     }

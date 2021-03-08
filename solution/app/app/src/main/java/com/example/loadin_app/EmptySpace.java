@@ -12,6 +12,11 @@ public class EmptySpace
 
     public EmptySpace(float input_length, float input_width, float input_height, Vector input_offset)
     {
+        if(input_offset.getX() < 0 || input_offset.getY() < 0 ||input_offset.getZ() < 0)
+        {
+            System.out.println("WARNING: EmptySpace with negative offset being created: " + input_offset.toString());
+        }
+
         length = input_length;
         width = input_width;
         height = input_height;

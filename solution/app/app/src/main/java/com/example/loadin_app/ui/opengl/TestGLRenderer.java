@@ -12,6 +12,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.example.loadin_app.Load;
 import com.example.loadin_app.LoadPlan;
+import com.example.loadin_app.LoadPlanGenerator;
 import com.example.loadin_app.TestingLoadPlanGenerator;
 
 import java.sql.Time;
@@ -183,11 +184,13 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
        }
 
        if(currentBox != null){
+           if(currentBox.getMyWorld() == null)
+           {
+               currentBox.setMyWorld(theWorld);
+           }
            currentBox.place(boxStagingArea);
            currentBox.setVisible(true);
        }
-
-
     }
 
 
@@ -206,8 +209,11 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         theHud = new Hud(theWorld); //setup the hud
         theCamera = new Camera();
 
-        theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
+        //theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
 
+        theLoadPlan = new LoadPlanGenerator().StartLoadPlan();
+        theLoadPlan.GetTruck().setMyWorld(theWorld);
+        Vector test = theLoadPlan.GetCurrentLoad().GetCurrentBox().getDestination();
         //theCamera.placeCamera(new Vector(-3f*12f, 8f*12f, -3f*12f));
 
 
@@ -289,9 +295,10 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         String loadMessage = "Load 1 of 10";
         String boxMessage = null;
         if(currentBox != null){
-            boxMessage = "Box #" + 1 + "\n"+  //TODO: get the unique number
+            boxMessage = "Box #" + currentBox.getBoxId() + "\n"+
                     "Contents:\n"+
                     "Fine China and other dishware\n"+  //TODO: get box description
+                    currentBox.getDestination().toString() + "\n"+
                     currentBox.getWidth() + " x " + currentBox.getHeight() + " x " + currentBox.getLength();
         }else{
             boxMessage = "";
@@ -327,9 +334,4 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         upperLeftScreenCorner = new Vector(ratio, 1f, 0f);
 
     }
-
-
-
-
-
 }

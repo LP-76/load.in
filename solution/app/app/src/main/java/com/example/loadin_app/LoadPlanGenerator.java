@@ -1,6 +1,10 @@
 package com.example.loadin_app;
 
+import android.content.Context;
+
 import com.example.loadin_app.ui.opengl.Box;
+import com.example.loadin_app.ui.opengl.Vector;
+import com.example.loadin_app.ui.opengl.World;
 import com.example.loadin_app.ui.opengl.Truck;
 
 import java.util.*;
@@ -11,20 +15,106 @@ public class LoadPlanGenerator
 
     private ArrayList<Box> moveInventory = new ArrayList<Box>();
 
-    LoadPlan plan;
+    private LoadPlan plan;
 
-    public LoadPlanGenerator()
+    private boolean useRandomBoxes = true;
+
+    public LoadPlan StartLoadPlan()
     {
-        GetMoveInventory();
-        GetTruckSize();
-        GenerateLoadPlan();
+        System.out.println(new Date());
 
+        GetTruckSize();
         plan = new LoadPlan(movingTruck); //make an empty load plan based on the dimensions of the truck
+
+        if(useRandomBoxes)
+            GenerateRandomBoxes();
+        else
+        {
+            GetMoveInventory();
+        }
+
+        SortMoveInventory();
+
+        GenerateLoadPlan();
+        //System.out.println("Finished StartLoadPlan!");
+        System.out.println(new Date());
+        return plan;
+    }
+
+    private void SortMoveInventory()
+    {
+        moveInventory.sort(new Comparator<Box>()
+        {
+            @Override
+            public int compare(Box o1, Box o2)
+            {
+                return (int) (o2.getVolume() - o1.getVolume());
+            }
+        });
+    }
+
+
+    private void GenerateRandomBoxes()
+    {
+        //System.out.println("Starting GenerateRandomBoxes!");
+        //moveInventory.add(new Box(24,24,24));
+        //moveInventory.add(new Box(48,48,48));
+
+        for(int i = 0; i < 30 ; i++)
+        {
+            moveInventory.add(new Box(12,12,12));
+        }
+        for(int i = 0; i < 20 ; i++)
+        {
+            moveInventory.add(new Box(18,16,18));
+        }
+        for(int i = 0; i < 15 ; i++)
+        {
+            moveInventory.add(new Box(24,18,18));
+        }
+
+        /*
+        float totalVolumeGenerated = 0;
+
+
+        while(totalVolumeGenerated <= movingTruck.GetVolumeOfTruckInches())
+        {
+            Box newRandomBox = GenerateNewRandomBox();
+            if(totalVolumeGenerated + newRandomBox.getVolume() > movingTruck.GetVolumeOfTruckInches() * 19)
+                return;
+
+            else
+            {
+                totalVolumeGenerated += newRandomBox.getVolume();
+                moveInventory.add(newRandomBox);
+            }
+        }
+        */
+        //System.out.println("Finished GenerateRandomBoxes!");
+    }
+
+    private Box GenerateNewRandomBox()
+    {
+        int minimumSize = 2;
+        int maximumSize = 7;
+
+        int length, width, height;
+
+        Random rand = new Random();
+
+        length = minimumSize + rand.nextInt(maximumSize - minimumSize);
+        width = minimumSize + rand.nextInt(maximumSize - minimumSize);
+        height = minimumSize + rand.nextInt(maximumSize - minimumSize);
+
+        return new Box(width * 6, height * 6, length * 6);
     }
 
     private void GetMoveInventory()
     {
         //TODO: Get the full Move Inventory
+
+
+
 
         //      for(int x = 0; x < 20; x++)
         //            moveInventory.add(new Box(15f, 25f, 30f));
@@ -34,67 +124,100 @@ public class LoadPlanGenerator
 
     private void GetTruckSize()
     {
-        //TODO: Get the size of the truck
-        //movingTruck = new Truck();
+        //System.out.println("Started Getting Truck Size!");
+        movingTruck = new Truck();
+        //System.out.println("Finished Getting Truck Size!");
     }
 
     private void GenerateLoadPlan()
     {
+        //System.out.println("Started GenerateLoadPlan!");
         for (Box currentBox : moveInventory)//for each box..
         {
-            PlaceBox(FindPlaceForBox(currentBox), currentBox);
+            if(BoxFitsWithinSpace(new EmptySpace(movingTruck.getLengthInches(),movingTruck.getWidthInches(), movingTruck.getHeightInches(), new Vector(0,0,0)),currentBox))
+                PlaceBox(FindPlaceForBox(currentBox), currentBox);
         }
+        //System.out.println("Finished GenerateLoadPlan!");
     }
 
     private void PlaceBox(LoadStatistics input_Info, Box input_Box)
     {
+        //System.out.println("Started PlaceBox!");
         EmptySpace idealSpace = plan.GetLoads().get(input_Info.GetLoadIndex()).GetEmptySpaces().get(input_Info.GetEmptySpaceIndex());
 
         switch(input_Info.GetNumberOfMatchingDimensions())
         {
-
             case 3:
+                //System.out.println("Box " + input_Box.getBoxId() + " is being placed under case 3");
                 //the box is the exact same size as the space
-                //we need to completely delete the space and put the box in its place
-
+                //completely delete the space and put the box in its place
+                //          x                      x                       z
+                //  |---------------|      |---------------|      |---------------|
+                //  |               |      |               |      |               |
+                // z|      box      |     y|      box      |     y|      box      |
+                //  |               |      |               |      |               |
+                //  |---------------o      |---------------o      |---------------o
                 input_Box.setDestination(idealSpace.GetOffset());
                 plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
                 plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
+
                 break;
             case 2:
+                //System.out.println("Box " + input_Box.getBoxId() + " is being placed under case 2");
                 //the box matches the space in 2 dimensions
                 //divide the space in 2 in the dimension that doesn't max, replace
                 //the filled space with a box
-                // |---------------|
-                // |      box      |
-                // |_______________|
-                // | updated space |
-                // |_______________|
+                //          x                      x                       z
+                //  |---------------|      |---------------|      |-------|-------|
+                //  |      box      |      |               |      |       |       |
+                // z|_______________o     y|      box      |     y|  box  | space |
+                //  |     space     |      |               |      |       |       |
+                //  |---------------o      |---------------o      |-------o-------o
+                input_Box.setDestination(new Vector(idealSpace.GetOffset().getX(), idealSpace.GetOffset().getY(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength())));
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
+                plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(idealSpace.GetWidth(), idealSpace.GetHeight(), idealSpace.GetLength() - input_Box.getLength(), idealSpace.GetOffset()));
 
                 break;
             case 1:
+                //System.out.println("Box " + input_Box.getBoxId() + " is being placed under case 1");
                 //the box matches the width, height, or length of the space and nothing else.
                 //the space will need to be divided in to 3 pieces
-                // |-------|-----------|
-                // |  box  | new space |
-                // |_______|___________|
-                // | new space         |
-                // |___________________|
+                //          x                      x                       z
+                //  |-------|-------|      |-------|-------|      |-------|-------|
+                //  |  box  | space |      |       |       |      |       |       |
+                // z|_______o_______o     y|  box  | space |     y|  box  | space |
+                //  |     space     |      |       |       |      |       |       |
+                //  |---------------o      |-------o-------o      |-------o-------o
+                input_Box.setDestination(new Vector(idealSpace.GetOffset().getX() + (idealSpace.GetWidth() - input_Box.getWidth()), idealSpace.GetOffset().getY(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength())));
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
+                plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
+
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(idealSpace.GetLength() - input_Box.getLength(), idealSpace.GetWidth(), idealSpace.GetHeight(), idealSpace.GetOffset() ));
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(input_Box.getLength(), idealSpace.GetWidth() - input_Box.getWidth(), idealSpace.GetHeight(), new Vector(idealSpace.GetOffset().getX(),idealSpace.GetOffset().getY(),idealSpace.GetOffset().getZ() + (idealSpace.GetLength()-input_Box.getLength()) )));
 
                 break;
             case 0:
-                //we will need to create 5 spaces
-                // - one that will be replaced with the box
-                // - one the width of the box that represents the difference in length
-                // - one the length of the box that represents the difference in width
-                // - one the height of the box that represents the difference in height
-                // - one that fills in the rest of the space diagonal to the box, only sharing a single edge with the box
-                // this is essentially a 3D version of the case 1 break-up
+                //System.out.println("Box " + input_Box.getBoxId() + " is being placed under case 0");
+                //          x                      x                       z
+                //  |-------|-------|      |-------|-------|      |-------|-------|
+                //  |  box  | space |      | space |       |      | space |       |
+                // z|_______o_ _____|     y|-------o space |     y|-------o space |
+                //  |     space     |      |  box  |       |      |  box  |       |
+                //  |---------------o      |-------o-------o      |-------o-------o
+                input_Box.setDestination(new Vector(idealSpace.GetOffset().getX() + (idealSpace.GetWidth() - input_Box.getWidth()), idealSpace.GetOffset().getY(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength())));
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
+                plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
+
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(idealSpace.GetLength() - input_Box.getLength(), idealSpace.GetWidth(), idealSpace.GetHeight(), idealSpace.GetOffset() ));
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(input_Box.getLength(), idealSpace.GetWidth() - input_Box.getWidth(), idealSpace.GetHeight(), new Vector(idealSpace.GetOffset().getX(),idealSpace.GetOffset().getY(),idealSpace.GetOffset().getZ() + (idealSpace.GetLength()-input_Box.getLength()))));
+                plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(input_Box.getLength(), input_Box.getWidth(), idealSpace.GetHeight() - input_Box.getHeight(), new Vector(idealSpace.GetOffset().getX() + (idealSpace.GetWidth() - input_Box.getWidth()), idealSpace.GetOffset().getY() + input_Box.getHeight(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength()))));
                 break;
             default:
                 //we should never hit this code.
                 break;
         }
+        //System.out.println("Finished PlaceBox!");
     }
 
 
@@ -130,6 +253,7 @@ public class LoadPlanGenerator
 
          int numberOfMatchingDimensionsInBestFit = -1;
          int bestFitSpaceIndex = -1;
+         float bestDistanceFromStart = -1f;
 
          if (input_Load.GetEmptySpaces().size() > 0)
          {
@@ -138,22 +262,32 @@ public class LoadPlanGenerator
              for(int spaceIndex = 0 ; spaceIndex < input_Load.GetEmptySpaces().size() ; spaceIndex++)
              {
                  EmptySpace currentSpace = input_Load.GetEmptySpaces().get(spaceIndex);
+
                  if( BoxFitsWithinSpace(currentSpace, input_Box) )
                  {
                      sizeAtLeastAsLargeAsBoxFound = true;
 
                      int numberOfMatchingDimensions = CheckIfEmptySpaceMatchesBoxDimensions(input_Box, currentSpace);
+                     float distanceFromStart = currentSpace.GetOffset().GetDistanceFromOrigin();
+
                      if(numberOfMatchingDimensions > numberOfMatchingDimensionsInBestFit)
                      {
                          numberOfMatchingDimensionsInBestFit = numberOfMatchingDimensions;
                          bestFitSpaceIndex = spaceIndex;
+                         bestDistanceFromStart = distanceFromStart;
+                     }
+                     else if(numberOfMatchingDimensions == numberOfMatchingDimensionsInBestFit && bestDistanceFromStart < distanceFromStart)
+                     {
+                         bestFitSpaceIndex = spaceIndex;
+                         bestDistanceFromStart = distanceFromStart;
+                         numberOfMatchingDimensionsInBestFit = numberOfMatchingDimensions;
                      }
                  }
              }
 
              if(sizeAtLeastAsLargeAsBoxFound)
              {
-                 return new LoadStatistics(input_LoadIndex, bestFitSpaceIndex, numberOfMatchingDimensionsInBestFit, input_Load.GetEmptyArea() );
+                 return new LoadStatistics(input_LoadIndex, bestFitSpaceIndex, numberOfMatchingDimensionsInBestFit, input_Load.GetEmptyArea(),bestDistanceFromStart );
              }
          }
 
@@ -195,18 +329,4 @@ public class LoadPlanGenerator
     {
         return (input_Space.GetWidth() >= input_Box.getWidth() ) &&(input_Space.GetLength() >= input_Box.getLength() ) && (input_Space.GetHeight() >= input_Box.getHeight() );
     }
-
-
-/*
-            for (EmptySpace currentSpace : plan.GetLoads().get(loadIndex).GetEmptySpaces()) //through all the empty spaces in that truck...
-            {
-                //TODO: Actual load plan figuring out
-
-                int dimensionsMatched =  CheckIfEmptySpaceMatchesBoxDimensions(currentBox,currentSpace);
-
-
-            }
-        }
-    }
-    */
 }

@@ -92,7 +92,10 @@ public class Vector  {
         return result;
     }
 
-
+    public float GetDistanceFromOrigin()
+    {
+        return (float)Math.sqrt(Math.pow((double)getX(),2) + Math.pow((double)getX(),2) + Math.pow((double)getX(),2) );
+    }
 
 
 
@@ -101,5 +104,11 @@ public class Vector  {
     }
     public Stream<Float> getColors(){
         return color.asFloats();
+    }
+
+    @Override
+    public String toString()
+    {
+        return "x: " + getX() + " y: " + getY() + "z: " + getZ();
     }
 }
