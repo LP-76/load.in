@@ -39,17 +39,20 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         Initial,
         Advancing,
         Reversing,
-        FastFoward,
+        FastForward,
         FastRewind,
         BoxStaged,
         BoxAnimating,
-        BoxAtDestination
+        BoxAtDestination,
+        EndOfLoadPlan
     }
 
     private enum SignalState{
         None,
         Forward,
-        Reverse
+        Reverse,
+        FastForward,
+        FastReverse
     }
 
     private SignalState signal;
@@ -100,6 +103,21 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         }
     }
 
+    public void fastForward(){
+        switch(getSignal()){
+            case None:   //we can only raise the flag once until the system is ready to respond to another request
+                setSignal(SignalState.FastForward);
+                break;
+        }
+    }
+    public void fastRewind(){
+        switch(getSignal()){
+            case None:   //we can only raise the flag once until the system is ready to respond to another request
+                setSignal(SignalState.FastReverse);
+                break;
+        }
+    }
+
    public void reverse(){
        switch(getSignal()){
            case None:   //we can only raise the flag once until the system is ready to respond to another request
@@ -128,6 +146,9 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
                         state = LoadPlanDisplayerState.BoxStaged;
                         setSignal(SignalState.None); //clear signla
                         break;
+                    case FastForward:
+                        putNextBoxIntoStaging(true);
+                        state = LoadPlanDisplayerState.BoxStaged;
                     default:
                         setSignal(SignalState.None);
                         break;
@@ -136,12 +157,24 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
                 break;
             case Advancing:
                 putNextBoxIntoStaging(false);
-                setSignal(SignalState.None); //we're ready for the next signal
-                state = LoadPlanDisplayerState.BoxStaged;
+                if(currentBox == null){
+                    state = LoadPlanDisplayerState.EndOfLoadPlan;
+                    setSignal(SignalState.None);
+                }
+                else{
+                    state = LoadPlanDisplayerState.BoxStaged;
+                    switch (getSignal()){
+                        case Forward:
+                            setSignal(SignalState.None);
+                            break;
+                    }
+                }
+
 
                 break;
             case BoxStaged:
                 switch (getSignal()){
+                    case FastForward:
                     case Forward:
                         //we've got the green light to go ahead
                         state = LoadPlanDisplayerState.BoxAnimating;
@@ -152,12 +185,14 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
                                 theWorld.getTick(),
                                 destination,
                                 i -> {
-                                    setSignal(SignalState.None);
+                                    if(getSignal() != SignalState.FastForward)
+                                        setSignal(SignalState.None);
                                     state = LoadPlanDisplayerState.BoxAtDestination;
                                 }
                         ) ;
                         theWorld.addAnimation(animation); //add this so it gets processed
                         break;
+                    case FastReverse:
                     case Reverse:
 
                         currentBox.setVisible(false);
@@ -167,12 +202,14 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
                         if(currentBox == null){
                             state = LoadPlanDisplayerState.Initial;
+                            setSignal(SignalState.None);  //always clear signal when we get to beginning
                         }else{
                             //we have a box and it's at it's destination
                             state = LoadPlanDisplayerState.BoxAtDestination;
 
                         }
-                        setSignal(SignalState.None); //clear the signal since we have processed the operation
+                        if(getSignal() == SignalState.Reverse)
+                            setSignal(SignalState.None); //clear the signal since we have processed the operation
 
                         break;
                 }
@@ -180,11 +217,13 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
             case BoxAtDestination:
                 //we're at the destination... now we wait for a signal
                 switch(getSignal()){
+                    case FastForward:
                     case Forward:
                         //we want to advance to the next box
                         state = LoadPlanDisplayerState.Advancing; //go ahead and move to next state
                         updateState();
                         break;
+                    case FastReverse:
                     case Reverse:
                         //we are going to fly back to origin
                         state = LoadPlanDisplayerState.BoxAnimating;
@@ -194,11 +233,29 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
                                 theWorld.getTick(),
                                 boxStagingArea,
                                 i -> {
-                                    setSignal(SignalState.None);
+                                    if(getSignal() == SignalState.Reverse)
+                                        setSignal(SignalState.None);  //only clear the signal for single step back
                                     state = LoadPlanDisplayerState.BoxStaged;
                                 }
                         ) ;
                         theWorld.addAnimation(animation); //add this so it gets processed
+                        break;
+                }
+
+                break;
+            case EndOfLoadPlan:
+                switch (getSignal()){
+                    case Reverse:
+                    case FastReverse:
+                        //we can go backward
+                        currentBox = theLoadPlan.GetCurrentLoad().GetCurrentBox(); //reload the last box
+                        state = LoadPlanDisplayerState.BoxAtDestination;
+                        if(getSignal() == SignalState.Reverse)
+                            setSignal(SignalState.None);
+
+                        break;
+                    default:
+                        setSignal(SignalState.None);
                         break;
                 }
 
@@ -230,6 +287,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
 
     private  void putNextBoxIntoStaging(boolean useCurrentBox){
+        currentBox = null;
        if(theLoadPlan.GetCurrentLoad() != null){
            Load current = theLoadPlan.GetCurrentLoad();
 
