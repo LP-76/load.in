@@ -36,7 +36,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private  Vector upperLeftScreenCorner;
 
     private enum LoadPlanDisplayerState{
-        Stopped,
+        Initial,
         Advancing,
         Reversing,
         FastFoward,
@@ -48,7 +48,8 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
     private enum SignalState{
         None,
-        Advancing
+        Forward,
+        Reverse
     }
 
     private SignalState signal;
@@ -65,6 +66,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private Hud theHud;
 
     private LoadPlan theLoadPlan;
+    private Truck theTruck;
 
     private Vector boxStagingArea;
 
@@ -80,7 +82,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
     public TestGLRenderer(Bitmap source, Context ctx){
         testBitmap = source;
-        state = LoadPlanDisplayerState.Stopped;
+        state = LoadPlanDisplayerState.Initial;
         signal = SignalState.None;
         context = ctx;
 
@@ -99,13 +101,17 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     }
 
    public void reverse(){
-       //setSignal(SignalState.Advancing.Reversing);
+       switch(getSignal()){
+           case None:   //we can only raise the flag once until the system is ready to respond to another request
+               setSignal(SignalState.Reverse);
+               break;
+       }
    }
 
     public void advance(){
         switch(getSignal()){
             case None:   //we can only raise the flag once until the system is ready to respond to another request
-                setSignal(SignalState.Advancing);
+                setSignal(SignalState.Forward);
                 break;
         }
 
@@ -114,12 +120,16 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private void updateState(){
 
         switch(state){
-            case Stopped:
+            case Initial:
                 switch(getSignal()){
-                    case Advancing:
+                    case Forward:
                         //we want to advance to the next box
-                        state = LoadPlanDisplayerState.Advancing; //go ahead and move to next state
-                        updateState();
+                        putNextBoxIntoStaging(true);
+                        state = LoadPlanDisplayerState.BoxStaged;
+                        setSignal(SignalState.None); //clear signla
+                        break;
+                    default:
+                        setSignal(SignalState.None);
                         break;
                 }
 
@@ -132,14 +142,15 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
                 break;
             case BoxStaged:
                 switch (getSignal()){
-                    case Advancing:
+                    case Forward:
                         //we've got the green light to go ahead
                         state = LoadPlanDisplayerState.BoxAnimating;
+                        Vector destination = theTruck.getWorldOffset().add(currentBox.getDestination());  //automatically adjust for the truck offsets
                        TransposeAnimation animation = new TransposeAnimation(
                                 currentBox,
                                 Duration.ofSeconds(2),
                                 theWorld.getTick(),
-                                currentBox.getDestination(),
+                                destination,
                                 i -> {
                                     setSignal(SignalState.None);
                                     state = LoadPlanDisplayerState.BoxAtDestination;
@@ -147,15 +158,47 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
                         ) ;
                         theWorld.addAnimation(animation); //add this so it gets processed
                         break;
+                    case Reverse:
+
+                        currentBox.setVisible(false);
+
+                        //we're staged
+                        getPreviousBox();  //attempt getting previous box
+
+                        if(currentBox == null){
+                            state = LoadPlanDisplayerState.Initial;
+                        }else{
+                            //we have a box and it's at it's destination
+                            state = LoadPlanDisplayerState.BoxAtDestination;
+
+                        }
+                        setSignal(SignalState.None); //clear the signal since we have processed the operation
+
+                        break;
                 }
                 break;
             case BoxAtDestination:
                 //we're at the destination... now we wait for a signal
                 switch(getSignal()){
-                    case Advancing:
+                    case Forward:
                         //we want to advance to the next box
                         state = LoadPlanDisplayerState.Advancing; //go ahead and move to next state
                         updateState();
+                        break;
+                    case Reverse:
+                        //we are going to fly back to origin
+                        state = LoadPlanDisplayerState.BoxAnimating;
+                        TransposeAnimation animation = new TransposeAnimation(
+                                currentBox,
+                                Duration.ofSeconds(2),
+                                theWorld.getTick(),
+                                boxStagingArea,
+                                i -> {
+                                    setSignal(SignalState.None);
+                                    state = LoadPlanDisplayerState.BoxStaged;
+                                }
+                        ) ;
+                        theWorld.addAnimation(animation); //add this so it gets processed
                         break;
                 }
 
@@ -166,7 +209,24 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
     }
 
+    private void getPreviousBox(){
+        currentBox = null;
 
+        if(theLoadPlan.GetCurrentLoad() != null){
+            Load current = theLoadPlan.GetCurrentLoad();
+
+
+            if(current.HasPreviousBox()){
+                currentBox = current.GetPreviousBox();
+
+            }
+
+        }
+
+
+
+
+    }
 
 
     private  void putNextBoxIntoStaging(boolean useCurrentBox){
@@ -212,16 +272,17 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         //theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
 
         theLoadPlan = new LoadPlanGenerator().StartLoadPlan();
-        theLoadPlan.GetTruck().setMyWorld(theWorld);
-        Vector test = theLoadPlan.GetCurrentLoad().GetCurrentBox().getDestination();
+        theTruck =theLoadPlan.GetTruck();
+        theTruck.setMyWorld(theWorld);
+
+
         //theCamera.placeCamera(new Vector(-3f*12f, 8f*12f, -3f*12f));
 
 
 
         boxStagingArea = new Vector(0f, 0f, 0f);
 
-        putNextBoxIntoStaging(true);
-        state = LoadPlanDisplayerState.BoxStaged;
+        advance();
 
     }
 
@@ -291,17 +352,22 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         }
     }
     private void onBoxChanged(){
-        String stepMessage = "Step 1 of 10000";
-        String loadMessage = "Load 1 of 10";
-        String boxMessage = null;
+        String stepMessage = "";
+        String loadMessage = "";
+        String boxMessage = "";
+        if(theLoadPlan.GetCurrentLoad() != null){
+            //TODO: alter load plan to give this information
+            stepMessage = "Step " + 1 + " of " + 10000;
+            loadMessage = "Load 1 of 10";
+        }
+
+
         if(currentBox != null){
             boxMessage = "Box #" + currentBox.getBoxId() + "\n"+
                     "Contents:\n"+
                     "Fine China and other dishware\n"+  //TODO: get box description
                     currentBox.getDestination().toString() + "\n"+
                     currentBox.getWidth() + " x " + currentBox.getHeight() + " x " + currentBox.getLength();
-        }else{
-            boxMessage = "";
         }
 
         theHud.getStepDisplay().setMessage(stepMessage);

@@ -68,13 +68,13 @@ public class TestGLSurfaceView extends GLSurfaceView {
                 float dy =  previousY - y;  //reversed coordinates
 
 
-                if(dy < 0)  //someone swiped to the left
+                if(dx < 0)  //someone swiped to the left
                 {
                     //next box
                     renderer.advance();
 
-                }else if(dy > 0){ //someone swiped to the right
-
+                }else if(dx > 0){ //someone swiped to the right
+                    renderer.reverse();
                 }
 
 

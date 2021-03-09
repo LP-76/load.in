@@ -27,7 +27,7 @@ public class TestingLoadPlanGenerator
                 {
                     Box newBox = new Box(boxSize,boxSize,boxSize);
                     newBox.setMyWorld(theWorld);
-                    newBox.setDestination( t.getWorldOffset().add(   new Vector(widthIndex*boxSize - boxSize, heightIndex*boxSize, lengthIndex*boxSize - boxSize)));
+                    newBox.setDestination(    new Vector(widthIndex*boxSize - boxSize, heightIndex*boxSize, lengthIndex*boxSize - boxSize));
                     sampleLoadPlan.AddBox(newBox);
                     newBox.setVisible(false);
                 }
@@ -47,7 +47,7 @@ public class TestingLoadPlanGenerator
 
         Box newBox = new Box(t.getWidthInches(),t.getHeightInches(),t.getLengthInches());
         newBox.setMyWorld(theWorld);
-        newBox.setDestination( t.getWorldOffset().add(   new Vector(0f, 0, 0f)));
+        newBox.setDestination(   new Vector(0f, 0, 0f));
         newBox.setVisible(false);
         sampleLoadPlan.AddBox(newBox);
 

@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 public class CubeMappedHexahedron extends Hexahedron implements IColorable, ICubeMappable {
 
     private  Triangle[] triangles;
+    private  Triangle[] cubeMapTriangles;
 
     OpenGLVariableHolder positions;
     OpenGLVariableHolder colors;
@@ -68,6 +69,38 @@ public class CubeMappedHexahedron extends Hexahedron implements IColorable, ICub
 
         };
 
+        Vector c1 = new Vector(0, 0, 0, white);
+        Vector c2 = new Vector(1, 0, 0, white);
+        Vector c3 = new Vector(1, 0, 1, white);
+        Vector c4 = new Vector(0, 0, 1, white);
+        Vector c5 = new Vector(0, 1, 0, white);
+        Vector c6 = new Vector(1, 1, 0f, white);
+        Vector c7 = new Vector(1, 1, 1, white);
+        Vector c8 = new Vector(0, 1, 1, white);
+
+
+        cubeMapTriangles = new Triangle[] {
+                //front
+                new Triangle(c1, c6, c2 ),
+                new Triangle(c1, c5, c6),
+                //base
+                new Triangle(c1, c4, c3),
+                new Triangle(c2, c1, c3),
+                //top
+                new Triangle(c5, c7, c6),
+                new Triangle(c5, c8, c7),
+                //back
+                new Triangle(c3, c8, c4),
+                new Triangle(c3, c7, c8),
+                //right
+                new Triangle(c2, c7, c3),
+                new Triangle(c2, c6, c7),
+                //left
+                new Triangle(c4, c5, c1),
+                new Triangle(c4, c8, c5)
+
+        };
+
 
     }
 
@@ -81,13 +114,13 @@ public class CubeMappedHexahedron extends Hexahedron implements IColorable, ICub
                 4
         );
         Vector center = new Vector(
-                getWidth()/2f,
-                getHeight()/2f,
-                getLength()/2f
+                1f/2f,
+                1f/2f,
+                1f/2f
         ).multiply(-1f);  //reverse direction
 
         texDirections = new OpenGLVariableHolder(
-                Arrays.stream(triangles).map(i -> i.moveAndCopy(center)).flatMap(i -> i.getCoordinates()),
+                Arrays.stream(cubeMapTriangles).map(i -> i.moveAndCopy(center)).flatMap(i -> i.getCoordinates()),
                 3
         );
     }

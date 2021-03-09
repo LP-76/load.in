@@ -35,8 +35,7 @@ public class Truck extends WorldObject
         shapes = new ArrayList<TexturedHexahedron>();
         //UHAUL SAMPLE TRUCK THAT's a 17 footer
 
-
-
+        place(new Vector(3f * 12f, 0f, 3f*12f ));
         lengthInches = 14f * 12f ;  //14foot 3 inches
         widthInches = 7f * 12f ;
         heightInches = 7f* 12f ;

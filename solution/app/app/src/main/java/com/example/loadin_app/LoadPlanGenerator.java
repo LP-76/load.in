@@ -60,20 +60,20 @@ public class LoadPlanGenerator
         //moveInventory.add(new Box(24,24,24));
         //moveInventory.add(new Box(48,48,48));
 
-        for(int i = 0; i < 30 ; i++)
-        {
-            moveInventory.add(new Box(12,12,12));
-        }
-        for(int i = 0; i < 20 ; i++)
-        {
-            moveInventory.add(new Box(18,16,18));
-        }
-        for(int i = 0; i < 15 ; i++)
-        {
-            moveInventory.add(new Box(24,18,18));
-        }
+//        for(int i = 0; i < 30 ; i++)
+//        {
+//            moveInventory.add(new Box(12,12,12));
+//        }
+//        for(int i = 0; i < 20 ; i++)
+//        {
+//            moveInventory.add(new Box(18,16,18));
+//        }
+//        for(int i = 0; i < 15 ; i++)
+//        {
+//            moveInventory.add(new Box(24,18,18));
+//        }
 
-        /*
+
         float totalVolumeGenerated = 0;
 
 
@@ -89,7 +89,7 @@ public class LoadPlanGenerator
                 moveInventory.add(newRandomBox);
             }
         }
-        */
+
         //System.out.println("Finished GenerateRandomBoxes!");
     }
 
