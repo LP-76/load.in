@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,15 +17,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import odu.edu.loadin.common.ExpertArticle;
 import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.InventoryService;
+
+import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
 
 public class AddItemActivity extends AppCompatActivity {
 
     private EditText descriptionInput, widthInput, depthInput, heightInput, weightInput, fragilityInput;
-    private Button addItemButton;
+    private Button addItemButton, tipsButton;
+    private String keyword;
 
     public static SharedPreferences sp;
 
@@ -38,7 +45,8 @@ public class AddItemActivity extends AppCompatActivity {
             startActivity(switchToLogin);
         }
 
-
+        tipsButton = (Button) findViewById(R.id.tipsButton);
+        tipsButton.setVisibility(View.INVISIBLE);
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
@@ -59,8 +67,19 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                searchForArticle(descriptionInput.getText().toString());
                 addItemToDB(descriptionInput.getText().toString(), Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()),
                         Float.parseFloat(heightInput.getText().toString()), Float.parseFloat(weightInput.getText().toString()), Integer.parseInt(fragilityInput.getText().toString()));
+            }
+        });
+
+        tipsButton = (Button) findViewById(R.id.tipsButton);
+        tipsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent switchToExpertTips = new Intent(AddItemActivity.this, TipsAndTricksActivity.class);
+                switchToExpertTips.putExtra(keyword, descriptionInput.getText().toString());
+                startActivity(switchToExpertTips);
             }
         });
     }
@@ -92,6 +111,26 @@ public class AddItemActivity extends AppCompatActivity {
         }
         //TODO: figure out what happens
         //what happens here?
+    }
+
+    private void searchForArticle(String inputDescription)
+    {
+        ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
+        ExpertArticle expertArticle = new ExpertArticle();
+        try{
+            expertArticle = service.getExpertArticles(inputDescription);
+
+            if(expertArticle.getKeyword() != null)
+            {
+                tipsButton.setVisibility(View.VISIBLE);
+            }
+
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+            //ooops we had an error
+            //TODO: make the user aware
+        }
     }
 
     // Menu icons are inflated just as they were with actionbar

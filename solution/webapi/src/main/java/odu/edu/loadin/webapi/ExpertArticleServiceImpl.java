@@ -39,7 +39,7 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
 
             //this will auto-close the connection
-            PreparedStatement statement = conn.prepareStatement("SELECT KEYWORD, CONTENT, TITLE FROM EXPERT_TIP");
+            PreparedStatement statement = conn.prepareStatement("SELECT KEYWORD, CONTENT, TITLE, VIDEO FROM EXPERT_TIP");
             //statement.setString(1, Keyword);
 
             ResultSet resultSet = statement.executeQuery();
@@ -52,6 +52,7 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
                 article.setKeyword(resultSet.getString("KEYWORD"));
                 article.setArticleContent(resultSet.getString("CONTENT"));
                 article.setArticleTitle(resultSet.getString("TITLE"));
+                article.setVisualFile(resultSet.getString("VIDEO"));
                 expertArticle.add(article);
             }
 
@@ -107,7 +108,7 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
         //An IndexWriter creates and maintains an index.
         IndexWriter w = new IndexWriter(index, config);
         for (ExpertArticle expertArticle : expertArticles) {
-            addDoc(w, expertArticle.getKeyword(), expertArticle.getArticleTitle(), expertArticle.getArticleContent());
+            addDoc(w, expertArticle.getKeyword(), expertArticle.getArticleTitle(), expertArticle.getArticleContent(), expertArticle.getVisualFile());
         }
 
         w.close();
@@ -151,6 +152,7 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
             results.setKeyword(doc.get("keyword"));
             results.setArticleTitle(doc.get("title"));
             results.setArticleContent(doc.get("article"));
+            results.setVisualFile(doc.get("video"));
         }
 
         reader.close();
@@ -169,7 +171,7 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
      * @throws IOException
      */
 
-    private static void addDoc(IndexWriter w, String keyword, String title, String article) throws IOException {
+    private static void addDoc(IndexWriter w, String keyword, String title, String article, String video) throws IOException {
         Document doc = new Document();
 
         // using TextField that is indexed and tokenized, without term vectors.
@@ -180,6 +182,8 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
 
         // using a string field for title because we don't want it tokenized
         doc.add(new StringField("title", title, Field.Store.YES));
+
+        doc.add(new StringField("video", video, Field.Store.YES));
         w.addDocument(doc);
     }
 

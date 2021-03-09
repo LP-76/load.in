@@ -91,8 +91,17 @@
             android:textSize="24sp"
             android:textColor="@color/load_in_green"
             android:layout_below="@id/articleSearchTool"
-            android:text="LET ERIC ANDRE IN" />
+            android:text="Placeholder Article Title" />
 
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/articleVideo"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_below="@id/articleTitle"
+            android:visibility="invisible"
+            app:layout_constraintDimensionRatio="4:3"
+            />
+<!--
         <VideoView
             android:id="@+id/articleVideo"
             android:layout_width="match_parent"
@@ -100,7 +109,7 @@
             app:layout_constraintDimensionRatio="4:3"
             android:layout_below="@id/articleTitle"
             android:visibility="invisible"/>
-
+-->
         <ImageView
             android:id="@+id/articleImage"
             android:layout_width="match_parent"
@@ -121,7 +130,7 @@
             android:textSize="24sp"
             android:textColor="@color/load_in_green"
             android:layout_below="@id/articleVideo"
-            android:text="LET ERIC ANDRE IN"/>
+            android:text="Placeholder Article Content"/>
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

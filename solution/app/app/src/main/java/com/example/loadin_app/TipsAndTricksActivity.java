@@ -1,14 +1,13 @@
 package com.example.loadin_app;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,47 +20,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 import com.example.loadin_app.data.services.ExpertArticleImpl;
+import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.Player;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.ui.PlayerView;
+
 import odu.edu.loadin.common.ExpertArticle;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
-import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.RAMDirectory;
-import org.w3c.dom.Text;
 
-import java.io.IOException;
 
-//TODO: Paul: Add Documentation to video playback methods.
 public class TipsAndTricksActivity extends AppCompatActivity {
 
-    private TextView mTextView;
-    private static final String mediaName = "cardboard.jpg";
-    private VideoView mVideoView;
-    private TextView mBufferingTextView;
+
+    private String videoLink = "cardboard.mp4";
     private int mCurrentPosition = 0;
-    private static final String PLAYBACK_TIME = "play_time";
     private Button searchForArticle;
     private ImageView imageView;
-    private EditText articleKeyword;
     private String keyword;
+    private EditText articleKeyword;
     private String value;
+    private PlayerView playerView;
+    private SimpleExoPlayer player;
+    private long playbackPosition = 0;
+    private int currentWindow = 0;
+    private boolean playWhenReady = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,26 +86,15 @@ public class TipsAndTricksActivity extends AppCompatActivity {
         Depending on what media type is found it will set their respective view to visible
         If a video is detected then it will also start the mediaplayer activity.
          */
-        if (mediaName.toString().endsWith(".jpg"))
+        if (videoLink.toString().endsWith(".jpg"))
         {
-            mVideoView = findViewById(R.id.articleVideo);
             imageView = findViewById(R.id.articleImage);
             imageView.setVisibility(View.VISIBLE);
             imageView.setImageResource(R.drawable.cardboard);
         }
-        else if (mediaName.toString().endsWith(".mp4"))
+        else if (videoLink.toString().endsWith(".mp4"))
         {
-            mVideoView = findViewById(R.id.articleVideo);
-            mVideoView.setVisibility(View.VISIBLE);
-            if(savedInstanceState != null)
-            {
-                mCurrentPosition = savedInstanceState.getInt(PLAYBACK_TIME);
-            }
-            MediaController controller = new MediaController(this);
-            controller.setMediaPlayer(mVideoView);
-            mVideoView.setMediaController(controller);
-            mBufferingTextView = findViewById(R.id.buffering_textview);
-            initializePlayer();
+            initializePlayer(videoLink);
         }
     }
 
@@ -200,92 +175,57 @@ public class TipsAndTricksActivity extends AppCompatActivity {
         ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
         ExpertArticle expertArticle = new ExpertArticle();
         try{
-           expertArticle = service.getExpertArticles(keyword);
+
+            expertArticle = service.getExpertArticles(keyword);
             TextView mArticleContent = findViewById(R.id.articleContent);
             TextView mArticleTitle = findViewById(R.id.articleTitle);
             mArticleContent.setText(expertArticle.getArticleContent());
             mArticleTitle.setText(expertArticle.getArticleTitle());
+            videoLink = expertArticle.getVisualFile();
+
+            initializePlayer(videoLink);
+
         }
         catch(Exception ex){
             System.out.println(ex);
             //ooops we had an error
             //TODO: make the user aware
         }
-    }
-
-    /**
-     * Will check if the media file being provided is a url or is locally stored
-     * TODO This is now broken and won't work with locally stored files? Not sure why yet. - Paul
-     * @param mediaName
-     * @return valid uri of the media file
-     */
-    private Uri getMedia(String mediaName)
-    {
-        if(URLUtil.isValidUrl(mediaName))
-        {
-            return Uri.parse(mediaName);
-        }
-        else
-            {
-            return Uri.parse("android.resource://" + getPackageName() + "/raw/" + mediaName);
-        }
-
-    }
-
-    /**
-     * Will initialize the video player being used for tips and tricks
-     * Will call the getMedia(String mediaName) function to retrieve file name
-     * Todo: Should probably modify this to have it accept the media name and then pass it into the getMedia method - Paul
-     * This is the main driver of the video playing feature.
-     */
-    private void initializePlayer() {
-        Uri videoUri = getMedia(mediaName);
-        mBufferingTextView.setVisibility(VideoView.VISIBLE);
-        mVideoView.setVideoURI(videoUri);
-
-        mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mBufferingTextView.setVisibility(VideoView.INVISIBLE);
-
-                if(mCurrentPosition > 0){
-                    mVideoView.seekTo(mCurrentPosition);
-                }
-                else
-                {
-                    mVideoView.seekTo(1);
-                }
-                mVideoView.start();
-            }
-        });
-        mVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
-        {
-            @Override
-            public void onCompletion(MediaPlayer mediaPlayer) {
-                Toast.makeText(TipsAndTricksActivity.this, "Playback completed", Toast.LENGTH_SHORT).show();
-                mVideoView.seekTo(0);
-            }
-        });
         releasePlayer();
+    }
 
-    }
-    @Override
-    protected void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
+    private void initializePlayer(String videoLink) {
 
-        outState.putInt(PLAYBACK_TIME, mVideoView.getCurrentPosition());
+        SimpleExoPlayer player = new SimpleExoPlayer.Builder(this).build();
+        playerView = findViewById(R.id.articleVideo);
+        playerView.setVisibility(View.VISIBLE);
+        playerView.setPlayer(player);
+
+        MediaItem mediaItem = MediaItem.fromUri(videoLink);
+        player.setMediaItem(mediaItem);
+        player.setPlayWhenReady(true);
+        player.prepare();
+
+        releasePlayer();
     }
-    private void releasePlayer()
-    {
-        mVideoView.stopPlayback();
+
+    private void releasePlayer() {
+        if (player != null) {
+            playWhenReady = player.getPlayWhenReady();
+            playbackPosition = player.getCurrentPosition();
+            currentWindow = player.getCurrentWindowIndex();
+            player.release();
+            player = null;
+        }
     }
+
     @Override
     protected void onPause()
     {
         super.onPause();
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            mVideoView.pause();
+            player.pause();
         }
     }
 

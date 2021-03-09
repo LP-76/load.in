@@ -63,6 +63,15 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.lucene/lucene-queryparser
     implementation group: 'org.apache.lucene', name: 'lucene-queryparser', version: '8.8.1'
 
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    // https://mvnrepository.com/artifact/com.google.android.exoplayer/exoplayer
+    implementation group: 'com.google.android.exoplayer', name: 'exoplayer', version: '2.13.2'
+    // https://mvnrepository.com/artifact/com.google.android.exoplayer/exoplayer-core
+    runtimeOnly group: 'com.google.android.exoplayer', name: 'exoplayer-core', version: '2.13.2'
+    // https://mvnrepository.com/artifact/com.google.android.exoplayer/exoplayer-hls
+    implementation group: 'com.google.android.exoplayer', name: 'exoplayer-hls', version: '2.13.2'
+    // https://mvnrepository.com/artifact/com.google.android.exoplayer/exoplayer-ui
+    runtimeOnly group: 'com.google.android.exoplayer', name: 'exoplayer-ui', version: '2.13.2'
+    // https://mvnrepository.com/artifact/com.google.android.exoplayer/exoplayer-smoothstreaming
+    implementation group: 'com.google.android.exoplayer', name: 'exoplayer-smoothstreaming', version: '2.13.2'
 
 }
