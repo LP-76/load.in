@@ -51,4 +51,9 @@ public class InventoryServiceImpl {
         Inventory result = addPromise.get().Data;
         return result;
     }
+    public Inventory deleteItem(int ID) throws ExecutionException, InterruptedException{
+        //CompletableFuture<DataWrapper<>>
+        retroService.deleteItem(ID);
+        return null;
+    }
 }

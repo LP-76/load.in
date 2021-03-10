@@ -38,7 +38,11 @@ public interface InventoryService {
     public Response addInventory(Inventory inventory);
 
     @POST
-    @Path("inventory/edit")
+    @Path("/inventory/edit")
     public Response editInventory(Inventory inventory) throws SQLException;
+
+    @POST
+    @Path("/inventory/delete/{ID}")
+    public void deleteItem(@PathParam("ID") int ID) throws SQLException;
 
 }

@@ -116,7 +116,14 @@ public class EditItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                
+                InventoryServiceImpl test = new InventoryServiceImpl("http://10.0.2.2:9000/");
+                try {
+                    test.deleteItem(sp.getInt("itemID",0));
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

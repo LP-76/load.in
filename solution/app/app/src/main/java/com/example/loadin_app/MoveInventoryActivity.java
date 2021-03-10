@@ -46,7 +46,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
         sp.edit().putString("itemHeight", "").apply();
         sp.edit().putString("itemFragility", "").apply();
         sp.edit().putString("itemWeight", "").apply();
-        sp.edit().putString("itemID", "").apply();
+        sp.edit().putInt("itemID", 0).apply();
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
