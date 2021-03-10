@@ -28,7 +28,7 @@ import odu.edu.loadin.common.BoxSize;
 public class EditItemActivity extends AppCompatActivity {
 
     private EditText descriptionInput, widthInput, depthInput, heightInput, fragilityInput, weightInput;
-    private Button editItemButton;
+    private Button editItemButton, deleteItemButton;
     private String description, width, length, height, weight, fragility;
 
     public static SharedPreferences sp;
@@ -111,8 +111,24 @@ public class EditItemActivity extends AppCompatActivity {
             }
         });
 
+        deleteItemButton = (Button) findViewById(R.id.deleteItemButton);
+        deleteItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                
+            }
+        });
 
     }
+
+
+
+
+
+
+
+
 
     private void updateItemToDB(Inventory item, InventoryServiceImpl service){
 
