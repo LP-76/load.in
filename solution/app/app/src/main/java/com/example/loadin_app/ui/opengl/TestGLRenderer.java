@@ -14,6 +14,7 @@ import com.example.loadin_app.Load;
 import com.example.loadin_app.LoadPlan;
 import com.example.loadin_app.LoadPlanGenerator;
 import com.example.loadin_app.TestingLoadPlanGenerator;
+import com.example.loadin_app.extensions.IExtendedIterator;
 
 import java.sql.Time;
 import java.time.Duration;
@@ -34,18 +35,20 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private  float[] viewMatrix = new float[16];
     private float[] hudViewMatrix = new float[16];
     private  Vector upperLeftScreenCorner;
+    int animationSeconds;
 
     private enum LoadPlanDisplayerState{
         Initial,
-        Advancing,
-        Reversing,
-        FastForward,
-        FastRewind,
         BoxStaged,
         BoxAnimating,
         BoxAtDestination,
+        Advancing,
+        Reversing,
         EndOfLoadPlan
     }
+
+
+
 
     private enum SignalState{
         None,
@@ -69,11 +72,14 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     private Hud theHud;
 
     private LoadPlan theLoadPlan;
+    private IExtendedIterator<Load> loadIterator;
+    private IExtendedIterator<Box> boxIterator;
+
     private Truck theTruck;
 
     private Vector boxStagingArea;
 
-    private Box currentBox;
+
     private Box lastRenderCheckBox;
 
 
@@ -88,7 +94,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         state = LoadPlanDisplayerState.Initial;
         signal = SignalState.None;
         context = ctx;
-
+        animationSeconds = 2;
     }
 
     private  SignalState getSignal() {
@@ -104,6 +110,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     }
 
     public void fastForward(){
+        animationSeconds = 1;
         switch(getSignal()){
             case None:   //we can only raise the flag once until the system is ready to respond to another request
                 setSignal(SignalState.FastForward);
@@ -111,6 +118,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         }
     }
     public void fastRewind(){
+        animationSeconds = 1;
         switch(getSignal()){
             case None:   //we can only raise the flag once until the system is ready to respond to another request
                 setSignal(SignalState.FastReverse);
@@ -119,6 +127,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     }
 
    public void reverse(){
+        animationSeconds = 2;
        switch(getSignal()){
            case None:   //we can only raise the flag once until the system is ready to respond to another request
                setSignal(SignalState.Reverse);
@@ -127,6 +136,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
    }
 
     public void advance(){
+        animationSeconds = 2;
         switch(getSignal()){
             case None:   //we can only raise the flag once until the system is ready to respond to another request
                 setSignal(SignalState.Forward);
@@ -139,120 +149,84 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         switch(state){
             case Initial:
-                switch(getSignal()){
-                    case Forward:
-                        //we want to advance to the next box
-                        putNextBoxIntoStaging(true);
-                        state = LoadPlanDisplayerState.BoxStaged;
-                        setSignal(SignalState.None); //clear signla
-                        break;
-                    case FastForward:
-                        putNextBoxIntoStaging(true);
-                        state = LoadPlanDisplayerState.BoxStaged;
-                    default:
-                        setSignal(SignalState.None);
-                        break;
-                }
+                if(boxIterator.hasNext())
+                    state = LoadPlanDisplayerState.Advancing;
+                else
+                    state = LoadPlanDisplayerState.EndOfLoadPlan;
 
                 break;
             case Advancing:
-                putNextBoxIntoStaging(false);
-                if(currentBox == null){
+                if(boxIterator.hasNext()){
+                    putNextBoxIntoStaging();
+                    state = LoadPlanDisplayerState.BoxStaged;
+                }else if(loadIterator.hasNext()){
+                    transitionToNextLoadPlan();
+                    state = LoadPlanDisplayerState.Initial;
+                    setSignal(SignalState.None); //always clear signal
+                }
+                else
                     state = LoadPlanDisplayerState.EndOfLoadPlan;
+
+                if(getSignal() != SignalState.FastForward)
+                    setSignal(SignalState.None);
+                break;
+            case Reversing:
+                if(boxIterator.hasPrevious()){
+                    boxIterator.current().setVisible(false);
+                    boxIterator.previous();
+                    state = LoadPlanDisplayerState.BoxAtDestination;
+
+                }else if(loadIterator.hasPrevious()){
+                    transitionToPreviousLoadPlan();
+                    setSignal(SignalState.None);
+                    state = LoadPlanDisplayerState.BoxAtDestination;
+                }else {
+                    state = LoadPlanDisplayerState.BoxStaged;
                     setSignal(SignalState.None);
                 }
-                else{
-                    state = LoadPlanDisplayerState.BoxStaged;
-                    switch (getSignal()){
-                        case Forward:
-                            setSignal(SignalState.None);
-                            break;
-                    }
-                }
 
-
+                if(getSignal() != SignalState.FastReverse)
+                    setSignal(SignalState.None);
                 break;
+
             case BoxStaged:
                 switch (getSignal()){
                     case FastForward:
                     case Forward:
                         //we've got the green light to go ahead
-                        state = LoadPlanDisplayerState.BoxAnimating;
-                        Vector destination = theTruck.getWorldOffset().add(currentBox.getDestination());  //automatically adjust for the truck offsets
-                       TransposeAnimation animation = new TransposeAnimation(
-                                currentBox,
-                                Duration.ofSeconds(2),
-                                theWorld.getTick(),
-                                destination,
-                                i -> {
-                                    if(getSignal() != SignalState.FastForward)
-                                        setSignal(SignalState.None);
-                                    state = LoadPlanDisplayerState.BoxAtDestination;
-                                }
-                        ) ;
-                        theWorld.addAnimation(animation); //add this so it gets processed
+                        //objective is to move it to destination
+                        Box current = boxIterator.current();
+                        Vector destination = theTruck.getWorldOffset().add(current.getDestination());
+                       animateBox(current,  destination, getSignal() == SignalState.Forward , LoadPlanDisplayerState.BoxAtDestination);
                         break;
                     case FastReverse:
                     case Reverse:
-
-                        currentBox.setVisible(false);
-
-                        //we're staged
-                        getPreviousBox();  //attempt getting previous box
-
-                        if(currentBox == null){
-                            state = LoadPlanDisplayerState.Initial;
-                            setSignal(SignalState.None);  //always clear signal when we get to beginning
-                        }else{
-                            //we have a box and it's at it's destination
-                            state = LoadPlanDisplayerState.BoxAtDestination;
-
-                        }
-                        if(getSignal() == SignalState.Reverse)
-                            setSignal(SignalState.None); //clear the signal since we have processed the operation
+                        state = LoadPlanDisplayerState.Reversing;
 
                         break;
                 }
                 break;
             case BoxAtDestination:
                 //we're at the destination... now we wait for a signal
-                switch(getSignal()){
-                    case FastForward:
-                    case Forward:
-                        //we want to advance to the next box
-                        state = LoadPlanDisplayerState.Advancing; //go ahead and move to next state
-                        updateState();
-                        break;
-                    case FastReverse:
-                    case Reverse:
-                        //we are going to fly back to origin
-                        state = LoadPlanDisplayerState.BoxAnimating;
-                        TransposeAnimation animation = new TransposeAnimation(
-                                currentBox,
-                                Duration.ofSeconds(2),
-                                theWorld.getTick(),
-                                boxStagingArea,
-                                i -> {
-                                    if(getSignal() == SignalState.Reverse)
-                                        setSignal(SignalState.None);  //only clear the signal for single step back
-                                    state = LoadPlanDisplayerState.BoxStaged;
-                                }
-                        ) ;
-                        theWorld.addAnimation(animation); //add this so it gets processed
-                        break;
-                }
+
+                    switch(getSignal()){
+                        case FastForward:
+                        case Forward:
+                          state = LoadPlanDisplayerState.Advancing;
+                            break;
+                        case FastReverse:
+                        case Reverse:
+                            animateBox(boxIterator.current(), boxStagingArea, getSignal() == SignalState.Reverse, LoadPlanDisplayerState.BoxStaged);
+                            break;
+                    }
 
                 break;
-            case EndOfLoadPlan:
-                switch (getSignal()){
-                    case Reverse:
-                    case FastReverse:
-                        //we can go backward
-                        currentBox = theLoadPlan.GetCurrentLoad().GetCurrentBox(); //reload the last box
-                        state = LoadPlanDisplayerState.BoxAtDestination;
-                        if(getSignal() == SignalState.Reverse)
-                            setSignal(SignalState.None);
 
+            case EndOfLoadPlan:
+                switch(getSignal()){  //we can only go back
+                    case FastReverse:
+                    case Reverse:
+                        animateBox(boxIterator.current(), boxStagingArea, getSignal() == SignalState.Reverse, LoadPlanDisplayerState.BoxStaged);
                         break;
                     default:
                         setSignal(SignalState.None);
@@ -261,57 +235,70 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
                 break;
 
+
         }
 
 
+    }
+
+   private void animateBox(Box target, Vector to, boolean clearSignal, LoadPlanDisplayerState resultingState){
+       state = LoadPlanDisplayerState.BoxAnimating;
+       TransposeAnimation animation = new TransposeAnimation(
+               target,
+               Duration.ofSeconds(animationSeconds),
+               theWorld.getTick(),
+               to,
+               i -> {
+                   if(clearSignal)
+                       setSignal(SignalState.None);  //only clear the signal for single step back
+                   state =resultingState;
+               }
+       ) ;
+       theWorld.addAnimation(animation); //add this so it gets processed
+   }
+
+
+    private void setAllBoxesVisibility(boolean visible){
+        for(IExtendedIterator<Box> i = loadIterator.current().iterator(); i.hasNext();)
+            i.next().setVisible(visible);  //toggle all boxes to be hidden
     }
 
     private void getPreviousBox(){
-        currentBox = null;
-
-        if(theLoadPlan.GetCurrentLoad() != null){
-            Load current = theLoadPlan.GetCurrentLoad();
-
-
-            if(current.HasPreviousBox()){
-                currentBox = current.GetPreviousBox();
-
-            }
-
-        }
-
-
-
-
+        boxIterator.previous(); //we will move null into current if we can't reverse
     }
 
 
-    private  void putNextBoxIntoStaging(boolean useCurrentBox){
-        currentBox = null;
-       if(theLoadPlan.GetCurrentLoad() != null){
-           Load current = theLoadPlan.GetCurrentLoad();
+    private  void putNextBoxIntoStaging(){
 
-           if(useCurrentBox && current.GetCurrentBox() != null){
-               currentBox = current.GetCurrentBox();
-           }
-           else if(current.HasNextBox()){
-               currentBox = current.GetNextBox();
 
-           }
-
-       }
-
-       if(currentBox != null){
-           if(currentBox.getMyWorld() == null)
+        Box currentBox = boxIterator.next();
+        if(currentBox != null){
+            if(currentBox.getMyWorld() == null)
            {
                currentBox.setMyWorld(theWorld);
            }
            currentBox.place(boxStagingArea);
            currentBox.setVisible(true);
-       }
+        }
+
     }
 
+    private void transitionToNextLoadPlan(){
 
+        setAllBoxesVisibility(false); //hide all current boxes
+        loadIterator.next();
+        boxIterator = loadIterator.current().iterator();
+
+    }
+    private void transitionToPreviousLoadPlan(){
+
+        setAllBoxesVisibility(false); //hide all current boxes
+        loadIterator.previous();
+        boxIterator = loadIterator.current().iterator();
+        boxIterator.goToEnd();
+        setAllBoxesVisibility(true);
+
+    }
 
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
         // Set the background frame color
@@ -330,6 +317,10 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         //theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
 
         theLoadPlan = new LoadPlanGenerator().StartLoadPlan();
+        loadIterator = theLoadPlan.iterator();
+        loadIterator.next(); //advance to the first load
+        boxIterator = loadIterator.current().iterator();  //get the box iterator
+
         theTruck =theLoadPlan.GetTruck();
         theTruck.setMyWorld(theWorld);
 
@@ -382,9 +373,9 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
             }
         }
 
-        if(currentBox != null){
+        if(boxIterator.current() != null){
 
-            Vector boxCenter = currentBox.getCenter();
+            Vector boxCenter = boxIterator.current().getCenter();
             Vector pointOfView = boxCenter.add(new Vector(-3f*12, 2f*12f, -3f*12f));
 
             theCamera.placeCamera(pointOfView);
@@ -413,12 +404,12 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         String stepMessage = "";
         String loadMessage = "";
         String boxMessage = "";
-        if(theLoadPlan.GetCurrentLoad() != null){
+        if(theLoadPlan != null){
             //TODO: alter load plan to give this information
-            stepMessage = "Step " + 1 + " of " + 10000;
-            loadMessage = "Load 1 of 10";
+            stepMessage = "Step " + (boxIterator.currentPosition() + 1) + " of " + boxIterator.size();
+            loadMessage = "Load " + (loadIterator.currentPosition() + 1) + " of " + loadIterator.size();
         }
-
+        Box currentBox = boxIterator.current();
 
         if(currentBox != null){
             boxMessage = "Box #" + currentBox.getBoxId() + "\n"+
@@ -434,9 +425,9 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
     }
 
     private void renderHud(){
-        if(currentBox != lastRenderCheckBox) //don't re-render textures unless we detect a change
+        if(boxIterator.current() != lastRenderCheckBox) //don't re-render textures unless we detect a change
             onBoxChanged();
-        lastRenderCheckBox = currentBox;
+        lastRenderCheckBox = boxIterator.current();
 
         theHud.setUpperLeftScreenCorner(upperLeftScreenCorner);
         theHud.draw(theWorld, hudViewMatrix, orthoMatrix);

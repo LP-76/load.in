@@ -108,4 +108,19 @@ public class Box extends WorldObject{
     {
         return id;
     }
+
+    public boolean isAbove(Box other){
+        //asks the question if the box in question is directly above the other box
+        //to be above, the x and z must be within the bounds of the other box
+
+        Vector d1 = getDestination();
+        Vector d2 = other.getDestination();
+
+        boolean x_bounded = d2.getX() <= d1.getX() && d1.getX() + getWidth()  <=  d2.getX() + other.getWidth();
+        boolean z_bounded = d2.getZ() <= d1.getZ() && d1.getZ() + getLength()   <=  d2.getZ() + other.getLength();
+
+        return x_bounded && z_bounded && d1.getY() > d2.getY();
+
+    }
+
 }

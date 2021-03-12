@@ -1,12 +1,19 @@
 package com.example.loadin_app;
 
+import androidx.annotation.NonNull;
+
+import com.example.loadin_app.extensions.ArrayListExtendedIterator;
+import com.example.loadin_app.extensions.ExtendedIterable;
+import com.example.loadin_app.extensions.IExtendedIterator;
 import com.example.loadin_app.ui.opengl.Box;
 import com.example.loadin_app.ui.opengl.Vector;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
-public class Load
+public class Load implements ExtendedIterable<Box> , Comparator<Box>
 {
     private int curBoxIndex = 0;
 
@@ -89,4 +96,37 @@ public class Load
     {
         emptySpaces.add(input_Space);
     }
+
+
+    @NonNull
+    @Override
+    public IExtendedIterator<Box> iterator() {
+        ArrayList<Box> copy = new ArrayList<Box>(boxes);
+        copy.sort(this);
+
+
+        return new ArrayListExtendedIterator<Box>(copy);
+    }
+
+
+    @Override
+    public int compare(Box o1, Box o2) {
+        Vector d1 = o1.getDestination();
+        Vector d2 = o2.getDestination();
+
+        if(d1.getX() == d2.getX() && d1.getY() == d2.getY() && d1.getZ() == d2.getZ())
+            return 0;
+
+        if(o2.isAbove(o1))
+            return -1;
+        else if(o1.isAbove(o2))
+            return 1;
+
+        if(d1.getZ() < d2.getZ()
+                || (d1.getZ() == d2.getZ() && d1.getX() > d2.getX()))
+            return 1; //box o1 goes on first
+
+        return -1;  //box o1 goes on later
+    }
 }
+

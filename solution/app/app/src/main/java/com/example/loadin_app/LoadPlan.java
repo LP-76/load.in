@@ -1,11 +1,17 @@
 package com.example.loadin_app;
+import androidx.annotation.NonNull;
+
+import com.example.loadin_app.extensions.ArrayListExtendedIterator;
+import com.example.loadin_app.extensions.ExtendedIterable;
+import com.example.loadin_app.extensions.IExtendedIterator;
 import com.example.loadin_app.ui.opengl.Box;
 import com.example.loadin_app.ui.opengl.Vector;
 import com.example.loadin_app.ui.opengl.Truck;
 import java.util.*;
+import java.util.stream.StreamSupport;
 
 //container of boxes, their translations, and loading order
-public class LoadPlan
+public class LoadPlan implements ExtendedIterable<Load>
 {
     //might need this? private int numberOfLoads = 0;
     private Truck movingTruck;
@@ -77,5 +83,23 @@ public class LoadPlan
     public Truck GetTruck()
     {
         return movingTruck;
+    }
+
+    public int getLoadCount(){
+        return iterator().size();
+    }
+
+    public int getItemCount(){
+        int count = 0;
+        for(IExtendedIterator<Load> l = iterator(); l.hasNext();){
+            count += l.next().iterator().size();
+        }
+        return count;
+    }
+
+    @NonNull
+    @Override
+    public IExtendedIterator<Load> iterator() {
+        return new ArrayListExtendedIterator<Load>(loads);
     }
 }
