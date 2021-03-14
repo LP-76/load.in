@@ -11,7 +11,7 @@ public class LoadPlanBox extends Inventory
 
     public LoadPlanBox(){};
 
-    public LoadPlanBox(int id, float length, float width, float height, float xOffset, float yOffset, float zOffset, float weight, int fragility, String description, int loadNumber, int stepNumber)
+    public LoadPlanBox(int id, float length, float width, float height, float xOffset, float yOffset, float zOffset, float weight, int fragility, String description, int loadNumber, int stepNumber, int boxId)
     {
         this.id = id;
 
@@ -30,6 +30,7 @@ public class LoadPlanBox extends Inventory
 
         this.loadNumber = loadNumber;
         this.stepNumber = stepNumber;
+        this.boxID = boxId;
     }
 
 
