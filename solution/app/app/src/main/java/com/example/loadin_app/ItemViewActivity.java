@@ -10,18 +10,25 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.ui.login.LoginActivity;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class ItemViewActivity extends AppCompatActivity {
 
     public static SharedPreferences sp;
     private TableLayout table;
+    private Button deleteItemButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,25 @@ public class ItemViewActivity extends AppCompatActivity {
         fH.setText("Fragility:");
         TextView fV = (TextView) findViewById(R.id.item_fragility_value);
         fV.setText(sp.getString("itemFragility", ""));
+
+        deleteItemButton = (Button) findViewById(R.id.deleteItemButton);
+        deleteItemButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                InventoryServiceImpl test = new InventoryServiceImpl("http://10.0.2.2:9000/");
+                try {
+                    test.deleteItem(sp.getInt("itemID",0));
+                    Intent switchToInventory = new Intent(ItemViewActivity.this, MoveInventoryActivity.class);
+                    startActivity(switchToInventory);
+                    Toast.makeText(ItemViewActivity.this, "Item Deleted", Toast.LENGTH_SHORT).show();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
 
     }

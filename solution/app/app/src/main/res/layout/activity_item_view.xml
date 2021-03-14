@@ -44,124 +44,149 @@
             </TextView>
         </androidx.appcompat.widget.Toolbar>
 
-        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <TableLayout
             android:id="@+id/item_table"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="360dp"
             android:background="@color/load_in_gray"
             android:stretchColumns="1">
+
             <TableRow>
+
                 <TextView
                     android:id="@+id/item_description_header"
-                    android:textStyle="bold"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:background="@drawable/cell_shape"
-                    android:padding="3dip" />
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/item_description_value"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
                     android:gravity="right"
-                    android:padding="3dip" />
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/item_boxID_header"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
-                    android:padding="3dip" />
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/item_boxID_value"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:gravity="right"
                     android:background="@drawable/cell_shape"
-                    android:padding="3dip" />
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/item_dimensions_header"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
-                    android:padding="3dip" />
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/item_dimensions_value"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:gravity="right"
                     android:background="@drawable/cell_shape"
-                    android:padding="3dip" />
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/item_weight_header"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
-                    android:padding="3dip" />
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/item_weight_value"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:gravity="right"
                     android:background="@drawable/cell_shape"
-                    android:padding="3dip" />
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
                     android:id="@+id/item_fragility_header"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
                     android:background="@drawable/cell_shape"
-                    android:padding="3dip" />
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/item_fragility_value"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:gravity="right"
                     android:background="@drawable/cell_shape"
-                    android:padding="3dip" />
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow>
+
                 <TextView
+                    android:background="@drawable/cell_shape"
+                    android:clickable="true"
+                    android:onClick="editInventory"
+                    android:padding="3dip"
                     android:text="Edit Item"
                     android:textColor="@color/load_in_green"
-                    android:textStyle="bold"
                     android:textSize="20sp"
-                    android:background="@drawable/cell_shape"
-                    android:padding="3dip"
-                    android:clickable="true"
-                    android:onClick="editInventory"/>
+                    android:textStyle="bold" />
+
                 <TextView
+                    android:id="@+id/AddItemText"
+                    android:background="@drawable/cell_shape"
+                    android:clickable="true"
+                    android:gravity="right"
+                    android:onClick="addItem"
+                    android:padding="3dip"
                     android:text="Add Item"
                     android:textColor="@color/load_in_green"
-                    android:textStyle="bold"
                     android:textSize="20sp"
-                    android:gravity="right"
-                    android:background="@drawable/cell_shape"
-                    android:padding="3dip"
-                    android:clickable="true"
-                    android:onClick="addItem"/>
+                    android:textStyle="bold" />
             </TableRow>
-            
+
 
         </TableLayout>
 
 
-
+        <Button
+            android:id="@+id/deleteItemButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginEnd="150dp"
+            android:layout_marginTop="16dp"
+            android:text="Delete Item"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/AddItemText" />
 
     </LinearLayout>
 
