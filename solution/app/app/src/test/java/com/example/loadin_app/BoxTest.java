@@ -41,15 +41,15 @@ public class BoxTest {
 
         int result = l.compare(a, b);
 
-        Assert.assertTrue(-1 == result);
+        Assert.assertTrue(1 == result);
 
         result = l.compare(b,a);
-        Assert.assertTrue(1 == result);
+        Assert.assertTrue(-1 == result);
 
         result = l.compare(a, c);
-        Assert.assertTrue(1 == result);
+        Assert.assertTrue(-1 == result);
 
         result = l.compare(b, c);
-        Assert.assertTrue(1 == result);
+        Assert.assertTrue(-1 == result);
     }
 }

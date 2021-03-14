@@ -8,17 +8,36 @@ import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
 public class Box extends WorldObject{
     private CubeMappedHexahedron hexahedron;
     protected float width, height, length;
+    protected float weight;
+    protected int fragility;
+    private String description = "objects that require a description";
 
     private int id;
     private static int lastGlobalId =0;
 
    private Vector destination = new Vector(0,0,0);
 
-    public Box(float width, float height, float length) {
+    public Box(int id, float width, float height, float length, float weight, int fragility, String description)
+    {
+        super();
+
+        this.width = width;
+        this.height = height;
+        this.length = length;
+
+        this.id = id;
+        this.fragility = fragility;
+        this.weight = weight;
+        this.description = description;
+    }
+
+    public Box(float width, float height, float length)
+    {
         super();
         this.width = width;
         this.height = height;
         this.length = length;
+
         id = ++lastGlobalId;
      }
 
@@ -107,6 +126,11 @@ public class Box extends WorldObject{
     public int getBoxId()
     {
         return id;
+    }
+
+    public String getDescription()
+    {
+        return description;
     }
 
     public boolean isAbove(Box other){

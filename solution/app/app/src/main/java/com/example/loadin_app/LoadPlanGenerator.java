@@ -1,7 +1,9 @@
 package com.example.loadin_app;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
+import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.opengl.Box;
 import com.example.loadin_app.ui.opengl.Vector;
 import com.example.loadin_app.ui.opengl.World;
@@ -17,7 +19,14 @@ public class LoadPlanGenerator
 
     private LoadPlan plan;
 
-    private boolean useRandomBoxes = true;
+    private boolean useRandomBoxes = false;
+
+    SharedPreferences sp;
+
+    public LoadPlanGenerator(SharedPreferences input_sp)
+    {
+        sp = input_sp;
+    }
 
     public LoadPlan StartLoadPlan()
     {
@@ -27,7 +36,9 @@ public class LoadPlanGenerator
         plan = new LoadPlan(movingTruck); //make an empty load plan based on the dimensions of the truck
 
         if(useRandomBoxes)
+        {
             GenerateRandomBoxes();
+        }
         else
         {
             GetMoveInventory();
@@ -56,23 +67,6 @@ public class LoadPlanGenerator
 
     private void GenerateRandomBoxes()
     {
-        //System.out.println("Starting GenerateRandomBoxes!");
-        //moveInventory.add(new Box(24,24,24));
-        //moveInventory.add(new Box(48,48,48));
-
-//        for(int i = 0; i < 30 ; i++)
-//        {
-//            moveInventory.add(new Box(12,12,12));
-//        }
-//        for(int i = 0; i < 20 ; i++)
-//        {
-//            moveInventory.add(new Box(18,16,18));
-//        }
-//        for(int i = 0; i < 15 ; i++)
-//        {
-//            moveInventory.add(new Box(24,18,18));
-//        }
-
 
         float totalVolumeGenerated = 0;
 
@@ -89,8 +83,6 @@ public class LoadPlanGenerator
                 moveInventory.add(newRandomBox);
             }
         }
-
-        //System.out.println("Finished GenerateRandomBoxes!");
     }
 
     private Box GenerateNewRandomBox()
@@ -111,15 +103,18 @@ public class LoadPlanGenerator
 
     private void GetMoveInventory()
     {
-        //TODO: Get the full Move Inventory
+        InventoryServiceImpl newInv = new InventoryServiceImpl("http://10.0.2.2:9000/");
 
+        try
+        {
+            moveInventory = newInv.getInventoryAsBoxes(sp.getInt("loginID", 0));
+        }
+        catch(Exception ex)
+        {
+            System.out.println(ex);
+        }
 
-
-
-        //      for(int x = 0; x < 20; x++)
-        //            moveInventory.add(new Box(15f, 25f, 30f));
-
-      //TODO: more dummy data
+        System.out.println("Got move inventory! size = " + moveInventory.size());
     }
 
     private void GetTruckSize()

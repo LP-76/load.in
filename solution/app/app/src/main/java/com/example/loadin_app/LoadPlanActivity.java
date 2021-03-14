@@ -23,19 +23,19 @@ public class LoadPlanActivity extends AppCompatActivity {
     private Button generateLoadPlanButton;
 
     public static SharedPreferences sp;
-    private LoadPlanGenerator generator = new LoadPlanGenerator();
+    private LoadPlanGenerator generator;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_plan);
 
-        /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
+        //THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         if(sp.getInt("loginID", 0) == 0){
-            Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
+            Intent switchToLogin = new Intent(this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-        */
+         generator = new LoadPlanGenerator(sp);
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

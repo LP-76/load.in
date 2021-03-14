@@ -13,6 +13,7 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 import com.example.loadin_app.Load;
 import com.example.loadin_app.LoadPlan;
 import com.example.loadin_app.LoadPlanGenerator;
+import com.example.loadin_app.TestOpenGLActivity;
 import com.example.loadin_app.TestingLoadPlanGenerator;
 import com.example.loadin_app.extensions.IExtendedIterator;
 
@@ -316,7 +317,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         //theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
 
-        theLoadPlan = new LoadPlanGenerator().StartLoadPlan();
+        theLoadPlan = new LoadPlanGenerator(TestOpenGLActivity.sp ).StartLoadPlan();
         loadIterator = theLoadPlan.iterator();
         loadIterator.next(); //advance to the first load
         boxIterator = loadIterator.current().iterator();  //get the box iterator
@@ -414,7 +415,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         if(currentBox != null){
             boxMessage = "Box #" + currentBox.getBoxId() + "\n"+
                     "Contents:\n"+
-                    "Fine China and other dishware\n"+  //TODO: get box description
+                    currentBox.getDescription() + "\n" +
                     currentBox.getDestination().toString() + "\n"+
                     currentBox.getWidth() + " x " + currentBox.getHeight() + " x " + currentBox.getLength();
         }
