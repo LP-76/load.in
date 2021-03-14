@@ -5,19 +5,20 @@ import android.opengl.GLES20;
 import com.example.loadin_app.ui.opengl.programs.OpenGLProgram;
 import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
 
-public class Box extends WorldObject{
+public class Box extends WorldObject
+{
     private CubeMappedHexahedron hexahedron;
     protected float width, height, length;
     protected float weight;
     protected int fragility;
     private String description = "objects that require a description";
 
-    private int id;
+    private int boxID, globalID;
     private static int lastGlobalId =0;
 
    private Vector destination = new Vector(0,0,0);
 
-    public Box(int id, float width, float height, float length, float weight, int fragility, String description)
+    public Box(int globalID, int boxID, float width, float height, float length, float weight, int fragility, String description)
     {
         super();
 
@@ -25,7 +26,8 @@ public class Box extends WorldObject{
         this.height = height;
         this.length = length;
 
-        this.id = id;
+        this.globalID = globalID;
+        this.boxID = boxID;
         this.fragility = fragility;
         this.weight = weight;
         this.description = description;
@@ -38,7 +40,7 @@ public class Box extends WorldObject{
         this.height = height;
         this.length = length;
 
-        id = ++lastGlobalId;
+        boxID = globalID = ++lastGlobalId;
      }
 
      public void setDestination(Vector destination){
@@ -142,7 +144,7 @@ public class Box extends WorldObject{
 
     public int getBoxId()
     {
-        return id;
+        return boxID;
     }
 
     public String getDescription()

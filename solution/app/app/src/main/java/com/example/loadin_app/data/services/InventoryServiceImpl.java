@@ -47,7 +47,7 @@ public class InventoryServiceImpl {
 
         for(Inventory item : inventory)
         {
-            inventoryAsBoxes.add(new Box(item.getBoxID(), item.getWidth(), item.getHeight(), item.getLength(), (float) item.getWeight(), item.getFragility(), item.getDescription()));
+            inventoryAsBoxes.add(new Box(item.getId(), item.getBoxID(), item.getWidth(), item.getHeight(), item.getLength(), (float) item.getWeight(), item.getFragility(), item.getDescription()));
         }
 
         return inventoryAsBoxes;
