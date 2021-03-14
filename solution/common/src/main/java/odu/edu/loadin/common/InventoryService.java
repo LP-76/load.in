@@ -26,7 +26,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @Path("/inventoryservice/")
-public interface InventoryService {
+public interface InventoryService
+{
 
     @GET
     @Path("/inventory/{loginID}")

@@ -41,8 +41,6 @@ public class Box extends WorldObject{
         id = ++lastGlobalId;
      }
 
-
-
      public void setDestination(Vector destination){
         //System.out.println("box " + id + " is going to " + destination.toString());
         this.destination = destination;
@@ -72,8 +70,27 @@ public class Box extends WorldObject{
          return getWidth() * getLength() * getHeight();
      }
 
+    public float getWeight() {
+        return weight;
+    }
 
-     public Vector getCenter()
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public int getFragility() {
+        return fragility;
+    }
+
+    public void setFragility(int fragility) {
+        this.fragility = fragility;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Vector getCenter()
      {
         float x = getWidth() / 2f;
         float z = getLength() / 2f;

@@ -4,6 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
+
+import odu.edu.loadin.common.LoadPlanBox;
+
 import com.example.loadin_app.ui.opengl.Box;
 import com.example.loadin_app.ui.opengl.Vector;
 import com.example.loadin_app.ui.opengl.World;
@@ -30,25 +34,20 @@ public class LoadPlanGenerator
 
     public LoadPlan StartLoadPlan()
     {
-        System.out.println(new Date());
-
         GetTruckSize();
         plan = new LoadPlan(movingTruck); //make an empty load plan based on the dimensions of the truck
 
         if(useRandomBoxes)
-        {
             GenerateRandomBoxes();
-        }
         else
-        {
             GetMoveInventory();
-        }
 
         SortMoveInventory();
 
         GenerateLoadPlan();
-        //System.out.println("Finished StartLoadPlan!");
-        System.out.println(new Date());
+
+        sendLoadPlanToDatabase();
+
         return plan;
     }
 
@@ -328,5 +327,34 @@ public class LoadPlanGenerator
     public void setUseRandomBoxes(boolean input)
     {
         useRandomBoxes = input;
+    }
+
+    private void sendLoadPlanToDatabase()
+    {
+        LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl("http://10.0.2.2:9000/");
+
+       // boxService.addLoadPlan(getDBDataModel());
+    }
+
+    private ArrayList<LoadPlanBox> getDBDataModel()
+    {
+        ArrayList<LoadPlanBox> dataModel = new ArrayList<LoadPlanBox>();
+        int loadIndex = 0;
+        int boxIndex = 0;
+
+        while(plan.HasNextLoad())
+        {
+            while(plan.GetLoads().get(loadIndex).HasNextBox() )
+            {
+                Box b = plan.GetLoads().get(loadIndex).GetNextBox();
+                dataModel.add(new LoadPlanBox(b.getBoxId(), b.getLength(), b.getWidth(), b.getHeight(), b.getDestination().getX(), b.getDestination().getY(), b.getDestination().getZ(), b.getWeight(), b.getFragility(), b.getDescription(), loadIndex, boxIndex) );
+                boxIndex++;
+            }
+
+            boxIndex = 0;
+            loadIndex++;
+        }
+
+        return dataModel;
     }
 }
