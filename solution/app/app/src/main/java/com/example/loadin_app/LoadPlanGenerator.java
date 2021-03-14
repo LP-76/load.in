@@ -358,7 +358,8 @@ public class LoadPlanGenerator
             while(plan.GetLoads().get(loadIndex).HasNextBox() )
             {
                 Box b = plan.GetLoads().get(loadIndex).GetNextBox();
-                dataModel.add(new LoadPlanBox(b.getBoxId(), b.getLength(), b.getWidth(), b.getHeight(), b.getDestination().getX(), b.getDestination().getY(), b.getDestination().getZ(), b.getWeight(), b.getFragility(), b.getDescription(), loadIndex, boxIndex) );
+                //TODO: fix
+               // dataModel.add(new LoadPlanBox(b.getBoxId(), b.getLength(), b.getWidth(), b.getHeight(), b.getDestination().getX(), b.getDestination().getY(), b.getDestination().getZ(), b.getWeight(), b.getFragility(), b.getDescription(), loadIndex, boxIndex) );
                 boxIndex++;
             }
 

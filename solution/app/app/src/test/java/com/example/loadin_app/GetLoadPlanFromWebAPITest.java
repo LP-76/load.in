@@ -33,7 +33,7 @@ public class GetLoadPlanFromWebAPITest
         try
         {
             ArrayList<LoadPlanBox> loadPlanList = new ArrayList<LoadPlanBox>();
-            loadPlanList.add(new LoadPlanBox(33,2f,2f,2f,1f,1f,1f,13f,13f,"",19,19));
+            loadPlanList.add(new LoadPlanBox(1,2f,2f,2f,1f,1f,1f,13f,13,"",19,19,1));
 
             List<LoadPlanBox> returnedList = service.addLoadPlan(1,loadPlanList);
 
