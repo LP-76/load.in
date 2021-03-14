@@ -29,7 +29,8 @@ public class LoadPlanBoxServiceImpl
         this("http://localhost:9000/");
 
     }
-    public LoadPlanBoxServiceImpl(String baseUrl){
+    public LoadPlanBoxServiceImpl(String baseUrl)
+    {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -39,16 +40,16 @@ public class LoadPlanBoxServiceImpl
 
     public List<LoadPlanBox> getLoadPlan(int id) throws ExecutionException, InterruptedException
     {
-        CompletableFuture<DataWrapper<List<LoadPlanBox>>> promise = retroService.getLoadPlan(id);
+        CompletableFuture<DataWrapper<ArrayList<LoadPlanBox>>> promise = retroService.getLoadPlan(id);
         return promise.get().Data;
     }
 
-    public List<LoadPlanBox> addLoadPlan(int id, List<LoadPlanBox> loadPlan) throws ExecutionException, InterruptedException
+    public ArrayList<LoadPlanBox> addLoadPlan(int id, ArrayList<LoadPlanBox> loadPlan) throws ExecutionException, InterruptedException
     {
-        DataWrapper<List<LoadPlanBox>> wrapper = new  DataWrapper<List<LoadPlanBox>>();
+        DataWrapper<ArrayList<LoadPlanBox>> wrapper = new DataWrapper<ArrayList<LoadPlanBox>>();
         wrapper.Data  = loadPlan;
-        CompletableFuture<DataWrapper<List<LoadPlanBox>>> addPromise = retroService.addLoadPlan(id,wrapper);
-        List<LoadPlanBox> result = addPromise.get().Data;
+        CompletableFuture<DataWrapper<ArrayList<LoadPlanBox>>> addPromise = retroService.addLoadPlan(id,wrapper);
+        ArrayList<LoadPlanBox> result = addPromise.get().Data;
         return result;
     }
 }

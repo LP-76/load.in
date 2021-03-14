@@ -1,7 +1,6 @@
 package com.example.loadin_app.data.services;
 
-
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 import odu.edu.loadin.common.LoadPlanBox;
@@ -17,13 +16,13 @@ public interface RetroLoadPlanBoxService
 
     @GET("/loadplan/{loginID}")
     @Headers( "accept: application/json" )
-    CompletableFuture<DataWrapper<List<LoadPlanBox>>> getLoadPlan(@Path("loginID") int id);
+    CompletableFuture<DataWrapper<ArrayList<LoadPlanBox>>> getLoadPlan(@Path("loginID") int id);
 
     @POST("/loadplan/{loginID}")
     @Headers({
             "accept: application/json",
             "contentType: application/json"
     })
-    CompletableFuture<DataWrapper<List<LoadPlanBox>>> addLoadPlan(@Path("loginID") int id, @Body DataWrapper<List<LoadPlanBox>> loadPlan);
+    CompletableFuture<DataWrapper<ArrayList<LoadPlanBox>>> addLoadPlan(@Path("loginID") int id, @Body DataWrapper<ArrayList<LoadPlanBox>> loadPlan);
 }
 

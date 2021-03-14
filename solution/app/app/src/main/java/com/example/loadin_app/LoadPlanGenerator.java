@@ -14,6 +14,7 @@ import com.example.loadin_app.ui.opengl.World;
 import com.example.loadin_app.ui.opengl.Truck;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public class LoadPlanGenerator
 {
@@ -333,10 +334,20 @@ public class LoadPlanGenerator
     {
         LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl("http://10.0.2.2:9000/");
 
-       // boxService.addLoadPlan(getDBDataModel());
+        try
+        {
+            boxService.addLoadPlan(sp.getInt("loginID", 0), generateDBDataModel());
+        }
+        catch (ExecutionException e)
+        {
+           // e.printStackTrace();
+        } catch (InterruptedException e)
+        {
+           // e.printStackTrace();
+        }
     }
 
-    private ArrayList<LoadPlanBox> getDBDataModel()
+    private ArrayList<LoadPlanBox> generateDBDataModel()
     {
         ArrayList<LoadPlanBox> dataModel = new ArrayList<LoadPlanBox>();
         int loadIndex = 0;
