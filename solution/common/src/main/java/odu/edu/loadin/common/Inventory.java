@@ -6,17 +6,17 @@ public class Inventory {
     public Inventory(){
 
     }
-    private int id;
-    private int userID;
-    private int boxID;
-    private String description;
-    private float width;
-    private float height;
-    private float length;
-    private int fragility;
-    private double weight;
-    private Date createdAt;
-    private Date updatedAt;
+    protected int id;
+    protected int userID;
+    protected int boxID;
+    protected String description;
+    protected float width;
+    protected float height;
+    protected float length;
+    protected int fragility;
+    protected double weight;
+    protected Date createdAt;
+    protected Date updatedAt;
 
 
     public int getUserID() {

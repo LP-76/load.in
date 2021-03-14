@@ -19,7 +19,7 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
         //do things
 
         ArrayList<LoadPlanBox> toReturn = new ArrayList<LoadPlanBox>();
-        toReturn.add(new LoadPlanBox(1,1f,1f,1f,1f,1f,1f, 1f, 1f, "",1,1));
+        toReturn.add(new LoadPlanBox(1,1f,1f,1f,1f,1f,1f, 1f, 1, "",1,1));
         return toReturn;
     }
 
