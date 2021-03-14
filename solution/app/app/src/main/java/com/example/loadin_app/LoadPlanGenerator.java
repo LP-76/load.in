@@ -324,4 +324,9 @@ public class LoadPlanGenerator
     {
         return (input_Space.GetWidth() >= input_Box.getWidth() ) &&(input_Space.GetLength() >= input_Box.getLength() ) && (input_Space.GetHeight() >= input_Box.getHeight() );
     }
+
+    public void setUseRandomBoxes(boolean input)
+    {
+        useRandomBoxes = input;
+    }
 }

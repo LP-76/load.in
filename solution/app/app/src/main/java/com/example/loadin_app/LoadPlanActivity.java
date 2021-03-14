@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,14 +17,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.loadin_app.ui.login.LoginActivity;
 
-public class LoadPlanActivity extends AppCompatActivity {
+public class LoadPlanActivity extends AppCompatActivity
+{
 
     private TextView mTextView;
 
     private Button generateLoadPlanButton;
+    private boolean useRandomBoxes = false;
 
     public static SharedPreferences sp;
     private LoadPlanGenerator generator;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +39,10 @@ public class LoadPlanActivity extends AppCompatActivity {
             Intent switchToLogin = new Intent(this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-         generator = new LoadPlanGenerator(sp);
+
+        generator = new LoadPlanGenerator(sp);
+
+        generator.setUseRandomBoxes(useRandomBoxes);
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -126,5 +133,23 @@ public class LoadPlanActivity extends AppCompatActivity {
         //LoadPlanGenerator will take it from here!
         generator.StartLoadPlan();
 
+    }
+
+    //https://developer.android.com/guide/topics/ui/controls/radiobutton
+    public void onRadioButtonClicked(View view)
+    {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId())
+        {
+            case R.id.UseMoveInventoryRadioButton:
+                useRandomBoxes = false;
+                    break;
+            case R.id.UseRandomBoxesRadioButton:
+                useRandomBoxes = true;
+                    break;
+        }
     }
 }
