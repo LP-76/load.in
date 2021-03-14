@@ -33,5 +33,43 @@ public class LoadPlanBox extends Inventory
         this.boxID = boxId;
     }
 
+    public float getxOffset() {
+        return xOffset;
+    }
 
+    public void setxOffset(float xOffset) {
+        this.xOffset = xOffset;
+    }
+
+    public float getyOffset() {
+        return yOffset;
+    }
+
+    public void setyOffset(float yOffset) {
+        this.yOffset = yOffset;
+    }
+
+    public float getzOffset() {
+        return zOffset;
+    }
+
+    public void setzOffset(float zOffset) {
+        this.zOffset = zOffset;
+    }
+
+    public int getLoadNumber() {
+        return loadNumber;
+    }
+
+    public void setLoadNumber(int loadNumber) {
+        this.loadNumber = loadNumber;
+    }
+
+    public int getStepNumber() {
+        return stepNumber;
+    }
+
+    public void setStepNumber(int stepNumber) {
+        this.stepNumber = stepNumber;
+    }
 }
