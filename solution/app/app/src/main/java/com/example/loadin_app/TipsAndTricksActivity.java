@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -37,7 +38,6 @@ public class TipsAndTricksActivity extends AppCompatActivity {
 
 
     private String videoLink = "cardboard.mp4";
-    private int mCurrentPosition = 0;
     private Button searchForArticle;
     private ImageView imageView;
     private String keyword;
@@ -177,13 +177,34 @@ public class TipsAndTricksActivity extends AppCompatActivity {
         try{
 
             expertArticle = service.getExpertArticles(keyword);
+
+            RelativeLayout relativelayout1 = findViewById(R.id.relativelayout1);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             TextView mArticleContent = findViewById(R.id.articleContent);
             TextView mArticleTitle = findViewById(R.id.articleTitle);
+
+            if((keyword.equals("grinch")))
+            {
+                toolbar.setBackgroundColor(Color.parseColor("#32E300"));
+                relativelayout1.setBackgroundColor(Color.parseColor("#32E300"));
+                mArticleContent.setTextColor(Color.parseColor("#6DD1A1"));
+                mArticleContent.setBackgroundColor(Color.WHITE);
+                mArticleTitle.setTextColor(Color.parseColor("#6DD1A1"));
+                mArticleTitle.setBackgroundColor(Color.WHITE);
+            }
+            else
+            {
+                toolbar.setBackgroundColor(Color.parseColor("#6DD1A1"));
+                relativelayout1.setBackgroundColor(Color.WHITE);
+                mArticleContent.setTextColor(Color.parseColor("#6DD1A1"));
+                mArticleTitle.setTextColor(Color.parseColor("#6DD1A1"));
+            }
             mArticleContent.setText(expertArticle.getArticleContent());
             mArticleTitle.setText(expertArticle.getArticleTitle());
             videoLink = expertArticle.getVisualFile();
 
             initializePlayer(videoLink);
+
 
         }
         catch(Exception ex){

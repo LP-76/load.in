@@ -9,10 +9,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 public class FeedbackActivity extends AppCompatActivity {
 
     public static SharedPreferences sp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,8 @@ public class FeedbackActivity extends AppCompatActivity {
         }
         */
 
+        ToggleButton thumbsUpButton = findViewById(R.id.overallExperienceThumbsUpButton);
+        ToggleButton thumbsDownButton = findViewById(R.id.overallExperienceThumbsDownButton);
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.

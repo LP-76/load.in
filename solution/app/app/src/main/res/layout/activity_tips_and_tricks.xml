@@ -35,20 +35,13 @@
         </TextView>    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
+        android:id="@+id/relativelayout1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="55dp"
         android:fitsSystemWindows="true"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/buffering_textview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Buffering..."
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/white" />
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/articleSearchTool"

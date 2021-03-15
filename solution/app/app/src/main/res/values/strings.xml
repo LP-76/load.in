@@ -38,4 +38,12 @@
     <string name="prompt_phone">Phone #</string>
     <string name="prompt_fname">First Name</string>
     <string name="prompt_lname">Last Name</string>
+
+    <string-array name="rating_choices">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>
