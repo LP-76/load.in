@@ -16,6 +16,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
 
@@ -24,9 +25,12 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import odu.edu.loadin.common.ExpertArticle;
+
 public class ItemViewActivity extends AppCompatActivity {
 
     public static SharedPreferences sp;
+    private String keyword;
     private TableLayout table;
     private Button deleteItemButton;
 
@@ -58,6 +62,8 @@ public class ItemViewActivity extends AppCompatActivity {
         descH.setText("Description:");
         TextView descV = (TextView) findViewById(R.id.item_description_value);
         descV.setText(sp.getString("itemDescription", ""));
+
+        searchForArticle(sp.getString("itemDescription", ""));
 
         TextView idH = (TextView) findViewById(R.id.item_boxID_header);
         idH.setText("Box Number:");
@@ -101,6 +107,13 @@ public class ItemViewActivity extends AppCompatActivity {
 
     }
 
+    public void viewExpertTips(View view){
+        Intent switchToExpertTips = new Intent(ItemViewActivity.this, TipsAndTricksActivity.class);
+        switchToExpertTips.putExtra(keyword, sp.getString("itemDescription", ""));
+        startActivity(switchToExpertTips);
+        finish();
+    }
+
     public void editInventory(View view){
         Intent switchToEditItem = new Intent(ItemViewActivity.this, EditItemActivity.class);
         startActivity(switchToEditItem);
@@ -112,6 +125,28 @@ public class ItemViewActivity extends AppCompatActivity {
         Intent switchToAddItem = new Intent(ItemViewActivity.this, AddItemActivity.class);
         startActivity(switchToAddItem);
         finish();
+    }
+
+
+    private void searchForArticle(String inputDescription)
+    {
+        TextView viewExpertTipsText = (TextView) findViewById(R.id.ViewExpertTipsText);
+        ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
+        ExpertArticle expertArticle = new ExpertArticle();
+        try{
+            expertArticle = service.getExpertArticles(inputDescription);
+
+            if(expertArticle.getKeyword() != null)
+            {
+                viewExpertTipsText.setVisibility(View.VISIBLE);
+            }
+
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+            //ooops we had an error
+            //TODO: make the user aware
+        }
     }
 
     // Menu icons are inflated just as they were with actionbar

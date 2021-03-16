@@ -171,6 +171,22 @@
                     android:textStyle="bold" />
             </TableRow>
 
+            <TableRow>
+
+                <TextView
+                    android:visibility="invisible"
+                    android:id="@+id/ViewExpertTipsText"
+                    android:background="@drawable/cell_shape"
+                    android:clickable="true"
+                    android:onClick="viewExpertTips"
+                    android:padding="3dip"
+                    android:text="Loading Tips are Available"
+                    android:textColor="@color/load_in_green"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+            </TableRow>
+
 
         </TableLayout>
 
