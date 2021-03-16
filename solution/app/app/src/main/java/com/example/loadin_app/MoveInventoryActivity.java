@@ -4,11 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,16 +20,21 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
 
+import java.lang.reflect.Array;
+import java.util.Iterator;
 import java.util.ArrayList;
 
+import odu.edu.loadin.common.ExpertArticle;
 import odu.edu.loadin.common.Inventory;
 
 public class MoveInventoryActivity extends AppCompatActivity {
 
     private TextView mTextView;
+    private EditText searchBar;
     public static SharedPreferences sp;
 
     @Override
@@ -75,9 +84,39 @@ public class MoveInventoryActivity extends AppCompatActivity {
         }
 
 
+        EditText searchBar = (EditText) findViewById(R.id.searchBar);
+        updateListView(inventoryHeaders, inventory);
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.simple_list_view, inventoryHeaders);
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                ArrayList<String> searchedInventoryHeaders = new ArrayList<>();
+                searchedInventoryHeaders = searchForBox(s.toString(), inventoryHeaders);
+                updateListView(searchedInventoryHeaders, inventory);
+            }
+        });
+
+
+    }
+
+    /**
+     * Will update the ListView object with the inventoryHeader ArrayList provided to it
+     * @param newinventoryHeaders ArrayList holding inventory header strings
+     * @param inventory ArrayList holding inventory details
+     */
+    private void updateListView(ArrayList<String> newinventoryHeaders, ArrayList<Inventory> inventory)
+    {
+
         ListView listView = (ListView) findViewById(R.id.InventoryListView);
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.simple_list_view, newinventoryHeaders);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -97,10 +136,33 @@ public class MoveInventoryActivity extends AppCompatActivity {
                 startActivity(switchToItemView);
             }
         });
-
-        mTextView = (TextView) findViewById(R.id.text);
     }
 
+    /**
+     * Will take in the description being typed into searchbar and search inventoryHeaders arrayList for matches
+     * @param inputDescription  Keyword being typed into searchbar
+     * @param inventoryHeaders ArrayList that holds inventoryHeaders
+     * @return searchedInventoryHeaders The new ArrayList holding matches
+     */
+    private ArrayList<String> searchForBox(String inputDescription, ArrayList<String> inventoryHeaders)
+    {
+        ArrayList<String> searchedInventoryHeaders = new ArrayList<>();
+        try{
+            for(String element : inventoryHeaders)
+            {
+                if (element.toLowerCase().contains(inputDescription.toLowerCase()))
+                {
+                    searchedInventoryHeaders.add(element);
+                }
+            }
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+            //ooops we had an error
+            //TODO: make the user aware
+        }
+        return searchedInventoryHeaders;
+    }
 
     // Menu icons are inflated just as they were with actionbar
     @Override
