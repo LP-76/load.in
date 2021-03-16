@@ -43,8 +43,8 @@ public class LoadPlanGenerator
             GenerateRandomBoxes();
             PersistBoxesToUserMoveInventory();
         }
-        else
-            GetMoveInventory();
+
+        GetMoveInventory();
 
         SortMoveInventory();
 
@@ -102,17 +102,23 @@ public class LoadPlanGenerator
     {
 
         float totalVolumeGenerated = 0;
+        int numberOfBoxesGenerated = 1;
 
 
         while(totalVolumeGenerated <= movingTruck.GetVolumeOfTruckInches())
         {
             Box newRandomBox = GenerateNewRandomBox();
+            newRandomBox.setDescription("Randomly Generated Box " + numberOfBoxesGenerated);
+            numberOfBoxesGenerated++;
+
             if(totalVolumeGenerated + newRandomBox.getVolume() > movingTruck.GetVolumeOfTruckInches() * 19)
                 return;
 
             else
             {
                 totalVolumeGenerated += newRandomBox.getVolume();
+
+
                 moveInventory.add(newRandomBox);
             }
         }

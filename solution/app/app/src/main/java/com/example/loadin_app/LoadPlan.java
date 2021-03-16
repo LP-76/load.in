@@ -41,7 +41,7 @@ public class LoadPlan implements ExtendedIterable<Load>
             if(b.getLoadNumber() >= loads.size())
                 AddLoad();
 
-            Box newBox = new Box(b.getId(), b.getBoxID(), b.getLength(), b.getHeight(), b.getWidth(), (float) b.getWeight(), b.getFragility(), b.getDescription());
+            Box newBox = new Box(b.getId(), b.getBoxID(), b.getWidth(), b.getHeight(), b.getLength(), (float) b.getWeight(), b.getFragility(), b.getDescription());
             newBox.setDestination(new Vector(b.getxOffset(), b.getyOffset(), b.getzOffset()));
             loads.get(b.getLoadNumber()).AddBox((newBox));
         }

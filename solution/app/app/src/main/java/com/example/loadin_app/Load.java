@@ -124,7 +124,7 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
         else if(o1.isAbove(o2))
             return 1;
 
-        if(d1.getZ() < d2.getZ() || (d1.getZ() == d2.getZ() && d1.getX() > d2.getX()))
+        if(d1.getZ() < d2.getZ() || (d1.getZ() == d2.getZ() && d1.getX() < d2.getX()))
             return 1; //box o1 goes on first
 
         return -1;  //box o1 goes on later
