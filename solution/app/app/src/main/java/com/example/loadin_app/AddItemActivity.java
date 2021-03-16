@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,6 +58,26 @@ public class AddItemActivity extends AppCompatActivity {
 
         newItemButton = (Button) findViewById(R.id.AddNewItemButton);
         descriptionInput = (EditText) findViewById(R.id.BoxDescriptionField);
+
+
+        TextWatcher afterTextChangedListener = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // ignore
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // ignore
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchForArticle(s.toString());
+            }
+        };
+        descriptionInput.addTextChangedListener(afterTextChangedListener);
+
         weightInput = (EditText) findViewById(R.id.WeightField);
         fragilityInput = (EditText) findViewById(R.id.FragilityField) ;
         widthInput = (EditText) findViewById(R.id.BoxWidthField);
@@ -67,8 +89,8 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                newItemButton.setVisibility(View.VISIBLE);
-                searchForArticle(descriptionInput.getText().toString());
+                //newItemButton.setVisibility(View.VISIBLE);
+
                 addItemToDB(descriptionInput.getText().toString(), Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()),
                         Float.parseFloat(heightInput.getText().toString()), Float.parseFloat(weightInput.getText().toString()), Integer.parseInt(fragilityInput.getText().toString()));
             }
