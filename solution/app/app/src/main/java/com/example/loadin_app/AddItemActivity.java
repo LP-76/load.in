@@ -28,7 +28,7 @@ import com.example.loadin_app.ui.login.LoginActivity;
 public class AddItemActivity extends AppCompatActivity {
 
     private EditText descriptionInput, widthInput, depthInput, heightInput, weightInput, fragilityInput;
-    private Button addItemButton, tipsButton;
+    private Button addItemButton, tipsButton, newItemButton;
     private String keyword;
 
     public static SharedPreferences sp;
@@ -46,7 +46,6 @@ public class AddItemActivity extends AppCompatActivity {
         }
 
         tipsButton = (Button) findViewById(R.id.tipsButton);
-        tipsButton.setVisibility(View.INVISIBLE);
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
@@ -55,6 +54,7 @@ public class AddItemActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
+        newItemButton = (Button) findViewById(R.id.AddNewItemButton);
         descriptionInput = (EditText) findViewById(R.id.BoxDescriptionField);
         weightInput = (EditText) findViewById(R.id.WeightField);
         fragilityInput = (EditText) findViewById(R.id.FragilityField) ;
@@ -67,6 +67,7 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
+                newItemButton.setVisibility(View.VISIBLE);
                 searchForArticle(descriptionInput.getText().toString());
                 addItemToDB(descriptionInput.getText().toString(), Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()),
                         Float.parseFloat(heightInput.getText().toString()), Float.parseFloat(weightInput.getText().toString()), Integer.parseInt(fragilityInput.getText().toString()));
@@ -82,6 +83,15 @@ public class AddItemActivity extends AppCompatActivity {
                 startActivity(switchToExpertTips);
             }
         });
+
+        newItemButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent switchToInventoryView = new Intent(AddItemActivity.this, AddItemActivity.class);
+                startActivity(switchToInventoryView);
+            }
+        });
+
     }
 
     private void addItemToDB(String inputDescription, float inputWidth,  float inputDepth, float inputHeight,
@@ -101,8 +111,6 @@ public class AddItemActivity extends AppCompatActivity {
             service.addInventory(inv);
 
             Toast.makeText(AddItemActivity.this, "Item Added To Inventory", Toast.LENGTH_SHORT).show();
-            Intent switchToInventoryView = new Intent(AddItemActivity.this, AddItemActivity.class);
-            startActivity(switchToInventoryView);
         }
         catch(Exception ex){
             System.out.println(ex);
