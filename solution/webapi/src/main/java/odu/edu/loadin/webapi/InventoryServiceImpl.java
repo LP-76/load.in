@@ -109,7 +109,11 @@ public class InventoryServiceImpl implements InventoryService {
         insertStatement.setInt(1, inventory.getId());
         insertStatement.setInt(2, inventory.getUserID());
         insertStatement.setInt(3, inventory.getBoxID());
-        insertStatement.setString(4, inventory.getDescription().substring(0, 30));  //TODO: FIX!!!
+        String description = inventory.getDescription();
+
+        description = description != null ? description.length() > 30 ? description.substring(0,30) : description : "";
+
+        insertStatement.setString(4, description);  //TODO: FIX!!!
         insertStatement.setFloat(5, inventory.getWidth());
         insertStatement.setFloat(6, inventory.getHeight());
         insertStatement.setFloat(7, inventory.getLength());
