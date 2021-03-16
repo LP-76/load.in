@@ -351,16 +351,19 @@ public class LoadPlanGenerator
 
     private ArrayList<LoadPlanBox> generateDBDataModel()
     {
+        System.out.println("in generateDBDataModel");
         ArrayList<LoadPlanBox> dataModel = new ArrayList<LoadPlanBox>();
         int loadIndex = 0;
         int boxIndex = 0;
 
         while(plan.HasNextLoad())
         {
+            System.out.println("  in hasNextLoad");
             Load curLoad = plan.GetNextLoad();
 
             while(curLoad.HasNextBox() )
             {
+                System.out.println("    in hasNextBox");
                 Box b = curLoad.GetNextBox();
                 dataModel.add(new LoadPlanBox(b.getId(), b.getLength(), b.getWidth(), b.getHeight(), b.getDestination().getX(), b.getDestination().getY(), b.getDestination().getZ(), b.getWeight(), b.getFragility(), b.getDescription(), loadIndex, boxIndex, b.getBoxId()) );
                 boxIndex++;

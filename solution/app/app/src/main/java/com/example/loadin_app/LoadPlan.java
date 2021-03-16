@@ -71,15 +71,18 @@ public class LoadPlan implements ExtendedIterable<Load>
 
     public boolean HasNextLoad()
     {
-        return ( curLoadIndex + 1 )  < loads.size();
+        return ( curLoadIndex )  < loads.size();
     }
 
     public Load GetNextLoad()
     {
         if(HasNextLoad())
         {
+            Load toReturn = loads.get(curLoadIndex);
+
             curLoadIndex++;
-            return loads.get(curLoadIndex);
+
+            return toReturn;
         }
         else
             return null;

@@ -47,15 +47,16 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
 
     public boolean HasNextBox()
     {
-        return (curBoxIndex + 1) < boxes.size();
+        return (curBoxIndex ) < boxes.size();
     }
 
     public Box GetNextBox()
     {
         if(HasNextBox())
         {
+            Box answer = boxes.get(curBoxIndex);
             curBoxIndex++;
-            return boxes.get(curBoxIndex);
+            return answer;
         }
         else
             return null;
