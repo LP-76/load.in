@@ -16,7 +16,7 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
     @Override
     public ArrayList<LoadPlanBox> getLoadPlan(int userId) throws SQLException
     {
-        System.out.println("--invoking getInventory");
+        System.out.println("--invoking getLoadPlan");
         try (Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()) { //this is called a try with resources and with java 1.8
             //this will auto-close the connection
             PreparedStatement statement = conn.prepareStatement("SELECT * FROM USER_INVENTORY_ITEM i\n" +

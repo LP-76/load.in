@@ -323,7 +323,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         try
         {
-            theLoadPlan = new LoadPlan(service.getLoadPlan(TestOpenGLActivity.sp.getInt("userID",0)));
+            theLoadPlan = new LoadPlan(service.getLoadPlan(TestOpenGLActivity.sp.getInt("loginID",0)));
         }
         catch (ExecutionException e)
         {
