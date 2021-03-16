@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,9 +78,10 @@ public class MoveInventoryActivity extends AppCompatActivity {
         }
 
         int i = 0;
-        ArrayList<String> inventoryHeaders = new ArrayList<String>();
+        ArrayList<Pair<String,Integer>> inventoryHeaders = new ArrayList<Pair<String,Integer>>();
         while(i < inventory.size()){
-            inventoryHeaders.add(inventory.get(i).getDescription());
+            Pair<String, Integer> header = new Pair<String, Integer> (inventory.get(i).getDescription(), i);
+            inventoryHeaders.add(header);
             i++;
         }
 
@@ -97,8 +99,8 @@ public class MoveInventoryActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                ArrayList<String> searchedInventoryHeaders = new ArrayList<>();
-                searchedInventoryHeaders = searchForBox(s.toString(), inventoryHeaders);
+                ArrayList<Pair <String, Integer>> searchedInventoryHeaders = new ArrayList<>();
+                searchedInventoryHeaders = searchForBox(s.toString(), extractHeaders(inventoryHeaders));
                 updateListView(searchedInventoryHeaders, inventory);
             }
         });
@@ -111,25 +113,27 @@ public class MoveInventoryActivity extends AppCompatActivity {
      * @param newinventoryHeaders ArrayList holding inventory header strings
      * @param inventory ArrayList holding inventory details
      */
-    private void updateListView(ArrayList<String> newinventoryHeaders, ArrayList<Inventory> inventory)
+    private void updateListView(ArrayList<Pair<String, Integer>> newinventoryHeaders, ArrayList<Inventory> inventory)
     {
+        ArrayList<String> headers = extractHeaders(newinventoryHeaders);
 
         ListView listView = (ListView) findViewById(R.id.InventoryListView);
-
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.simple_list_view, newinventoryHeaders);
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.simple_list_view, headers);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                sp.edit().putString("itemDescription", inventory.get(position).getDescription()).apply();
-                sp.edit().putString("itemBoxID", Integer.toString(inventory.get(position).getBoxID())).apply();
-                sp.edit().putString("itemWidth", Float.toString(inventory.get(position).getWidth())).apply();
-                sp.edit().putString("itemLength", Float.toString(inventory.get(position).getLength())).apply();
-                sp.edit().putString("itemHeight", Float.toString(inventory.get(position).getHeight())).apply();
-                sp.edit().putString("itemWeight", Double.toString(inventory.get(position).getWeight())).apply();
-                sp.edit().putString("itemFragility", Integer.toString(inventory.get(position).getFragility())).apply();
+                int positionInInventory = newinventoryHeaders.get(position).second;
+
+                sp.edit().putString("itemDescription", inventory.get(positionInInventory).getDescription()).apply();
+                sp.edit().putString("itemBoxID", Integer.toString(inventory.get(positionInInventory).getBoxID())).apply();
+                sp.edit().putString("itemWidth", Float.toString(inventory.get(positionInInventory).getWidth())).apply();
+                sp.edit().putString("itemLength", Float.toString(inventory.get(positionInInventory).getLength())).apply();
+                sp.edit().putString("itemHeight", Float.toString(inventory.get(positionInInventory).getHeight())).apply();
+                sp.edit().putString("itemWeight", Double.toString(inventory.get(positionInInventory).getWeight())).apply();
+                sp.edit().putString("itemFragility", Integer.toString(inventory.get(positionInInventory).getFragility())).apply();
                 sp.edit().putInt("itemID", inventory.get(position).getId()).apply();
 
                 Intent switchToItemView = new Intent(MoveInventoryActivity.this, ItemViewActivity.class);
@@ -138,22 +142,37 @@ public class MoveInventoryActivity extends AppCompatActivity {
         });
     }
 
+    private ArrayList<String> extractHeaders(ArrayList <Pair<String,Integer>> HeaderPairs)
+    {
+        ArrayList<String> headers = new ArrayList<>();
+        int i = 0;
+        while(i < HeaderPairs.size()){
+            headers.add(HeaderPairs.get(i).first);
+            i++;
+        }
+
+        return headers;
+    }
     /**
      * Will take in the description being typed into searchbar and search inventoryHeaders arrayList for matches
      * @param inputDescription  Keyword being typed into searchbar
      * @param inventoryHeaders ArrayList that holds inventoryHeaders
      * @return searchedInventoryHeaders The new ArrayList holding matches
      */
-    private ArrayList<String> searchForBox(String inputDescription, ArrayList<String> inventoryHeaders)
+    private ArrayList <Pair<String, Integer>> searchForBox(String inputDescription, ArrayList<String> inventoryHeaders)
     {
-        ArrayList<String> searchedInventoryHeaders = new ArrayList<>();
+        ArrayList <Pair<String, Integer>> searchedInventoryHeaders = new ArrayList<>();
         try{
+            int currentPosition = 0;
             for(String element : inventoryHeaders)
             {
                 if (element.toLowerCase().contains(inputDescription.toLowerCase()))
                 {
-                    searchedInventoryHeaders.add(element);
+                    Pair <String, Integer> header = new Pair <String, Integer> (element, currentPosition);
+                    searchedInventoryHeaders.add(header);
+
                 }
+                currentPosition++;
             }
         }
         catch(Exception ex){

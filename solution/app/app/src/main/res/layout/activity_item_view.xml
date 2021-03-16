@@ -62,6 +62,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="0dp"
                     android:id="@+id/item_description_value"
                     android:background="@drawable/cell_shape"
                     android:gravity="right"
@@ -81,6 +82,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="0dp"
                     android:id="@+id/item_boxID_value"
                     android:background="@drawable/cell_shape"
                     android:gravity="right"
@@ -100,6 +102,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="0dp"
                     android:id="@+id/item_dimensions_value"
                     android:background="@drawable/cell_shape"
                     android:gravity="right"
@@ -119,6 +122,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="0dp"
                     android:id="@+id/item_weight_value"
                     android:background="@drawable/cell_shape"
                     android:gravity="right"
@@ -138,6 +142,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="0dp"
                     android:id="@+id/item_fragility_value"
                     android:background="@drawable/cell_shape"
                     android:gravity="right"
@@ -159,6 +164,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:layout_width="0dp"
                     android:id="@+id/AddItemText"
                     android:background="@drawable/cell_shape"
                     android:clickable="true"
@@ -180,7 +186,7 @@
                     android:clickable="true"
                     android:onClick="viewExpertTips"
                     android:padding="3dip"
-                    android:text="Loading Tips are Available"
+                    android:text="Loading Tips"
                     android:textColor="@color/load_in_green"
                     android:textSize="20sp"
                     android:textStyle="bold" />
