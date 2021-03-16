@@ -1,17 +1,19 @@
 package com.example.loadin_app.data.services;
 
 
-import com.example.loadin_app.data.RetroBoxService;
+
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import odu.edu.loadin.common.BoxSize;
 import odu.edu.loadin.common.User;
 import odu.edu.loadin.common.UserLoginRequest;
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,10 +31,20 @@ public class UserServiceImpl {
 
     }
     public UserServiceImpl(String baseUrl){
-        Retrofit retrofit = new Retrofit.Builder()
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
+                .callTimeout(2, TimeUnit.MINUTES)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS);
+
+        Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+                .addConverterFactory(GsonConverterFactory.create());
+
+        builder.client(httpClient.build());
+
+        Retrofit retrofit = builder.build();
+
         retroService = retrofit.create(RetroUserService.class);
     }
 

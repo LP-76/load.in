@@ -1,4 +1,4 @@
-package com.example.loadin_app.data;
+package com.example.loadin_app.data.services;
 
 
 import com.example.loadin_app.data.services.DataWrapper;

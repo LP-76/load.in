@@ -57,42 +57,7 @@ public class InventoryServiceImpl implements InventoryService {
         System.out.println("----invoking addInventory");
 
         try (Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()) {
-            Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT ID FROM USER_INVENTORY_ITEM ORDER BY ID DESC LIMIT 1"),
-                    (ResultSet rs) -> {
-                        return rs.getInt("ID");
-                    }).stream().findFirst().orElse(0);
-            inventory.setId(lastId + 1);
-
-            PreparedStatement statement = conn.prepareStatement("SELECT BOX_ID FROM USER_INVENTORY_ITEM where ID = ? ORDER BY ID DESC LIMIT 1");
-            statement.setString(1, String.valueOf(inventory.getId()));
-            Integer lastBoxId = StatementHelper.getResults(statement,
-                    (ResultSet rs) -> {
-                        return rs.getInt("BOX_ID");
-                    }).stream().findFirst().orElse(0);
-
-            //set the new id here
-            inventory.setBoxID(lastBoxId + 1);
-            //inventory.setUserID(1); //TODO needs to be mapped to user's ID
-            /*
-            TODO BOX_ID defaults to null in database; need to set a check so that the first box in
-            a user's inventory is set to 1 if the select comes back null
-            */
-            String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,USER_ID, BOX_ID, ITEM_DESCRIPTION, BOX_WIDTH, BOX_HEIGHT, BOX_LENGTH, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
-                    + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NULL ,NOW(), NOW() )";
-
-            PreparedStatement insertStatement = conn.prepareStatement(query);
-            insertStatement.setInt(1, inventory.getId());
-            insertStatement.setInt(2, inventory.getUserID());
-            insertStatement.setInt(3, inventory.getBoxID());
-            insertStatement.setString(4, inventory.getDescription());
-            insertStatement.setFloat(5, inventory.getWidth());
-            insertStatement.setFloat(6, inventory.getHeight());
-            insertStatement.setFloat(7, inventory.getLength());
-            insertStatement.setInt(8, inventory.getFragility());
-            insertStatement.setDouble(9, inventory.getWeight());
-            System.out.println(insertStatement);
-            insertStatement.executeUpdate();
-
+            addInventoryItem(conn, inventory);
         } catch (SQLException ex) {
             System.out.println(ex);
         }
@@ -100,6 +65,60 @@ public class InventoryServiceImpl implements InventoryService {
         return Response.ok(inventory).build();
 
     }
+
+    @Override
+    public ArrayList<Inventory> addBulkInventory(ArrayList<Inventory> items) {
+        System.out.println("----invoking addBulkInventory");
+
+        try (Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()) {
+            for(Inventory i: items)
+                addInventoryItem(conn, i);
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        return items;
+    }
+
+
+    private void addInventoryItem(Connection conn, Inventory inventory) throws SQLException {
+        Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT ID FROM USER_INVENTORY_ITEM ORDER BY ID DESC LIMIT 1"),
+                (ResultSet rs) -> {
+                    return rs.getInt("ID");
+                }).stream().findFirst().orElse(0);
+        inventory.setId(lastId + 1);
+
+        PreparedStatement statement = conn.prepareStatement("SELECT BOX_ID FROM USER_INVENTORY_ITEM where ID = ? ORDER BY ID DESC LIMIT 1");
+        statement.setString(1, String.valueOf(inventory.getId()));
+        Integer lastBoxId = StatementHelper.getResults(statement,
+                (ResultSet rs) -> {
+                    return rs.getInt("BOX_ID");
+                }).stream().findFirst().orElse(0);
+
+        //set the new id here
+        inventory.setBoxID(lastBoxId + 1);
+        //inventory.setUserID(1); //TODO needs to be mapped to user's ID
+            /*
+            TODO BOX_ID defaults to null in database; need to set a check so that the first box in
+            a user's inventory is set to 1 if the select comes back null
+            */
+        String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,USER_ID, BOX_ID, ITEM_DESCRIPTION, BOX_WIDTH, BOX_HEIGHT, BOX_LENGTH, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NULL ,NOW(), NOW() )";
+
+        PreparedStatement insertStatement = conn.prepareStatement(query);
+        insertStatement.setInt(1, inventory.getId());
+        insertStatement.setInt(2, inventory.getUserID());
+        insertStatement.setInt(3, inventory.getBoxID());
+        insertStatement.setString(4, inventory.getDescription().substring(0, 30));  //TODO: FIX!!!
+        insertStatement.setFloat(5, inventory.getWidth());
+        insertStatement.setFloat(6, inventory.getHeight());
+        insertStatement.setFloat(7, inventory.getLength());
+        insertStatement.setInt(8, inventory.getFragility());
+        insertStatement.setDouble(9, inventory.getWeight());
+        System.out.println(insertStatement);
+        insertStatement.executeUpdate();
+    }
+
 
     public Response editInventory(Inventory inventory) {
 

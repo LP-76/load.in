@@ -39,6 +39,11 @@ public interface InventoryService
     public Response addInventory(Inventory inventory);
 
     @POST
+    @Path("/inventory/addBulk")
+    @Produces( "application/json" )
+    public ArrayList<Inventory> addBulkInventory(ArrayList<Inventory> inventory);
+
+    @POST
     @Path("/inventory/edit")
     public Response editInventory(Inventory inventory) throws SQLException;
 

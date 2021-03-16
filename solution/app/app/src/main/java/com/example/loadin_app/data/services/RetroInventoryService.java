@@ -1,4 +1,4 @@
-package com.example.loadin_app.data;
+package com.example.loadin_app.data.services;
 
 
 import com.example.loadin_app.data.services.DataWrapper;
@@ -26,6 +26,13 @@ public interface RetroInventoryService {
             "contentType: application/json"
     })
     CompletableFuture<DataWrapper<Inventory>> addInventory(@Body DataWrapper<Inventory> inventory);
+
+    @POST("/inventoryservice/inventory/addBulk")
+    @Headers({
+            "accept: application/json",
+            "contentType: application/json"
+    })
+    CompletableFuture<DataWrapper<ArrayList<Inventory>>> addBulkInventory(@Body DataWrapper<ArrayList<Inventory>> items);
 
     @POST("/inventoryservice/inventory/edit")
     @Headers({

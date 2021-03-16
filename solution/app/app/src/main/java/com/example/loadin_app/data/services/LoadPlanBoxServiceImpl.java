@@ -1,6 +1,6 @@
 package com.example.loadin_app.data.services;
 
-import com.example.loadin_app.data.RetroInventoryService;
+
 import com.example.loadin_app.ui.opengl.Box;
 
 import java.lang.reflect.Array;

@@ -1,7 +1,6 @@
 package com.example.loadin_app.data.services;
 
-import com.example.loadin_app.data.RetroBoxService;
-import com.example.loadin_app.data.RetroInventoryService;
+
 import com.example.loadin_app.ui.opengl.Box;
 
 import java.sql.Array;
@@ -59,6 +58,15 @@ public class InventoryServiceImpl {
         Inventory result = addPromise.get().Data;
         return result;
     }
+
+    public ArrayList<Inventory> addBulkInventory(ArrayList<Inventory> items) throws ExecutionException, InterruptedException {
+        DataWrapper<ArrayList<Inventory>> wrapper = new  DataWrapper<ArrayList<Inventory>>();
+        wrapper.Data  = items;
+        CompletableFuture<DataWrapper<ArrayList<Inventory>>> addPromise = retroService.addBulkInventory(wrapper);
+        ArrayList<Inventory> result = addPromise.get().Data;
+        return result;
+    }
+
     public Inventory editInventory(Inventory inventory) throws ExecutionException, InterruptedException {
         DataWrapper<Inventory> wrapper = new  DataWrapper<Inventory>();
         wrapper.Data  = inventory;

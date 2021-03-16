@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 
+import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.LoadPlanBox;
 
 import com.example.loadin_app.ui.opengl.Box;
@@ -38,8 +39,10 @@ public class LoadPlanGenerator
         GetTruckSize();
         plan = new LoadPlan(movingTruck); //make an empty load plan based on the dimensions of the truck
 
-        if(useRandomBoxes)
+        if(useRandomBoxes){
             GenerateRandomBoxes();
+            PersistBoxesToUserMoveInventory();
+        }
         else
             GetMoveInventory();
 
@@ -64,6 +67,36 @@ public class LoadPlanGenerator
         });
     }
 
+    private void PersistBoxesToUserMoveInventory(){
+        //we need to take the move inventory and send it to the server in bulk
+
+        ArrayList<Inventory> items = new ArrayList<Inventory>();
+
+        for(Box b : moveInventory){
+            Inventory item = new Inventory();
+            item.setId(0);
+            item.setDescription(b.getDescription());
+            item.setWidth(b.getWidth());
+            item.setHeight(b.getHeight());
+            item.setLength(b.getLength());
+            item.setFragility(b.getFragility());
+            item.setWeight(b.getWeight());
+            item.setUserID(getUserId());
+            items.add(item);
+        }
+
+        InventoryServiceImpl service = new InventoryServiceImpl("http://10.0.2.2:9000/");
+        System.out.println("Saving to inventory");
+        try{
+            service.addBulkInventory(items);
+            System.out.println("Complete");
+        }catch(Exception e){
+            System.out.println("Error: " + e.toString());
+        }
+
+
+
+    }
 
     private void GenerateRandomBoxes()
     {
@@ -101,13 +134,17 @@ public class LoadPlanGenerator
         return new Box(width * 6, height * 6, length * 6);
     }
 
+    private int getUserId(){
+        return sp.getInt("loginID", 0);
+    }
+
     private void GetMoveInventory()
     {
         InventoryServiceImpl newInv = new InventoryServiceImpl("http://10.0.2.2:9000/");
 
         try
         {
-            moveInventory = newInv.getInventoryAsBoxes(sp.getInt("loginID", 0));
+            moveInventory = newInv.getInventoryAsBoxes(getUserId());
         }
         catch(Exception ex)
         {
