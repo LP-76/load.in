@@ -16,8 +16,14 @@ public class GetLoadPlanFromWebAPITest
 
         try
         {
-            List<LoadPlanBox> loadPlanList = service.getLoadPlan(1);
-            Assert.assertTrue(loadPlanList.size() >= 1);
+            ArrayList<LoadPlanBox> loadPlanList = new ArrayList<LoadPlanBox>();
+            loadPlanList.add(new LoadPlanBox(1,2f,2f,2f,1f,1f,1f,13f,13,"",19,19,1));
+
+            service.addLoadPlan(1,loadPlanList);
+
+            int result = service.getLoadPlan(1).size();
+
+            Assert.assertTrue(result == 1);
         }
         catch(Exception e)
         {
@@ -26,7 +32,7 @@ public class GetLoadPlanFromWebAPITest
     }
 
     @Test
-    public void TestaddLoadPlan()
+    public void TestAddLoadPlan()
     {
         LoadPlanBoxServiceImpl service = new LoadPlanBoxServiceImpl();
 

@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:layout_constraintVertical_bias="0.79">
+        app:layout_constraintVertical_bias="0.96">
 
         <RadioButton
             android:id="@+id/UseMoveInventoryRadioButton"
@@ -79,19 +79,17 @@
     </androidx.appcompat.widget.Toolbar>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/ViewLoadPlanButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="29dp"
         android:layout_marginEnd="75dp"
-        android:layout_marginBottom="12dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/generate_load_plan"
+        android:text="View Load Plan"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="0.13999999" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -146,7 +146,10 @@ public class Box extends WorldObject
     {
         return boxID;
     }
-
+    public int getId()
+    {
+        return globalID;
+    }
     public String getDescription()
     {
         return description;

@@ -110,6 +110,4 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
         System.out.println(insertStatement);
         insertStatement.executeUpdate();
     }
-
-
 }

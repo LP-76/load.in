@@ -178,7 +178,7 @@ public class LoadPlanGenerator
                 //System.out.println("Box " + input_Box.getBoxId() + " is being placed under case 1");
                 //the box matches the width, height, or length of the space and nothing else.
                 //the space will need to be divided in to 3 pieces
-                //          x                      x                       z
+                //          x                      x                      z
                 //  |-------|-------|      |-------|-------|      |-------|-------|
                 //  |  box  | space |      |       |       |      |       |       |
                 // z|_______o_______o     y|  box  | space |     y|  box  | space |
@@ -333,17 +333,19 @@ public class LoadPlanGenerator
     private void sendLoadPlanToDatabase()
     {
         LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl("http://10.0.2.2:9000/");
+        ArrayList<LoadPlanBox> data = generateDBDataModel();
 
         try
         {
-            boxService.addLoadPlan(sp.getInt("loginID", 0), generateDBDataModel());
+            boxService.addLoadPlan(sp.getInt("loginID", 0), data);
         }
         catch (ExecutionException e)
         {
-           // e.printStackTrace();
-        } catch (InterruptedException e)
+            e.printStackTrace();
+        }
+        catch (InterruptedException e)
         {
-           // e.printStackTrace();
+           e.printStackTrace();
         }
     }
 
@@ -355,11 +357,12 @@ public class LoadPlanGenerator
 
         while(plan.HasNextLoad())
         {
-            while(plan.GetLoads().get(loadIndex).HasNextBox() )
+            Load curLoad = plan.GetNextLoad();
+
+            while(curLoad.HasNextBox() )
             {
-                Box b = plan.GetLoads().get(loadIndex).GetNextBox();
-                //TODO: fix
-               // dataModel.add(new LoadPlanBox(b.getBoxId(), b.getLength(), b.getWidth(), b.getHeight(), b.getDestination().getX(), b.getDestination().getY(), b.getDestination().getZ(), b.getWeight(), b.getFragility(), b.getDescription(), loadIndex, boxIndex) );
+                Box b = curLoad.GetNextBox();
+                dataModel.add(new LoadPlanBox(b.getId(), b.getLength(), b.getWidth(), b.getHeight(), b.getDestination().getX(), b.getDestination().getY(), b.getDestination().getZ(), b.getWeight(), b.getFragility(), b.getDescription(), loadIndex, boxIndex, b.getBoxId()) );
                 boxIndex++;
             }
 

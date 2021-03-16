@@ -38,7 +38,7 @@ public class LoadPlanBoxServiceImpl
         retroService = retrofit.create(RetroLoadPlanBoxService.class);
     }
 
-    public List<LoadPlanBox> getLoadPlan(int id) throws ExecutionException, InterruptedException
+    public ArrayList<LoadPlanBox> getLoadPlan(int id) throws ExecutionException, InterruptedException
     {
         CompletableFuture<DataWrapper<ArrayList<LoadPlanBox>>> promise = retroService.getLoadPlan(id);
         return promise.get().Data;

@@ -22,8 +22,9 @@ public class LoadPlanActivity extends AppCompatActivity
 
     private TextView mTextView;
 
-    private Button generateLoadPlanButton;
-    private boolean useRandomBoxes = false;
+    private Button generateLoadPlanButton, viewLoadPlanButton;
+    private RadioButton useRandomBoxesRadioButton,useMoveInventoryRadioButton;
+    private boolean useRandomBoxes= false;
 
     public static SharedPreferences sp;
     private LoadPlanGenerator generator;
@@ -61,6 +62,28 @@ public class LoadPlanActivity extends AppCompatActivity
             {
                 StartLoadPlan();
             }
+        });
+
+        viewLoadPlanButton = (Button) findViewById(R.id.ViewLoadPlanButton);
+        viewLoadPlanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                GoTo3DRenderingActivity();
+            }
+        });
+        useMoveInventoryRadioButton = (RadioButton) findViewById(R.id.UseMoveInventoryRadioButton);
+        useMoveInventoryRadioButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {useRandomBoxes = false;}
+        });
+
+        useRandomBoxesRadioButton = (RadioButton) findViewById(R.id.UseRandomBoxesRadioButton);
+        useRandomBoxesRadioButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {useRandomBoxes = true;}
         });
     }
 
@@ -131,25 +154,14 @@ public class LoadPlanActivity extends AppCompatActivity
     private void StartLoadPlan()
     {
         //LoadPlanGenerator will take it from here!
+        generator.setUseRandomBoxes(useRandomBoxes);
         generator.StartLoadPlan();
 
     }
 
-    //https://developer.android.com/guide/topics/ui/controls/radiobutton
-    public void onRadioButtonClicked(View view)
+    private void GoTo3DRenderingActivity()
     {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId())
-        {
-            case R.id.UseMoveInventoryRadioButton:
-                useRandomBoxes = false;
-                    break;
-            case R.id.UseRandomBoxesRadioButton:
-                useRandomBoxes = true;
-                    break;
-        }
+        Intent switchToLogin = new Intent(LoadPlanActivity.this, TestOpenGLActivity.class);
+        startActivity(switchToLogin);
     }
 }

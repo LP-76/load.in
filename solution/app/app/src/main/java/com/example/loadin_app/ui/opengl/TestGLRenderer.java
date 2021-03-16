@@ -15,12 +15,14 @@ import com.example.loadin_app.LoadPlan;
 import com.example.loadin_app.LoadPlanGenerator;
 import com.example.loadin_app.TestOpenGLActivity;
 import com.example.loadin_app.TestingLoadPlanGenerator;
+import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 import com.example.loadin_app.extensions.IExtendedIterator;
 
 import java.sql.Time;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAmount;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -317,7 +319,21 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         //theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
 
-        theLoadPlan = new LoadPlanGenerator(TestOpenGLActivity.sp ).StartLoadPlan();
+        LoadPlanBoxServiceImpl service = new LoadPlanBoxServiceImpl("http://10.0.2.2:9000/");
+
+        try
+        {
+            theLoadPlan = new LoadPlan(service.getLoadPlan(TestOpenGLActivity.sp.getInt("userID",0)));
+        }
+        catch (ExecutionException e)
+        {
+            //e.printStackTrace();
+        }
+        catch (InterruptedException e)
+        {
+            //e.printStackTrace();
+        }
+
         loadIterator = theLoadPlan.iterator();
         loadIterator.next(); //advance to the first load
         boxIterator = loadIterator.current().iterator();  //get the box iterator
