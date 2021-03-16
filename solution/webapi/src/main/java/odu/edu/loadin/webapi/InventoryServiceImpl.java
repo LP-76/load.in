@@ -88,8 +88,8 @@ public class InventoryServiceImpl implements InventoryService {
                 }).stream().findFirst().orElse(0);
         inventory.setId(lastId + 1);
 
-        PreparedStatement statement = conn.prepareStatement("SELECT BOX_ID FROM USER_INVENTORY_ITEM where ID = ? ORDER BY ID DESC LIMIT 1");
-        statement.setString(1, String.valueOf(inventory.getId()));
+        PreparedStatement statement = conn.prepareStatement("SELECT BOX_ID FROM USER_INVENTORY_ITEM where USER_ID = ? ORDER BY BOX_ID DESC LIMIT 1");
+        statement.setString(1, String.valueOf(inventory.getUserID()));
         Integer lastBoxId = StatementHelper.getResults(statement,
                 (ResultSet rs) -> {
                     return rs.getInt("BOX_ID");
