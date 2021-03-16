@@ -93,9 +93,10 @@ public class ItemViewActivity extends AppCompatActivity {
                 InventoryServiceImpl test = new InventoryServiceImpl("http://10.0.2.2:9000/");
                 try {
                     test.deleteItem(sp.getInt("itemID",0));
+
+                    Toast.makeText(ItemViewActivity.this, "Item Deleted", Toast.LENGTH_SHORT).show();
                     Intent switchToInventory = new Intent(ItemViewActivity.this, MoveInventoryActivity.class);
                     startActivity(switchToInventory);
-                    Toast.makeText(ItemViewActivity.this, "Item Deleted", Toast.LENGTH_SHORT).show();
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {

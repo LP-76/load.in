@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -61,6 +62,7 @@ public class LoadPlanActivity extends AppCompatActivity
             public void onClick(View v)
             {
                 StartLoadPlan();
+                Toast.makeText(LoadPlanActivity.this, "Load Plan Generated", Toast.LENGTH_SHORT).show();
             }
         });
 

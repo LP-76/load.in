@@ -79,7 +79,7 @@ public class EditItemActivity extends AppCompatActivity {
 
                 ArrayList<Inventory> item = new ArrayList<Inventory>();
                 try {
-                    item.add(service.getInventory(sp.getInt("loginID", 0)).get(Integer.parseInt(sp.getString("itemBoxID", ""))));
+                    item.add(service.getInventory(sp.getInt("loginID", 0)).get(Integer.parseInt(sp.getString("itemBoxID", ""))-1));
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
