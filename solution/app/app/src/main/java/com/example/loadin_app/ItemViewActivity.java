@@ -55,7 +55,7 @@ public class ItemViewActivity extends AppCompatActivity {
         String dimensions = sp.getString("itemWidth", "") + " x " + sp.getString("itemLength", "") + " x " + sp.getString("itemHeight", "");
 
         TextView descH = (TextView) findViewById(R.id.item_description_header);
-        descH.setText("Descritpion:");
+        descH.setText("Description:");
         TextView descV = (TextView) findViewById(R.id.item_description_value);
         descV.setText(sp.getString("itemDescription", ""));
 
