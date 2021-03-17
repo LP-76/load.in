@@ -67,4 +67,34 @@ public class EmptySpace
     {
         offset = input;
     }
+
+    //checks whether other space is of the same height and length and directly to the left or right of this space (no empty space in between)
+    public boolean isNeighborInXandSameHeightAndLength(EmptySpace other)
+    {
+        return other.GetHeight() == height
+                && other.GetLength() == length
+                && ( (other.GetOffset().getX() - width == offset.getX() ) || (other.GetOffset().getX() + other.GetWidth() == offset.getX()) )
+                && other.GetOffset().getZ() == offset.getZ()
+                && other.GetOffset().getY() == offset.getY();
+    }
+
+    //checks whether other space is of the same width and length and directly above or below this space (no empty space in between)
+    public boolean isNeighBorInYAboveAndSameWidthAndLength(EmptySpace other)
+    {
+        return other.GetWidth() == width
+                && other.GetLength() == length
+                && other.GetOffset().getX() == offset.getX()
+                && other.GetOffset().getZ() == offset.getZ()
+                && ( (other.GetOffset().getY() - height == offset.getY() ) || (other.GetOffset().getY() + other.GetHeight() == offset.getY()) );
+    }
+
+    //checks whether other space is of the same width and height and directly in front or behind this space (no empty space in between)
+    public boolean isNeighborInZandSameHeightAndWidth(EmptySpace other)
+    {
+        return other.GetHeight() == height
+                && other.GetWidth() == width
+                && other.GetOffset().getX() == offset.getX()
+                && ( (other.GetOffset().getZ() - length == offset.getX() ) || (other.GetOffset().getZ() + other.GetLength() == offset.getZ()) )
+                && other.GetOffset().getY() == offset.getY();
+    }
 }
