@@ -97,4 +97,19 @@ public class EmptySpace
                 && ( (other.GetOffset().getZ() - length == offset.getX() ) || (other.GetOffset().getZ() + other.GetLength() == offset.getZ()) )
                 && other.GetOffset().getY() == offset.getY();
     }
+
+    public boolean isNeighborInAnyWay(EmptySpace other)
+    {
+        return isNeighborInXandSameHeightAndLength(other) || isNeighBorInYAboveAndSameWidthAndLength(other) || isNeighborInZandSameHeightAndWidth(other);
+    }
+
+    public boolean equals(EmptySpace other)
+    {
+        return other.GetHeight() == height
+                && other.GetWidth() == width
+                && other.GetLength() == length
+                && other.GetOffset().getX() == offset.getX()
+                && other.GetOffset().getY() == offset.getY()
+                && other.GetOffset().getZ() == offset.getZ();
+    }
 }
