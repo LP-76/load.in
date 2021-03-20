@@ -21,6 +21,20 @@
     ]
   },
   {
+    "section": "Features",
+    "id": "prototype-features",
+    "deliverables": [
+
+      {
+        "name": "Features",
+        "description": "",
+        "template": "features-table",
+        "thumbnail": null,
+        "downloadTarget": null
+      }
+    ]
+  },
+  {
     "section": "Main Deliverables",
     "id": "prototype-main",
     "deliverables": [
@@ -32,17 +46,10 @@
         "template": null
       },
       {
-        "name": "Features",
-        "description": "",
-        "template": "features-table",
-        "thumbnail": null,
-        "downloadTarget": null
-      },
-      {
         "name": "Prototype Sprint Plan",
         "description": "",
-        "thumbnail": "deliverables/prototype/Load_in_prototype_sprint_plan",
-        "downloadTarget": "deliverables/prototype/Load_in_prototype_sprint_plan",
+        "thumbnail": "deliverables/prototype/Load_in_prototype_sprint_plan.png",
+        "downloadTarget": "deliverables/prototype/Load_in_prototype_sprint_plan.png",
         "template": null
       }
     ]
@@ -91,6 +98,20 @@
         "description": "",
         "thumbnail": "deliverables/prototype/weeklyReports/TeamWeeklyReport6.PNG",
         "downloadTarget": "deliverables/prototype/weeklyReports/TeamWeeklyReport6.docx",
+        "template": null
+      },
+      {
+        "name": "Week 7 Report",
+        "description": "",
+        "thumbnail": "deliverables/prototype/weeklyReports/TeamWeeklyReport7.PNG",
+        "downloadTarget": "deliverables/prototype/weeklyReports/TeamWeeklyReport7.docx",
+        "template": null
+      },
+      {
+        "name": "Week 8 Report",
+        "description": "",
+        "thumbnail": "deliverables/prototype/weeklyReports/TeamWeeklyReport8.PNG",
+        "downloadTarget": "deliverables/prototype/weeklyReports/TeamWeeklyReport8.docx",
         "template": null
       }
 

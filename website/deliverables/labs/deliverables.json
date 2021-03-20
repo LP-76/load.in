@@ -97,11 +97,23 @@
     ]
   },
   {
+    "section": "Lab 1 Version 3",
+    "id": "lab-1-v3",
+    "deliverables": [
+      {
+        "name": "Byron",
+        "description": "",
+        "thumbnail": "deliverables/labs/ByronAquilino_Lab1_V3.png",
+        "downloadTarget": "deliverables/labs/ByronAquilino_Lab1_V3.pdf"
+      }
+    ]
+  },
+  {
     "section": "Lab 2",
     "id": "lab-2",
     "deliverables": [
       {
-        "name": "Lab 2 Section 3 Outline",
+        "name": "Lab 2 Complete Outline",
         "description": "",
         "thumbnail": "deliverables/labs/Lab2_Outline_2.PNG",
         "downloadTarget": "deliverables/labs/Lab2_Outline_2.pdf"
