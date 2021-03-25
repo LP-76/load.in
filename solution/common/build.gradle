@@ -3,7 +3,7 @@ plugins {
 }
 sourceCompatibility = 1.8
 group 'odu.edu'
-version '1.0'
+version '1.1'
 
 repositories {
     mavenCentral()
@@ -28,7 +28,7 @@ test {
 task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': 'Load.In Common Shared Library',
-                'Implementation-Version': '1.0.0'
+                'Implementation-Version': '1.1.0'
 
     }
     baseName = project.name + '-all'

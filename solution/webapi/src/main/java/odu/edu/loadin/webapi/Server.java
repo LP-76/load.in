@@ -44,17 +44,14 @@ public class Server {
 
 
         sf.setResourceClasses(
-                CustomerServiceImpl.class,
-                BoxSizeServiceImpl.class,
+                 BoxSizeServiceImpl.class,
                 UserServiceImpl.class,
                 InventoryServiceImpl.class,
                 ExpertArticleServiceImpl.class,
                 LoadPlanBoxServiceImpl.class
         );
 
-        sf.setResourceProvider(CustomerServiceImpl.class,
-            new SingletonResourceProvider(new CustomerServiceImpl())
-        );
+
         sf.setResourceProvider(BoxSizeServiceImpl.class,
                 new SingletonResourceProvider(new BoxSizeServiceImpl())
         );
