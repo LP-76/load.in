@@ -16,13 +16,13 @@ public interface RetroLoadPlanBoxService
 
     @GET("/loadplan/{loginID}")
     @Headers( "accept: application/json" )
-    CompletableFuture<DataWrapper<ArrayList<LoadPlanBox>>> getLoadPlan(@Path("loginID") int id);
+    CompletableFuture<LoadPlanBoxWrapper> getLoadPlan(@Path("loginID") int id);
 
     @POST("/loadplan/{loginID}")
     @Headers({
             "accept: application/json",
             "contentType: application/json"
     })
-    CompletableFuture<DataWrapper<ArrayList<LoadPlanBox>>> addLoadPlan(@Path("loginID") int id, @Body DataWrapper<ArrayList<LoadPlanBox>> loadPlan);
+    CompletableFuture<LoadPlanBoxWrapper> addLoadPlan(@Path("loginID") int id, @Body LoadPlanBoxWrapper loadPlan);
 }
 

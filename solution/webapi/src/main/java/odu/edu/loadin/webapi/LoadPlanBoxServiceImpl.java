@@ -1,5 +1,6 @@
 package odu.edu.loadin.webapi;
 
+import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.LoadPlanBox;
 import odu.edu.loadin.common.LoadPlanBoxService;
 
@@ -8,7 +9,7 @@ import javax.ws.rs.core.Response;
 import java.sql.*;
 import java.util.ArrayList;
 import com.mysql.cj.x.protobuf.MysqlxPrepare;
-import odu.edu.loadin.common.*;
+
 import odu.edu.loadin.helpers.*;
 
 public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
@@ -28,17 +29,18 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
             //individual objects
             ArrayList<LoadPlanBox> results = StatementHelper.getResults(statement, (ResultSet rs) -> {
                 LoadPlanBox s = new LoadPlanBox();
-                s.setId(rs.getInt("ID"));
-                s.setUserID(rs.getInt("USER_ID"));
-                s.setBoxID(rs.getInt("BOX_ID"));
-                s.setWidth(rs.getFloat("BOX_WIDTH"));
-                s.setHeight(rs.getFloat("BOX_HEIGHT"));
-                s.setLength(rs.getFloat("BOX_LENGTH"));
-                s.setDescription(rs.getString("ITEM_DESCRIPTION"));
-                s.setFragility(rs.getInt("FRAGILITY"));
-                s.setWeight(rs.getDouble("WEIGHT"));
-                s.setCreatedAt(rs.getDate("CREATED_AT"));
-                s.setUpdatedAt(rs.getDate("UPDATED_AT"));
+                Inventory b = s.getBox();
+                b.setId(rs.getInt("ID"));
+                b.setUserID(rs.getInt("USER_ID"));
+                b.setBoxID(rs.getInt("BOX_ID"));
+                b.setWidth(rs.getFloat("BOX_WIDTH"));
+                b.setHeight(rs.getFloat("BOX_HEIGHT"));
+                b.setLength(rs.getFloat("BOX_LENGTH"));
+                b.setDescription(rs.getString("ITEM_DESCRIPTION"));
+                b.setFragility(rs.getInt("FRAGILITY"));
+                b.setWeight(rs.getDouble("WEIGHT"));
+                b.setCreatedAt(rs.getDate("CREATED_AT"));
+                b.setUpdatedAt(rs.getDate("UPDATED_AT"));
 
                 //additional properties
                 s.setxOffset(rs.getFloat("X_OFFSET"));
@@ -101,7 +103,7 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
                 "VALUES (?, ?, ?, ?, ?, ?);";
 
         PreparedStatement insertStatement = conn.prepareStatement(query);
-        insertStatement.setInt(1, box.getId());
+        insertStatement.setInt(1, box.getBox().getId());
         insertStatement.setFloat(2, box.getxOffset());
         insertStatement.setFloat(3, box.getyOffset());
         insertStatement.setFloat(4, box.getzOffset());

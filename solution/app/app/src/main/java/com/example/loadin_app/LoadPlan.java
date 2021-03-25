@@ -10,6 +10,7 @@ import com.example.loadin_app.ui.opengl.Truck;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
+import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.LoadPlanBox;
 
 //container of boxes, their translations, and loading order
@@ -41,7 +42,9 @@ public class LoadPlan implements ExtendedIterable<Load>
             if(b.getLoadNumber() >= loads.size())
                 AddLoad();
 
-            Box newBox = new Box(b.getId(), b.getBoxID(), b.getWidth(), b.getHeight(), b.getLength(), (float) b.getWeight(), b.getFragility(), b.getDescription());
+            Inventory i = b.getBox();
+
+            Box newBox = new Box(i.getId(), i.getBoxID(), i.getWidth(), i.getHeight(), i.getLength(), (float) i.getWeight(), i.getFragility(), i.getDescription());
             newBox.setDestination(new Vector(b.getxOffset(), b.getyOffset(), b.getzOffset()));
             loads.get(b.getLoadNumber()).AddBox((newBox));
         }

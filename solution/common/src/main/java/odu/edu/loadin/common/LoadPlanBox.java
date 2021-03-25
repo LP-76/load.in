@@ -3,47 +3,41 @@ package odu.edu.loadin.common;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
-@XmlRootElement(name="Data")
+@XmlRootElement(name="LPB")
 public class LoadPlanBox
 {
     private float xOffset,yOffset,zOffset;
     private int  loadNumber,stepNumber;
-    private int id;
-    private int userID;
-    private int boxID;
-    private String description;
-    private float width;
-    private float height;
-    private float length;
-    private int fragility;
-    private double weight;
-    private Date createdAt;
-    private Date updatedAt;
+
+    private Inventory box;
 
 
-
-    public LoadPlanBox(){};
+    public LoadPlanBox(){
+        box = new Inventory();
+    };
 
     public LoadPlanBox(int id, float length, float width, float height, float xOffset, float yOffset, float zOffset, float weight, int fragility, String description, int loadNumber, int stepNumber, int boxId)
     {
-        this.id = id;
+        box = new Inventory();
 
-        this.length = length;
-        this.width = width;
-        this.height = height;
+        box.setId(id);
+
+        box.setLength( length);
+        box.setWidth(  width);
+        box.setHeight(  height);
 
         this.xOffset = xOffset;
         this.yOffset = yOffset;
         this.zOffset = zOffset;
 
-        this.weight = weight;
-        this.fragility = fragility;
+        box.setWeight( weight);
+        box.setFragility(fragility);
 
-        this.description = description;
+        box.setDescription(description);
 
         this.loadNumber = loadNumber;
         this.stepNumber = stepNumber;
-        this.boxID = boxId;
+        box.setBoxID(boxId);
     }
 
     public float getxOffset() {
@@ -86,91 +80,11 @@ public class LoadPlanBox
         this.stepNumber = stepNumber;
     }
 
-    public int getId() {
-        return id;
+    public Inventory getBox() {
+        return box;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public int getBoxID() {
-        return boxID;
-    }
-
-    public void setBoxID(int boxID) {
-        this.boxID = boxID;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-    public float getLength() {
-        return length;
-    }
-
-    public void setLength(float length) {
-        this.length = length;
-    }
-
-    public int getFragility() {
-        return fragility;
-    }
-
-    public void setFragility(int fragility) {
-        this.fragility = fragility;
-    }
-
-    public double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-        this.weight = weight;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setBox(Inventory box) {
+        this.box = box;
     }
 }

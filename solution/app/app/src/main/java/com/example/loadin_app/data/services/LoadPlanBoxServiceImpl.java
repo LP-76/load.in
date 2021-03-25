@@ -40,16 +40,16 @@ public class LoadPlanBoxServiceImpl
 
     public ArrayList<LoadPlanBox> getLoadPlan(int id) throws ExecutionException, InterruptedException
     {
-        CompletableFuture<DataWrapper<ArrayList<LoadPlanBox>>> promise = retroService.getLoadPlan(id);
-        return promise.get().Data;
+        CompletableFuture<LoadPlanBoxWrapper> promise = retroService.getLoadPlan(id);
+        return promise.get().LPB;
     }
 
     public ArrayList<LoadPlanBox> addLoadPlan(int id, ArrayList<LoadPlanBox> loadPlan) throws ExecutionException, InterruptedException
     {
-        DataWrapper<ArrayList<LoadPlanBox>> wrapper = new DataWrapper<ArrayList<LoadPlanBox>>();
-        wrapper.Data  = loadPlan;
-        CompletableFuture<DataWrapper<ArrayList<LoadPlanBox>>> addPromise = retroService.addLoadPlan(id,wrapper);
-        ArrayList<LoadPlanBox> result = addPromise.get().Data;
+        LoadPlanBoxWrapper wrapper = new LoadPlanBoxWrapper();
+        wrapper.LPB  = loadPlan;
+        CompletableFuture<LoadPlanBoxWrapper> addPromise = retroService.addLoadPlan(id,wrapper);
+        ArrayList<LoadPlanBox> result = addPromise.get().LPB;
         return result;
     }
 }
