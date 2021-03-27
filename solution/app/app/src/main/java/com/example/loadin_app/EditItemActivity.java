@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.BoxServiceImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
@@ -75,7 +76,7 @@ public class EditItemActivity extends AppCompatActivity {
                 weight = weightInput.getText().toString();
                 fragility = fragilityInput.getText().toString();
 
-                InventoryServiceImpl service = new InventoryServiceImpl("http://10.0.2.2:9000/");
+                InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
 
                 ArrayList<Inventory> item = new ArrayList<Inventory>();
                 try {

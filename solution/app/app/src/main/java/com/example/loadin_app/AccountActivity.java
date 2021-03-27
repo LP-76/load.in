@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.UserServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
@@ -37,7 +38,7 @@ public class AccountActivity extends AppCompatActivity {
             startActivity(switchToLogin);
         }
 
-        UserServiceImpl service = new UserServiceImpl("http://10.0.2.2:9000/");
+        UserServiceImpl service = new UserServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
         User user = new User();
         int j = sp.getInt("loginID", 0);
         try{

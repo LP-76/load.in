@@ -67,9 +67,9 @@ public class Server {
         sf.setResourceProvider(LoadPlanBoxServiceImpl.class,
                 new SingletonResourceProvider(new LoadPlanBoxServiceImpl())
         );
-        //sf.setAddress("https://localhost:9000/");
+        sf.setAddress("https://localhost:9000/");
 
-        sf.setAddress("http://localhost:9000/");
+        //sf.setAddress("http://localhost:9000/");
         sf.create();
     }
 

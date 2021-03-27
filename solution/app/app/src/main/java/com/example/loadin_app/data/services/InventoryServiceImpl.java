@@ -17,19 +17,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class InventoryServiceImpl {
+public class InventoryServiceImpl extends LoadInBaseServiceImplementation{
     RetroInventoryService retroService;
 
     public InventoryServiceImpl(){
-        this("http://localhost:9000/");
+        this(BaseServiceUrlProvider.Config.LOCAL);
 
     }
-    public InventoryServiceImpl(String baseUrl){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        retroService = retrofit.create(RetroInventoryService.class);
+    public InventoryServiceImpl(BaseServiceUrlProvider.Config config){
+        super(config);
+        retroService = retrofitContext.create(RetroInventoryService.class);
     }
 
     public List<Inventory> getInventory(int loginID) throws ExecutionException, InterruptedException

@@ -20,6 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -172,7 +174,7 @@ public class TipsAndTricksActivity extends AppCompatActivity {
     {
         System.out.println("Searching for an article with keyword: " + keyword + "!");
 
-        ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
+        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig());
         ExpertArticle expertArticle = new ExpertArticle();
         try{
 

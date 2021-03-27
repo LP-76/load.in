@@ -20,32 +20,51 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class UserServiceImpl {
+public class UserServiceImpl extends LoadInBaseServiceImplementation {
     RetroUserService retroService;
 
-
-
-
     public UserServiceImpl(){
-        this("http://localhost:9000/");
+        this(BaseServiceUrlProvider.Config.LOCAL);
 
     }
-    public UserServiceImpl(String baseUrl){
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
-                .callTimeout(2, TimeUnit.MINUTES)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS);
+    public UserServiceImpl(BaseServiceUrlProvider.Config config){
+       super(config);
 
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create());
+        retroService = retrofitContext.create(RetroUserService.class);
+    }
 
-        builder.client(httpClient.build());
+    @Override
+    protected Retrofit.Builder createRetrofitBuilder(){
 
-        Retrofit retrofit = builder.build();
 
-        retroService = retrofit.create(RetroUserService.class);
+        switch(currentConfig){
+            case LOCAL:
+            case ANDROID_SIM:
+                OkHttpClient.Builder httpClient = getAllTrustingClient()
+                        .callTimeout(2, TimeUnit.MINUTES)
+                        .connectTimeout(30, TimeUnit.SECONDS)
+                        .readTimeout(60, TimeUnit.SECONDS)
+                        .writeTimeout(60, TimeUnit.SECONDS);
+                return new Retrofit.Builder()
+                        .baseUrl(baseUrl)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(getAllTrustingClient().build());
+
+            case PRODUCTION:
+                OkHttpClient.Builder httpClient2 = new OkHttpClient.Builder()
+                        .callTimeout(2, TimeUnit.MINUTES)
+                        .connectTimeout(30, TimeUnit.SECONDS)
+                        .readTimeout(60, TimeUnit.SECONDS)
+                        .writeTimeout(60, TimeUnit.SECONDS);
+                return new Retrofit.Builder()
+                        .baseUrl(baseUrl)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(httpClient2.build());
+
+        }
+
+        return null;
+
     }
 
     public User getUser(int id) throws ExecutionException, InterruptedException {

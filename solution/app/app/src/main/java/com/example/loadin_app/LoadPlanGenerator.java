@@ -3,6 +3,7 @@ package com.example.loadin_app;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 
@@ -85,7 +86,7 @@ public class LoadPlanGenerator
             items.add(item);
         }
 
-        InventoryServiceImpl service = new InventoryServiceImpl("http://10.0.2.2:9000/");
+        InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
         System.out.println("Saving to inventory");
         try{
             service.addBulkInventory(items);
@@ -146,7 +147,7 @@ public class LoadPlanGenerator
 
     private void GetMoveInventory()
     {
-        InventoryServiceImpl newInv = new InventoryServiceImpl("http://10.0.2.2:9000/");
+        InventoryServiceImpl newInv = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
 
         try
         {
@@ -375,7 +376,7 @@ public class LoadPlanGenerator
 
     private void sendLoadPlanToDatabase()
     {
-        LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl("http://10.0.2.2:9000/");
+        LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
         ArrayList<LoadPlanBox> data = generateDBDataModel();
 
         try

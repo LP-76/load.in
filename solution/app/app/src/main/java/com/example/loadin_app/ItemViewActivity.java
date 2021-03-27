@@ -16,6 +16,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
@@ -90,7 +91,7 @@ public class ItemViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                InventoryServiceImpl test = new InventoryServiceImpl("http://10.0.2.2:9000/");
+                InventoryServiceImpl test = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
                 try {
                     test.deleteItem(sp.getInt("itemID",0));
 
@@ -132,7 +133,7 @@ public class ItemViewActivity extends AppCompatActivity {
     private void searchForArticle(String inputDescription)
     {
         TextView viewExpertTipsText = (TextView) findViewById(R.id.ViewExpertTipsText);
-        ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
+        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig());
         ExpertArticle expertArticle = new ExpertArticle();
         try{
             expertArticle = service.getExpertArticles(inputDescription);

@@ -3,6 +3,7 @@ package com.example.loadin_app.data;
 import android.accounts.AuthenticatorException;
 
 import com.example.loadin_app.data.model.LoggedInUser;
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.UserServiceImpl;
 
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class LoginDataSource {
 
     public Result<User> login(String username, String password) {
 
-        UserServiceImpl userService = new UserServiceImpl("http://10.0.2.2:9000/");
+        UserServiceImpl userService = new UserServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
         UserServiceImpl.LoginResult result = null;
 
         try{

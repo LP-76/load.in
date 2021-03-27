@@ -23,6 +23,7 @@ import odu.edu.loadin.common.ExpertArticle;
 import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.InventoryService;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
@@ -128,7 +129,7 @@ public class AddItemActivity extends AppCompatActivity {
         inv.setFragility(inputFragility);
         inv.setUserID(sp.getInt("loginID", 0));
 
-        InventoryServiceImpl service = new InventoryServiceImpl("http://10.0.2.2:9000/");
+        InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
         try{
             service.addInventory(inv);
 
@@ -145,7 +146,7 @@ public class AddItemActivity extends AppCompatActivity {
 
     private void searchForArticle(String inputDescription)
     {
-        ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
+        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig());
         ExpertArticle expertArticle = new ExpertArticle();
         try{
             expertArticle = service.getExpertArticles(inputDescription);

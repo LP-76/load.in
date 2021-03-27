@@ -21,6 +21,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
@@ -67,7 +68,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(null);
 
 
-        InventoryServiceImpl newInv = new InventoryServiceImpl("http://10.0.2.2:9000/");
+        InventoryServiceImpl newInv = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
         ArrayList<Inventory> inventory = new ArrayList<Inventory>();
         int j = sp.getInt("loginID", 0);
         try{

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import odu.edu.loadin.common.User;
 import odu.edu.loadin.common.UserService;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.UserServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
@@ -83,7 +84,7 @@ public class RegistrationActivity extends AppCompatActivity {
         user.setLastName(inputLname);
         user.setPhoneNumber(inputPhone);
 
-        UserServiceImpl service = new UserServiceImpl("http://10.0.2.2:9000/");
+        UserServiceImpl service = new UserServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
         try{
             service.addUser(user);
         }

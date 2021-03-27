@@ -20,21 +20,18 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class ExpertArticleImpl {
+public class ExpertArticleImpl extends LoadInBaseServiceImplementation {
     RetroExpertArticleService retroService;
 
 
     public ExpertArticleImpl() {
-        this("http://localhost:9000/");
+        this(BaseServiceUrlProvider.Config.LOCAL);
 
     }
 
-    public ExpertArticleImpl(String baseUrl){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        retroService = retrofit.create(RetroExpertArticleService.class);
+    public ExpertArticleImpl(BaseServiceUrlProvider.Config config){
+        super(config);
+        retroService = retrofitContext.create(RetroExpertArticleService.class);
     }
 
     public ExpertArticle getExpertArticles(String keyword) throws ExecutionException, InterruptedException {

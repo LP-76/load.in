@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.BoxServiceImpl;
 import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -83,7 +84,7 @@ public class BoxInputActivity extends AppCompatActivity
 
     private void searchForArticle(String inputDescription)
     {
-        ExpertArticleImpl service = new ExpertArticleImpl("http://10.0.2.2:9000/");
+        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig());
         ExpertArticle expertArticle = new ExpertArticle();
         try{
             expertArticle = service.getExpertArticles(inputDescription);
@@ -114,7 +115,7 @@ public class BoxInputActivity extends AppCompatActivity
         bs.setDescription(inputDescription);
         bs.setDimensions(dimension);
 
-        BoxServiceImpl service = new BoxServiceImpl("http://10.0.2.2:9000/");
+        BoxServiceImpl service = new BoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
         try{
             service.addBoxSize(bs);
         }

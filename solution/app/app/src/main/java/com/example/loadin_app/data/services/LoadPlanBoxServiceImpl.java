@@ -20,22 +20,19 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 
-public class LoadPlanBoxServiceImpl
+public class LoadPlanBoxServiceImpl extends LoadInBaseServiceImplementation
 {
     RetroLoadPlanBoxService retroService;
 
     public LoadPlanBoxServiceImpl()
     {
-        this("http://localhost:9000/");
+        this(BaseServiceUrlProvider.Config.LOCAL);
 
     }
-    public LoadPlanBoxServiceImpl(String baseUrl)
+    public LoadPlanBoxServiceImpl(BaseServiceUrlProvider.Config config)
     {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        retroService = retrofit.create(RetroLoadPlanBoxService.class);
+        super(config);
+        retroService = retrofitContext.create(RetroLoadPlanBoxService.class);
     }
 
     public ArrayList<LoadPlanBox> getLoadPlan(int id) throws ExecutionException, InterruptedException

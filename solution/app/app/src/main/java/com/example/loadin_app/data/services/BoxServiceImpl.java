@@ -16,19 +16,16 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class BoxServiceImpl {
+public class BoxServiceImpl extends LoadInBaseServiceImplementation {
     RetroBoxService retroService;
 
     public BoxServiceImpl(){
-        this("http://localhost:9000/");
+        this(BaseServiceUrlProvider.Config.LOCAL);
 
     }
-    public BoxServiceImpl(String baseUrl){
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        retroService = retrofit.create(RetroBoxService.class);
+    public BoxServiceImpl(BaseServiceUrlProvider.Config config){
+        super(config);
+        retroService = retrofitContext.create(RetroBoxService.class);
     }
 
     public List<BoxSize> getBoxSizes() throws ExecutionException, InterruptedException {

@@ -15,6 +15,7 @@ import com.example.loadin_app.LoadPlan;
 import com.example.loadin_app.LoadPlanGenerator;
 import com.example.loadin_app.TestOpenGLActivity;
 import com.example.loadin_app.TestingLoadPlanGenerator;
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 import com.example.loadin_app.extensions.IExtendedIterator;
 
@@ -319,7 +320,7 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         //theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
 
-        LoadPlanBoxServiceImpl service = new LoadPlanBoxServiceImpl("http://10.0.2.2:9000/");
+        LoadPlanBoxServiceImpl service = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
 
         try
         {
