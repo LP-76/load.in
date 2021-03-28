@@ -84,7 +84,10 @@ public class BoxInputActivity extends AppCompatActivity
 
     private void searchForArticle(String inputDescription)
     {
-        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig());
+        LoadInApplication app = (LoadInApplication)getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
+        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
         ExpertArticle expertArticle = new ExpertArticle();
         try{
             expertArticle = service.getExpertArticles(inputDescription);
@@ -115,7 +118,11 @@ public class BoxInputActivity extends AppCompatActivity
         bs.setDescription(inputDescription);
         bs.setDimensions(dimension);
 
-        BoxServiceImpl service = new BoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
+        LoadInApplication app = (LoadInApplication)getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
+
+        BoxServiceImpl service = new BoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
         try{
             service.addBoxSize(bs);
         }

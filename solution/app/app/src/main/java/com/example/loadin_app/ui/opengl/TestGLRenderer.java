@@ -91,14 +91,16 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
     private Object signalLock = new Object();
 
+    private LoadPlanBoxServiceImpl boxService;
 
-
-    public TestGLRenderer(Bitmap source, Context ctx){
+    public TestGLRenderer(Bitmap source, Context ctx, LoadPlanBoxServiceImpl boxService){
         testBitmap = source;
         state = LoadPlanDisplayerState.Initial;
         signal = SignalState.None;
         context = ctx;
         animationSeconds = 2;
+        this.boxService = boxService;
+
     }
 
     private  SignalState getSignal() {
@@ -320,11 +322,12 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
 
         //theLoadPlan = TestingLoadPlanGenerator.GenerateBasicSampleLoadPlan(theWorld);
 
-        LoadPlanBoxServiceImpl service = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
+
+
 
         try
         {
-            theLoadPlan = new LoadPlan(service.getLoadPlan(TestOpenGLActivity.sp.getInt("loginID",0)));
+            theLoadPlan = new LoadPlan(boxService.getLoadPlan(TestOpenGLActivity.sp.getInt("loginID",0)));
         }
         catch (ExecutionException e)
         {

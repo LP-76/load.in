@@ -12,7 +12,10 @@ public class GetLoadPlanFromWebAPITest
     @Test
     public void TestGetLoadPlan()
     {
-        LoadPlanBoxServiceImpl service = new LoadPlanBoxServiceImpl();
+        String username = "john.smith@test.net";
+        String password = "BlueMango@1";
+
+        LoadPlanBoxServiceImpl service = new LoadPlanBoxServiceImpl(username, password);
 
         try
         {
@@ -34,7 +37,10 @@ public class GetLoadPlanFromWebAPITest
     @Test
     public void TestAddLoadPlan()
     {
-        LoadPlanBoxServiceImpl service = new LoadPlanBoxServiceImpl();
+        String username = "john.smith@test.net";
+        String password = "BlueMango@1";
+
+        LoadPlanBoxServiceImpl service = new LoadPlanBoxServiceImpl(username, password);
 
         try
         {

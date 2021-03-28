@@ -29,9 +29,13 @@ public class LoadPlanGenerator
     private boolean useRandomBoxes = false;
 
     SharedPreferences sp;
+    protected  InventoryServiceImpl inventoryService;
+    protected LoadPlanBoxServiceImpl boxService;
 
-    public LoadPlanGenerator(SharedPreferences input_sp)
+    public LoadPlanGenerator(SharedPreferences input_sp, InventoryServiceImpl inventoryService, LoadPlanBoxServiceImpl boxService)
     {
+        this.inventoryService   = inventoryService;
+        this.boxService = boxService;
         sp = input_sp;
     }
 
@@ -86,10 +90,10 @@ public class LoadPlanGenerator
             items.add(item);
         }
 
-        InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
+
         System.out.println("Saving to inventory");
         try{
-            service.addBulkInventory(items);
+            inventoryService.addBulkInventory(items);
             System.out.println("Complete");
         }catch(Exception e){
             System.out.println("Error: " + e.toString());
@@ -147,11 +151,11 @@ public class LoadPlanGenerator
 
     private void GetMoveInventory()
     {
-        InventoryServiceImpl newInv = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
+
 
         try
         {
-            moveInventory = newInv.getInventoryAsBoxes(getUserId());
+            moveInventory = inventoryService.getInventoryAsBoxes(getUserId());
         }
         catch(Exception ex)
         {
@@ -376,7 +380,7 @@ public class LoadPlanGenerator
 
     private void sendLoadPlanToDatabase()
     {
-        LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
+
         ArrayList<LoadPlanBox> data = generateDBDataModel();
 
         try

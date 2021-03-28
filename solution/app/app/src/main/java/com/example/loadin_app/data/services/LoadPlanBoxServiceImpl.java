@@ -20,18 +20,18 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 
-public class LoadPlanBoxServiceImpl extends LoadInBaseServiceImplementation
+public class LoadPlanBoxServiceImpl extends LoadInServiceWithAuthImpl
 {
     RetroLoadPlanBoxService retroService;
 
-    public LoadPlanBoxServiceImpl()
+    public LoadPlanBoxServiceImpl(String username, String password)
     {
-        this(BaseServiceUrlProvider.Config.LOCAL);
+        this(BaseServiceUrlProvider.Config.LOCAL, username, password);
 
     }
-    public LoadPlanBoxServiceImpl(BaseServiceUrlProvider.Config config)
+    public LoadPlanBoxServiceImpl(BaseServiceUrlProvider.Config config, String username, String password)
     {
-        super(config);
+        super(config, username, password);
         retroService = retrofitContext.create(RetroLoadPlanBoxService.class);
     }
 

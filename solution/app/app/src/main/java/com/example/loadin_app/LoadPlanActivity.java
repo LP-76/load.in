@@ -16,6 +16,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
+import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
 
 public class LoadPlanActivity extends AppCompatActivity
@@ -42,7 +45,13 @@ public class LoadPlanActivity extends AppCompatActivity
             startActivity(switchToLogin);
         }
 
-        generator = new LoadPlanGenerator(sp);
+        LoadInApplication app = (LoadInApplication)getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
+        LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
+        InventoryServiceImpl inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
+
+        generator = new LoadPlanGenerator(sp,  inventoryService, boxService);
 
         generator.setUseRandomBoxes(useRandomBoxes);
 

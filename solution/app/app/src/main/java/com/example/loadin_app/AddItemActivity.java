@@ -129,7 +129,10 @@ public class AddItemActivity extends AppCompatActivity {
         inv.setFragility(inputFragility);
         inv.setUserID(sp.getInt("loginID", 0));
 
-        InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
+        LoadInApplication app = (LoadInApplication)getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
+        InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
         try{
             service.addInventory(inv);
 
@@ -146,7 +149,10 @@ public class AddItemActivity extends AppCompatActivity {
 
     private void searchForArticle(String inputDescription)
     {
-        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig());
+        LoadInApplication app = (LoadInApplication)getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
+        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
         ExpertArticle expertArticle = new ExpertArticle();
         try{
             expertArticle = service.getExpertArticles(inputDescription);

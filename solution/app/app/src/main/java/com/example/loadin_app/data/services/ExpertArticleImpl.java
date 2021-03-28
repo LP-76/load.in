@@ -20,17 +20,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class ExpertArticleImpl extends LoadInBaseServiceImplementation {
+public class ExpertArticleImpl extends LoadInServiceWithAuthImpl {
     RetroExpertArticleService retroService;
 
 
-    public ExpertArticleImpl() {
-        this(BaseServiceUrlProvider.Config.LOCAL);
+    public ExpertArticleImpl(String username, String password) {
+        this(BaseServiceUrlProvider.Config.LOCAL, username, password);
 
     }
 
-    public ExpertArticleImpl(BaseServiceUrlProvider.Config config){
-        super(config);
+    public ExpertArticleImpl(BaseServiceUrlProvider.Config config, String username, String password){
+        super(config, username, password);
         retroService = retrofitContext.create(RetroExpertArticleService.class);
     }
 

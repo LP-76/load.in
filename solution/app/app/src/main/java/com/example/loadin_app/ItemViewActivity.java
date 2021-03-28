@@ -91,7 +91,11 @@ public class ItemViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                InventoryServiceImpl test = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
+                LoadInApplication app = (LoadInApplication) getApplication();
+                String username = app.getCurrentUser().getEmail();
+                String password = app.getCurrentUser().getPassword();
+
+                InventoryServiceImpl test = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
                 try {
                     test.deleteItem(sp.getInt("itemID",0));
 
@@ -132,8 +136,11 @@ public class ItemViewActivity extends AppCompatActivity {
 
     private void searchForArticle(String inputDescription)
     {
+        LoadInApplication app = (LoadInApplication) getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
         TextView viewExpertTipsText = (TextView) findViewById(R.id.ViewExpertTipsText);
-        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig());
+        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
         ExpertArticle expertArticle = new ExpertArticle();
         try{
             expertArticle = service.getExpertArticles(inputDescription);

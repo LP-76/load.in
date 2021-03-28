@@ -16,15 +16,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class BoxServiceImpl extends LoadInBaseServiceImplementation {
+public class BoxServiceImpl extends LoadInServiceWithAuthImpl {
     RetroBoxService retroService;
 
-    public BoxServiceImpl(){
-        this(BaseServiceUrlProvider.Config.LOCAL);
+    public BoxServiceImpl(String username, String password){
+        this(BaseServiceUrlProvider.Config.LOCAL, username, password);
 
     }
-    public BoxServiceImpl(BaseServiceUrlProvider.Config config){
-        super(config);
+    public BoxServiceImpl(BaseServiceUrlProvider.Config config, String username, String password){
+        super(config, username, password);
         retroService = retrofitContext.create(RetroBoxService.class);
     }
 

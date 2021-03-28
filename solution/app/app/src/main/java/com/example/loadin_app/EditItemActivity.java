@@ -75,8 +75,11 @@ public class EditItemActivity extends AppCompatActivity {
                 height = heightInput.getText().toString();
                 weight = weightInput.getText().toString();
                 fragility = fragilityInput.getText().toString();
+                LoadInApplication app = (LoadInApplication) getApplication();
+                String username = app.getCurrentUser().getEmail();
+                String password = app.getCurrentUser().getPassword();
 
-                InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
+                InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
 
                 ArrayList<Inventory> item = new ArrayList<Inventory>();
                 try {

@@ -31,23 +31,28 @@ public class LoadInBaseServiceImplementation {
 
     protected Retrofit.Builder createRetrofitBuilder(){
 
-        switch(currentConfig){
-            case LOCAL:
-            case ANDROID_SIM:
                 return new Retrofit.Builder()
                         .baseUrl(baseUrl)
                         .addConverterFactory(GsonConverterFactory.create())
-                        .client(getAllTrustingClient().build());
+                        .client(createRetrofitClient().build());
+
+
+    }
+
+    protected OkHttpClient.Builder createRetrofitClient(){
+        switch(currentConfig){
+            case LOCAL:
+            case ANDROID_SIM:
+               return getAllTrustingClient();
 
             case PRODUCTION:
-                return new Retrofit.Builder()
-                        .baseUrl(baseUrl)
-                        .addConverterFactory(GsonConverterFactory.create());
+                return new OkHttpClient.Builder();
 
         }
 
         return null;
     }
+
 
     protected static OkHttpClient.Builder getAllTrustingClient(){
         //WARNING: this is extremely dangerous and should not really be used for a production environment

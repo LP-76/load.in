@@ -30,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.loadin_app.LoadInApplication;
 import com.example.loadin_app.MainMenuActivity;
 import com.example.loadin_app.MoveInventoryActivity;
 import com.example.loadin_app.R;
@@ -142,7 +143,7 @@ public class LoginActivity extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString(), context);
+                            passwordEditText.getText().toString(), context, (LoadInApplication)getApplication());
                 }
                 return false;
             }
@@ -154,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 loadingProgressBar.setVisibility(View.VISIBLE);
                 loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString(), context);
+                        passwordEditText.getText().toString(), context,(LoadInApplication)getApplication());
             }
         });
 

@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -22,17 +22,24 @@ package odu.edu.loadin.webapi;
 import org.apache.cxf.Bus;
 import org.apache.cxf.BusFactory;
 import org.apache.cxf.bus.spring.SpringBusFactory;
+
 import org.apache.cxf.feature.LoggingFeature;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
-import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
+import org.springframework.context.ApplicationContext;
 
 public class Server {
 
     static {
         // set the configuration file
         SpringBusFactory factory = new SpringBusFactory();
+        ApplicationContext context = factory.getApplicationContext();
+
         Bus bus = factory.createBus("ServerConfig.xml");
-         BusFactory.setDefaultBus(bus);
+        BusFactory.setDefaultBus(bus);
+
+
+
+
     }
 
     protected Server() throws Exception {
@@ -43,34 +50,40 @@ public class Server {
         sf.getFeatures().add(logging);
 
 
-        sf.setResourceClasses(
-                 BoxSizeServiceImpl.class,
+
+
+                sf.setResourceClasses(
+                BoxSizeServiceImpl.class,
                 UserServiceImpl.class,
                 InventoryServiceImpl.class,
                 ExpertArticleServiceImpl.class,
                 LoadPlanBoxServiceImpl.class
         );
 
+        sf.getInInterceptors().add(new LoadInAuthenticationInterceptor());
+        sf.getInInterceptors().add(new LoadInAuthorizationInterceptor());
 
-        sf.setResourceProvider(BoxSizeServiceImpl.class,
-                new SingletonResourceProvider(new BoxSizeServiceImpl())
-        );
-        sf.setResourceProvider(UserServiceImpl.class,
-                new SingletonResourceProvider(new UserServiceImpl())
-        );
-        sf.setResourceProvider(InventoryServiceImpl.class,
-                new SingletonResourceProvider(new InventoryServiceImpl())
-        );
-        sf.setResourceProvider(ExpertArticleServiceImpl.class,
-                new SingletonResourceProvider(new ExpertArticleServiceImpl())
-        );
-        sf.setResourceProvider(LoadPlanBoxServiceImpl.class,
-                new SingletonResourceProvider(new LoadPlanBoxServiceImpl())
-        );
+//        sf.setResourceProvider(BoxSizeServiceImpl.class,
+//                new SingletonResourceProvider(new BoxSizeServiceImpl())
+//        );
+//        sf.setResourceProvider(UserServiceImpl.class,
+//                new SingletonResourceProvider(new UserServiceImpl())
+//        );
+//        sf.setResourceProvider(InventoryServiceImpl.class,
+//                new SingletonResourceProvider(new InventoryServiceImpl())
+//        );
+//        sf.setResourceProvider(ExpertArticleServiceImpl.class,
+//                new SingletonResourceProvider(new ExpertArticleServiceImpl())
+//        );
+//        sf.setResourceProvider(LoadPlanBoxServiceImpl.class,
+//                new SingletonResourceProvider(new LoadPlanBoxServiceImpl())
+//        );
         sf.setAddress("https://localhost:9000/");
 
         //sf.setAddress("http://localhost:9000/");
-        sf.create();
+       sf.create();
+        //server.getEndpoint().
+
     }
 
     public static void main(String[] args) throws Exception {

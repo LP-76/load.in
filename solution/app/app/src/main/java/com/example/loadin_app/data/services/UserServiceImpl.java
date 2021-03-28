@@ -34,41 +34,28 @@ public class UserServiceImpl extends LoadInBaseServiceImplementation {
     }
 
     @Override
-    protected Retrofit.Builder createRetrofitBuilder(){
-
-
-        switch(currentConfig){
-            case LOCAL:
-            case ANDROID_SIM:
-                OkHttpClient.Builder httpClient = getAllTrustingClient()
-                        .callTimeout(2, TimeUnit.MINUTES)
-                        .connectTimeout(30, TimeUnit.SECONDS)
-                        .readTimeout(60, TimeUnit.SECONDS)
-                        .writeTimeout(60, TimeUnit.SECONDS);
-                return new Retrofit.Builder()
-                        .baseUrl(baseUrl)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(getAllTrustingClient().build());
-
-            case PRODUCTION:
-                OkHttpClient.Builder httpClient2 = new OkHttpClient.Builder()
-                        .callTimeout(2, TimeUnit.MINUTES)
-                        .connectTimeout(30, TimeUnit.SECONDS)
-                        .readTimeout(60, TimeUnit.SECONDS)
-                        .writeTimeout(60, TimeUnit.SECONDS);
-                return new Retrofit.Builder()
-                        .baseUrl(baseUrl)
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(httpClient2.build());
-
-        }
-
-        return null;
+    protected OkHttpClient.Builder createRetrofitClient() {
+        return super.createRetrofitClient().callTimeout(2, TimeUnit.MINUTES)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS);
 
     }
 
-    public User getUser(int id) throws ExecutionException, InterruptedException {
-        CompletableFuture<DataWrapper<User>> promise = retroService.getUser(id);
+
+    public User getUser(int id, String username, String password) throws ExecutionException, InterruptedException {
+        //this one needs the additional interceptor
+
+        OkHttpClient.Builder client = createRetrofitClient();
+        client.addInterceptor(new RetroAuthInterceptor(username, password));
+
+
+        Retrofit b = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client.build()).build();
+
+        CompletableFuture<DataWrapper<User>> promise = b.create(RetroUserService.class).getUser(id);
         return promise.get().Data;
     }
 

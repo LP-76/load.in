@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
 
 import java.lang.reflect.Array;
@@ -66,9 +67,11 @@ public class MoveInventoryActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+        LoadInApplication app = (LoadInApplication)getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
 
-
-        InventoryServiceImpl newInv = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
+        InventoryServiceImpl newInv = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
         ArrayList<Inventory> inventory = new ArrayList<Inventory>();
         int j = sp.getInt("loginID", 0);
         try{

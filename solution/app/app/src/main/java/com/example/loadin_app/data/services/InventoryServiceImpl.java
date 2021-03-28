@@ -17,15 +17,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class InventoryServiceImpl extends LoadInBaseServiceImplementation{
+public class InventoryServiceImpl extends LoadInServiceWithAuthImpl{
     RetroInventoryService retroService;
 
-    public InventoryServiceImpl(){
-        this(BaseServiceUrlProvider.Config.LOCAL);
+    public InventoryServiceImpl(String username, String password){
+        this(BaseServiceUrlProvider.Config.LOCAL, username, password);
 
     }
-    public InventoryServiceImpl(BaseServiceUrlProvider.Config config){
-        super(config);
+    public InventoryServiceImpl(BaseServiceUrlProvider.Config config, String username, String password){
+        super(config, username, password);
         retroService = retrofitContext.create(RetroInventoryService.class);
     }
 

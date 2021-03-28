@@ -173,8 +173,11 @@ public class TipsAndTricksActivity extends AppCompatActivity {
     private void searchForArticle(String keyword)
     {
         System.out.println("Searching for an article with keyword: " + keyword + "!");
+        LoadInApplication app = (LoadInApplication) getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
 
-        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig());
+        ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
         ExpertArticle expertArticle = new ExpertArticle();
         try{
 

@@ -21,13 +21,28 @@
   ** This file configures the Server which exposes the REST endpoint.
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:sec="http://cxf.apache.org/configuration/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:sec="http://cxf.apache.org/configuration/security"
+       xmlns:security="http://www.springframework.org/schema/security"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:cxf="http://cxf.apache.org/core"
-    xmlns:http="http://cxf.apache.org/transports/http/configuration"
-    xmlns:httpj="http://cxf.apache.org/transports/http-jetty/configuration"
-    xsi:schemaLocation="http://cxf.apache.org/configuration/security http://cxf.apache.org/schemas/configuration/security.xsd http://cxf.apache.org/transports/http/configuration http://cxf.apache.org/schemas/configuration/http-conf.xsd http://cxf.apache.org/transports/http-jetty/configuration http://cxf.apache.org/schemas/configuration/http-jetty.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:http="http://cxf.apache.org/transports/http/configuration"
+       xmlns:httpj="http://cxf.apache.org/transports/http-jetty/configuration"
+       xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+
+       xsi:schemaLocation="http://cxf.apache.org/configuration/security
+    http://cxf.apache.org/schemas/configuration/security.xsd
+    http://cxf.apache.org/transports/http/configuration
+     http://cxf.apache.org/schemas/configuration/http-conf.xsd
+     http://cxf.apache.org/transports/http-jetty/configuration
+     http://cxf.apache.org/schemas/configuration/http-jetty.xsd
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd
+     http://www.springframework.org/schema/security
+     http://www.springframework.org/schema/security/spring-security.xsd
+     http://cxf.apache.org/jaxrs
+     http://cxf.apache.org/schemas/jaxrs.xsd
+">
     <httpj:engine-factory bus="cxf">
         <httpj:engine port="9000">
             <httpj:tlsServerParameters>
@@ -41,6 +56,33 @@
             </httpj:tlsServerParameters>
         </httpj:engine>
     </httpj:engine-factory>
+
+   <!-- <jaxrs:server id="loadin" address="/">
+        <jaxrs:serviceBeans>
+            <ref bean="userService"/>
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+
+    <bean id="userService" class="odu.edu.loadin.webapi.UserServiceImpl"/>
+
+    <bean id="myUserDetailsService"
+          class="odu.edu.loadin.webapi.LoadInUserDetailService"/>
+    <security:global-method-security secured-annotations="enabled" >
+    </security:global-method-security>
+    <security:authentication-manager>
+        <security:authentication-provider
+                user-service-ref="myUserDetailsService" >
+            <security:password-encoder ref="noopEncoder"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+    <security:http auto-config="true">
+        <security:http-basic/>
+    </security:http> -->
+    <!--<bean id="passwordEncoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <constructor-arg value="11"/>
+    </bean>-->
+   <!-- <bean id="noopEncoder" class="org.springframework.security.crypto.password.NoOpPasswordEncoder"/>-->
 
     <!--
     <bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.json.JSONProvider">

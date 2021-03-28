@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import androidx.constraintlayout.solver.widgets.Rectangle;
 
 import com.example.loadin_app.R;
+import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 
 public class TestGLSurfaceView extends GLSurfaceView {
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
@@ -25,14 +26,14 @@ public class TestGLSurfaceView extends GLSurfaceView {
 
 
     private final TestGLRenderer renderer;
-    public TestGLSurfaceView(Context context){
+    public TestGLSurfaceView(Context context, LoadPlanBoxServiceImpl boxService){
         super(context);
         setEGLContextClientVersion(2);
         BitmapFactory.Options ops = new BitmapFactory.Options();
         ops.inScaled = false;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.blah, ops);
 
-        renderer = new TestGLRenderer(bitmap, context);
+        renderer = new TestGLRenderer(bitmap, context, boxService);
         setRenderer(renderer);
         panMode = true;
 

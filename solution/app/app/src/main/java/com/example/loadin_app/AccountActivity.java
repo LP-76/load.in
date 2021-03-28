@@ -37,12 +37,14 @@ public class AccountActivity extends AppCompatActivity {
             Intent switchToLogin = new Intent(AccountActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-
+        LoadInApplication app = (LoadInApplication) getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
         UserServiceImpl service = new UserServiceImpl(BaseServiceUrlProvider.getCurrentConfig());
         User user = new User();
         int j = sp.getInt("loginID", 0);
         try{
-            user = service.getUser(j);
+            user = service.getUser(j, username, password);
         }
         catch(Exception ex){
             System.out.println(ex);

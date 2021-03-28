@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Patterns;
 
+import com.example.loadin_app.LoadInApplication;
 import com.example.loadin_app.data.LoginRepository;
 import com.example.loadin_app.data.Result;
 import com.example.loadin_app.data.model.LoggedInUser;
@@ -35,16 +37,20 @@ public class LoginViewModel extends ViewModel {
         return loginResult;
     }
 
-    public void login(String username, String password, Context context) {
+    public void login(String username, String password, Context context, LoadInApplication app) {
         // can be launched in a separate asynchronous job
         Result<User> result = loginRepository.login(username, password);
 
         if (result instanceof Result.Success) {
             User data = ((Result.Success<User>) result).getData();
             String displayName = data.getFirstName() + " " + data.getLastName();
+            data.setPassword(password);  //store for later use
+
 
             sp = context.getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE);
             sp.edit().putInt("loginID", data.getId()).apply();
+
+            app.setCurrentUser(data);  //we now have the current user
 
             loginResult.setValue(new LoginResult(new LoggedInUserView(displayName)));
         } else {

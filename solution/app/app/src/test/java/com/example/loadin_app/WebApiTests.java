@@ -22,9 +22,14 @@ import static org.junit.Assert.*;
 
 public class WebApiTests {
 
+    private String username = "john.smith@test.net";
+    private String password = "BlueMango@1";
+
     @Test
     public void TestBasicBoxSizeConnectivity() throws ExecutionException, InterruptedException, SQLException {
-        BoxServiceImpl tc = new BoxServiceImpl();
+
+
+        BoxServiceImpl tc = new BoxServiceImpl(username, password);
 
         List<BoxSize> boxeSizes = tc.getBoxSizes();
 
@@ -34,7 +39,7 @@ public class WebApiTests {
 
     @Test
     public void TestAddBoxSize() throws ExecutionException, InterruptedException {
-        BoxServiceImpl tc = new BoxServiceImpl();
+        BoxServiceImpl tc = new BoxServiceImpl(username, password);
 
         BoxSize test = new BoxSize();
         test.setDescription("Test Box Size");
