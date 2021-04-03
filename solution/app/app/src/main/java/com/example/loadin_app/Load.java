@@ -124,10 +124,22 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
         //a box goes on first if it is behind another box
         //below another box
 
-       if(o2.isInFrontOf(o1) || o2.isAbove(o1))
-           return -1;
-       else if(o1.isInFrontOf(o2) || o1.isAbove(o2))
+       if(o1.isInSameRowAs(o2)){
+           if(o1.isAbove(o2))
+               return 1;
+           else if(o2.isAbove(o1))
+               return -1;
+
+           if(o1.getDestination().getX() > o2.getDestination().getX())  //o1 is to the left of o2
+               return -1;
+           else
+               return 1;  //the assumption is if it's in the same row and it's not to the left, it would have to be to the right
+
+       }
+       else if(o1.isInFrontOf(o2))
            return 1;
+       else if(o2.isInFrontOf(o1))
+           return -1;
 
        return 0;
 
