@@ -161,18 +161,50 @@ public class Box extends WorldObject
         return description;
     }
 
+    private boolean withinRange(float s, float e, float p){
+        float max = Math.max(s, e);
+        float min = Math.min(s, e);
+        return min < p && p < max;
+    }
+
+    private boolean overlaps(float s1, float e1, float s2, float e2 ){
+        return withinRange(s1, e1, s2) || withinRange(s1, e1, e2) || withinRange(s2, e2, s1) || withinRange(s2, e2, e1);
+    }
+
+    public boolean isInSameRowAs(Box other){
+        //to be in the same row, we must not be above the other box
+
+        Vector myDestination = getDestination();
+        Vector othersDestination = other.getDestination();
+
+
+        return overlaps(myDestination.getZ(), myDestination.getZ() + getLength(), othersDestination.getZ(), othersDestination.getZ() + other.getLength())
+                && !isAbove(other) && !other.isAbove(this);  //neither box is above each other
+
+    }
+
+    public boolean isInFrontOf(Box other){
+        Vector myDestination = getDestination();
+        Vector othersDestination = other.getDestination();
+        boolean sameRow = isInSameRowAs(other);
+        return !sameRow && othersDestination.getZ() > myDestination.getZ();  //the greater the z, the further back in the truck it is
+    }
+
+
     public boolean isAbove(Box other){
         //asks the question if the box in question is directly above the other box
         //to be above, the x and z must be within the bounds of the other box
 
-        Vector d1 = getDestination();
-        Vector d2 = other.getDestination();
+        Vector myDestination = getDestination();
+        Vector otherDestination = other.getDestination();
 
-        boolean x_bounded = d2.getX() <= d1.getX() && d1.getX() + getWidth()  <=  d2.getX() + other.getWidth();
-        boolean z_bounded = d2.getZ() <= d1.getZ() && d1.getZ() + getLength()   <=  d2.getZ() + other.getLength();
+        //both x and z overlap and my y is greater than the other box
 
-        return x_bounded && z_bounded && d1.getY() > d2.getY();
-
+        return overlaps(myDestination.getX(), myDestination.getX() + getWidth(),
+                otherDestination.getX(), otherDestination.getX() + other.getWidth())  //overlap x
+                && overlaps(myDestination.getZ(), myDestination.getZ() + getLength(),
+                otherDestination.getZ(), otherDestination.getZ() + other.getLength()) //overlap z
+                && myDestination.getY() > otherDestination.getY();
     }
 
 }

@@ -29,6 +29,58 @@ public class BoxTest {
     }
 
     @Test
+    public void testInFrontOf(){
+        Box a = new Box(24, 24, 24);
+        Box b = new Box(24, 24, 24);
+
+        a.setDestination(new Vector(0, 0, 0));
+        b.setDestination(new Vector(0, 0, 0));
+        Assert.assertTrue(!a.isInFrontOf(b));
+        Assert.assertTrue(!b.isInFrontOf(a));
+
+        a.setDestination(new Vector(24, 24, 0));  //x and y do not affect the z
+        Assert.assertTrue(!a.isInFrontOf(b));
+        Assert.assertTrue(!b.isInFrontOf(a));
+
+        a.setDestination(new Vector(0, 0, 16));  //we're still in the same row technically
+        Assert.assertTrue(!a.isInFrontOf(b));
+        Assert.assertTrue(!b.isInFrontOf(a));
+
+        a.setDestination(new Vector(0, 0, 25));  //we're still in the same row technically
+        Assert.assertTrue(!a.isInFrontOf(b));
+        Assert.assertTrue(b.isInFrontOf(a));
+
+
+
+    }
+
+    @Test
+    public void testInSameRow(){
+
+        Box a = new Box(24, 24, 24);
+        Box b = new Box(24, 24, 24);
+
+        a.setDestination(new Vector(0, 0, 0));
+        b.setDestination(new Vector(0, 0, 0));
+        Assert.assertTrue(a.isInSameRowAs(b));
+        Assert.assertTrue(b.isInSameRowAs(a));
+
+        a.setDestination(new Vector(0, 24, 0));  //y does affect
+        Assert.assertTrue(!a.isInSameRowAs(b));
+        Assert.assertTrue(!b.isInSameRowAs(a));
+
+        a.setDestination(new Vector(45, 0, 16));  //we're still in the same row technically because x shouldn't matter
+        Assert.assertTrue(a.isInSameRowAs(b));
+        Assert.assertTrue(b.isInSameRowAs(a));
+
+        a.setDestination(new Vector(0, 0, 25));  //now we've moved in front of
+        Assert.assertTrue(b.isInFrontOf(a));
+        Assert.assertTrue(!a.isInSameRowAs(b));
+        Assert.assertTrue(!b.isInSameRowAs(a));
+    }
+
+
+    @Test
     public void comparator(){
         Box a = new Box(24, 24, 24);
         Box b = new Box(24, 24, 24);
