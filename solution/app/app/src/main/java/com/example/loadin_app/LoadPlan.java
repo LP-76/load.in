@@ -49,6 +49,11 @@ public class LoadPlan implements ExtendedIterable<Load>
             loads.get(b.getLoadNumber()).AddBox((newBox));
         }
     }
+
+    public LoadPlan(LoadPlan other){
+        //TODO: implement clone feature
+    }
+
     public void AddLoad()
     {
         loads.add(new Load(new EmptySpace(movingTruck.getLengthInches(), movingTruck.getWidthInches(), movingTruck.getHeightInches(), new Vector(0,0,0))));

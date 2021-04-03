@@ -31,6 +31,11 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
         emptyArea = input_Space.GetLength() * input_Space.GetHeight() * input_Space.GetWidth();
     }
 
+    public Load(Load l){
+        //TODO: clone a load
+    }
+
+
     public void AddBox(Box input_box)
     {
         boxes.add(input_box);

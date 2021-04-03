@@ -39,6 +39,9 @@ public class Box extends WorldObject {
 
         boxID = globalID = ++lastGlobalId;
     }
+    public Box(Box other){
+        //todo: make a clone constructor
+    }
 
     public void setDestination(Vector destination) {
         //System.out.println("box " + id + " is going to " + destination.toString());

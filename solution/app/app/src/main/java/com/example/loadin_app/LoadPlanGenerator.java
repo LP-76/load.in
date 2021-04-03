@@ -377,7 +377,7 @@ public class LoadPlanGenerator
         if(input_Box.getWidth() == input_Space.GetWidth())
             numberOfMatchingDimensions++;
 
-        if(input_Box.getLength() == input_Space.GetHeight())
+        if(input_Box.getHeight() == input_Space.GetHeight())
             numberOfMatchingDimensions++;
 
         if(input_Box.getLength() == input_Space.GetLength())
@@ -441,4 +441,32 @@ public class LoadPlanGenerator
 
         return dataModel;
     }
+
+
+    public void processTrees(DecisionFrame currentFrame){
+
+        //TODO: Implement??  Ponder?
+
+        //grab the next box
+
+        //for each space in each load in the current load plan that the box can fit into:
+
+        //generate a new load plan from putting that box into every available space
+
+        //does any of the load plans i've just generated violate a rule
+        //if so remove that load plan
+
+        //process all other load plans while boxes remain
+
+
+
+    }
+
+
+    private class DecisionFrame{
+        ArrayList<Box> remainingBoxes;
+        LoadPlan currentLoadPlan;
+
+    }
+
 }

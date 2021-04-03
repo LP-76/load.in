@@ -1,7 +1,10 @@
 package com.example.loadin_app;
 
 
+import com.example.loadin_app.ui.opengl.Box;
 import com.example.loadin_app.ui.opengl.Vector;
+
+import java.util.ArrayList;
 
 //this class represents an empty space, which will be used in the load plan algorithm to represent some or all of the empty space in the truck.
 public class EmptySpace
@@ -26,6 +29,10 @@ public class EmptySpace
         lengthHeightArea = length * height;
         widthHeightArea = width * height;
         volume = length * width * height;
+    }
+
+    public EmptySpace(EmptySpace other){
+        //TODO: implement
     }
 
     public float GetLength()
@@ -102,6 +109,36 @@ public class EmptySpace
     {
         return isNeighborInXandSameHeightAndLength(other) || isNeighBorInYAboveAndSameWidthAndLength(other) || isNeighborInZandSameHeightAndWidth(other);
     }
+
+
+    public void merge(EmptySpace other){
+        //TODO: alter this empty space to merge with another
+
+        //adds the space to this space
+
+    }
+
+    public EmptySpace splitX(float x){
+        //TODO: implement
+        return null;
+    }
+
+    public EmptySpace splitY(float y){
+        //TODO: implement
+        return null;
+    }
+
+    public EmptySpace splitZ(float z){
+        //TODO: implement
+        return null;
+    }
+
+    public ArrayList<EmptySpace> split(Box box){
+        //TODO: implement
+        return null;
+    }
+
+
 
     public boolean equals(EmptySpace other)
     {
