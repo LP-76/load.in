@@ -72,6 +72,12 @@ public class Box extends WorldObject
          return getWidth() * getLength() * getHeight();
      }
 
+     public float getXZArea()
+     {
+         return getWidth()*getLength();
+     }
+
+
     public float getWeight() {
         return weight;
     }

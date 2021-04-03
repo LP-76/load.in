@@ -67,7 +67,7 @@ public class LoadPlanGenerator
             @Override
             public int compare(Box o1, Box o2)
             {
-                return (int) (o2.getVolume() - o1.getVolume());
+                return (int) (o2.getXZArea() - o1.getXZArea());
             }
         });
     }
@@ -116,7 +116,7 @@ public class LoadPlanGenerator
             newRandomBox.setDescription("Randomly Generated Box " + numberOfBoxesGenerated);
             numberOfBoxesGenerated++;
 
-            if(totalVolumeGenerated + newRandomBox.getVolume() > movingTruck.GetVolumeOfTruckInches() * 19)
+            if(totalVolumeGenerated + newRandomBox.getVolume() > movingTruck.GetVolumeOfTruckInches())
                 return;
 
             else
@@ -131,7 +131,21 @@ public class LoadPlanGenerator
 
     private Box GenerateNewRandomBox()
     {
-        int minimumSize = 2;
+        /*
+        //home dpot box sizes
+        Box[] sizes =
+                {
+                        new Box(22,15,16),
+                        new Box(28,16,15),
+                        new Box(16,12,12),
+                        new Box(22,21,22)
+                };
+
+        Random rand = new Random();
+        return sizes[rand.nextInt(sizes.length - 1)];
+        */
+
+        int minimumSize = 3;
         int maximumSize = 7;
 
         int length, width, height;
@@ -151,8 +165,6 @@ public class LoadPlanGenerator
 
     private void GetMoveInventory()
     {
-
-
         try
         {
             moveInventory = inventoryService.getInventoryAsBoxes(getUserId());
@@ -185,9 +197,17 @@ public class LoadPlanGenerator
 
     private void PlaceBox(LoadStatistics input_Info, Box input_Box)
     {
-        //System.out.println("Started PlaceBox!");
         EmptySpace idealSpace = plan.GetLoads().get(input_Info.GetLoadIndex()).GetEmptySpaces().get(input_Info.GetEmptySpaceIndex());
 
+        input_Box.setDestination(new Vector(idealSpace.GetOffset().getX() + (idealSpace.GetWidth() - input_Box.getWidth()), idealSpace.GetOffset().getY(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength())));
+        plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
+        plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
+
+        plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(idealSpace.GetLength() - input_Box.getLength(), idealSpace.GetWidth(), idealSpace.GetHeight(), idealSpace.GetOffset() ));
+        plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(input_Box.getLength(), idealSpace.GetWidth() - input_Box.getWidth(), idealSpace.GetHeight(), new Vector(idealSpace.GetOffset().getX(),idealSpace.GetOffset().getY(),idealSpace.GetOffset().getZ() + (idealSpace.GetLength()-input_Box.getLength()))));
+        plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(input_Box.getLength(), input_Box.getWidth(), idealSpace.GetHeight() - input_Box.getHeight(), new Vector(idealSpace.GetOffset().getX() + (idealSpace.GetWidth() - input_Box.getWidth()), idealSpace.GetOffset().getY() + input_Box.getHeight(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength()))));
+
+        /*
         switch(input_Info.GetNumberOfMatchingDimensions())
         {
             case 3:
@@ -200,6 +220,7 @@ public class LoadPlanGenerator
                 // z|      box      |     y|      box      |     y|      box      |
                 //  |               |      |               |      |               |
                 //  |---------------o      |---------------o      |---------------o
+
                 input_Box.setDestination(idealSpace.GetOffset());
                 plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
                 plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
@@ -216,9 +237,11 @@ public class LoadPlanGenerator
                 // z|_______________o     y|      box      |     y|  box  | space |
                 //  |     space     |      |               |      |       |       |
                 //  |---------------o      |---------------o      |-------o-------o
+
                 input_Box.setDestination(new Vector(idealSpace.GetOffset().getX(), idealSpace.GetOffset().getY(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength())));
                 plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
                 plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
+
                 plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(idealSpace.GetWidth(), idealSpace.GetHeight(), idealSpace.GetLength() - input_Box.getLength(), idealSpace.GetOffset()));
 
                 break;
@@ -248,19 +271,14 @@ public class LoadPlanGenerator
                 // z|_______o_ _____|     y|-------o space |     y|-------o space |
                 //  |     space     |      |  box  |       |      |  box  |       |
                 //  |---------------o      |-------o-------o      |-------o-------o
-                input_Box.setDestination(new Vector(idealSpace.GetOffset().getX() + (idealSpace.GetWidth() - input_Box.getWidth()), idealSpace.GetOffset().getY(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength())));
-                plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
-                plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
 
-                plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(idealSpace.GetLength() - input_Box.getLength(), idealSpace.GetWidth(), idealSpace.GetHeight(), idealSpace.GetOffset() ));
-                plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(input_Box.getLength(), idealSpace.GetWidth() - input_Box.getWidth(), idealSpace.GetHeight(), new Vector(idealSpace.GetOffset().getX(),idealSpace.GetOffset().getY(),idealSpace.GetOffset().getZ() + (idealSpace.GetLength()-input_Box.getLength()))));
-                plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(input_Box.getLength(), input_Box.getWidth(), idealSpace.GetHeight() - input_Box.getHeight(), new Vector(idealSpace.GetOffset().getX() + (idealSpace.GetWidth() - input_Box.getWidth()), idealSpace.GetOffset().getY() + input_Box.getHeight(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength()))));
-                break;
             default:
                 //we should never hit this code.
                 break;
         }
         //System.out.println("Finished PlaceBox!");
+
+         */
     }
 
 

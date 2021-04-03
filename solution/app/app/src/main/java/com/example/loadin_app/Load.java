@@ -95,7 +95,11 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
 
     public void AddSpace(EmptySpace input_Space)
     {
-        emptySpaces.add(input_Space);
+        if(input_Space.GetHeight() > 0 && input_Space.GetWidth() > 0 && input_Space.GetLength() > 0)
+        {
+            emptySpaces.add(input_Space);
+            emptySpaces = new EmptySpaceDefragmenter().Defragment(emptySpaces);
+        }
     }
 
 
