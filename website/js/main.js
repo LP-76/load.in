@@ -386,12 +386,54 @@ $(document).ready(function() {
   wow.init();
 });
 
+var vmTimeKeeper = function(){
+    var self = this;
+
+
+
+    self.remainingMilliseconds = ko.observable();
+
+    self.targetDate = ko.observable(new Date('2021-05-10 00:00:00.000'));
+
+    self.updateRemainingMilliSeconds = function(){
+        var n = new Date(); //now
+        var r = self.targetDate().getTime() - n.getTime();
+        self.remainingMilliseconds(r);
+    }
+
+    self.timer = window.setInterval(self.updateRemainingMilliSeconds, 250);
+
+    self.timeRemainingDisplay = ko.pureComputed(function(){
+        var totalRemainingMilliseconds = Math.abs(self.remainingMilliseconds());
+        var totalSeconds = totalRemainingMilliseconds / 1000;
+        var milliseconds = totalRemainingMilliseconds % 1000;
+        var seconds = Math.floor(totalSeconds % 60);
+        var totalMinutes = totalSeconds / 60;
+        var minutes = Math.floor(totalMinutes % 60);
+        var totalHours = totalMinutes / 60;
+        var hours = Math.floor(totalHours % 24);
+        var totalDays = totalHours / 24;
+        var days = Math.floor(totalDays % 7);
+        var totalWeeks = totalDays / 7;
+        var weeks = Math.floor(totalWeeks % 52);
+        var totalYears = Math.floor(totalWeeks / 52);
+
+        return totalYears + "y:" + weeks + "w:" + days + "d:" + hours + "h:" + minutes + "m:" + seconds + "s";
+    });
+
+
+
+
+}
+
+
 var vmModelFactory = function(){
     var self = this;
     self.feasibilitySections = ko.observableArray();
     self.designSections = ko.observableArray();
     self.prototypeSections = ko.observableArray();
     self.labSections = ko.observableArray();
+    self.countDownTimer = new vmTimeKeeper();
 };
 
 //adding knockout functionality for the deliverables management section
@@ -412,6 +454,9 @@ $(document).ready(function(){
             vm.labSections(d);
         });
     ko.applyBindings(vm); //apply the model
+
+    window.targetCountdownDate = vm.countDownTimer.targetDate;
+
 });
 
 
