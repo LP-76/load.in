@@ -138,6 +138,10 @@ public class EmptySpace
         return null;
     }
 
+    public boolean canFit(Box box){
+        //TODO: implement
+        return false;
+    }
 
 
     public boolean equals(EmptySpace other)

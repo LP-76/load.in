@@ -442,29 +442,116 @@ public class LoadPlanGenerator
         return dataModel;
     }
 
+    private  boolean violatesConstraints(Box currentBox, LoadPlan currentLoadPlan){
+        //TODO: implement
+        return  false;
+    }
 
-    public void processTrees(DecisionFrame currentFrame){
+    public int score(LoadPlan plan){
+        //TODO: score a load plan
+        return 0;
+    }
 
-        //TODO: Implement??  Ponder?
+    public LoadPlan determineBestLoadPlan(ArrayList<LoadPlan> allPlans){
 
-        //grab the next box
+        LoadPlan bestScoredPlan = null;
+        int bestScore = -1;
 
-        //for each space in each load in the current load plan that the box can fit into:
+        for(LoadPlan l : allPlans){
+            int score = score(l);
+            if(bestScoredPlan == null || score > bestScore){
+                bestScore = score;
+                bestScoredPlan = l;
+            }
+        }
+        return bestScoredPlan;
 
-        //generate a new load plan from putting that box into every available space
-
-        //does any of the load plans i've just generated violate a rule
-        //if so remove that load plan
-
-        //process all other load plans while boxes remain
+    }
 
 
+    public ArrayList<LoadPlan> processTrees(){
+
+
+        ArrayList<LoadPlan> finishedLoadPlans = new ArrayList<LoadPlan>();
+        Stack<DecisionFrame> toProcess = new Stack<DecisionFrame>();  //we push on to this for processing
+
+        DecisionFrame initial = new DecisionFrame();
+        initial.remainingBoxes = new LinkedList<Box>(moveInventory);
+        initial.currentLoadPlan = new LoadPlan(movingTruck);  //create the initial plan
+
+        toProcess.push(initial);
+
+        while(!toProcess.isEmpty()){
+            DecisionFrame current = toProcess.pop(); //get the next frame to check on
+
+            if(current.remainingBoxes.size() > 0){  //we have boxes left to process
+                //grab the next box
+
+                Box nextBox = current.remainingBoxes.remove();
+
+                //for each space in each load in the current load plan that the box can fit into:
+
+                ArrayList<Load> loads = current.currentLoadPlan.GetLoads();
+                for( int loadIndex = 0; loadIndex < loads.size(); loadIndex++){
+                    Load nextLoad = loads.get(loadIndex);
+                    ArrayList<EmptySpace> spaces = nextLoad.GetEmptySpaces();
+                    for(int emptySpaceIndex = 0; emptySpaceIndex < spaces.size(); emptySpaceIndex++){
+                        EmptySpace e = spaces.get(emptySpaceIndex);
+                        //generate a new load plan from putting that box into every available space
+                        if(e.canFit(nextBox)){
+
+                            Box copyOfNextBox = new Box(nextBox); //need to make a copy because it is going to be placed in a different location
+
+                            //duplicate the plan
+                            LoadPlan copy = new LoadPlan(current.currentLoadPlan);  //we make a copy so that it's modifiable from the others
+
+                            Load copyLoad = copy.GetLoads().get(loadIndex);
+                            EmptySpace targetCopy = copyLoad.GetEmptySpaces().get(emptySpaceIndex);
+
+                            ArrayList<EmptySpace> newSpaces = targetCopy.split(copyOfNextBox);
+                            copyLoad.RemoveSpace(targetCopy);
+
+                            for(EmptySpace s :newSpaces)
+                                copyLoad.AddSpace(s);  //we add all the new spaces
+
+                            //TODO: does the split function modify the box?  or do we need to do that here?
+
+                            if(!violatesConstraints(copyOfNextBox, copy)){  //does any of the load plans i've just generated violate a rule
+                                DecisionFrame n = new DecisionFrame();
+                                n.currentLoadPlan = copy;
+                                n.remainingBoxes = new LinkedList<Box>(current.remainingBoxes); //copy the queue of the remaining boxes
+
+                                toProcess.push(n); //push the next item to process that we can continue down that decision tree
+
+                            } //if so remove that load plan
+
+                        }
+
+                        //TODO: if we can't fit the box anywhere, we probably need a new load?
+
+                        //process all other load plans while boxes remain
+                    }
+
+                }
+
+
+            }
+            else{
+                finishedLoadPlans.add(current.currentLoadPlan);  //we have reached the end
+            }
+
+
+        }
+
+
+
+        return finishedLoadPlans;
 
     }
 
 
     private class DecisionFrame{
-        ArrayList<Box> remainingBoxes;
+        Queue<Box> remainingBoxes;
         LoadPlan currentLoadPlan;
 
     }
