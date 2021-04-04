@@ -393,7 +393,7 @@ var vmTimeKeeper = function(){
 
     self.remainingMilliseconds = ko.observable();
 
-    self.targetDate = ko.observable(new Date('2021-05-10 00:00:00.000'));
+    self.targetDate = ko.observable(new Date('2021-05-8 00:00:00.000'));
 
     self.updateRemainingMilliSeconds = function(){
         var n = new Date(); //now
