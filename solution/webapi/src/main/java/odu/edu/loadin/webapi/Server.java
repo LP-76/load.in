@@ -57,7 +57,8 @@ public class Server {
                 UserServiceImpl.class,
                 InventoryServiceImpl.class,
                 ExpertArticleServiceImpl.class,
-                LoadPlanBoxServiceImpl.class
+                LoadPlanBoxServiceImpl.class,
+                FeedbackServiceImpl.class
         );
 
         sf.getInInterceptors().add(new LoadInAuthenticationInterceptor());
