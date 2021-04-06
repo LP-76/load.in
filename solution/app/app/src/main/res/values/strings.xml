@@ -40,10 +40,10 @@
     <string name="prompt_lname">Last Name</string>
 
     <string-array name="rating_choices">
-        <item>5</item>
-        <item>4</item>
-        <item>3</item>
+        <item>1(Awful)</item>
         <item>2</item>
-        <item>1</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5(Amazing!)</item>
     </string-array>
 </resources>

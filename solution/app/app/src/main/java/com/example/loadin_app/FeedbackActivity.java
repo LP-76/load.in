@@ -19,7 +19,6 @@ import android.widget.ToggleButton;
 
 import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.FeedbackServiceImpl;
-import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
 
 import odu.edu.loadin.common.Feedback;
@@ -41,12 +40,17 @@ public class FeedbackActivity extends AppCompatActivity {
             startActivity(switchToLogin);
         }
 
-
+        /**
+         * Declaration of all the needed views and objects from the activity_feedback.xml layout file.
+         */
         EditText accountCreationCommentText, itemInputCommentText, loadPlanCommentText, expertTipsCommentText, overallExperienceCommentText;
         Spinner accountCreationRatingSpinner, itemInputRatingSpinner, loadPlanRatingSpinner, expertTipsRatingSpinner;
         ToggleButton thumbsUp, thumbsDown;
         Button addNewFeedback;
 
+        /**
+         * Assigns all the needed views and objects to their matching objects in the activity_feedback.xml layout file.
+         */
         thumbsUp = findViewById(R.id.overallExperienceThumbsUpButton);
         thumbsDown = findViewById(R.id.overallExperienceThumbsDownButton);
         accountCreationRatingSpinner = findViewById(R.id.account_login_spinner);
@@ -61,6 +65,10 @@ public class FeedbackActivity extends AppCompatActivity {
         addNewFeedback = findViewById(R.id.submitFeedBackButton);
 
 
+        /**
+         * Listener for the thumbs up button, if button is clicked will set Boolean thumbsUp to true.
+         * If button is clicked and thumbsDown button is also clicked it will unclick thumbsDown.
+         */
         thumbsUp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -76,7 +84,10 @@ public class FeedbackActivity extends AppCompatActivity {
 
             }
         });
-
+        /**
+         * Listener for the thumbs down button, if button is clicked will set Boolean thumbsDown to true.
+         * If button is clicked and thumbsUp button is also clicked it will unclick thumbsUp.
+         */
         thumbsDown.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -94,16 +105,23 @@ public class FeedbackActivity extends AppCompatActivity {
         });
 
 
+        /**
+         * Listener for addNewFeedback button. Will call the addFeedbackToDB function and pass all values from fields.
+         * The variables being passed are all converted into needed data types.
+         */
         addNewFeedback.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 addFeedbackToDB(accountCreationCommentText.getText().toString(), itemInputCommentText.getText().toString(), loadPlanCommentText.getText().toString(), expertTipsCommentText.getText().toString(),
-                        overallExperienceCommentText.getText().toString(), Integer.parseInt(accountCreationRatingSpinner.getSelectedItem().toString()), Integer.parseInt(itemInputRatingSpinner.getSelectedItem().toString()),
-                        Integer.parseInt(loadPlanRatingSpinner.getSelectedItem().toString()), Integer.parseInt(expertTipsRatingSpinner.getSelectedItem().toString()), thumbsup);
+                        overallExperienceCommentText.getText().toString(), accountCreationRatingSpinner.getSelectedItemPosition(), itemInputRatingSpinner.getSelectedItemPosition(),
+                        loadPlanRatingSpinner.getSelectedItemPosition(), expertTipsRatingSpinner.getSelectedItemPosition(), thumbsup);
             }
         });
 
 
+        /**
+         * Toolbar variable declarations. Boilerplate for consistency with all other pages.
+         */
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -112,11 +130,30 @@ public class FeedbackActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(null);
     }
 
+    /**
+     * Will create a new feedback object and pass it to webAPI using the retroservice.
+     *
+     * @param accountCreationComment
+     * @param itemInputComment
+     * @param loadPlanComment
+     * @param expertTipsComment
+     * @param overallExperienceComment
+     * @param accountCreationRating
+     * @param itemInputRating
+     * @param loadPlanRating
+     * @param expertTipsRating
+     * @param thumbsUp The way I have this, if thumbsUp button is activated then boolean thumbsUp will be true, so a 1 will be sent
+     *                  if the button is not activated which is only possible if thumbs down is activated boolean thumbsUp will be false so it will send as a 0.
+     *                  Felt this was easier way to determine the result of that rather than send both booleans and do a check.
+     */
     private void addFeedbackToDB(String accountCreationComment, String itemInputComment, String loadPlanComment, String expertTipsComment, String overallExperienceComment,
-                                 Integer accountCreationRating, Integer itemInputRating, Integer loadPlanRating, Integer expertTipsRating, Boolean thumbsup)
+                                 Integer accountCreationRating, Integer itemInputRating, Integer loadPlanRating, Integer expertTipsRating, Boolean thumbsUp)
     {
+        /**
+         * If/else to check status of boolean thumbsUp as discussed above.
+         */
         Feedback newFeedback = new Feedback();
-        if(thumbsup == true)
+        if(thumbsUp == true)
         {
             newFeedback.setOverallExperienceRating(1);
         }
@@ -124,33 +161,43 @@ public class FeedbackActivity extends AppCompatActivity {
         {
             newFeedback.setOverallExperienceRating(0);
         }
+        /**
+         * Assignment of all the relevant data into new feedback object data members.
+         * The ratings are +1 because the spinner index begins at 0, adjusted to reflect true rating.
+         * Otherwise a 5 rating would be a 4.
+         */
         newFeedback.setUserID(sp.getInt("loginID", 0));
         newFeedback.setAccountCreationComment(accountCreationComment);
-        newFeedback.setAccountCreationRating(accountCreationRating);
+        newFeedback.setAccountCreationRating(accountCreationRating+1);
         newFeedback.setItemInputComment(itemInputComment);
-        newFeedback.setItemInputRating(itemInputRating);
+        newFeedback.setItemInputRating(itemInputRating+1);
         newFeedback.setLoadPlanComment(loadPlanComment);
-        newFeedback.setLoadPlanRating(loadPlanRating);
+        newFeedback.setLoadPlanRating(loadPlanRating+1);
         newFeedback.setExpertTipsComment(expertTipsComment);
-        newFeedback.setExpertTipsRating(expertTipsRating);
+        newFeedback.setExpertTipsRating(expertTipsRating+1);
         newFeedback.setOverallExperienceComment(overallExperienceComment);
 
+        /**
+         * Gets current user information
+         */
         LoadInApplication app = (LoadInApplication)getApplication();
         String username = app.getCurrentUser().getEmail();
         String password = app.getCurrentUser().getPassword();
 
 
+        /**
+         * Will call FeedbackServiceImpl to pass the new feedback object into the webAPI
+         */
         try{
             FeedbackServiceImpl service = new FeedbackServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
             service.addFeedback(newFeedback);
+
+            Toast.makeText(FeedbackActivity.this, "Feedback Submitted", Toast.LENGTH_SHORT).show();
         }
         catch(Exception ex){
             System.out.println(ex);
-            //ooops we had an error
-            //TODO: make the user aware
         }
-        //TODO: figure out what happens
-        //what happens here?
+
     }
     // Menu icons are inflated just as they were with actionbar
     @Override
