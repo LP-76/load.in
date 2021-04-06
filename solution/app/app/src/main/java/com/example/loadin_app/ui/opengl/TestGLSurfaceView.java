@@ -3,14 +3,9 @@ package com.example.loadin_app.ui.opengl;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
-
-import androidx.constraintlayout.solver.widgets.Rectangle;
 
 import com.example.loadin_app.R;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
@@ -25,7 +20,7 @@ public class TestGLSurfaceView extends GLSurfaceView {
 
 
 
-    private final TestGLRenderer renderer;
+    private final LoadPlanRenderer renderer;
     public TestGLSurfaceView(Context context, LoadPlanBoxServiceImpl boxService){
         super(context);
         setEGLContextClientVersion(2);
@@ -33,7 +28,7 @@ public class TestGLSurfaceView extends GLSurfaceView {
         ops.inScaled = false;
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.blah, ops);
 
-        renderer = new TestGLRenderer(bitmap, context, boxService);
+        renderer = new LoadPlanRenderer(bitmap, context, boxService);
         setRenderer(renderer);
         panMode = true;
 
