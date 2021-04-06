@@ -108,7 +108,7 @@ public class Camera {
                 return -90f;
         }
 
-        double asRadians = Math.atan(y / x);  //if negative, should be a negative value
+        double asRadians = Math.asin(y );  //if negative, should be a negative value
         double asDegrees = Math.toDegrees(asRadians);
 
         return  (float)asDegrees;

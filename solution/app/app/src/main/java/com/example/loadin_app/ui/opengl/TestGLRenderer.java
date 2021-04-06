@@ -397,7 +397,8 @@ public class TestGLRenderer implements GLSurfaceView.Renderer {
         if(boxIterator.current() != null){
 
             Vector boxCenter = boxIterator.current().getCenter();
-            Vector pointOfView = boxCenter.add(new Vector(-3f*12, 2f*12f, -3f*12f));
+            Vector pointOfView = boxCenter.add(new Vector(-2f*12, 0f, -6f*12f));
+            pointOfView.setY(6f*12f); //fixed at eye height
 
             theCamera.placeCamera(pointOfView);
             theCamera.lookAt(boxCenter);  //always look at the current box
