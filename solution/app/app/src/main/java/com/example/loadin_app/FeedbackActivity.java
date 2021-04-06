@@ -11,29 +11,99 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
+import com.example.loadin_app.data.services.FeedbackServiceImpl;
+import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.ui.login.LoginActivity;
+
+import odu.edu.loadin.common.Feedback;
 
 public class FeedbackActivity extends AppCompatActivity {
 
     public static SharedPreferences sp;
-
+    boolean thumbsup, thumbsdown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
 
-        /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
+        // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         if(sp.getInt("loginID", 0) == 0){
-            Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
+            Intent switchToLogin = new Intent(FeedbackActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-        */
 
-        ToggleButton thumbsUpButton = findViewById(R.id.overallExperienceThumbsUpButton);
-        ToggleButton thumbsDownButton = findViewById(R.id.overallExperienceThumbsDownButton);
+
+        EditText accountCreationCommentText, itemInputCommentText, loadPlanCommentText, expertTipsCommentText, overallExperienceCommentText;
+        Spinner accountCreationRatingSpinner, itemInputRatingSpinner, loadPlanRatingSpinner, expertTipsRatingSpinner;
+        ToggleButton thumbsUp, thumbsDown;
+        Button addNewFeedback;
+
+        thumbsUp = findViewById(R.id.overallExperienceThumbsUpButton);
+        thumbsDown = findViewById(R.id.overallExperienceThumbsDownButton);
+        accountCreationRatingSpinner = findViewById(R.id.account_login_spinner);
+        itemInputRatingSpinner = findViewById(R.id.itemInputSpinner);
+        loadPlanRatingSpinner = findViewById(R.id.loadPlanSpinner);
+        expertTipsRatingSpinner = findViewById(R.id.expertTipsSpinner);
+        accountCreationCommentText = findViewById(R.id.accountLoginComments);
+        itemInputCommentText = findViewById(R.id.itemInputComments);
+        loadPlanCommentText = findViewById(R.id.loadPlanComments);
+        expertTipsCommentText = findViewById(R.id.expertTipsComments);
+        overallExperienceCommentText = findViewById(R.id.overallExperienceComments);
+        addNewFeedback = findViewById(R.id.submitFeedBackButton);
+
+
+        thumbsUp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    thumbsup = true;
+                    thumbsDown.setChecked(false);
+                }
+                else
+                {
+                    thumbsup = false;
+                }
+
+            }
+        });
+
+        thumbsDown.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked)
+                {
+                    thumbsdown = true;
+                    thumbsUp.setChecked(false);
+                }
+                else
+                {
+                    thumbsdown = false;
+                }
+
+            }
+        });
+
+
+        addNewFeedback.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                addFeedbackToDB(accountCreationCommentText.getText().toString(), itemInputCommentText.getText().toString(), loadPlanCommentText.getText().toString(), expertTipsCommentText.getText().toString(),
+                        overallExperienceCommentText.getText().toString(), Integer.parseInt(accountCreationRatingSpinner.getSelectedItem().toString()), Integer.parseInt(itemInputRatingSpinner.getSelectedItem().toString()),
+                        Integer.parseInt(loadPlanRatingSpinner.getSelectedItem().toString()), Integer.parseInt(expertTipsRatingSpinner.getSelectedItem().toString()), thumbsup);
+            }
+        });
+
+
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -42,6 +112,46 @@ public class FeedbackActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(null);
     }
 
+    private void addFeedbackToDB(String accountCreationComment, String itemInputComment, String loadPlanComment, String expertTipsComment, String overallExperienceComment,
+                                 Integer accountCreationRating, Integer itemInputRating, Integer loadPlanRating, Integer expertTipsRating, Boolean thumbsup)
+    {
+        Feedback newFeedback = new Feedback();
+        if(thumbsup == true)
+        {
+            newFeedback.setOverallExperienceRating(1);
+        }
+        else
+        {
+            newFeedback.setOverallExperienceRating(0);
+        }
+        newFeedback.setUserID(sp.getInt("loginID", 0));
+        newFeedback.setAccountCreationComment(accountCreationComment);
+        newFeedback.setAccountCreationRating(accountCreationRating);
+        newFeedback.setItemInputComment(itemInputComment);
+        newFeedback.setItemInputRating(itemInputRating);
+        newFeedback.setLoadPlanComment(loadPlanComment);
+        newFeedback.setLoadPlanRating(loadPlanRating);
+        newFeedback.setExpertTipsComment(expertTipsComment);
+        newFeedback.setExpertTipsRating(expertTipsRating);
+        newFeedback.setOverallExperienceComment(overallExperienceComment);
+
+        LoadInApplication app = (LoadInApplication)getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
+
+
+        try{
+            FeedbackServiceImpl service = new FeedbackServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
+            service.addFeedback(newFeedback);
+        }
+        catch(Exception ex){
+            System.out.println(ex);
+            //ooops we had an error
+            //TODO: make the user aware
+        }
+        //TODO: figure out what happens
+        //what happens here?
+    }
     // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
