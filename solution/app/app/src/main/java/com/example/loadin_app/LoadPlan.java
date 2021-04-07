@@ -44,7 +44,7 @@ public class LoadPlan implements ExtendedIterable<Load>
 
             Inventory i = b.getBox();
 
-            Box newBox = new Box(i.getId(), i.getBoxID(), i.getWidth(), i.getHeight(), i.getLength(), (float) i.getWeight(), i.getFragility(), i.getDescription());
+            Box newBox = new Box(i.getId(), i.getBoxID(), i.getWidth(), i.getHeight(), i.getLength(), (float) i.getWeight(), i.getFragility(), i.getDescription(), i.getUserID(), i.getStatus());
             newBox.setDestination(new Vector(b.getxOffset(), b.getyOffset(), b.getzOffset()));
             loads.get(b.getLoadNumber()).AddBox((newBox));
         }

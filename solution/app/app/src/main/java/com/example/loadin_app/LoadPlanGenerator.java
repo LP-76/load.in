@@ -131,30 +131,30 @@ public class LoadPlanGenerator
 
     private Box GenerateNewRandomBox()
     {
-        //home dpot box sizes
-        Box[] sizes =
-                {
-                        new Box(22,15,16),
-                        new Box(28,16,15),
-                        new Box(16,12,12),
-                        new Box(22,21,22)
-                };
-
-        Random rand = new Random();
-        return sizes[rand.nextInt(sizes.length - 1)];
-
-//        int minimumSize = 3;
-//        int maximumSize = 7;
-//
-//        int length, width, height;
+//        //home dpot box sizes
+//        Box[] sizes =
+//                {
+//                        new Box(22,15,16),
+//                        new Box(28,16,15),
+//                        new Box(16,12,12),
+//                        new Box(22,21,22)
+//                };
 //
 //        Random rand = new Random();
-//
-//        length = minimumSize + rand.nextInt(maximumSize - minimumSize);
-//        width = minimumSize + rand.nextInt(maximumSize - minimumSize);
-//        height = minimumSize + rand.nextInt(maximumSize - minimumSize);
+//        return sizes[rand.nextInt(sizes.length - 1)];
 
-//        return new Box(width * 6, height * 6, length * 6);
+        int minimumSize = 3;
+        int maximumSize = 7;
+
+        int length, width, height;
+
+        Random rand = new Random();
+
+        length = minimumSize + rand.nextInt(maximumSize - minimumSize);
+        width = minimumSize + rand.nextInt(maximumSize - minimumSize);
+        height = minimumSize + rand.nextInt(maximumSize - minimumSize);
+
+        return new Box(width * 6, height * 6, length * 6);
     }
 
     private int getUserId(){

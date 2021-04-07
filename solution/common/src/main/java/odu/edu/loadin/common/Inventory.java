@@ -3,8 +3,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 @XmlRootElement(name="Data")
 public class Inventory {
-    public Inventory(){
+    public static final String AT_SOURCE = "At Source";
+    public static final String ON_TRUCK = "On Truck";
+    public static final String AT_DESTINATION = "At Destination";
 
+
+
+    public Inventory(){
+        status = AT_SOURCE; //by default always at the source on creation
     }
     protected int id;
     protected int userID;
@@ -17,7 +23,15 @@ public class Inventory {
     protected double weight;
     protected Date createdAt;
     protected Date updatedAt;
+    protected String status;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public int getUserID() {
         return userID;

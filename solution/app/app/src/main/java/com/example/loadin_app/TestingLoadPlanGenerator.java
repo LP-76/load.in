@@ -7,11 +7,11 @@ import com.example.loadin_app.ui.opengl.World;
 
 public class TestingLoadPlanGenerator
 {
-    public static LoadPlan GenerateBasicSampleLoadPlan(World theWorld)
+    public static LoadPlan GenerateBasicSampleLoadPlan()
     {
         //World sampleWorld = new World();
         Truck t = new Truck();
-        t.setMyWorld(theWorld);
+
         t.place(new Vector(2f*12f, 0f, 2f*12f));
 
 
@@ -26,7 +26,7 @@ public class TestingLoadPlanGenerator
                 for(int widthIndex = (int) (sampleLoadPlan.GetTruck().getWidthInches()/boxSize) ; widthIndex >= 0  ; widthIndex--)
                 {
                     Box newBox = new Box(boxSize,boxSize,boxSize);
-                    newBox.setMyWorld(theWorld);
+
                     newBox.setDestination(    new Vector(widthIndex*boxSize - boxSize, heightIndex*boxSize, lengthIndex*boxSize - boxSize));
                     sampleLoadPlan.AddBox(newBox);
                     newBox.setVisible(false);

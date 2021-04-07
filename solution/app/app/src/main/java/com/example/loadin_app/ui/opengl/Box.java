@@ -5,30 +5,36 @@ import android.opengl.GLES20;
 import com.example.loadin_app.ui.opengl.programs.OpenGLProgram;
 import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
 
+import odu.edu.loadin.common.Inventory;
+import odu.edu.loadin.common.LoadPlanBox;
+
 public class Box extends WorldObject {
     private CubeMappedHexahedron hexahedron;
     protected float width, height, length;
     protected float weight;
     protected int fragility;
     private String description = "objects that require a description";
+    private String status;
 
-    private int boxID, globalID;
+    private int boxID, globalID, userID;
     private static int lastGlobalId = 0;
 
     private Vector destination = new Vector(0, 0, 0);
 
-    public Box(int globalID, int boxID, float width, float height, float length, float weight, int fragility, String description) {
+    public Box(int globalID, int boxID, float width, float height, float length, float weight, int fragility, String description, int userID, String status) {
         super();
 
         this.width = width;
         this.height = height;
         this.length = length;
+        this.userID = userID;
 
         this.globalID = globalID;
         this.boxID = boxID;
         this.fragility = fragility;
         this.weight = weight;
         this.description = description;
+        this.status = status;
     }
 
     public Box(float width, float height, float length) {
@@ -46,6 +52,36 @@ public class Box extends WorldObject {
     public void setDestination(Vector destination) {
         //System.out.println("box " + id + " is going to " + destination.toString());
         this.destination = destination;
+    }
+
+
+    public LoadPlanBox toLoadPlanBox(){
+
+        LoadPlanBox lpb = new LoadPlanBox();
+        Inventory i = lpb.getBox();
+        i.setId(globalID);
+        i.setBoxID(boxID);
+        i.setDescription(description);
+        i.setWidth(width);
+        i.setHeight(height);
+        i.setLength(length);
+        i.setFragility(fragility);
+        i.setWeight(weight);
+        i.setStatus(status);
+        i.setUserID(userID);
+        lpb.setxOffset(destination.getX());
+        lpb.setyOffset(destination.getY());
+        lpb.setzOffset(destination.getZ());
+
+        return lpb;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Vector getDestination() {

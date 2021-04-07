@@ -97,6 +97,11 @@ public class Vector  {
         return (float)Math.sqrt(Math.pow((double)getX(),2) + Math.pow((double)getX(),2) + Math.pow((double)getX(),2) );
     }
 
+    public boolean equalsVector(Vector v){
+        return getX() == v.getX()
+                && getY() ==v.getY()
+                && getZ() == v.getZ();
+    }
 
 
     public Stream<Float> getCoordinates() {

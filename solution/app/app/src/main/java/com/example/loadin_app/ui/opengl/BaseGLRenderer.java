@@ -39,7 +39,7 @@ public abstract class BaseGLRenderer implements GLSurfaceView.Renderer {
     private  float[] viewMatrix = new float[16];
     private float[] hudViewMatrix = new float[16];
     private  Vector upperLeftScreenCorner;
-    int animationSeconds;
+    int animationMillisecondsSeconds;
 
 
 
@@ -62,7 +62,7 @@ public abstract class BaseGLRenderer implements GLSurfaceView.Renderer {
     public BaseGLRenderer(Bitmap source, Context ctx, LoadPlanBoxServiceImpl boxService){
 
         context = ctx;
-        animationSeconds = 2;
+        animationMillisecondsSeconds = 2 * 1000;
         this.boxService = boxService;
 
     }

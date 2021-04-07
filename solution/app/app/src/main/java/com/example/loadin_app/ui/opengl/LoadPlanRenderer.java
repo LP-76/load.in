@@ -6,13 +6,19 @@ import android.graphics.Bitmap;
 import com.example.loadin_app.Load;
 import com.example.loadin_app.LoadPlan;
 import com.example.loadin_app.TestOpenGLActivity;
+import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
+import com.example.loadin_app.extensions.ExtendedIterable;
 import com.example.loadin_app.extensions.IExtendedIterator;
 
 import java.time.Duration;
+import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 import javax.microedition.khronos.opengles.GL10;
+
+import odu.edu.loadin.common.Inventory;
+import odu.edu.loadin.common.LoadPlanBox;
 
 /*
 In this class, we want to be able to display the load plan
@@ -20,21 +26,26 @@ In this class, we want to be able to display the load plan
 public class LoadPlanRenderer extends BaseGLRenderer {
 
     private LoadPlan theLoadPlan;
-    private IExtendedIterator<Load> loadIterator;
-    private IExtendedIterator<Box> boxIterator;
+    //private IExtendedIterator<Load> loadIterator;
+    //private IExtendedIterator<Box> boxIterator;
+
+    private LoadPlanStepIterator lpiter;
+
     private Object signalLock = new Object();
 
 
     private Truck theTruck;
     private Vector boxStagingArea;
-    private Box lastRenderCheckBox;
+    private LoadPlanStep lastRenderCheckStep;
+
 
     private SignalState signal;
     private LoadPlanDisplayerState state;
+    private InventoryServiceImpl inventoryService;
 
-    public LoadPlanRenderer(Bitmap source, Context ctx, LoadPlanBoxServiceImpl boxService) {
+    public LoadPlanRenderer(Bitmap source, Context ctx, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService) {
         super(source, ctx, boxService);
-
+        this.inventoryService = inventoryService;
        // testBitmap = source;
         state = LoadPlanDisplayerState.Initial;
         signal = SignalState.None;
@@ -43,9 +54,9 @@ public class LoadPlanRenderer extends BaseGLRenderer {
 
     @Override
     protected void adjustCameraPlacement() {
-        if(boxIterator.current() != null){
-
-            Vector boxCenter = boxIterator.current().getCenter();
+        if(lpiter.current() != null){
+            LoadPlanStep currentStep = lpiter.current();
+            Vector boxCenter = currentStep.currentBox.getCenter();
             Vector pointOfView = boxCenter.add(new Vector(-2f*12, 0f, -6f*12f));
             pointOfView.setY(6f*12f); //fixed at eye height
 
@@ -70,9 +81,10 @@ public class LoadPlanRenderer extends BaseGLRenderer {
             //e.printStackTrace();
         }
 
-        loadIterator = theLoadPlan.iterator();
-        loadIterator.next(); //advance to the first load
-        boxIterator = loadIterator.current().iterator();  //get the box iterator
+        lpiter = new LoadPlanStepIterator(theLoadPlan);
+//        loadIterator = theLoadPlan.iterator();
+//        loadIterator.next(); //advance to the first load
+//        boxIterator = loadIterator.current().iterator();  //get the box iterator
 
         theTruck =theLoadPlan.GetTruck();
         theTruck.setMyWorld(theWorld);
@@ -84,7 +96,7 @@ public class LoadPlanRenderer extends BaseGLRenderer {
 
         boxStagingArea = new Vector(0f, 0f, 0f);
 
-        advance();
+        requestAdvance();
     }
 
     private  SignalState getSignal() {
@@ -101,16 +113,16 @@ public class LoadPlanRenderer extends BaseGLRenderer {
 
 
 
-    public void fastForward(){
-        animationSeconds = 1;
+    public void requestFastForward(){
+        animationMillisecondsSeconds = 500;
         switch(getSignal()){
             case None:   //we can only raise the flag once until the system is ready to respond to another request
                 setSignal(SignalState.FastForward);
                 break;
         }
     }
-    public void fastRewind(){
-        animationSeconds = 1;
+    public void requestFastRewind(){
+        animationMillisecondsSeconds = 500;
         switch(getSignal()){
             case None:   //we can only raise the flag once until the system is ready to respond to another request
                 setSignal(SignalState.FastReverse);
@@ -118,8 +130,8 @@ public class LoadPlanRenderer extends BaseGLRenderer {
         }
     }
 
-    public void reverse(){
-        animationSeconds = 2;
+    public void requestReverse(){
+        animationMillisecondsSeconds = 500;
         switch(getSignal()){
             case None:   //we can only raise the flag once until the system is ready to respond to another request
                 setSignal(SignalState.Reverse);
@@ -127,8 +139,8 @@ public class LoadPlanRenderer extends BaseGLRenderer {
         }
     }
 
-    public void advance(){
-        animationSeconds = 2;
+    public void requestAdvance(){
+        animationMillisecondsSeconds = 500;
         switch(getSignal()){
             case None:   //we can only raise the flag once until the system is ready to respond to another request
                 setSignal(SignalState.Forward);
@@ -136,89 +148,213 @@ public class LoadPlanRenderer extends BaseGLRenderer {
         }
 
     }
+    private boolean shouldSkipStep(LoadPlanStep step){
+        Box current = step.currentBox;
+        if(step.loading){
+            switch(current.getStatus()){
+                case Inventory.ON_TRUCK:
+                case Inventory.AT_DESTINATION:
+                    return true;
+
+            }
+
+        }else{
+            switch(current.getStatus()){
+                case Inventory.AT_DESTINATION:
+                    return true;
+
+            }
+        }
+        return false;
+    }
 
     private void updateState(){
-
+        LoadPlanStep currentStep = lpiter.current();
+        Box current = currentStep != null ? currentStep.currentBox : null;
+        if(current != null && current.getMyWorld() == null){
+            current.setMyWorld(theWorld);
+        }
         switch(state){
             case Initial:
-                if(boxIterator.hasNext())
+                if(lpiter.hasNext()) {
+
+                    while (lpiter.hasNext() && shouldSkipStep(lpiter.next())) {
+                        Box b = lpiter.current().currentBox;
+                        if(b.getMyWorld() == null)
+                            b.setMyWorld(theWorld);
+
+                        switch (b.getStatus()) {
+                            case Inventory.AT_DESTINATION:
+                                b.setVisible(false);
+                                b.place(boxStagingArea);
+                                break;
+                            case Inventory.ON_TRUCK:
+                                b.setVisible(true);
+                                Vector destination = theTruck.getWorldOffset().add(b.getDestination());
+                                b.place(destination);
+                                break;
+                        }
+                    }
+                    lpiter.previous(); //reverse one
+
                     state = LoadPlanDisplayerState.Advancing;
+                }
                 else
                     state = LoadPlanDisplayerState.EndOfLoadPlan;
 
                 break;
             case Advancing:
-                if(boxIterator.hasNext()){
-                    putNextBoxIntoStaging();
-                    state = LoadPlanDisplayerState.BoxStaged;
-                }else if(loadIterator.hasNext()){
-                    transitionToNextLoadPlan();
-                    state = LoadPlanDisplayerState.Initial;
-                    setSignal(SignalState.None); //always clear signal
-                }
-                else
+
+                if(lpiter.hasNext()){
+                    Box previous = current;
+                    LoadPlanStep previousStep = currentStep;
+                    currentStep = lpiter.next();
+                    current = currentStep != null ? currentStep.currentBox : null;
+                    current.setVisible(true);
+
+
+
+                    if(currentStep.loading){
+                        //if we are loading, we want to skip any box that is already at destination
+
+
+
+
+                        if(previousStep != null && currentStep.loading != previousStep.loading)
+                            previous.setVisible(false); //hide last member of previous unloading
+
+                        state = LoadPlanDisplayerState.BoxStaged;
+                    }else{
+
+
+                        if(previous != current)
+                            previous.setVisible(false);
+                        state = LoadPlanDisplayerState.BoxOnTruck;
+                    }
+
+
+                }else{
                     state = LoadPlanDisplayerState.EndOfLoadPlan;
+                    setSignal(SignalState.None);
+                }
 
                 if(getSignal() != SignalState.FastForward)
                     setSignal(SignalState.None);
                 break;
             case Reversing:
-                if(boxIterator.hasPrevious()){
-                    boxIterator.current().setVisible(false);
-                    boxIterator.previous();
-                    state = LoadPlanDisplayerState.BoxAtDestination;
 
-                }else if(loadIterator.hasPrevious()){
-                    transitionToPreviousLoadPlan();
-                    setSignal(SignalState.None);
-                    state = LoadPlanDisplayerState.BoxAtDestination;
-                }else {
+                if(lpiter.hasPrevious()){
+                    Box previous = current;
+                    LoadPlanStep previousStep = currentStep;
+                    currentStep = lpiter.previous();
+                    current = currentStep != null ? currentStep.currentBox : null;
+                    current.setVisible(true);
+
+                    if(currentStep.loading){
+                        if(previous != current)
+                            previous.setVisible(false);
+                        state = LoadPlanDisplayerState.BoxOnTruck;
+                    }else{
+                        if(previousStep != null && currentStep.loading != previousStep.loading)
+                            previous.setVisible(false); //hide last member of previous unloading
+
+                        state = LoadPlanDisplayerState.BoxStaged;
+
+                    }
+
+
+                }else{
                     state = LoadPlanDisplayerState.BoxStaged;
                     setSignal(SignalState.None);
                 }
 
                 if(getSignal() != SignalState.FastReverse)
                     setSignal(SignalState.None);
+
                 break;
 
             case BoxStaged:
-                switch (getSignal()){
-                    case FastForward:
-                    case Forward:
-                        //we've got the green light to go ahead
-                        //objective is to move it to destination
-                        Box current = boxIterator.current();
-                        Vector destination = theTruck.getWorldOffset().add(current.getDestination());
-                        animateBox(current,  destination, getSignal() == SignalState.Forward , LoadPlanDisplayerState.BoxAtDestination);
-                        break;
-                    case FastReverse:
-                    case Reverse:
-                        state = LoadPlanDisplayerState.Reversing;
 
-                        break;
+
+                if(currentStep.loading){
+                    switch (getSignal()){
+                        case FastForward:
+                        case Forward:
+                            //we've got the green light to go ahead
+                            //objective is to move it to destination
+                            Vector destination = theTruck.getWorldOffset().add(current.getDestination());
+                            animateBox(current,  destination, getSignal() == SignalState.Forward , LoadPlanDisplayerState.BoxOnTruck);
+                            break;
+                        case FastReverse:
+                        case Reverse:
+                            state = LoadPlanDisplayerState.Reversing;
+
+                            break;
+                    }
+                }else{
+                    switch (getSignal()){
+                        case FastForward:
+                        case Forward:
+                            state = LoadPlanDisplayerState.Advancing;
+                            break;
+                        case FastReverse:
+                        case Reverse:
+                            //we've got the green light to go ahead
+                            //objective is to move it to destination
+
+                            Vector destination = theTruck.getWorldOffset().add(current.getDestination());
+                            animateBox(current,  destination, getSignal() == SignalState.Reverse , LoadPlanDisplayerState.BoxOnTruck);
+
+
+                            break;
+                    }
                 }
+
                 break;
-            case BoxAtDestination:
+            case BoxOnTruck:
                 //we're at the destination... now we wait for a signal
 
-                switch(getSignal()){
-                    case FastForward:
-                    case Forward:
-                        state = LoadPlanDisplayerState.Advancing;
-                        break;
-                    case FastReverse:
-                    case Reverse:
-                        animateBox(boxIterator.current(), boxStagingArea, getSignal() == SignalState.Reverse, LoadPlanDisplayerState.BoxStaged);
-                        break;
+                if(currentStep.loading){
+                    switch(getSignal()){
+                        case FastForward:
+                        case Forward:
+                            state = LoadPlanDisplayerState.Advancing;
+                            break;
+                        case FastReverse:
+                        case Reverse:
+                            animateBox(current, boxStagingArea, getSignal() == SignalState.Reverse, LoadPlanDisplayerState.BoxStaged);
+                            break;
+                    }
+
+                }else{
+                    switch(getSignal()){
+                        case FastForward:
+                        case Forward:
+                            //if we're unloading we want the box to travel from the truck to the staging area
+                            animateBox(current, boxStagingArea, getSignal() == SignalState.Forward, LoadPlanDisplayerState.BoxStaged);
+                            break;
+                        case FastReverse:
+                        case Reverse:
+
+                            state = LoadPlanDisplayerState.Reversing;
+
+                            break;
+                    }
                 }
+
 
                 break;
 
             case EndOfLoadPlan:
+
                 switch(getSignal()){  //we can only go back
                     case FastReverse:
                     case Reverse:
-                        animateBox(boxIterator.current(), boxStagingArea, getSignal() == SignalState.Reverse, LoadPlanDisplayerState.BoxStaged);
+
+
+                        Vector destination = theTruck.getWorldOffset().add(current.getDestination());
+                        animateBox(current,  destination, getSignal() == SignalState.Reverse , LoadPlanDisplayerState.BoxOnTruck);
+
                         break;
                     default:
                         setSignal(SignalState.None);
@@ -239,61 +375,48 @@ public class LoadPlanRenderer extends BaseGLRenderer {
         state = LoadPlanDisplayerState.BoxAnimating;
         TransposeAnimation animation = new TransposeAnimation(
                 target,
-                Duration.ofSeconds(animationSeconds),
+                Duration.ofMillis(animationMillisecondsSeconds),
                 theWorld.getTick(),
                 to,
                 i -> {
                     if(clearSignal)
                         setSignal(SignalState.None);  //only clear the signal for single step back
                     state =resultingState;
+
+                    LoadPlanBox lpb = target.toLoadPlanBox();
+                    LoadPlanStep current = lpiter.current();
+
+                    switch (state){
+                        case BoxOnTruck:
+                            lpb.getBox().setStatus(Inventory.ON_TRUCK);
+                            break;
+                        case BoxStaged:
+                            if(current.loading){
+                                lpb.getBox().setStatus(Inventory.AT_SOURCE);
+                            }else{
+                                lpb.getBox().setStatus(Inventory.AT_DESTINATION);
+                            }
+                            break;
+                    }
+
+                    try {
+                        inventoryService.editInventory(lpb.getBox());
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                 }
         ) ;
         theWorld.addAnimation(animation); //add this so it gets processed
     }
 
-    private void setAllBoxesVisibility(boolean visible){
-        for(IExtendedIterator<Box> i = loadIterator.current().iterator(); i.hasNext();)
-            i.next().setVisible(visible);  //toggle all boxes to be hidden
-    }
-
-    private void getPreviousBox(){
-        boxIterator.previous(); //we will move null into current if we can't reverse
-    }
-
-    private  void putNextBoxIntoStaging(){
 
 
-        Box currentBox = boxIterator.next();
-        if(currentBox != null){
-            if(currentBox.getMyWorld() == null)
-            {
-                currentBox.setMyWorld(theWorld);
-            }
-            currentBox.place(boxStagingArea);
-            currentBox.setVisible(true);
-        }
-
-    }
 
 
-    private void transitionToNextLoadPlan(){
 
-        setAllBoxesVisibility(false); //hide all current boxes
-        loadIterator.next();
-        boxIterator = loadIterator.current().iterator();
-
-    }
-
-
-    private void transitionToPreviousLoadPlan(){
-
-        setAllBoxesVisibility(false); //hide all current boxes
-        loadIterator.previous();
-        boxIterator = loadIterator.current().iterator();
-        boxIterator.goToEnd();
-        setAllBoxesVisibility(true);
-
-    }
 
     @Override
     protected void renderWorld() {
@@ -303,23 +426,33 @@ public class LoadPlanRenderer extends BaseGLRenderer {
 
     @Override
     protected void renderHud() {
-        if(boxIterator.current() != lastRenderCheckBox) //don't re-render textures unless we detect a change
-            onBoxChanged();
-        lastRenderCheckBox = boxIterator.current();
+        LoadPlanStep current = lpiter.current();
+
+
+        if(current != lastRenderCheckStep) //don't re-render textures unless we detect a change
+            onStepChanged();
+        lastRenderCheckStep =  current;
         //then render the HUD
         super.renderHud();
     }
 
-    private void onBoxChanged(){
+    private void onStepChanged(){
+        LoadPlanStep current = lpiter.current();
+        Box currentBox = current != null ? current.currentBox : null;
+
         String stepMessage = "";
         String loadMessage = "";
         String boxMessage = "";
-        if(theLoadPlan != null){
-            //TODO: alter load plan to give this information
-            stepMessage = "Step " + (boxIterator.currentPosition() + 1) + " of " + boxIterator.size();
-            loadMessage = "Load " + (loadIterator.currentPosition() + 1) + " of " + loadIterator.size();
+        if(theLoadPlan != null && current != null){
+            if(current.loading){
+                stepMessage = "Loading " + (current.stepNumber + 1) + " of " + current.steps;
+            }else{
+                stepMessage = "Unloading " + (current.stepNumber + 1) + " of " + current.steps;
+            }
+
+            loadMessage = "Load " + (current.loadNumber + 1) + " of " + current.totalLoads;
         }
-        Box currentBox = boxIterator.current();
+
 
         if(currentBox != null){
             boxMessage = "Box #" + currentBox.getBoxId() + "\n"+
@@ -335,11 +468,14 @@ public class LoadPlanRenderer extends BaseGLRenderer {
     }
 
 
+
+
+
     private enum LoadPlanDisplayerState{
         Initial,
         BoxStaged,
         BoxAnimating,
-        BoxAtDestination,
+        BoxOnTruck,
         Advancing,
         Reversing,
         EndOfLoadPlan

@@ -41,6 +41,7 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
                 b.setWeight(rs.getDouble("WEIGHT"));
                 b.setCreatedAt(rs.getDate("CREATED_AT"));
                 b.setUpdatedAt(rs.getDate("UPDATED_AT"));
+                b.setStatus(rs.getString("STATUS"));
 
                 //additional properties
                 s.setxOffset(rs.getFloat("X_OFFSET"));
