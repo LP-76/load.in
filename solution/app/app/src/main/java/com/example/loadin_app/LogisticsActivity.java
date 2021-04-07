@@ -31,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import odu.edu.loadin.common.Inventory;
-import odu.edu.loadin.common.LogisticsApiResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.Route;
 import retrofit2.Call;

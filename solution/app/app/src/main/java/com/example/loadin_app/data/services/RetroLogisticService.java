@@ -9,8 +9,6 @@ import com.example.loadin_app.data.services.logisticalthings.RouteLeg;
 
 import java.util.concurrent.CompletableFuture;
 
-import odu.edu.loadin.common.Logistics;
-import odu.edu.loadin.common.LogisticsApiResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
