@@ -16,7 +16,7 @@ import com.example.loadin_app.ui.login.LoginActivity;
 
 public class MainMenuActivity extends AppCompatActivity
 {
-    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, openGLTestButton;
+    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, openGLTestButton, logisticsButton;
     public static SharedPreferences sp;
 
     @Override
@@ -61,6 +61,17 @@ public class MainMenuActivity extends AppCompatActivity
             {
                 Intent switchToMoveInventory = new Intent(MainMenuActivity.this, AddItemActivity.class);
                 startActivity(switchToMoveInventory);
+            }
+        });
+
+        logisticsButton = (Button) findViewById(R.id.logistics_button);
+        logisticsButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent switchToLoadPlan = new Intent(MainMenuActivity.this, LogisticsActivity.class);
+                startActivity(switchToLoadPlan);
             }
         });
 
