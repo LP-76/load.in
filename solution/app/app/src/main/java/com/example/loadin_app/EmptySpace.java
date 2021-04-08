@@ -111,36 +111,34 @@ public class EmptySpace
     }
 
 
-    public void merge(EmptySpace other){
+    public void merge(EmptySpace other)
+    {
         //TODO: alter this empty space to merge with another
+        //need to refactor/adapt code from EmptySpaceDefragmenter.Merge();
 
         //adds the space to this space
 
     }
 
-    public EmptySpace splitX(float x){
-        //TODO: implement
-        return null;
+    public ArrayList<EmptySpace> split(Box box)
+    {
+        ArrayList<EmptySpace> splitSpaces = new ArrayList<EmptySpace>();
+
+        if(this.length - box.getLength() > 0 && this.width > 0 && this.height > 0 )
+            splitSpaces.add(new EmptySpace(this.length - box.getLength(), this.width, this.height, this.offset ));
+
+        if(box.getLength() > 0 && this.width - box.getWidth() > 0 && this.height > 0)
+            splitSpaces.add(new EmptySpace(box.getLength(), this.width - box.getWidth(), this.height, new Vector(this.offset.getX(),this.offset.getY(),this.offset.getZ() + (this.length-box.getLength()))));
+
+        if(box.getLength() > 0 && box.getWidth() > 0 && (this.height - box.getHeight()) > 0 )
+            splitSpaces.add(new EmptySpace(box.getLength(), box.getWidth(), this.height - box.getHeight(), new Vector(this.offset.getX() + (this.width - box.getWidth()), this.offset.getY() + box.getHeight(), this.offset.getZ() + (this.length - box.getLength()))));
+
+        return splitSpaces;
     }
 
-    public EmptySpace splitY(float y){
-        //TODO: implement
-        return null;
-    }
-
-    public EmptySpace splitZ(float z){
-        //TODO: implement
-        return null;
-    }
-
-    public ArrayList<EmptySpace> split(Box box){
-        //TODO: implement
-        return null;
-    }
-
-    public boolean canFit(Box box){
-        //TODO: implement
-        return false;
+    public boolean canFit(Box box)
+    {
+        return (this.width >= box.getWidth() ) &&(this.length >= box.getLength() ) && (this.height >= box.getHeight() );
     }
 
 

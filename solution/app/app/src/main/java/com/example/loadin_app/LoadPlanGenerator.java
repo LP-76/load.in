@@ -187,7 +187,7 @@ public class LoadPlanGenerator
         //System.out.println("Started GenerateLoadPlan!");
         for (Box currentBox : moveInventory)//for each box..
         {
-            if(BoxFitsWithinSpace(new EmptySpace(movingTruck.getLengthInches(),movingTruck.getWidthInches(), movingTruck.getHeightInches(), new Vector(0,0,0)),currentBox))
+            if(new EmptySpace(movingTruck.getLengthInches(),movingTruck.getWidthInches(), movingTruck.getHeightInches(), new Vector(0,0,0)).canFit((currentBox)))
                 PlaceBox(FindPlaceForBox(currentBox), currentBox);
         }
         //System.out.println("Finished GenerateLoadPlan!");
@@ -201,9 +201,7 @@ public class LoadPlanGenerator
         plan.GetLoads().get(input_Info.GetLoadIndex()).AddBox(input_Box);
         plan.GetLoads().get(input_Info.GetLoadIndex()).RemoveSpace(idealSpace);
 
-        plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(idealSpace.GetLength() - input_Box.getLength(), idealSpace.GetWidth(), idealSpace.GetHeight(), idealSpace.GetOffset() ));
-        plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(input_Box.getLength(), idealSpace.GetWidth() - input_Box.getWidth(), idealSpace.GetHeight(), new Vector(idealSpace.GetOffset().getX(),idealSpace.GetOffset().getY(),idealSpace.GetOffset().getZ() + (idealSpace.GetLength()-input_Box.getLength()))));
-        plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpace(new EmptySpace(input_Box.getLength(), input_Box.getWidth(), idealSpace.GetHeight() - input_Box.getHeight(), new Vector(idealSpace.GetOffset().getX() + (idealSpace.GetWidth() - input_Box.getWidth()), idealSpace.GetOffset().getY() + input_Box.getHeight(), idealSpace.GetOffset().getZ() + (idealSpace.GetLength() - input_Box.getLength()))));
+        plan.GetLoads().get(input_Info.GetLoadIndex()).AddSpaces(idealSpace.split(input_Box));
 
         /*
         switch(input_Info.GetNumberOfMatchingDimensions())
@@ -322,7 +320,7 @@ public class LoadPlanGenerator
              {
                  EmptySpace currentSpace = input_Load.GetEmptySpaces().get(spaceIndex);
 
-                 if( BoxFitsWithinSpace(currentSpace, input_Box) )
+                 if( currentSpace.canFit((input_Box) ) )
                  {
                      sizeAtLeastAsLargeAsBoxFound = true;
 
@@ -384,10 +382,7 @@ public class LoadPlanGenerator
         return numberOfMatchingDimensions;
     }
 
-    private boolean BoxFitsWithinSpace(EmptySpace input_Space, Box input_Box)
-    {
-        return (input_Space.GetWidth() >= input_Box.getWidth() ) &&(input_Space.GetLength() >= input_Box.getLength() ) && (input_Space.GetHeight() >= input_Box.getHeight() );
-    }
+
 
     public void setUseRandomBoxes(boolean input)
     {
