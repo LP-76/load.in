@@ -34,6 +34,9 @@ VALUES ('Grinch','Im Janet and I love Load.In and Grinch Green', 'Using Load.In 
 INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, VIDEO, COMMENTS, CREATED_AT, UPDATED_AT)
 VALUES ('Heavy Objects','How to pack and move heavy objects', 'Ensure heavy objects are at the bottom of your box. Next ensure you lift with your legs and not your back. Ensure heavy items are at the bottom of your vehicle.', NULL, 'https://loadinvideohost.s3.amazonaws.com/heavy_real.mp4', 'THIS TIP SUCKS', NOW(), NOW());
 
+INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, VIDEO, COMMENTS, CREATED_AT, UPDATED_AT)
+VALUES ('Fine China','How to pack Fine China', 'Ensure you package the fine china with bubble wrap or a similar material to reduce vibration and chance of shattering. Ensure the box where the fine china is stored is loaded higher than heavier items.', NULL, 'https://loadinvideohost.s3.amazonaws.com/fine_china.mp4', 'THIS TIP SUCKS', NOW(), NOW());
+
 INSERT INTO USER_FEEDBACK( ID, USER_ID, ACCOUNT_CREATION_COMMENT, ACCOUNT_CREATION_RATING, ITEM_INPUT_COMMENT, ITEM_INPUT_RATING, LOAD_PLAN_COMMENT, LOAD_PLAN_RATING, EXPERT_TIPS_COMMENT, EXPERT_TIPS_RATING, OVERALL_EXPERIENCE_COMMENT, OVERALL_EXPERIENCE_RATING, CREATED_AT, UPDATED_AT) VALUES (1,1,'LOVE IT',5,'LOVE IT',5,'LOVE IT',5,'LOVE IT',5,'LOVE IT',5,NOW(),NOW());
 
 INSERT INTO LOAD_PLAN_BOX(ID, X_OFFSET, Y_OFFSET, Z_OFFSET, BOX_STEP, LOAD_NUMBER)
