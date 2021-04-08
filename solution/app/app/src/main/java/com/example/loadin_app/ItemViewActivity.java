@@ -141,11 +141,11 @@ public class ItemViewActivity extends AppCompatActivity {
         String password = app.getCurrentUser().getPassword();
         TextView viewExpertTipsText = (TextView) findViewById(R.id.ViewExpertTipsText);
         ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
-        ExpertArticle expertArticle = new ExpertArticle();
+        ArrayList<ExpertArticle> expertArticle = new ArrayList<ExpertArticle>();
         try{
             expertArticle = service.getExpertArticles(inputDescription);
 
-            if(expertArticle.getKeyword() != null)
+            if(expertArticle.size() > 0)
             {
                 viewExpertTipsText.setVisibility(View.VISIBLE);
             }

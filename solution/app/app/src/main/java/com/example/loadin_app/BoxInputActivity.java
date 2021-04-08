@@ -67,7 +67,7 @@ public class BoxInputActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                searchForArticle(descriptionInput.getText().toString());
+               // searchForArticle(descriptionInput.getText().toString());
                 AddBoxSizeToDB(descriptionInput.getText().toString(), Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()), Float.parseFloat(heightInput.getText().toString()));
             }
         });
@@ -81,7 +81,7 @@ public class BoxInputActivity extends AppCompatActivity
             }
         });
     }
-
+/*
     private void searchForArticle(String inputDescription)
     {
         LoadInApplication app = (LoadInApplication)getApplication();
@@ -105,6 +105,7 @@ public class BoxInputActivity extends AppCompatActivity
             //TODO: make the user aware
         }
     }
+ */
     private void AddBoxSizeToDB(String inputDescription, float inputWidth, float inputDepth, float inputHeight)
     {
         System.out.println("Creating a box of width: " + inputWidth + ", depth: " + inputDepth +", height: " + inputHeight + ", description: " + inputDescription + "!");

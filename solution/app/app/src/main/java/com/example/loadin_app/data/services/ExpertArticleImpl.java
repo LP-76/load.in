@@ -6,6 +6,7 @@ package com.example.loadin_app.data.services;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -34,8 +35,8 @@ public class ExpertArticleImpl extends LoadInServiceWithAuthImpl {
         retroService = retrofitContext.create(RetroExpertArticleService.class);
     }
 
-    public ExpertArticle getExpertArticles(String keyword) throws ExecutionException, InterruptedException {
-        CompletableFuture<DataWrapper<ExpertArticle>> promise = retroService.getExpertArticles(keyword);
+    public ArrayList<ExpertArticle> getExpertArticles(String keyword) throws ExecutionException, InterruptedException {
+        CompletableFuture<DataWrapper<ArrayList<ExpertArticle>>> promise = retroService.getExpertArticles(keyword);
         return promise.get().Data;
     }
 

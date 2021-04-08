@@ -33,7 +33,7 @@ import javax.ws.rs.core.Response;
 public class ExpertArticleServiceImpl implements ExpertArticleService {
 
     @Override
-    public ExpertArticle getExpertArticles(String Keyword){
+    public ArrayList<ExpertArticle> getExpertArticles(String Keyword){
 
 
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
@@ -81,9 +81,7 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
      * @throws IOException -
      * @throws ParseException -
      */
-    private ExpertArticle startLucene(String keyword, ArrayList<ExpertArticle> expertArticles) throws IOException, ParseException {
-
-        ExpertArticle results = new ExpertArticle();
+    private ArrayList<ExpertArticle> startLucene(String keyword, ArrayList<ExpertArticle> expertArticles) throws IOException, ParseException {
 
         // Specify the analyzer for tokenizing text.
         //    The same analyzer should be used for indexing and searching
@@ -143,6 +141,8 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
         ScoreDoc[] hits = docs.scoreDocs;
 
 
+        ArrayList<ExpertArticle> foundArticles = new ArrayList<ExpertArticle>();
+        ExpertArticle results = new ExpertArticle();
         // looping through our results.
         if(hits.length >= 1) {
             for (int i = 0; i < hits.length; ++i) {
@@ -154,6 +154,7 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
                 results.setArticleTitle(doc.get("title"));
                 results.setArticleContent(doc.get("article"));
                 results.setVisualFile(doc.get("video"));
+                foundArticles.add(results);
             }
         }
         else
@@ -180,7 +181,7 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
         }
 
         reader.close();
-        return results;
+        return foundArticles;
     }
 
 

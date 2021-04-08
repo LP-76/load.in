@@ -28,6 +28,8 @@ import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
 
+import java.util.ArrayList;
+
 public class AddItemActivity extends AppCompatActivity {
 
     private EditText descriptionInput, widthInput, depthInput, heightInput, weightInput, fragilityInput;
@@ -153,11 +155,11 @@ public class AddItemActivity extends AppCompatActivity {
         String username = app.getCurrentUser().getEmail();
         String password = app.getCurrentUser().getPassword();
         ExpertArticleImpl service = new ExpertArticleImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
-        ExpertArticle expertArticle = new ExpertArticle();
+        ArrayList<ExpertArticle> expertArticles = new ArrayList<ExpertArticle>();
         try{
-            expertArticle = service.getExpertArticles(inputDescription);
+            expertArticles = service.getExpertArticles(inputDescription);
 
-            if(expertArticle.getKeyword() != null)
+            if(expertArticles.size() > 0)
             {
                 tipsButton.setVisibility(View.VISIBLE);
             }
