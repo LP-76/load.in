@@ -197,7 +197,11 @@ public class TipsAndTricksActivity extends AppCompatActivity {
                 mArticleTitle.setTextColor(Color.parseColor("#6DD1A1"));
                 mArticleTitle.setBackgroundColor(Color.WHITE);
             }
-            else
+            else if(expertArticle.getArticleTitle().equals(""))
+            {
+                System.out.println(expertArticle.getArticleTitle());
+                Toast.makeText(TipsAndTricksActivity.this, "Sorry, we don't have a tip for this at the moment. But we saved it for future updates!", Toast.LENGTH_LONG).show();
+            }
             {
                 toolbar.setBackgroundColor(Color.parseColor("#6DD1A1"));
                 relativelayout1.setBackgroundColor(Color.WHITE);

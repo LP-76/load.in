@@ -144,15 +144,39 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
 
 
         // looping through our results.
-        for(int i=0; i < hits.length; ++i) {
-            int docId = hits[i].doc;
-            Document doc = searcher.doc(docId);
+        if(hits.length >= 1) {
+            for (int i = 0; i < hits.length; ++i) {
+                int docId = hits[i].doc;
+                Document doc = searcher.doc(docId);
 
-            //grabbing each expert tip and storing it into our ADT
-            results.setKeyword(doc.get("keyword"));
-            results.setArticleTitle(doc.get("title"));
-            results.setArticleContent(doc.get("article"));
-            results.setVisualFile(doc.get("video"));
+                //grabbing each expert tip and storing it into our ADT
+                results.setKeyword(doc.get("keyword"));
+                results.setArticleTitle(doc.get("title"));
+                results.setArticleContent(doc.get("article"));
+                results.setVisualFile(doc.get("video"));
+            }
+        }
+        else
+        {
+            results.setKeyword("");
+            results.setArticleTitle("");
+            results.setArticleContent("");
+
+            try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){
+
+                String addQuery = "INSERT INTO EXPERT_TIP_UNMATCHED_KEYWORDS(KEYWORD, CREATED_AT, UPDATED_AT)"
+                        +" VALUES (?, NOW(), NOW() )";
+
+                PreparedStatement insertStatement = conn.prepareStatement(addQuery);
+                insertStatement.setString(1,keyword);
+                System.out.println(insertStatement);
+                insertStatement.executeUpdate();
+
+            }
+            catch (SQLException ex){
+
+            }
+
         }
 
         reader.close();

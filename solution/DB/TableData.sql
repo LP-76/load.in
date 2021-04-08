@@ -17,7 +17,7 @@ INSERT INTO USER_INVENTORY_ITEM (USER_ID, BOX_ID, BOX_WIDTH, BOX_LENGTH, BOX_HEI
 VALUES (1, 1, 3, 3, 3, 'Mothers Clothes', '2', 234.5, NOW(), NOW(), 'At Source');
 
 INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, VIDEO, COMMENTS, CREATED_AT, UPDATED_AT)
-VALUES ('Heavy item','Use small boxes for heavy items.', 'LIFT WITH YOUR BACK!', NULL, 'https://loadinvideohost.s3.amazonaws.com/heavy.mp4', 'THIS TIP SUCKS', NOW(), NOW());
+VALUES ('Rocket','Use small boxes for heavy items.', 'LIFT WITH YOUR BACK!', NULL, 'https://loadinvideohost.s3.amazonaws.com/heavy.mp4', 'THIS TIP SUCKS', NOW(), NOW());
 
 INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, VIDEO, COMMENTS, CREATED_AT, UPDATED_AT)
 VALUES ('Eric','LET ERIC IN', 'HE NEEDS TO SCREAMMMMMMMMMMM', NULL,'https://loadinvideohost.s3.amazonaws.com/eric.mp4', 'THIS TIP SUCKS', NOW(), NOW());
@@ -30,6 +30,9 @@ VALUES ('Janet','Check to see if you have original boxes for your electronics', 
 
 INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, VIDEO, COMMENTS, CREATED_AT, UPDATED_AT)
 VALUES ('Grinch','Im Janet and I love Load.In and Grinch Green', 'Using Load.In Green is how you secure an A in CS411W', NULL, 'https://loadinvideohost.s3.amazonaws.com/janetgrinch.mp4', 'THIS TIP SUCKS', NOW(), NOW());
+
+INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, VIDEO, COMMENTS, CREATED_AT, UPDATED_AT)
+VALUES ('Heavy Objects','How to pack and move heavy objects', 'Ensure heavy objects are at the bottom of your box. Next ensure you lift with your legs and not your back. Ensure heavy items are at the bottom of your vehicle.', NULL, 'https://loadinvideohost.s3.amazonaws.com/heavy_real.mp4', 'THIS TIP SUCKS', NOW(), NOW());
 
 INSERT INTO USER_FEEDBACK( ID, USER_ID, ACCOUNT_CREATION_COMMENT, ACCOUNT_CREATION_RATING, ITEM_INPUT_COMMENT, ITEM_INPUT_RATING, LOAD_PLAN_COMMENT, LOAD_PLAN_RATING, EXPERT_TIPS_COMMENT, EXPERT_TIPS_RATING, OVERALL_EXPERIENCE_COMMENT, OVERALL_EXPERIENCE_RATING, CREATED_AT, UPDATED_AT) VALUES (1,1,'LOVE IT',5,'LOVE IT',5,'LOVE IT',5,'LOVE IT',5,'LOVE IT',5,NOW(),NOW());
 
