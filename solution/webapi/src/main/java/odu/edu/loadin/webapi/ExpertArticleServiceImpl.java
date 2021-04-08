@@ -146,15 +146,16 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
         // looping through our results.
         if(hits.length >= 1) {
             for (int i = 0; i < hits.length; ++i) {
+                ExpertArticle searched = new ExpertArticle();
                 int docId = hits[i].doc;
                 Document doc = searcher.doc(docId);
 
                 //grabbing each expert tip and storing it into our ADT
-                results.setKeyword(doc.get("keyword"));
-                results.setArticleTitle(doc.get("title"));
-                results.setArticleContent(doc.get("article"));
-                results.setVisualFile(doc.get("video"));
-                foundArticles.add(results);
+                searched.setKeyword(doc.get("keyword"));
+                searched.setArticleTitle(doc.get("title"));
+                searched.setArticleContent(doc.get("article"));
+                searched.setVisualFile(doc.get("video"));
+                foundArticles.add(searched);
             }
         }
         else
