@@ -440,8 +440,20 @@ public class LoadPlanGenerator
         return  false;
     }
 
-    public int score(LoadPlan plan){
-        //TODO: score a load plan
+    public int score(LoadPlan plan)
+    {
+        float emptyVolume = 0;
+
+        for(Load load : plan.GetLoads())
+        {
+            for(EmptySpace space : load.GetEmptySpaces())
+            {
+                emptyVolume += space.GetVolume();
+            }
+        }
+
+        //TODO: This is the right way to score, need to discuss how to utilize the score
+
         return 0;
     }
 

@@ -65,6 +65,12 @@ public class EmptySpace
         return widthHeightArea;
     }
 
+    public float GetVolume()
+    {
+        return length * width * height;
+    }
+
+
     public Vector GetOffset()
     {
         return offset;
