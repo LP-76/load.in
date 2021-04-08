@@ -440,7 +440,7 @@ public class LoadPlanGenerator
         return dataModel;
     }
 
-    private  boolean violatesConstraints(Box currentBox, LoadPlan currentLoadPlan){
+    private  boolean violatesConstraints(Box currentBox, LoadPlan currentLoadPlan, Load loadForBox){
         //TODO: implement
         return  false;
     }
@@ -487,7 +487,7 @@ public class LoadPlanGenerator
             //TODO: does the split function modify the box?  or do we need to do that here?
             //we need to set the offset here
 
-            if(!violatesConstraints(copyOfNextBox, copy)){  //does any of the load plans i've just generated violate a rule
+            if(!violatesConstraints(copyOfNextBox, copy, copyLoad)){  //does any of the load plans i've just generated violate a rule
                 DecisionFrame n = new DecisionFrame();
                 n.currentLoadPlan = copy;
                results.add(n);
@@ -496,7 +496,7 @@ public class LoadPlanGenerator
 
         }
 
-        //TODO: if we can't fit the box anywhere, we probably need a new load?
+
 
         //process all other load plans while boxes remain
         return results;
@@ -532,7 +532,9 @@ public class LoadPlanGenerator
 
                     }
 
+
                 }
+                //TODO: if we can't fit the box anywhere, we probably need a new load?
 
                 current.remainingBoxes.add(nextBox);
 
