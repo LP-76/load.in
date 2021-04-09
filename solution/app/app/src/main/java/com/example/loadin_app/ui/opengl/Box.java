@@ -45,8 +45,21 @@ public class Box extends WorldObject {
 
         boxID = globalID = ++lastGlobalId;
     }
-    public Box(Box other){
-        //todo: make a clone constructor
+    public Box(Box other)
+    {
+        super();
+        this.length = other.length;
+        this.width = other.width;
+        this.height = other.height;
+
+        this.fragility = other.fragility;
+        this.description = other.description;
+        this.status = other.status;
+        this.boxID = other.boxID;
+        this.userID = other.userID;
+        this.globalID = other.globalID;
+        this.destination = other.destination;
+        this.hexahedron = other.hexahedron;
     }
 
     public void setDestination(Vector destination) {
