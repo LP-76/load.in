@@ -129,6 +129,19 @@ public class LoadPlan implements ExtendedIterable<Load>
         return count;
     }
 
+    public float getSumOfEmptyVolumeInAllLoads()
+    {
+        float totalEmptyVolume = 0;
+
+        for(Load load : loads)
+        {
+            totalEmptyVolume += load.GetEmptyVolume();
+        }
+
+        return totalEmptyVolume;
+    }
+
+
     @NonNull
     @Override
     public IExtendedIterator<Load> iterator() {

@@ -344,7 +344,7 @@ public class LoadPlanGenerator
 
              if(sizeAtLeastAsLargeAsBoxFound)
              {
-                 return new LoadStatistics(input_LoadIndex, bestFitSpaceIndex, numberOfMatchingDimensionsInBestFit, input_Load.GetEmptyArea(),bestDistanceFromStart );
+                 return new LoadStatistics(input_LoadIndex, bestFitSpaceIndex, numberOfMatchingDimensionsInBestFit, input_Load.GetEmptyVolume(),bestDistanceFromStart );
              }
          }
 
@@ -435,22 +435,17 @@ public class LoadPlanGenerator
         return dataModel;
     }
 
-    private  boolean violatesConstraints(Box currentBox, LoadPlan currentLoadPlan, Load loadForBox){
+    private  boolean violatesConstraints(Box currentBox, LoadPlan currentLoadPlan, Load loadForBox)
+    {
         //TODO: implement
         return  false;
     }
 
     public int score(LoadPlan plan)
     {
-        float emptyVolume = 0;
+        float emptyVolume = plan.getSumOfEmptyVolumeInAllLoads();
 
-        for(Load load : plan.GetLoads())
-        {
-            for(EmptySpace space : load.GetEmptySpaces())
-            {
-                emptyVolume += space.GetVolume();
-            }
-        }
+
 
         //TODO: This is the right way to score, need to discuss how to utilize the score
 
