@@ -17,9 +17,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(1,0,0)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,2,1,new Vector(0,0,0))));
     }
@@ -32,9 +30,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(0,1,0)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,1,2,new Vector(0,0,0))));
     }
@@ -47,9 +43,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,1)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(2,1,1,new Vector(0,0,0))));
     }
@@ -62,9 +56,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,33,1, new Vector(0,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(33,0,0)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,34,1,new Vector(0,0,0))));
     }
@@ -77,9 +69,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,33, new Vector(0,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(0,33,0)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,1,34,new Vector(0,0,0))));
     }
@@ -92,9 +82,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(33,1,1, new Vector(0,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,33)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(34,1,1,new Vector(0,0,0))));
     }
@@ -107,9 +95,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(130,130,130)));
         spaces.add(new EmptySpace(1,1,1, new Vector(131,130,130)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,2,1,new Vector(130,130,130))));
     }
@@ -122,9 +108,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(130,130,130)));
         spaces.add(new EmptySpace(1,1,1, new Vector(130,131,130)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,1,2,new Vector(130,130,130))));
     }
@@ -137,9 +121,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(130,130,130)));
         spaces.add(new EmptySpace(1,1,1, new Vector(130,130,131)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(2,1,1,new Vector(130,130,130))));
     }
@@ -153,9 +135,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(1,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(2,0,0)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,3,1,new Vector(0,0,0))));
     }
@@ -167,9 +147,8 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(0,1,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(0,2,0)));
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
 
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,1,3,new Vector(0,0,0))));
     }
@@ -182,9 +161,8 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,1)));
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,2)));
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
 
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(3,1,1,new Vector(0,0,0))));
     }
@@ -197,9 +175,8 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(1,0,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(33,33,33)));
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
 
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 2);
         Assert.assertTrue(answer.get(1).equals(new EmptySpace(1,2,1,new Vector(0,0,0))));
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,1,1, new Vector(33,33,33))));
@@ -214,9 +191,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,1,0)));
         spaces.add(new EmptySpace(1,1,1, new Vector(33,33,33)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 2);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,1,1, new Vector(33,33,33))));
         Assert.assertTrue(answer.get(1).equals(new EmptySpace(1,1,2,new Vector(0,0,0))));
@@ -231,9 +206,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,0,1)));
         spaces.add(new EmptySpace(1,1,1, new Vector(33,33,33)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 2);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,1,1, new Vector(33,33,33))));
         Assert.assertTrue(answer.get(1).equals(new EmptySpace(2,1,1,new Vector(0,0,0))));
@@ -250,9 +223,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,1,1)));
         spaces.add(new EmptySpace(2,1,2, new Vector(1,0,0)));
 
-        EmptySpaceDefragmenter defrag = new EmptySpaceDefragmenter();
-
-        ArrayList<EmptySpace> answer = defrag.Defragment(spaces);
+        ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(2,2,2,new Vector(0,0,0))));
     }

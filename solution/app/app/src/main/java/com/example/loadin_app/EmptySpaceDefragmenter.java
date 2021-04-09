@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class EmptySpaceDefragmenter
 {
-    public ArrayList<EmptySpace> Defragment(ArrayList<EmptySpace> spaces)
+    public static ArrayList<EmptySpace> Defragment(ArrayList<EmptySpace> spaces)
     {
         boolean neighboringSpacesFoundAndDeFragmented = false;
 
@@ -44,7 +44,7 @@ public class EmptySpaceDefragmenter
             return spaces;
     }
 
-    private EmptySpace Merge(EmptySpace space, EmptySpace other)
+    public static EmptySpace Merge(EmptySpace space, EmptySpace other)
     {
         EmptySpace mergedSpace = null;
         if(space.isNeighborInXandSameHeightAndLength(other))
