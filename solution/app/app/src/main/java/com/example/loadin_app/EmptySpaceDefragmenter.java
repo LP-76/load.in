@@ -31,9 +31,7 @@ public class EmptySpaceDefragmenter
                 }
                 else
                 {
-                    //if they are the same space, remove the duplicate
-                    //if you've hit this code, you've done something horribly wrong
-                    spaces.remove(other);
+                    //if they are the same space do nothing
                 }
             }
         }

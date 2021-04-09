@@ -149,6 +149,7 @@ public class EmptySpaceDefragmenterTester
         spaces.add(new EmptySpace(1,1,1, new Vector(0,2,0)));
 
         ArrayList<EmptySpace> answer = EmptySpaceDefragmenter.Defragment(spaces);
+
         Assert.assertTrue(answer.size() == 1);
         Assert.assertTrue(answer.get(0).equals(new EmptySpace(1,1,3,new Vector(0,0,0))));
     }
