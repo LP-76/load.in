@@ -136,7 +136,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
         try{
             for(int i = 0; i < originalInventory.size(); i++)
             {
-                if((originalInventory.get(i).getDescription().toLowerCase().contains(searchWord))||(originalInventory.get(i).getRoom().toLowerCase().contains(searchWord))||(originalInventory.get(i).getStatus().toLowerCase().contains(searchWord)))
+                if(originalInventory.get(i).getDescription().toLowerCase().contains(searchWord.toLowerCase()))
                 {
                     searchedInventory.add(originalInventory.get(i));
                 }

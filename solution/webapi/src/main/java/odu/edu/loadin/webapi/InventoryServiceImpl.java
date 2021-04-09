@@ -40,6 +40,7 @@ public class InventoryServiceImpl implements InventoryService {
                 s.setCreatedAt(rs.getDate("CREATED_AT"));
                 s.setUpdatedAt(rs.getDate("UPDATED_AT"));
                 s.setStatus(rs.getString("STATUS"));
+                s.setRoom(rs.getString("ROOM"));
                 return s;
             });
             return results;
@@ -103,8 +104,8 @@ public class InventoryServiceImpl implements InventoryService {
             TODO BOX_ID defaults to null in database; need to set a check so that the first box in
             a user's inventory is set to 1 if the select comes back null
             */
-        String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,USER_ID, BOX_ID, ITEM_DESCRIPTION, BOX_WIDTH, BOX_HEIGHT, BOX_LENGTH, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT, STATUS)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NULL ,NOW(), NOW(), ? )";
+        String query = "INSERT INTO USER_INVENTORY_ITEM ( ID ,USER_ID, BOX_ID, ITEM_DESCRIPTION, BOX_WIDTH, BOX_HEIGHT, BOX_LENGTH, FRAGILITY, WEIGHT, IMAGE, CREATED_AT, UPDATED_AT, STATUS, ROOM)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NULL ,NOW(), NOW(), ?, ? )";
 
         PreparedStatement insertStatement = conn.prepareStatement(query);
         insertStatement.setInt(1, inventory.getId());
@@ -121,6 +122,7 @@ public class InventoryServiceImpl implements InventoryService {
         insertStatement.setInt(8, inventory.getFragility());
         insertStatement.setDouble(9, inventory.getWeight());
         insertStatement.setString(10, inventory.getStatus());
+        insertStatement.setString(11, inventory.getRoom());
         System.out.println(insertStatement);
         insertStatement.executeUpdate();
     }
@@ -141,7 +143,7 @@ public class InventoryServiceImpl implements InventoryService {
             inventory.setBoxID(lastBoxId + 1);*/
             //inventory.setUserID(1);
             String query = "UPDATE USER_INVENTORY_ITEM SET USER_ID=?, BOX_ID=?, ITEM_DESCRIPTION=?, BOX_WIDTH=?, BOX_HEIGHT=?," +
-                    "BOX_LENGTH=?, FRAGILITY=?, WEIGHT=?, IMAGE=NULL,UPDATED_AT=NOW(), STATUS=? WHERE ID =?;";
+                    "BOX_LENGTH=?, FRAGILITY=?, WEIGHT=?, IMAGE=NULL,UPDATED_AT=NOW(), STATUS=?, ROOM=?, WHERE ID =?;";
 
             PreparedStatement insertStatement = conn.prepareStatement(query);
             insertStatement.setInt(1, inventory.getUserID());
@@ -153,7 +155,8 @@ public class InventoryServiceImpl implements InventoryService {
             insertStatement.setInt(7, inventory.getFragility());
             insertStatement.setDouble(8, inventory.getWeight());
             insertStatement.setString(9, inventory.getStatus());
-            insertStatement.setInt(10, inventory.getId());
+            insertStatement.setString(10, inventory.getRoom());
+            insertStatement.setInt(11, inventory.getId());
             System.out.println(insertStatement);
             insertStatement.executeUpdate();
 

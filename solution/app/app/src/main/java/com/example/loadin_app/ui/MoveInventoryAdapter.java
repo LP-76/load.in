@@ -43,7 +43,7 @@ public class MoveInventoryAdapter extends ArrayAdapter<Inventory> {
         View view = layoutInflater.inflate(resource, null, false);
 
 
-        TextView item_description_value = view.findViewById(R.id.item_description_value);
+        TextView item_description_value = view.findViewById(R.id.item_name_value);
         TextView item_room_value = view.findViewById(R.id.item_room_value);
         TextView item_status_value = view.findViewById(R.id.item_status_value);
         TextView item_boxID = view.findViewById(R.id.item_boxID_value);

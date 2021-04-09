@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class AddItemActivity extends AppCompatActivity {
 
-    private EditText descriptionInput, widthInput, depthInput, heightInput, weightInput, fragilityInput;
+    private EditText descriptionInput, widthInput, depthInput, heightInput, weightInput, fragilityInput, roomInput;
     private Button addItemButton, tipsButton, newItemButton;
     private String keyword;
 
@@ -86,6 +86,7 @@ public class AddItemActivity extends AppCompatActivity {
         widthInput = (EditText) findViewById(R.id.BoxWidthField);
         depthInput = (EditText) findViewById(R.id.BoxDepthField);
         heightInput = (EditText) findViewById(R.id.BoxHeightField);
+        roomInput = findViewById(R.id.BoxRoomLocation);
 
         addItemButton = (Button) findViewById(R.id.AddItemButton);
         addItemButton.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +96,7 @@ public class AddItemActivity extends AppCompatActivity {
                 //newItemButton.setVisibility(View.VISIBLE);
 
                 addItemToDB(descriptionInput.getText().toString(), Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()),
-                        Float.parseFloat(heightInput.getText().toString()), Float.parseFloat(weightInput.getText().toString()), Integer.parseInt(fragilityInput.getText().toString()));
+                        Float.parseFloat(heightInput.getText().toString()), Float.parseFloat(weightInput.getText().toString()), Integer.parseInt(fragilityInput.getText().toString()), roomInput.getText().toString());
             }
         });
 
@@ -120,7 +121,7 @@ public class AddItemActivity extends AppCompatActivity {
     }
 
     private void addItemToDB(String inputDescription, float inputWidth,  float inputDepth, float inputHeight,
-                             float inputWeight, int inputFragility){
+                             float inputWeight, int inputFragility, String inputRoom){
 
         Inventory inv = new Inventory();
         inv.setDescription(inputDescription);
@@ -130,6 +131,7 @@ public class AddItemActivity extends AppCompatActivity {
         inv.setWeight(inputWeight);
         inv.setFragility(inputFragility);
         inv.setUserID(sp.getInt("loginID", 0));
+        inv.setRoom(inputRoom);
 
         LoadInApplication app = (LoadInApplication)getApplication();
         String username = app.getCurrentUser().getEmail();

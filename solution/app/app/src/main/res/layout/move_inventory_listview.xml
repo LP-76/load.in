@@ -16,13 +16,15 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:textColor="#4d4d4d" />
+            android:textColor="@color/load_in_green" />
         <TextView
-            android:id="@+id/item_room"
+            android:id="@+id/item_name_value"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Room"
-            android:layout_marginLeft="10dp"/>
+            android:text="value"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/load_in_green" />
+        />
     </LinearLayout>
 
     <LinearLayout android:layout_width="wrap_content"
@@ -30,20 +32,21 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/item_description_value"
+            android:id="@+id/item_room_header"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="value"
+            android:text="Room"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:textColor="#4d4d4d" />
+            android:textColor="@color/load_in_green" />
         <TextView
             android:id="@+id/item_room_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Room"
-            android:layout_marginLeft="10dp"/>
+            android:text="value"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/load_in_green" />
     </LinearLayout>
 
     <LinearLayout android:layout_width="wrap_content"
@@ -54,17 +57,18 @@
             android:id="@+id/item_status_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Location: "
+            android:text="Status"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:textColor="#4d4d4d" />
+            android:textColor="@color/load_in_green" />
         <TextView
-            android:id="@+id/item_boxID_header"
+            android:id="@+id/item_status_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Box ID"
-            android:layout_marginLeft="10dp"/>
+            android:text="value"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/load_in_green" />
     </LinearLayout>
 
     <LinearLayout android:layout_width="wrap_content"
@@ -72,20 +76,24 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/item_status_value"
-            android:layout_width="wrap_content"
+            android:id="@+id/item_boxID_header"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description"
+            android:text="Box ID"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="5dp"
-            android:textColor="#4d4d4d" />
+            android:textColor="@color/load_in_green" />
         <TextView
             android:id="@+id/item_boxID_value"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textAlignment="gravity"
             android:text="value"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/load_in_green" />
+
     </LinearLayout>
 
 </LinearLayout>
