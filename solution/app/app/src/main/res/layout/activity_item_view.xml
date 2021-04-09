@@ -154,6 +154,46 @@
             <TableRow>
 
                 <TextView
+                    android:id="@+id/item_room_header"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:id="@+id/item_room_value"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/item_list_header"
+                    android:background="@drawable/cell_shape"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:id="@+id/item_list_value"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="right"
+                    android:padding="3dip"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
                     android:background="@drawable/cell_shape"
                     android:clickable="true"
                     android:onClick="editInventory"
@@ -192,6 +232,8 @@
                     android:textStyle="bold" />
 
             </TableRow>
+
+
 
 
         </TableLayout>

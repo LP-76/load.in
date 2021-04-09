@@ -43,7 +43,8 @@ public class InventoryServiceImpl extends LoadInServiceWithAuthImpl{
 
         for(Inventory item : inventory)
         {
-            inventoryAsBoxes.add(new Box(item.getId(), item.getBoxID(), item.getWidth(), item.getHeight(), item.getLength(), (float) item.getWeight(), item.getFragility(), item.getDescription(), item.getUserID(), item.getStatus()));
+            inventoryAsBoxes.add(new Box(item.getId(), item.getBoxID(), item.getWidth(), item.getHeight(), item.getLength(), (float) item.getWeight(), item.getFragility(),
+                    item.getDescription(), item.getUserID(), item.getStatus(), item.getItemList(), item.getRoom()));
         }
 
         return inventoryAsBoxes;

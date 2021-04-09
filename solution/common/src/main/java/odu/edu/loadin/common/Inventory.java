@@ -24,6 +24,25 @@ public class Inventory {
     protected Date createdAt;
     protected Date updatedAt;
     protected String status;
+    protected String itemList;
+    protected String room;
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(String itemList) {
+        this.itemList = itemList;
+    }
+
 
     public String getStatus() {
         return status;

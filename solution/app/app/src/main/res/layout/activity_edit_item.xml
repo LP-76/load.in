@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="50dp"
             android:layout_marginEnd="100dp"
             android:layout_marginBottom="12dp"
             android:ems="10"
@@ -163,6 +163,44 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BoxDepthField2" />
+
+        <EditText
+            android:id="@+id/BoxRoom2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="Room Box is From"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="textShortMessage"
+            app:layout_constraintBottom_toTopOf="@+id/BoxItemList"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/BoxHeightField2" />
+
+        <EditText
+            android:id="@+id/BoxItemList2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="List of Items in Box"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="textShortMessage"
+            app:layout_constraintBottom_toTopOf="@+id/editItemButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/BoxRoom" />
 
         <Button
             android:id="@+id/editItemButton"

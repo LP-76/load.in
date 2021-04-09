@@ -58,6 +58,9 @@ public class MoveInventoryActivity extends AppCompatActivity {
         sp.edit().putString("itemHeight", "").apply();
         sp.edit().putString("itemFragility", "").apply();
         sp.edit().putString("itemWeight", "").apply();
+        sp.edit().putString("itemStatus", "").apply();
+        sp.edit().putString("itemList", "").apply();
+        sp.edit().putString("itemRoom", "").apply();
         sp.edit().putInt("itemID", 0).apply();
 
         // Find the toolbar view inside the activity layout
@@ -84,7 +87,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
         int i = 0;
         ArrayList<Pair<String,Integer>> inventoryHeaders = new ArrayList<Pair<String,Integer>>();
         while(i < inventory.size()){
-            Pair<String, Integer> header = new Pair<String, Integer> (inventory.get(i).getDescription(), i);
+            Pair<String, Integer> header = new Pair<String, Integer> (inventory.get(i).getDescription() + "   " + inventory.get(i).getStatus(), i);
             inventoryHeaders.add(header);
             i++;
         }
@@ -138,6 +141,9 @@ public class MoveInventoryActivity extends AppCompatActivity {
                 sp.edit().putString("itemHeight", Float.toString(inventory.get(positionInInventory).getHeight())).apply();
                 sp.edit().putString("itemWeight", Double.toString(inventory.get(positionInInventory).getWeight())).apply();
                 sp.edit().putString("itemFragility", Integer.toString(inventory.get(positionInInventory).getFragility())).apply();
+                sp.edit().putString("itemStatus", inventory.get(positionInInventory).getStatus()).apply();
+                sp.edit().putString("itemRoom", inventory.get(positionInInventory).getRoom()).apply();
+                sp.edit().putString("itemList", inventory.get(positionInInventory).getItemList()).apply();
                 sp.edit().putInt("itemID", inventory.get(position).getId()).apply();
 
                 Intent switchToItemView = new Intent(MoveInventoryActivity.this, ItemViewActivity.class);

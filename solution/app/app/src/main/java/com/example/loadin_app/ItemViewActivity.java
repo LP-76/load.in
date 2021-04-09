@@ -86,6 +86,16 @@ public class ItemViewActivity extends AppCompatActivity {
         TextView fV = (TextView) findViewById(R.id.item_fragility_value);
         fV.setText(sp.getString("itemFragility", ""));
 
+        TextView rH = (TextView) findViewById(R.id.item_room_header);
+        rH.setText("Room:");
+        TextView rV = (TextView) findViewById(R.id.item_room_value);
+        rV.setText(sp.getString("itemRoom", ""));
+
+        TextView lH = (TextView) findViewById(R.id.item_list_header);
+        lH.setText("List of Items:");
+        TextView lV = (TextView) findViewById(R.id.item_list_value);
+        lV.setText(sp.getString("itemList", ""));
+
         deleteItemButton = (Button) findViewById(R.id.deleteItemButton);
         deleteItemButton.setOnClickListener(new View.OnClickListener() {
             @Override

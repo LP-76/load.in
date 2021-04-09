@@ -169,30 +169,68 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/BoxDepthField" />
 
-        <Button
-            android:id="@+id/AddItemButton"
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
-            android:text="Add Item To Inventory"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75" />
 
-        <Button
-            android:id="@+id/AddNewItemButton"
-            android:layout_width="160dp"
+        <EditText
+            android:id="@+id/BoxRoom"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Create New Item"
-            android:layout_gravity="center"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="Room Box is From"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="textShortMessage"
+            app:layout_constraintBottom_toTopOf="@+id/BoxItemList"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.75" />
+            app:layout_constraintTop_toBottomOf="@+id/BoxHeightField2" />
+
+        <EditText
+            android:id="@+id/BoxItemList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:hint="List of Items in Box"
+            android:textColor="@color/load_in_green"
+            android:textColorHint="@color/white"
+            android:backgroundTint="@color/white"
+            android:inputType="textShortMessage"
+            app:layout_constraintBottom_toTopOf="@+id/editItemButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/BoxRoom" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp">
+            <Button
+                android:id="@+id/AddItemButton"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Add Item To Inventory"
+                android:layout_gravity="left"
+                android:layout_marginLeft="20dp"
+
+                app:layout_constraintVertical_bias="0.75" />
+
+            <Button
+                android:id="@+id/AddNewItemButton"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Create New Item"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:visibility="invisible"
+                app:layout_constraintVertical_bias="0.75" />
+        </LinearLayout>
 
 
 

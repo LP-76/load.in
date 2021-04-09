@@ -28,9 +28,9 @@ import odu.edu.loadin.common.BoxSize;
 
 public class EditItemActivity extends AppCompatActivity {
 
-    private EditText descriptionInput, widthInput, depthInput, heightInput, fragilityInput, weightInput;
+    private EditText descriptionInput, widthInput, depthInput, heightInput, fragilityInput, weightInput, roomInput, itemListInput;
     private Button editItemButton;
-    private String description, width, length, height, weight, fragility;
+    private String description, width, length, height, weight, fragility, room, itemList;
 
     public static SharedPreferences sp;
 
@@ -62,6 +62,8 @@ public class EditItemActivity extends AppCompatActivity {
         widthInput = (EditText) findViewById(R.id.BoxWidthField2);
         depthInput = (EditText) findViewById(R.id.BoxDepthField2);
         heightInput = (EditText) findViewById(R.id.BoxHeightField2);
+        roomInput = (EditText) findViewById(R.id.BoxRoom2);
+        itemListInput = (EditText) findViewById(R.id.BoxItemList2);
 
         editItemButton = (Button) findViewById(R.id.editItemButton);
         editItemButton.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +77,8 @@ public class EditItemActivity extends AppCompatActivity {
                 height = heightInput.getText().toString();
                 weight = weightInput.getText().toString();
                 fragility = fragilityInput.getText().toString();
+                room = roomInput.getText().toString();
+                itemList = itemListInput.getText().toString();
                 LoadInApplication app = (LoadInApplication) getApplication();
                 String username = app.getCurrentUser().getEmail();
                 String password = app.getCurrentUser().getPassword();
@@ -106,6 +110,12 @@ public class EditItemActivity extends AppCompatActivity {
                 }
                 if(!weight.matches("")){
                     item.get(0).setWeight(Float.parseFloat(weight));
+                }
+                if(!room.matches("")) {
+                    item.get(0).setRoom(room);
+                }
+                if(!itemList.matches("")) {
+                    item.get(0).setItemList(itemList);
                 }
 
 

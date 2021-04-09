@@ -15,13 +15,15 @@ public class Box extends WorldObject {
     protected int fragility;
     private String description = "objects that require a description";
     private String status;
+    private String room;
+    private String itemList;
 
     private int boxID, globalID, userID;
     private static int lastGlobalId = 0;
 
     private Vector destination = new Vector(0, 0, 0);
 
-    public Box(int globalID, int boxID, float width, float height, float length, float weight, int fragility, String description, int userID, String status) {
+    public Box(int globalID, int boxID, float width, float height, float length, float weight, int fragility, String description, int userID, String status, String room, String itemList) {
         super();
 
         this.width = width;
@@ -35,6 +37,8 @@ public class Box extends WorldObject {
         this.weight = weight;
         this.description = description;
         this.status = status;
+        this.room = room;
+        this.itemList = itemList;
     }
 
     public Box(float width, float height, float length) {
@@ -74,6 +78,22 @@ public class Box extends WorldObject {
         lpb.setzOffset(destination.getZ());
 
         return lpb;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
+    }
+
+    public String getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(String itemList) {
+        this.itemList = itemList;
     }
 
     public String getStatus() {
