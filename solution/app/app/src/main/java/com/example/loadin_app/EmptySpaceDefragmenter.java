@@ -20,8 +20,7 @@ public class EmptySpaceDefragmenter
                     if(space.isNeighborInAnyWay(other))
                     {
                         neighboringSpacesFoundAndDeFragmented = true;
-                        spaces.add(Merge(space,other));
-                        spaces.remove(space);
+                        space.merge(other);
                         spaces.remove(other);
                         break outerloop;
                     }
@@ -43,7 +42,7 @@ public class EmptySpaceDefragmenter
         else
             return spaces;
     }
-
+    /*
     public static EmptySpace Merge(EmptySpace space, EmptySpace other)
     {
         EmptySpace mergedSpace = null;
@@ -65,4 +64,6 @@ public class EmptySpaceDefragmenter
 
         return mergedSpace;
     }
+
+     */
 }

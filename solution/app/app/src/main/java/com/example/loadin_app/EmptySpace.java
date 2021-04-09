@@ -132,11 +132,21 @@ public class EmptySpace {
 
     public void merge(EmptySpace other)
     {
-        //TODO: alter this empty space to merge with another
-        //need to refactor/adapt code from EmptySpaceDefragmenter.Merge();
-
-        //adds the space to this space
-
+        if(this.isNeighborInXandSameHeightAndLength(other))
+        {
+            this.width += other.GetWidth();
+            this.offset = new Vector(Math.min(this.GetOffset().getX(),other.GetOffset().getX()), this.GetOffset().getY(), this.GetOffset().getZ());
+        }
+        else if(this.isNeighBorInYAboveAndSameWidthAndLength(other))
+        {
+            this.height += + other.GetHeight();
+            this.offset = new Vector(this.GetOffset().getX(),Math.min(this.GetOffset().getY(),other.GetOffset().getY()), this.GetOffset().getZ());
+        }
+        else if(this.isNeighborInZandSameHeightAndWidth(other))
+        {
+            this.length += other.GetLength();
+            this.offset = new Vector(this.GetOffset().getX(),this.GetOffset().getY(), Math.min(this.GetOffset().getZ(),other.GetOffset().getZ()));
+        }
     }
 
     public ArrayList<EmptySpace> split(Box box)
@@ -160,14 +170,23 @@ public class EmptySpace {
         return (this.width >= box.getWidth() ) &&(this.length >= box.getLength() ) && (this.height >= box.getHeight() );
     }
 
-
-    public boolean equals(EmptySpace other)
+    @Override
+    public boolean equals(Object other)
     {
-        return other.GetHeight() == height
-                && other.GetWidth() == width
-                && other.GetLength() == length
-                && other.GetOffset().getX() == offset.getX()
-                && other.GetOffset().getY() == offset.getY()
-                && other.GetOffset().getZ() == offset.getZ();
+        if(other.getClass() == getClass())
+        {
+            EmptySpace otherSpace = (EmptySpace)other;
+
+            return otherSpace.GetHeight() == height
+                    && otherSpace.GetWidth() == width
+                    && otherSpace.GetLength() == length
+                    && otherSpace.GetOffset().getX() == offset.getX()
+                    && otherSpace.GetOffset().getY() == offset.getY()
+                    && otherSpace.GetOffset().getZ() == offset.getZ();
+        }
+        else
+        {
+            return false;
+        }
     }
 }
