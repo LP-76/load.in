@@ -65,6 +65,8 @@ public class Box extends WorldObject {
         this.globalID = other.globalID;
         this.destination = other.destination;
         this.hexahedron = other.hexahedron;
+        this.room = other.room;
+
     }
 
     public void setDestination(Vector destination) {
@@ -87,6 +89,7 @@ public class Box extends WorldObject {
         i.setWeight(weight);
         i.setStatus(status);
         i.setUserID(userID);
+        i.setRoom(room);
         lpb.setxOffset(destination.getX());
         lpb.setyOffset(destination.getY());
         lpb.setzOffset(destination.getZ());
