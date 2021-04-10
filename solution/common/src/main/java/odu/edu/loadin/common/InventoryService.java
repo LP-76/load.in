@@ -51,11 +51,8 @@ public interface InventoryService
     @Path("/inventory/delete/{ID}")
     public void deleteItem(@PathParam("ID") int ID) throws SQLException;
 
-
-    //TODO: CHANGE METHOD TO PASS ITEM_ID AND USER_ID
-
     @POST
     @Path("/inventory/delete/{USER_ID}")
-    public void deleteAllItem(@PathParam("USER_ID") int USER_ID, int ITEM_ID) throws SQLException;
+    public void deleteAllItem(@PathParam("USER_ID") int USER_ID) throws SQLException;
 
 }
