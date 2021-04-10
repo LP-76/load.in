@@ -16,6 +16,7 @@ import com.example.loadin_app.ui.opengl.Vector;
 import com.example.loadin_app.ui.opengl.World;
 import com.example.loadin_app.ui.opengl.Truck;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -107,6 +108,12 @@ public class LoadPlanGenerator
     private void GenerateRandomBoxes()
     {
 
+        //IF YOU REALLY WANT TO STRESS IT, USE THIS FOR LOOP
+//        for(int i = 0; i < 1000; i++){  //simple generation for now
+//            Box b = GenerateNewRandomBox();
+//            moveInventory.add(b);
+//        }
+
         float totalVolumeGenerated = 0;
         int numberOfBoxesGenerated = 1;
 
@@ -132,33 +139,33 @@ public class LoadPlanGenerator
 
     private Box GenerateNewRandomBox()
     {
-//        //home dpot box sizes
-        Box[] sizes =
-                {
-                        new Box(22,15,16),
-                        new Box(28,16,15),
-                        new Box(16,12,12),
-                        new Box(22,21,22)
-                };
-
-        Random rand = new Random();
-        Box b =  sizes[rand.nextInt(sizes.length - 1)];
-
-//        int minimumSize = 3;
-//        int maximumSize = 7;
-//
-//        int length, width, height;
+////        //home dpot box sizes
+//        Box[] sizes =
+//                {
+//                        new Box(22,15,16),
+//                        new Box(28,16,15),
+//                        new Box(16,12,12),
+//                        new Box(22,21,22)
+//                };
 //
 //        Random rand = new Random();
+//        Box b =  sizes[rand.nextInt(sizes.length - 1)];
 //
-//        length = minimumSize + rand.nextInt(maximumSize - minimumSize);
-//        width = minimumSize + rand.nextInt(maximumSize - minimumSize);
-//        height = minimumSize + rand.nextInt(maximumSize - minimumSize);
-//
-//        Box b = new Box(width * 6, height * 6, length * 6);
+        int minimumSize = 3;
+        int maximumSize = 7;
 
-       // b.setFragility( 1 + rand.nextInt(4));
-        b.setFragility(1);
+        int length, width, height;
+
+        Random rand = new Random();
+
+        length = minimumSize + rand.nextInt(maximumSize - minimumSize);
+        width = minimumSize + rand.nextInt(maximumSize - minimumSize);
+        height = minimumSize + rand.nextInt(maximumSize - minimumSize);
+
+        Box b = new Box(width * 6, height * 6, length * 6);
+
+        b.setFragility( 1 + rand.nextInt(4));
+        //b.setFragility(1);
         b.setWeight(1 + rand.nextInt(9));
 
         return b;
@@ -456,7 +463,7 @@ public class LoadPlanGenerator
         return dataModel;
     }
 
-    private  boolean violatesConstraints(Box currentBox, LoadPlan currentLoadPlan, Load loadForBox)
+    private  boolean violatesConstraints(Box currentBox, Load loadForBox)
     {
         //if we have a box that is above any other box and it is either heavier or less fragile, then it's a failure
 
@@ -476,122 +483,251 @@ public class LoadPlanGenerator
     }
 
 
+    private BoxPlacementPossibility attemptBoxPlacement(Box aBox, EmptySpace aSpace, Load theLoadForSpace){
+        BoxPlacementPossibility result = null;
+        if(aSpace.canFit(aBox)){
+            int rank = aSpace.rankFit(aBox);
+            //we place the box into the space to evaluate
+            //BUT, do not assume that box will always be there until we clone it and make it a decision
+            //it can move around as we test other spaces
+            aSpace.setBoxInSpace(aBox);
 
+            if(!violatesConstraints(aBox, theLoadForSpace)){  //does any of the load plans i've just generated violate a rule
+               result = new BoxPlacementPossibility();
+               result.box = aBox;
+               result.load = theLoadForSpace;
+               result.priority = rank;
+               result.space = aSpace;
 
-    private ArrayList<DecisionFrame> processBox(LoadPlan currentLoadPlan, int loadIndex,int emptySpaceIndex, EmptySpace aSpace, Box nextBox){
-       ArrayList<DecisionFrame> results = new ArrayList<DecisionFrame>();
-
-        //generate a new load plan from putting that box into every available space
-        if(aSpace.canFit(nextBox)){
-            int rank = aSpace.rankFit(nextBox);
-
-            Box copyOfNextBox = new Box(nextBox); //need to make a copy because it is going to be placed in a different location
-
-            //duplicate the plan
-            LoadPlan copy = new LoadPlan(currentLoadPlan);  //we make a copy so that it's modifiable from the others
-
-            Load copyLoad = copy.GetLoads().get(loadIndex);
-            EmptySpace targetCopy = copyLoad.GetEmptySpaces().get(emptySpaceIndex);
-
-            ArrayList<EmptySpace> newSpaces = targetCopy.split(copyOfNextBox);
-            copyLoad.RemoveSpace(targetCopy);
-
-            for(EmptySpace s :newSpaces)
-                copyLoad.AddSpace(s);  //we add all the new spaces
-
-            targetCopy.setBoxInSpace(copyOfNextBox);
-            copyLoad.AddBox(copyOfNextBox);
-
-            if(!violatesConstraints(copyOfNextBox, copy, copyLoad)){  //does any of the load plans i've just generated violate a rule
-                DecisionFrame n = new DecisionFrame();
-                n.currentLoadPlan = copy;
-                n.priority = rank; //the heigher the rank the better the priority
-               results.add(n);
-
-            } //if so remove that load plan
-
+            }
         }
-
-
-
-        //process all other load plans while boxes remain
-        return results;
+        return result;
     }
-    private ArrayList<DecisionFrame> processFrame(DecisionFrame current, ArrayList<LoadPlan> finishedLoadPlans){
 
-        ArrayList<DecisionFrame> toProcess = new ArrayList<DecisionFrame>();
+    private ArrayList<BoxPlacementPossibility> calculateAllPossibilities( Box box, Load load){
+        ArrayList<BoxPlacementPossibility> results = new ArrayList<BoxPlacementPossibility>();
 
-        if(current.remainingBoxes.size() > 0){  //we have boxes left to process
-            //grab the next box
+        ArrayList<EmptySpace> spaces = load.GetEmptySpaces();
 
-           // for(int boxIndex = 0; boxIndex < current.remainingBoxes.size(); boxIndex++){
+        for(int i = 0; i < spaces.size(); i++){
+            EmptySpace space = spaces.get(i);
 
-                Box nextBox = current.remainingBoxes.remove();
+            BoxPlacementPossibility option = attemptBoxPlacement(box, space, load);
+            if(option != null)
+                results.add(option);
 
-                boolean placedInALoad = false;
-                //for each space in each load in the current load plan that the box can fit into:
+        }
 
-                ArrayList<Load> loads = current.currentLoadPlan.GetLoads();
-                for( int loadIndex = 0; loadIndex < loads.size(); loadIndex++){
-                    Load nextLoad = loads.get(loadIndex);
-                    ArrayList<EmptySpace> spaces = nextLoad.GetEmptySpaces();
-                    for(int emptySpaceIndex = 0; emptySpaceIndex < spaces.size(); emptySpaceIndex++){
-                        EmptySpace e = spaces.get(emptySpaceIndex);
-                        ArrayList<DecisionFrame> results = processBox(current.currentLoadPlan, loadIndex, emptySpaceIndex, e, nextBox);
+       return results;
 
-                        for(DecisionFrame f: results){
-                            //if we have any decision frames to process it means we could place it
-                            placedInALoad = true;
-                            f.remainingBoxes = new LinkedList<Box>(current.remainingBoxes); //we want to clone the list with whatever boxes remain
-                            toProcess.add(f);
-                        }
-
-                        //do rotation here?
-
-                        //TODO: make the rotation here
-
-                    }
+    }
 
 
-                }
-                if(!placedInALoad){
-                    //is the box too large for the truck
-                    LoadPlan copyLoadPlan = new LoadPlan(current.currentLoadPlan);
-                    Load newLoad = copyLoadPlan.AddLoad();
-                    ArrayList<EmptySpace> spaces = newLoad.GetEmptySpaces();
-                    for(int emptySpaceIndex = 0; emptySpaceIndex < spaces.size(); emptySpaceIndex++){
-                        EmptySpace e = spaces.get(emptySpaceIndex);
-                       ArrayList<DecisionFrame> results = processBox(copyLoadPlan, copyLoadPlan.getLoadCount()-1, emptySpaceIndex, e, nextBox);
-
-                        for(DecisionFrame f: results){
-                            //if we have any decision frames to process it means we could place it
-                            f.remainingBoxes = new LinkedList<Box>(current.remainingBoxes); //we want to clone the list with whatever boxes remain
-                            toProcess.add(f);
-                        }
-
-                        //do rotation here?
-
-                        //TODO: make the rotation here
-
-                    }
-
-                }
 
 
-//                current.remainingBoxes.add(nextBox);
+
+//    private ArrayList<DecisionFrame> processBox(LoadPlan currentLoadPlan, int loadIndex,int emptySpaceIndex, EmptySpace aSpace, Box nextBox){
+//        ArrayList<DecisionFrame> results = new ArrayList<DecisionFrame>();
 //
-//            }
+//        //generate a new load plan from putting that box into every available space
+//        if(aSpace.canFit(nextBox)){
+//            int rank = aSpace.rankFit(nextBox);
+//
+//            Box copyOfNextBox = new Box(nextBox); //need to make a copy because it is going to be placed in a different location
+//
+//            //duplicate the plan
+//            LoadPlan copy = new LoadPlan(currentLoadPlan);  //we make a copy so that it's modifiable from the others
+//
+//            Load copyLoad = copy.GetLoads().get(loadIndex);
+//            EmptySpace targetCopy = copyLoad.GetEmptySpaces().get(emptySpaceIndex);
+//
+//            ArrayList<EmptySpace> newSpaces = targetCopy.split(copyOfNextBox);
+//            copyLoad.RemoveSpace(targetCopy);
+//
+//            for(EmptySpace s :newSpaces)
+//                copyLoad.AddSpace(s);  //we add all the new spaces
+//
+//            targetCopy.setBoxInSpace(copyOfNextBox);
+//            copyLoad.AddBox(copyOfNextBox);
+//
+//            if(!violatesConstraints(copyOfNextBox, copy, copyLoad)){  //does any of the load plans i've just generated violate a rule
+//                DecisionFrame n = new DecisionFrame();
+//                n.currentLoadPlan = copy;
+//                n.priority = rank; //the heigher the rank the better the priority
+//                results.add(n);
+//
+//            } //if so remove that load plan
+//
+//        }
+//
+//
+//
+//        //process all other load plans while boxes remain
+//        return results;
+//    }
 
+    private void populatePossibleBoxPlacements(DecisionFrame currentFrame){
+        //we haven't created possibilities for a box yet
+        if(currentFrame.possibleBoxPlacements == null)
+            currentFrame.possibleBoxPlacements = new LinkedList<BoxPlacementPossibility>();
+        Box next = currentFrame.remainingBoxes.remove(); //get the next box
 
+        for(Load l : currentFrame.currentLoadPlan.GetLoads()){
+            ArrayList<BoxPlacementPossibility> p = calculateAllPossibilities(next, l);
+            for(BoxPlacementPossibility bp: p){
+                currentFrame.possibleBoxPlacements.add(bp); //add it as a possibility
+            }
+        }
 
+        if(currentFrame.possibleBoxPlacements.size() == 0){
+            //we're going to add a load to the plan
+            LoadPlan thePlan = currentFrame.currentLoadPlan;
+            Load newLoad = thePlan.AddLoad();
+            ArrayList<BoxPlacementPossibility> p = calculateAllPossibilities(next, newLoad);
+            for(BoxPlacementPossibility bp: p){
+                currentFrame.possibleBoxPlacements.add(bp); //add it as a possibility
+            }
+
+            //TODO:  if the box STILL can't fit, it's an error with too big a box or too small a truck
 
         }
-        else{
-            finishedLoadPlans.add(current.currentLoadPlan);  //we have reached the end
+        currentFrame.possibleBoxPlacements.sort((p1, p2) -> p1.priority == p2.priority ? 0 : p1.priority > p2.priority ? -1 : 1);
+    }
+
+    private ArrayList<DecisionFrame> processFrame(DecisionFrame currentFrame, ArrayList<LoadPlan> finishedLoadPlans){
+        ArrayList<DecisionFrame> toProcess = new ArrayList<DecisionFrame>();
+        //now for a frame, we want to exhaust all box possiblities against all spaces, but we don't want to act on them until we really need to
+
+        if(currentFrame.remainingBoxes.size() == 0 && (currentFrame.possibleBoxPlacements == null || currentFrame.possibleBoxPlacements.size() == 0)){
+            finishedLoadPlans.add(currentFrame.currentLoadPlan); //there are no more boxes and no more possibiltiies to look at
+            return toProcess;
         }
+
+
+        if(currentFrame.possibleBoxPlacements == null || currentFrame.possibleBoxPlacements.size() == 0){
+            populatePossibleBoxPlacements(currentFrame);
+        }
+
+        if(currentFrame.possibleBoxPlacements.size() == 0){  //the last box has some more options left to look at
+            //if we've gotten to here, then it means that simply we cannot place the box anywhere
+            //this would indicate that it can't go on a truck
+            //we are going to just 'throw' the box away at this point
+            return processFrame(currentFrame, finishedLoadPlans); //this will trigger the process to try again
+        }
+
+        //if we have gotten here, we have some possibilities to explore
+        BoxPlacementPossibility nextPossibility = currentFrame.possibleBoxPlacements.remove(); //the assumption is we have the best option first
+
+        toProcess.add(currentFrame);  //we haven't thrown the frame away yet
+        DecisionFrame newDirection = placeBoxIntoLoad(currentFrame, nextPossibility);
+        toProcess.add(newDirection);  //add this to be processed next
+
         return toProcess;
     }
 
+    private DecisionFrame placeBoxIntoLoad(DecisionFrame previous,  BoxPlacementPossibility possibility){
+        //we need to clone the load and put it in the load in the desired space
+
+        DecisionFrame next = new DecisionFrame();
+        next.remainingBoxes = new LinkedList<>(previous.remainingBoxes);
+
+        LoadPlan newLoadPlan = new LoadPlan(previous.currentLoadPlan);
+        Box clonedBox = new Box(possibility.box);
+
+        int loadIndex = previous.currentLoadPlan.GetLoads().indexOf(possibility.load);
+        int spaceIndex = possibility.load.GetEmptySpaces().indexOf(possibility.space);
+
+        Load newTargetLoad = newLoadPlan.GetLoads().get(loadIndex);
+        EmptySpace newTargetSpace = newTargetLoad.GetEmptySpaces().get(spaceIndex);
+        newTargetLoad.GetEmptySpaces().remove(newTargetSpace);
+        newTargetSpace.setBoxInSpace(clonedBox);
+
+        ArrayList<EmptySpace> newSpaces = newTargetSpace.split(clonedBox);
+        for(EmptySpace e: newSpaces)
+            newTargetLoad.AddSpace(e);
+
+        newTargetLoad.AddBox(clonedBox);
+
+        next.currentLoadPlan = newLoadPlan; //the next frame gets the new loadplan
+        return next;
+
+    }
+
+
+//    private ArrayList<DecisionFrame> processFrame(DecisionFrame current, ArrayList<LoadPlan> finishedLoadPlans){
+//
+//        ArrayList<DecisionFrame> toProcess = new ArrayList<DecisionFrame>();
+//
+//        if(current.remainingBoxes.size() > 0){  //we have boxes left to process
+//            //grab the next box
+//
+//            // for(int boxIndex = 0; boxIndex < current.remainingBoxes.size(); boxIndex++){
+//
+//            Box nextBox = current.remainingBoxes.remove();
+//
+//            boolean placedInALoad = false;
+//            //for each space in each load in the current load plan that the box can fit into:
+//
+//            ArrayList<Load> loads = current.currentLoadPlan.GetLoads();
+//            for( int loadIndex = 0; loadIndex < loads.size(); loadIndex++){
+//                Load nextLoad = loads.get(loadIndex);
+//                ArrayList<EmptySpace> spaces = nextLoad.GetEmptySpaces();
+//                for(int emptySpaceIndex = 0; emptySpaceIndex < spaces.size(); emptySpaceIndex++){
+//                    EmptySpace e = spaces.get(emptySpaceIndex);
+//                    ArrayList<DecisionFrame> results = processBox(current.currentLoadPlan, loadIndex, emptySpaceIndex, e, nextBox);
+//
+//                    for(DecisionFrame f: results){
+//                        //if we have any decision frames to process it means we could place it
+//                        placedInALoad = true;
+//                        f.remainingBoxes = new LinkedList<Box>(current.remainingBoxes); //we want to clone the list with whatever boxes remain
+//                        toProcess.add(f);
+//                    }
+//
+//                    //do rotation here?
+//
+//                    //TODO: make the rotation here
+//
+//                }
+//
+//
+//            }
+//            if(!placedInALoad){
+//                //is the box too large for the truck
+//                LoadPlan copyLoadPlan = new LoadPlan(current.currentLoadPlan);
+//                Load newLoad = copyLoadPlan.AddLoad();
+//                ArrayList<EmptySpace> spaces = newLoad.GetEmptySpaces();
+//                for(int emptySpaceIndex = 0; emptySpaceIndex < spaces.size(); emptySpaceIndex++){
+//                    EmptySpace e = spaces.get(emptySpaceIndex);
+//                    ArrayList<DecisionFrame> results = processBox(copyLoadPlan, copyLoadPlan.getLoadCount()-1, emptySpaceIndex, e, nextBox);
+//
+//                    for(DecisionFrame f: results){
+//                        //if we have any decision frames to process it means we could place it
+//                        f.remainingBoxes = new LinkedList<Box>(current.remainingBoxes); //we want to clone the list with whatever boxes remain
+//                        toProcess.add(f);
+//                    }
+//
+//                    //do rotation here?
+//
+//                    //TODO: make the rotation here
+//
+//                }
+//
+//            }
+//
+//
+////                current.remainingBoxes.add(nextBox);
+////
+////            }
+//
+//
+//
+//
+//        }
+//        else{
+//            finishedLoadPlans.add(current.currentLoadPlan);  //we have reached the end
+//        }
+//        return toProcess;
+//    }
 
     public ArrayList<LoadPlan> processTrees(){
 
@@ -600,7 +736,32 @@ public class LoadPlanGenerator
         Stack<DecisionFrame> toProcess = new Stack<DecisionFrame>();  //we push on to this for processing
 
         DecisionFrame initial = new DecisionFrame();
-        moveInventory.sort( (o1, o2) -> o1.calcArea() == o2.calcArea() ? 0 : o1.calcArea() > o2.calcArea() ? -1 : 1 );
+        moveInventory.sort( (o1, o2) -> {  //sort by weight first, then fragility, then area
+
+            if(o1.getWeight() == o2.getWeight()){
+                if(o1.getFragility() == o2.getFragility()) {
+                    if (o1.calcArea() == o2.calcArea()) {
+                        return 0;
+                    }
+                    else if(o1.calcArea() > o2.calcArea()){
+                        return -1;
+                    }
+                    else
+                        return 1;
+                }
+                else if(o1.getFragility() < o2.getFragility()){
+                    return -1;
+                }else{
+                    return 1;
+                }
+
+            }else if(o1.getWeight() > o2.getWeight()){
+                return -1;
+            }else{
+                return 1;
+            }
+
+        });
         initial.remainingBoxes = new LinkedList<Box>(moveInventory);
         initial.currentLoadPlan = new LoadPlan(movingTruck);  //create the initial plan
 
@@ -610,8 +771,6 @@ public class LoadPlanGenerator
             DecisionFrame current = toProcess.pop(); //get the next frame to check on
 
             ArrayList<DecisionFrame> results = processFrame(current, finishedLoadPlans);
-
-            results.sort((o1, o2) -> o1.priority < o2.priority ? -1 : o1.priority == o2.priority ? 0 : 1);
 
             for(DecisionFrame f: results)
                 toProcess.push(f);
@@ -624,11 +783,17 @@ public class LoadPlanGenerator
 
     }
 
+    private class BoxPlacementPossibility{
+        EmptySpace space;
+        Box box;
+        Load load;
+        int priority;
+    }
 
     private class DecisionFrame{
+        LinkedList<BoxPlacementPossibility> possibleBoxPlacements;
         Queue<Box> remainingBoxes;
         LoadPlan currentLoadPlan;
-        int priority;
     }
 
 }
