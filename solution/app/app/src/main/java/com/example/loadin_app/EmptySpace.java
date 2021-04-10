@@ -165,6 +165,10 @@ public class EmptySpace {
         return splitSpaces;
     }
 
+    public void setBoxInSpace(Box b){
+        b.setDestination(new Vector(GetOffset().getX() + (GetWidth() - b.getWidth()), GetOffset().getY(), GetOffset().getZ() + (GetLength() - b.getLength())));
+    }
+
     public boolean canFit(Box box)
     {
         return (this.width >= box.getWidth() ) &&(this.length >= box.getLength() ) && (this.height >= box.getHeight() );

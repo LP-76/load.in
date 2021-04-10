@@ -26,6 +26,25 @@ public class BoxTest {
 
         Assert.assertFalse(b.isAbove(c));
 
+
+        Box d = new Box(48, 24, 24);
+        Box e = new Box(24, 24, 24);
+        Box f = new Box(24, 24, 24);
+        Box g = new Box(24,24, 24);
+
+        e.setDestination(new Vector(0,0,0));
+        f.setDestination(new Vector(24, 0, 0));
+        d.setDestination(new Vector(0, 24, 0));;
+
+        g.setDestination(new Vector(12, 0, 0));
+
+        Assert.assertTrue(d.isAbove(e));
+        Assert.assertTrue(d.isAbove(f));
+        Assert.assertTrue(d.isAbove(g));
+
+
+
+
     }
 
     @Test

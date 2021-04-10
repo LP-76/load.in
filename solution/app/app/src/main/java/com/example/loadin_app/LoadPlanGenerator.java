@@ -10,6 +10,7 @@ import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.LoadPlanBox;
 
+import com.example.loadin_app.extensions.IExtendedIterator;
 import com.example.loadin_app.ui.opengl.Box;
 import com.example.loadin_app.ui.opengl.Vector;
 import com.example.loadin_app.ui.opengl.World;
@@ -182,15 +183,27 @@ public class LoadPlanGenerator
         //System.out.println("Finished Getting Truck Size!");
     }
 
-    private void GenerateLoadPlan()
-    {
-        //System.out.println("Started GenerateLoadPlan!");
-        for (Box currentBox : moveInventory)//for each box..
-        {
-            if(new EmptySpace(movingTruck.getLengthInches(),movingTruck.getWidthInches(), movingTruck.getHeightInches(), new Vector(0,0,0)).canFit((currentBox)))
-                PlaceBox(FindPlaceForBox(currentBox), currentBox);
-        }
-        //System.out.println("Finished GenerateLoadPlan!");
+//    private void GenerateLoadPlan()
+//    {
+//        //System.out.println("Started GenerateLoadPlan!");
+//        for (Box currentBox : moveInventory)//for each box..
+//        {
+//            if(new EmptySpace(movingTruck.getLengthInches(),movingTruck.getWidthInches(), movingTruck.getHeightInches(), new Vector(0,0,0)).canFit((currentBox)))
+//                PlaceBox(FindPlaceForBox(currentBox), currentBox);
+//        }
+//        //System.out.println("Finished GenerateLoadPlan!");
+//    }
+
+    private void GenerateLoadPlan(){
+
+        ArrayList<LoadPlan> availablePlans = processTrees();
+
+        plan = determineBestLoadPlan(availablePlans);
+
+        System.out.println("Finished");
+
+
+
     }
 
     private void PlaceBox(LoadStatistics input_Info, Box input_Box)
@@ -437,29 +450,38 @@ public class LoadPlanGenerator
 
     private  boolean violatesConstraints(Box currentBox, LoadPlan currentLoadPlan, Load loadForBox)
     {
-        //TODO: implement
+        //if we have a box that is above any other box and it is either heavier or less fragile, then it's a failure
+
+        IExtendedIterator<Box> it = loadForBox.iterator();
+        while(it.hasNext()){
+            Box b = it.next();
+
+            if(b.getId() == currentBox.getId())
+                continue;
+
+            if(currentBox.isAbove(b) && (currentBox.getWeight() > b.getWeight() || currentBox.getFragility() < b.getFragility() )){
+                return true;
+            }
+        }
+
         return  false;
     }
 
-    public int score(LoadPlan plan)
+    public float score(LoadPlan plan)
     {
         float emptyVolume = plan.getSumOfEmptyVolumeInAllLoads();
 
-
-
-        //TODO: This is the right way to score, need to discuss how to utilize the score
-
-        return 0;
+        return emptyVolume;
     }
 
     public LoadPlan determineBestLoadPlan(ArrayList<LoadPlan> allPlans){
 
         LoadPlan bestScoredPlan = null;
-        int bestScore = -1;
+        float bestScore = Float.MAX_VALUE;
 
         for(LoadPlan l : allPlans){
-            int score = score(l);
-            if(bestScoredPlan == null || score > bestScore){
+            float score = score(l);
+            if(bestScoredPlan == null || score < bestScore){
                 bestScore = score;
                 bestScoredPlan = l;
             }
@@ -486,8 +508,8 @@ public class LoadPlanGenerator
             for(EmptySpace s :newSpaces)
                 copyLoad.AddSpace(s);  //we add all the new spaces
 
-            //TODO: does the split function modify the box?  or do we need to do that here?
-            //we need to set the offset here
+            targetCopy.setBoxInSpace(copyOfNextBox);
+            copyLoad.AddBox(copyOfNextBox);
 
             if(!violatesConstraints(copyOfNextBox, copy, copyLoad)){  //does any of the load plans i've just generated violate a rule
                 DecisionFrame n = new DecisionFrame();
@@ -510,10 +532,11 @@ public class LoadPlanGenerator
         if(current.remainingBoxes.size() > 0){  //we have boxes left to process
             //grab the next box
 
-            for(int boxIndex = 0; boxIndex < current.remainingBoxes.size(); boxIndex++){
+           // for(int boxIndex = 0; boxIndex < current.remainingBoxes.size(); boxIndex++){
 
                 Box nextBox = current.remainingBoxes.remove();
 
+                boolean placedInALoad = false;
                 //for each space in each load in the current load plan that the box can fit into:
 
                 ArrayList<Load> loads = current.currentLoadPlan.GetLoads();
@@ -522,10 +545,13 @@ public class LoadPlanGenerator
                     ArrayList<EmptySpace> spaces = nextLoad.GetEmptySpaces();
                     for(int emptySpaceIndex = 0; emptySpaceIndex < spaces.size(); emptySpaceIndex++){
                         EmptySpace e = spaces.get(emptySpaceIndex);
-                        toProcess = processBox(current.currentLoadPlan, loadIndex, emptySpaceIndex, e, nextBox);
+                        ArrayList<DecisionFrame> results = processBox(current.currentLoadPlan, loadIndex, emptySpaceIndex, e, nextBox);
 
-                        for(DecisionFrame f: toProcess){
+                        for(DecisionFrame f: results){
+                            //if we have any decision frames to process it means we could place it
+                            placedInALoad = true;
                             f.remainingBoxes = new LinkedList<Box>(current.remainingBoxes); //we want to clone the list with whatever boxes remain
+                            toProcess.add(f);
                         }
 
                         //do rotation here?
@@ -536,11 +562,33 @@ public class LoadPlanGenerator
 
 
                 }
-                //TODO: if we can't fit the box anywhere, we probably need a new load?
+                if(!placedInALoad){
+                    //is the box too large for the truck
+                    LoadPlan copyLoadPlan = new LoadPlan(current.currentLoadPlan);
+                    Load newLoad = copyLoadPlan.AddLoad();
+                    ArrayList<EmptySpace> spaces = newLoad.GetEmptySpaces();
+                    for(int emptySpaceIndex = 0; emptySpaceIndex < spaces.size(); emptySpaceIndex++){
+                        EmptySpace e = spaces.get(emptySpaceIndex);
+                       ArrayList<DecisionFrame> results = processBox(copyLoadPlan, copyLoadPlan.getLoadCount()-1, emptySpaceIndex, e, nextBox);
 
-                current.remainingBoxes.add(nextBox);
+                        for(DecisionFrame f: results){
+                            //if we have any decision frames to process it means we could place it
+                            f.remainingBoxes = new LinkedList<Box>(current.remainingBoxes); //we want to clone the list with whatever boxes remain
+                            toProcess.add(f);
+                        }
 
-            }
+                        //do rotation here?
+
+                        //TODO: make the rotation here
+
+                    }
+
+                }
+
+
+              //  current.remainingBoxes.add(nextBox);
+
+           // }
 
 
 
@@ -565,7 +613,7 @@ public class LoadPlanGenerator
 
         toProcess.push(initial);
 
-        while(!toProcess.isEmpty()){
+        while(!toProcess.isEmpty() && finishedLoadPlans.size() < 100){
             DecisionFrame current = toProcess.pop(); //get the next frame to check on
 
             ArrayList<DecisionFrame> results = processFrame(current, finishedLoadPlans);

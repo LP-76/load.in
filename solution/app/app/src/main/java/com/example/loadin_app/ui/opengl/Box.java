@@ -219,13 +219,13 @@ public class Box extends WorldObject {
         return description;
     }
 
-    private boolean withinRange(float s, float e, float p) {
+    public static boolean withinRange(float s, float e, float p) {
         float max = Math.max(s, e);
         float min = Math.min(s, e);
         return min <= p && p <= max;
     }
 
-    private boolean overlaps(float s1, float e1, float s2, float e2) {
+    public static boolean overlaps(float s1, float e1, float s2, float e2) {
         return withinRange(s1, e1, s2) || withinRange(s1, e1, e2) || withinRange(s2, e2, s1) || withinRange(s2, e2, e1);
     }
 

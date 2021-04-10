@@ -19,7 +19,7 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
 
     private ArrayList<Box> boxes = new ArrayList<Box>();
     private ArrayList<EmptySpace> emptySpaces = new ArrayList<EmptySpace>();
-    private EmptySpace spaceDimensions;
+
 
     private float emptyVolume;
 
@@ -29,7 +29,15 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
     }
 
     public Load(Load l){
-        //TODO: clone a load
+
+        for(Box b: l.boxes){
+            boxes.add(new Box(b));
+        }
+
+        for(EmptySpace es : l.emptySpaces)
+            emptySpaces.add(new EmptySpace(es));
+
+
     }
 
 
