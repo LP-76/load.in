@@ -459,7 +459,8 @@ public class LoadPlanRenderer extends BaseGLRenderer {
                     "Contents:\n"+
                     currentBox.getDescription() + "\n" +
                     currentBox.getDestination().toString() + "\n"+
-                    currentBox.getWidth() + " x " + currentBox.getHeight() + " x " + currentBox.getLength();
+                    currentBox.getWidth() + " x " + currentBox.getHeight() + " x " + currentBox.getLength()+ "\n" +
+                    "Weight: " + currentBox.getWeight() + " Fragility: " + currentBox.getFragility();
         }
 
         theHud.getStepDisplay().setMessage(stepMessage);
