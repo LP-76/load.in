@@ -1,99 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal" >
-
-    <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/item_description_header"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/load_in_green" />
+    android:stretchColumns="1">
+<TableRow>
         <TextView
             android:id="@+id/item_name_value"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="value"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/load_in_green" />
-        />
-    </LinearLayout>
+            android:layout_height="50dp"
+            android:text="name"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:textColor="@color/load_in_green"
+            android:padding="3dip"/>
 
-    <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/item_room_header"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Room"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/load_in_green" />
         <TextView
             android:id="@+id/item_room_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="value"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/load_in_green" />
-    </LinearLayout>
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="room"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:textColor="@color/load_in_green"
+            android:padding="3dip"/>
 
-    <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/item_status_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/load_in_green" />
         <TextView
             android:id="@+id/item_status_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="value"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/load_in_green" />
-    </LinearLayout>
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="status"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:textColor="@color/load_in_green"
+            android:padding="3dip"/>
 
-    <LinearLayout android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/item_boxID_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Box ID"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/load_in_green" />
         <TextView
             android:id="@+id/item_boxID_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:gravity="center"
             android:textAlignment="gravity"
-            android:text="value"
-            android:layout_marginLeft="10dp"
-            android:textColor="@color/load_in_green" />
-
-    </LinearLayout>
-
-</LinearLayout>
+            android:text="boxID"
+            android:textColor="@color/load_in_green"
+            android:padding="3dip"/>
+    </TableRow>
+</TableLayout>

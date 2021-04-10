@@ -56,7 +56,6 @@
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_marginTop="0dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginBottom="0dp"
             android:layout_height="45dp"
             android:gravity="center"
@@ -66,9 +65,53 @@
             android:textColor="@color/load_in_green"
         />
 
-        <ListView
-            android:layout_marginTop="20dp"
+
+        <TextView
+            android:id="@+id/item_name_header"
+            android:layout_marginStart="30dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="5dp"
             android:layout_below="@id/searchBar"
+            android:textColor="@color/load_in_green" />
+
+        <TextView
+            android:id="@+id/item_boxID_header"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Room"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_toRightOf="@id/item_name_header"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/searchBar"
+            android:textColor="@color/load_in_green" />
+
+        <TextView
+            android:id="@+id/item_room_header"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_toRightOf="@id/item_boxID_header"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/searchBar"
+            android:textColor="@color/load_in_green" />
+
+        <TextView
+            android:id="@+id/item_status_header"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Box ID"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_toRightOf="@id/item_room_header"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/searchBar"
+            android:textColor="@color/load_in_green" />
+
+        <ListView
+            android:layout_below="@id/item_status_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/InventoryListView">
