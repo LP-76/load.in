@@ -96,7 +96,7 @@ public class TestHarnessActivity extends AppCompatActivity {
 
                 try {
                     //TODO: NEED TO PASS IN THE USER_ID + ITEM ID
-                    //test.deleteAllItem( USER_ID , ITEM_ID);
+                    //test.deleteAllItem( USER_ID );
 
                     //Toast.makeText(ItemViewActivity.this, "Item Deleted", Toast.LENGTH_SHORT).show();
                     //Intent switchToInventory = new Intent(ItemViewActivity.this, MoveInventoryActivity.class);
