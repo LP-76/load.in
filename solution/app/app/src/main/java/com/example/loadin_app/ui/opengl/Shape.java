@@ -10,6 +10,7 @@ public abstract class Shape implements IDrawable, IPlaceable {
 
     protected Vector parentOffset;
 
+
     public Shape(IPlaceable parent){
         this.parent =parent;
         parentOffset = new Vector(0,0,0f); //by default, we are right there with parent coordinates
