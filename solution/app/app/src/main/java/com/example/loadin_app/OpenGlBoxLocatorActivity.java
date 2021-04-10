@@ -25,7 +25,9 @@ public class OpenGlBoxLocatorActivity extends Activity {
             Intent switchToLogin = new Intent(this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-
+        Bundle extras = getIntent().getExtras();
+        //int id = (sp.getInt("id",0));
+        int id = extras.getInt("id");
         LoadInApplication app = (LoadInApplication)getApplication();
         String username = app.getCurrentUser().getEmail();
         String password = app.getCurrentUser().getPassword();
@@ -33,7 +35,7 @@ public class OpenGlBoxLocatorActivity extends Activity {
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
 
         super.onCreate(savedInstanceState);
-        glView  = new OpenGlBoxLocatorSurfaceView(this, boxService, inventoryService);
+        glView  = new OpenGlBoxLocatorSurfaceView(this, boxService, inventoryService,id);
         setContentView(glView);
 
     }

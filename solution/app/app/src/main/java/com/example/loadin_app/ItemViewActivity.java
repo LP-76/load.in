@@ -34,6 +34,7 @@ public class ItemViewActivity extends AppCompatActivity {
     private String keyword;
     private TableLayout table;
     private Button deleteItemButton;
+    private Button boxLocatorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +120,21 @@ public class ItemViewActivity extends AppCompatActivity {
                 }
             }
         });
+        boxLocatorButton = (Button) findViewById(R.id.FindBox);
+        boxLocatorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
 
+                Intent switchToBoxLocatorActivity = new Intent(ItemViewActivity.this, OpenGlBoxLocatorActivity.class);
+                int id = Integer.parseInt(sp.getString("itemBoxID",""));
+                //sp.edit().putInt("id",id).apply();
+                switchToBoxLocatorActivity.putExtra("id",id);
+                startActivity(switchToBoxLocatorActivity);
+                finish();
+
+            }
+        });
 
     }
 

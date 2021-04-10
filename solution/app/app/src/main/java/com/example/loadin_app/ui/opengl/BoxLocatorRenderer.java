@@ -165,8 +165,11 @@ public class BoxLocatorRenderer extends BaseGLRenderer {
 
     private void calculateDisplayState() {
 
-        if (located == null)
+        if (located == null){
             state = LoadPlanDisplayerState.BoxNotFound;
+            return;
+        }
+
 
         switch (located.currentBox.getStatus()) {
             case Inventory.AT_DESTINATION:
