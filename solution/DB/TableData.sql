@@ -14,8 +14,8 @@ INSERT INTO ROLE (DESCRIPTION)
 VALUES ('Standard User'), ('Administrator User');
 
 INSERT INTO USER_INVENTORY_ITEM (USER_ID, BOX_ID, BOX_WIDTH, BOX_LENGTH, BOX_HEIGHT, ITEM_DESCRIPTION, FRAGILITY, WEIGHT, CREATED_AT, UPDATED_AT, STATUS, ROOM, ITEM_LIST)
-VALUES (1, 1, 3, 3, 3, 'Mothers Clothes', '2', 234.5, NOW(), NOW(), 'At Source', 'Bedroom, thong, leggings, sweatshirt'),
-       (1, 1, 48, 48, 60, 'Fridge', '2', 10, NOW(), NOW(), 'At Source');
+VALUES (1, 1, 3, 3, 3, 'Mothers Clothes', '2', 234.5, NOW(), NOW(), 'At Source', 'Bedroom', 'thong, leggings, sweatshirt'),
+       (1, 1, 48, 48, 60, 'Fridge', '2', 10, NOW(), NOW(), 'At Source', 'Kitchen', 'Fridge');
 
 INSERT INTO EXPERT_TIP (KEYWORD, TITLE, CONTENT, IMAGE, VIDEO, COMMENTS, CREATED_AT, UPDATED_AT)
 VALUES ('Heavy item','Use small boxes for heavy items.', 'LIFT WITH YOUR BACK!', NULL, 'https://loadinvideohost.s3.amazonaws.com/heavy.mp4', 'THIS TIP SUCKS', NOW(), NOW());
