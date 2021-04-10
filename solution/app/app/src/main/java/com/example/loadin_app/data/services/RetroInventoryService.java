@@ -53,6 +53,6 @@ public interface RetroInventoryService {
             "accept: application/json",
             "contentType: application/json"
     })
-    CompletableFuture<DataWrapper<List<Inventory>>> deleteAllItem(@Path("ID") int ID, int USER_ID);
+    CompletableFuture<DataWrapper<List<Inventory>>> deleteAllItem(@Path("USER_ID") int USER_ID);
 }
 
