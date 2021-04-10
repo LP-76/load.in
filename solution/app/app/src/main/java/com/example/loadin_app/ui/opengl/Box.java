@@ -236,6 +236,9 @@ public class Box extends WorldObject {
     public int getId() {
         return globalID;
     }
+    public void setId(int id){
+        globalID = id;
+    }
 
     public String getDescription() {
         return description;

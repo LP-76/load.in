@@ -6,15 +6,13 @@ import android.content.SharedPreferences;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
-import android.widget.TextView;
-
 import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
-import com.example.loadin_app.ui.opengl.TestGLSurfaceView;
+import com.example.loadin_app.ui.opengl.LoadPlanNavigatorSurfaceView;
 
-public class TestOpenGLActivity extends Activity {
+public class LoadPlanNavigatorActivity extends Activity {
 
     private GLSurfaceView glView;
     public static SharedPreferences sp;
@@ -34,7 +32,7 @@ public class TestOpenGLActivity extends Activity {
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
 
         super.onCreate(savedInstanceState);
-        glView  = new TestGLSurfaceView(this, boxService, inventoryService);
+        glView  = new LoadPlanNavigatorSurfaceView(this, boxService, inventoryService);
         setContentView(glView);
 
     }

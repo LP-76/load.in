@@ -2,31 +2,11 @@ package com.example.loadin_app.ui.opengl;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
-import android.os.SystemClock;
 
-import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
-
-import com.example.loadin_app.Load;
-import com.example.loadin_app.LoadPlan;
-import com.example.loadin_app.LoadPlanGenerator;
-import com.example.loadin_app.TestOpenGLActivity;
-import com.example.loadin_app.TestingLoadPlanGenerator;
-import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
-import com.example.loadin_app.extensions.IExtendedIterator;
-
-import java.sql.Time;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.temporal.TemporalAmount;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -59,7 +39,7 @@ public abstract class BaseGLRenderer implements GLSurfaceView.Renderer {
 
 
 
-    public BaseGLRenderer(Bitmap source, Context ctx, LoadPlanBoxServiceImpl boxService){
+    public BaseGLRenderer(Context ctx, LoadPlanBoxServiceImpl boxService){
 
         context = ctx;
         animationMillisecondsSeconds = 2 * 1000;

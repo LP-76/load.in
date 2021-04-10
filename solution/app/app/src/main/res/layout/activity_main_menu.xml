@@ -61,7 +61,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="Open Gl Test" />
+        android:text="Load Plan Navigator" />
+
+        <Button
+            android:id="@+id/open_gl_box_locator_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="Box Locator" />
 
     <Button
         android:id="@+id/tips_and_tricks_button"

@@ -11,7 +11,7 @@ import com.example.loadin_app.R;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 
-public class TestGLSurfaceView extends GLSurfaceView {
+public class LoadPlanNavigatorSurfaceView extends GLSurfaceView {
     private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
     private float previousX;
     private float previousY;
@@ -22,14 +22,12 @@ public class TestGLSurfaceView extends GLSurfaceView {
 
 
     private final LoadPlanRenderer renderer;
-    public TestGLSurfaceView(Context context, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService){
+    public LoadPlanNavigatorSurfaceView(Context context, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService){
         super(context);
         setEGLContextClientVersion(2);
-        BitmapFactory.Options ops = new BitmapFactory.Options();
-        ops.inScaled = false;
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.blah, ops);
 
-        renderer = new LoadPlanRenderer(bitmap, context, boxService, inventoryService);
+
+        renderer = new LoadPlanRenderer( context, boxService, inventoryService);
         setRenderer(renderer);
         panMode = true;
 

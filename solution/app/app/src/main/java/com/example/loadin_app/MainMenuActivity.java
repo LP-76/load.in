@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -16,7 +16,7 @@ import com.example.loadin_app.ui.login.LoginActivity;
 
 public class MainMenuActivity extends AppCompatActivity
 {
-    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, openGLTestButton, logisticsButton;
+    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, openGLTestButton, logisticsButton, openGLBoxLocatorButton;
     public static SharedPreferences sp;
 
     @Override
@@ -102,12 +102,21 @@ public class MainMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent switchToLogin = new Intent(MainMenuActivity.this, TestOpenGLActivity.class);
+                Intent switchToLogin = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
                 startActivity(switchToLogin);
             }
         });
 
-
+        openGLBoxLocatorButton = (Button) findViewById(R.id.open_gl_box_locator_button);
+        openGLBoxLocatorButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent switchToLogin = new Intent(MainMenuActivity.this, OpenGlBoxLocatorActivity.class);
+                startActivity(switchToLogin);
+            }
+        });
     }
 
     // Menu icons are inflated just as they were with actionbar
