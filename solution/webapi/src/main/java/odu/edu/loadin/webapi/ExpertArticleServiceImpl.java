@@ -33,7 +33,7 @@ import javax.ws.rs.core.Response;
 public class ExpertArticleServiceImpl implements ExpertArticleService {
 
     @Override
-    public ExpertArticle getExpertArticles(String Keyword){
+    public ArrayList<ExpertArticle> getExpertArticles(String Keyword){
 
 
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
@@ -81,9 +81,7 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
      * @throws IOException -
      * @throws ParseException -
      */
-    private ExpertArticle startLucene(String keyword, ArrayList<ExpertArticle> expertArticles) throws IOException, ParseException {
-
-        ExpertArticle results = new ExpertArticle();
+    private ArrayList<ExpertArticle> startLucene(String keyword, ArrayList<ExpertArticle> expertArticles) throws IOException, ParseException {
 
         // Specify the analyzer for tokenizing text.
         //    The same analyzer should be used for indexing and searching
@@ -143,20 +141,48 @@ public class ExpertArticleServiceImpl implements ExpertArticleService {
         ScoreDoc[] hits = docs.scoreDocs;
 
 
+        ArrayList<ExpertArticle> foundArticles = new ArrayList<ExpertArticle>();
+        ExpertArticle results = new ExpertArticle();
         // looping through our results.
-        for(int i=0; i < hits.length; ++i) {
-            int docId = hits[i].doc;
-            Document doc = searcher.doc(docId);
+        if(hits.length >= 1) {
+            for (int i = 0; i < hits.length; ++i) {
+                ExpertArticle searched = new ExpertArticle();
+                int docId = hits[i].doc;
+                Document doc = searcher.doc(docId);
 
-            //grabbing each expert tip and storing it into our ADT
-            results.setKeyword(doc.get("keyword"));
-            results.setArticleTitle(doc.get("title"));
-            results.setArticleContent(doc.get("article"));
-            results.setVisualFile(doc.get("video"));
+                //grabbing each expert tip and storing it into our ADT
+                searched.setKeyword(doc.get("keyword"));
+                searched.setArticleTitle(doc.get("title"));
+                searched.setArticleContent(doc.get("article"));
+                searched.setVisualFile(doc.get("video"));
+                foundArticles.add(searched);
+            }
+        }
+        else
+        {
+            results.setKeyword("");
+            results.setArticleTitle("");
+            results.setArticleContent("");
+
+            try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){
+
+                String addQuery = "INSERT INTO EXPERT_TIP_UNMATCHED_KEYWORDS(KEYWORD, CREATED_AT, UPDATED_AT)"
+                        +" VALUES (?, NOW(), NOW() )";
+
+                PreparedStatement insertStatement = conn.prepareStatement(addQuery);
+                insertStatement.setString(1,keyword);
+                System.out.println(insertStatement);
+                insertStatement.executeUpdate();
+
+            }
+            catch (SQLException ex){
+
+            }
+
         }
 
         reader.close();
-        return results;
+        return foundArticles;
     }
 
 

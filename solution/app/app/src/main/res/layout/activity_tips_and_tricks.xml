@@ -40,7 +40,6 @@
         android:layout_height="match_parent"
         android:layout_marginTop="55dp"
         android:fitsSystemWindows="true"
-
         android:orientation="vertical">
 
         <EditText
@@ -84,7 +83,7 @@
             android:textSize="24sp"
             android:textColor="@color/load_in_green"
             android:layout_below="@id/articleSearchTool"
-            android:text="Placeholder Article Title" />
+            android:text="" />
 
         <com.google.android.exoplayer2.ui.PlayerView
             android:id="@+id/articleVideo"
@@ -123,7 +122,19 @@
             android:textSize="24sp"
             android:textColor="@color/load_in_green"
             android:layout_below="@id/articleVideo"
-            android:text="Placeholder Article Content"/>
+            android:text=""/>
+
+        <ListView
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/searchForArticle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/ExpertListView"
+            android:background="@color/load_in_gray"
+            android:visibility="invisible">
+
+
+        </ListView>
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

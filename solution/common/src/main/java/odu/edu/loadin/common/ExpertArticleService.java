@@ -12,6 +12,6 @@ public interface ExpertArticleService {
     @GET
     @Path("/expertArticles/{keyword}")
     @Produces( "application/json" )
-    ExpertArticle getExpertArticles(@PathParam("keyword") String keyword) throws SQLException;
+    ArrayList<ExpertArticle> getExpertArticles(@PathParam("keyword") String keyword) throws SQLException;
 
 }

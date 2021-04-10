@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_description_header"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/load_in_green" />
+        <TextView
+            android:id="@+id/item_name_value"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="value"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/load_in_green" />
+        />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_room_header"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Room"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/load_in_green" />
+        <TextView
+            android:id="@+id/item_room_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="value"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/load_in_green" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_status_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/load_in_green" />
+        <TextView
+            android:id="@+id/item_status_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="value"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/load_in_green" />
+    </LinearLayout>
+
+    <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/item_boxID_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Box ID"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/load_in_green" />
+        <TextView
+            android:id="@+id/item_boxID_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:textAlignment="gravity"
+            android:text="value"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/load_in_green" />
+
+    </LinearLayout>
+
+</LinearLayout>

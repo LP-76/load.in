@@ -7,16 +7,13 @@ import com.example.loadin_app.ui.opengl.Vector;
 import java.util.ArrayList;
 
 //this class represents an empty space, which will be used in the load plan algorithm to represent some or all of the empty space in the truck.
-public class EmptySpace
-{
+public class EmptySpace {
     private float length, width, height, volume, lengthWidthArea, lengthHeightArea, widthHeightArea;
 
     private Vector offset;
 
-    public EmptySpace(float input_length, float input_width, float input_height, Vector input_offset)
-    {
-        if(input_offset.getX() < 0 || input_offset.getY() < 0 ||input_offset.getZ() < 0)
-        {
+    public EmptySpace(float input_length, float input_width, float input_height, Vector input_offset) {
+        if (input_offset.getX() < 0 || input_offset.getY() < 0 || input_offset.getZ() < 0) {
             System.out.println("WARNING: EmptySpace with negative offset being created: " + input_offset.toString());
         }
 
@@ -31,8 +28,24 @@ public class EmptySpace
         volume = length * width * height;
     }
 
-    public EmptySpace(EmptySpace other){
-        //TODO: implement
+    public EmptySpace(EmptySpace other)
+    {
+        //    private float length, width, height, volume, lengthWidthArea, lengthHeightArea, widthHeightArea;
+        //
+        //    private Vector offset;
+
+        this.length = other.length;
+        this.width = other.width;
+        this.height = other.height;
+
+        lengthWidthArea = length * width;
+        lengthHeightArea = length * height;
+        widthHeightArea = width * height;
+        volume = length * width * height;
+
+        this.offset = other.offset;
+
+
     }
 
     public float GetLength()
@@ -64,6 +77,12 @@ public class EmptySpace
     {
         return widthHeightArea;
     }
+
+    public float GetVolume()
+    {
+        return length * width * height;
+    }
+
 
     public Vector GetOffset()
     {
@@ -111,46 +130,63 @@ public class EmptySpace
     }
 
 
-    public void merge(EmptySpace other){
-        //TODO: alter this empty space to merge with another
-
-        //adds the space to this space
-
-    }
-
-    public EmptySpace splitX(float x){
-        //TODO: implement
-        return null;
-    }
-
-    public EmptySpace splitY(float y){
-        //TODO: implement
-        return null;
-    }
-
-    public EmptySpace splitZ(float z){
-        //TODO: implement
-        return null;
-    }
-
-    public ArrayList<EmptySpace> split(Box box){
-        //TODO: implement
-        return null;
-    }
-
-    public boolean canFit(Box box){
-        //TODO: implement
-        return false;
-    }
-
-
-    public boolean equals(EmptySpace other)
+    public void merge(EmptySpace other)
     {
-        return other.GetHeight() == height
-                && other.GetWidth() == width
-                && other.GetLength() == length
-                && other.GetOffset().getX() == offset.getX()
-                && other.GetOffset().getY() == offset.getY()
-                && other.GetOffset().getZ() == offset.getZ();
+        if(this.isNeighborInXandSameHeightAndLength(other))
+        {
+            this.width += other.GetWidth();
+            this.offset = new Vector(Math.min(this.GetOffset().getX(),other.GetOffset().getX()), this.GetOffset().getY(), this.GetOffset().getZ());
+        }
+        else if(this.isNeighBorInYAboveAndSameWidthAndLength(other))
+        {
+            this.height += + other.GetHeight();
+            this.offset = new Vector(this.GetOffset().getX(),Math.min(this.GetOffset().getY(),other.GetOffset().getY()), this.GetOffset().getZ());
+        }
+        else if(this.isNeighborInZandSameHeightAndWidth(other))
+        {
+            this.length += other.GetLength();
+            this.offset = new Vector(this.GetOffset().getX(),this.GetOffset().getY(), Math.min(this.GetOffset().getZ(),other.GetOffset().getZ()));
+        }
+    }
+
+    public ArrayList<EmptySpace> split(Box box)
+    {
+        ArrayList<EmptySpace> splitSpaces = new ArrayList<EmptySpace>();
+
+        if(this.length - box.getLength() > 0 && this.width > 0 && this.height > 0 )
+            splitSpaces.add(new EmptySpace(this.length - box.getLength(), this.width, this.height, this.offset ));
+
+        if(box.getLength() > 0 && this.width - box.getWidth() > 0 && this.height > 0)
+            splitSpaces.add(new EmptySpace(box.getLength(), this.width - box.getWidth(), this.height, new Vector(this.offset.getX(),this.offset.getY(),this.offset.getZ() + (this.length-box.getLength()))));
+
+        if(box.getLength() > 0 && box.getWidth() > 0 && (this.height - box.getHeight()) > 0 )
+            splitSpaces.add(new EmptySpace(box.getLength(), box.getWidth(), this.height - box.getHeight(), new Vector(this.offset.getX() + (this.width - box.getWidth()), this.offset.getY() + box.getHeight(), this.offset.getZ() + (this.length - box.getLength()))));
+
+        return splitSpaces;
+    }
+
+    public boolean canFit(Box box)
+    {
+        return (this.width >= box.getWidth() ) &&(this.length >= box.getLength() ) && (this.height >= box.getHeight() );
+    }
+
+    @Override
+    public boolean equals(Object other)
+    {
+        if(other.getClass() == getClass())
+        {
+            EmptySpace otherSpace = (EmptySpace)other;
+
+            return otherSpace.GetHeight() == height
+                    && otherSpace.GetWidth() == width
+                    && otherSpace.GetLength() == length
+                    && otherSpace.GetOffset().getX() == offset.getX()
+                    && otherSpace.GetOffset().getY() == offset.getY()
+                    && otherSpace.GetOffset().getZ() == offset.getZ();
+        }
+        else
+        {
+            return false;
+        }
     }
 }

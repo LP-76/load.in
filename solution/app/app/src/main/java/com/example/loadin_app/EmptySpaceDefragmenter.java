@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class EmptySpaceDefragmenter
 {
-    public ArrayList<EmptySpace> Defragment(ArrayList<EmptySpace> spaces)
+    public static ArrayList<EmptySpace> Defragment(ArrayList<EmptySpace> spaces)
     {
         boolean neighboringSpacesFoundAndDeFragmented = false;
 
@@ -20,8 +20,7 @@ public class EmptySpaceDefragmenter
                     if(space.isNeighborInAnyWay(other))
                     {
                         neighboringSpacesFoundAndDeFragmented = true;
-                        spaces.add(Merge(space,other));
-                        spaces.remove(space);
+                        space.merge(other);
                         spaces.remove(other);
                         break outerloop;
                     }
@@ -32,7 +31,7 @@ public class EmptySpaceDefragmenter
                 }
                 else
                 {
-                    //if they are the same space, do nothing
+                    //if they are the same space do nothing
                 }
             }
         }
@@ -42,27 +41,5 @@ public class EmptySpaceDefragmenter
 
         else
             return spaces;
-    }
-
-    private EmptySpace Merge(EmptySpace space, EmptySpace other)
-    {
-        EmptySpace mergedSpace = null;
-        if(space.isNeighborInXandSameHeightAndLength(other))
-        {
-            mergedSpace = new EmptySpace(space.GetLength(), space.GetWidth() + other.GetWidth(),space.GetHeight(),
-                    new Vector(Math.min(space.GetOffset().getX(),other.GetOffset().getX()),space.GetOffset().getY(),space.GetOffset().getZ() ));
-        }
-        else if(space.isNeighBorInYAboveAndSameWidthAndLength(other))
-        {
-            mergedSpace = new EmptySpace(space.GetLength(), space.GetWidth(),space.GetHeight() + other.GetHeight(),
-                    new Vector(space.GetOffset().getX(),Math.min(space.GetOffset().getY(),other.GetOffset().getY()), space.GetOffset().getZ()));
-        }
-        else if(space.isNeighborInZandSameHeightAndWidth(other))
-        {
-            mergedSpace = new EmptySpace(space.GetLength() + other.GetLength(), space.GetWidth(), space.GetHeight(),
-                    new Vector(space.GetOffset().getX(),space.GetOffset().getY(), Math.min(space.GetOffset().getZ(),other.GetOffset().getZ())));
-        }
-
-        return mergedSpace;
     }
 }

@@ -21,14 +21,11 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
     private ArrayList<EmptySpace> emptySpaces = new ArrayList<EmptySpace>();
     private EmptySpace spaceDimensions;
 
-    private float emptyArea;
+    private float emptyVolume;
 
     public Load(EmptySpace input_Space)
     {
-        spaceDimensions = input_Space;
-        emptySpaces.add(new EmptySpace(input_Space.GetLength(), input_Space.GetWidth(), input_Space.GetHeight(), new Vector(0,0,0)));
-
-        emptyArea = input_Space.GetLength() * input_Space.GetHeight() * input_Space.GetWidth();
+        AddSpace(new EmptySpace(input_Space.GetLength(), input_Space.GetWidth(), input_Space.GetHeight(), new Vector(0,0,0)));
     }
 
     public Load(Load l){
@@ -39,7 +36,7 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
     public void AddBox(Box input_box)
     {
         boxes.add(input_box);
-        emptyArea -= input_box.getVolume();
+        //emptyArea -= input_box.getVolume();
     }
 
     public Box GetCurrentBox()
@@ -91,22 +88,28 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
     public void RemoveSpace(EmptySpace input_Space)
     {
         emptySpaces.remove(input_Space);
+        emptyVolume -= input_Space.GetVolume();
     }
 
-    public float GetEmptyArea()
+    public float GetEmptyVolume()
     {
-        return emptyArea;
+        return emptyVolume;
     }
 
     public void AddSpace(EmptySpace input_Space)
     {
-        if(input_Space.GetHeight() > 0 && input_Space.GetWidth() > 0 && input_Space.GetLength() > 0)
-        {
             emptySpaces.add(input_Space);
+            emptyVolume += input_Space.GetVolume();
             emptySpaces = new EmptySpaceDefragmenter().Defragment(emptySpaces);
-        }
     }
 
+    public void AddSpaces(ArrayList<EmptySpace> spaces)
+    {
+        for(EmptySpace space : spaces)
+        {
+            AddSpace(space);
+        }
+    }
 
     @NonNull
     @Override
@@ -147,7 +150,6 @@ public class Load implements ExtendedIterable<Box> , Comparator<Box>
            return -1;
 
        return 0;
-
 
     }
 }
