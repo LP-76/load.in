@@ -7,37 +7,59 @@
         <TextView
             android:id="@+id/item_name_value"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:text="name"
             android:gravity="center"
             android:textAlignment="gravity"
             android:textColor="@color/load_in_green"
-            android:padding="3dip"/>
-
+            />
 
         <TextView
             android:id="@+id/item_room_value"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:text="room"
             android:gravity="center"
             android:textAlignment="gravity"
             android:textColor="@color/load_in_green"
-            android:padding="3dip"/>
+            />
 
         <TextView
             android:id="@+id/item_status_value"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:text="status"
             android:gravity="center"
             android:textAlignment="gravity"
             android:textColor="@color/load_in_green"
-            android:padding="3dip"/>
+            />
 
         <TextView
             android:id="@+id/item_boxID_value"
             android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:text="boxID"
+            android:textColor="@color/load_in_green"
+            />
+
+    </TableRow>
+    <TableRow>
+
+        <TextView
+            android:id="@+id/item_contents_header"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:text="Contents:"
+            android:textColor="@color/load_in_green"
+            android:padding="3dip"/>
+
+        <TextView
+            android:id="@+id/item_contents_value"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:gravity="center"
             android:textAlignment="gravity"

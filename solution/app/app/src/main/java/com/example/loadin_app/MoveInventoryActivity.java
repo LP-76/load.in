@@ -163,6 +163,10 @@ public class MoveInventoryActivity extends AppCompatActivity {
                 {
                     searchedInventory.add(originalInventory.get(i));
                 }
+                else if(inventory.getItemList() != null && inventory.getItemList().toLowerCase().contains(searchWord.toLowerCase()))
+                {
+                    searchedInventory.add(originalInventory.get(i));
+                }
 
             }
         }
