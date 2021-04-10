@@ -20,14 +20,17 @@ public class CubeMappedHexahedron extends Hexahedron implements IColorable, ICub
     OpenGLVariableHolder texDirections;
     private CubeMap map;
 
+    private Color myColor;
 
     public CubeMappedHexahedron(float width, float height, float length, IPlaceable parent){
+        this(width, height, length, parent, new Color(1f,1f,1f,1f));
+
+    }
+    public CubeMappedHexahedron(float width, float height, float length, IPlaceable parent, Color color){
         super(width, height, length, parent);
-
-
         //IMPORTANT, the Z axis is considered horizontal and Y is considered the up direction
-
-       setupTriangles(width, height, length);
+        myColor = color;
+        setupTriangles(width, height, length);
         setupVariables();
     }
 
@@ -35,16 +38,16 @@ public class CubeMappedHexahedron extends Hexahedron implements IColorable, ICub
         float x = width;
         float z = length;
         float y = height;
-        Color white = new Color(1f,1f,1f,1f);
 
-        Vector p1 = new Vector(0, 0, 0, white);
-        Vector p2 = new Vector(x, 0, 0, white);
-        Vector p3 = new Vector(x, 0, z, white);
-        Vector p4 = new Vector(0, 0, z, white);
-        Vector p5 = new Vector(0, y, 0, white);
-        Vector p6 = new Vector(x, y, 0f, white);
-        Vector p7 = new Vector(x, y, z, white);
-        Vector p8 = new Vector(0, y, z, white);
+
+        Vector p1 = new Vector(0, 0, 0, myColor);
+        Vector p2 = new Vector(x, 0, 0, myColor);
+        Vector p3 = new Vector(x, 0, z, myColor);
+        Vector p4 = new Vector(0, 0, z, myColor);
+        Vector p5 = new Vector(0, y, 0, myColor);
+        Vector p6 = new Vector(x, y, 0f, myColor);
+        Vector p7 = new Vector(x, y, z, myColor);
+        Vector p8 = new Vector(0, y, z, myColor);
 
 
         triangles = new Triangle[] {
@@ -69,14 +72,14 @@ public class CubeMappedHexahedron extends Hexahedron implements IColorable, ICub
 
         };
 
-        Vector c1 = new Vector(0, 0, 0, white);
-        Vector c2 = new Vector(1, 0, 0, white);
-        Vector c3 = new Vector(1, 0, 1, white);
-        Vector c4 = new Vector(0, 0, 1, white);
-        Vector c5 = new Vector(0, 1, 0, white);
-        Vector c6 = new Vector(1, 1, 0f, white);
-        Vector c7 = new Vector(1, 1, 1, white);
-        Vector c8 = new Vector(0, 1, 1, white);
+        Vector c1 = new Vector(0, 0, 0, myColor);
+        Vector c2 = new Vector(1, 0, 0, myColor);
+        Vector c3 = new Vector(1, 0, 1, myColor);
+        Vector c4 = new Vector(0, 0, 1, myColor);
+        Vector c5 = new Vector(0, 1, 0, myColor);
+        Vector c6 = new Vector(1, 1, 0f, myColor);
+        Vector c7 = new Vector(1, 1, 1, myColor);
+        Vector c8 = new Vector(0, 1, 1, myColor);
 
 
         cubeMapTriangles = new Triangle[] {
@@ -102,6 +105,16 @@ public class CubeMappedHexahedron extends Hexahedron implements IColorable, ICub
         };
 
 
+    }
+
+    public Color getMyColor() {
+        return myColor;
+    }
+
+    public void setMyColor(Color myColor) {
+        this.myColor = myColor;
+        setupTriangles(width, height, length );
+        setupVariables();
     }
 
     private void setupVariables(){

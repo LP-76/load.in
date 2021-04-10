@@ -57,6 +57,7 @@ public class Box extends WorldObject {
         this.height = other.height;
 
         this.fragility = other.fragility;
+        this.weight = other.weight;
         this.description = other.description;
         this.status = other.status;
         this.boxID = other.boxID;
@@ -148,6 +149,8 @@ public class Box extends WorldObject {
 
     public void setWeight(float weight) {
         this.weight = weight;
+        if(myWorld != null)
+            recalculateShapes(); //this has an impact on the color
     }
 
     public int getFragility() {
@@ -155,7 +158,10 @@ public class Box extends WorldObject {
     }
 
     public void setFragility(int fragility) {
+
         this.fragility = fragility;
+        if(myWorld != null)
+            recalculateShapes();
     }
 
     public void setDescription(String description) {
@@ -167,6 +173,17 @@ public class Box extends WorldObject {
         float z = getLength() / 2f;
         float y = getHeight() / 2f;
         return getWorldOffset().add(new Vector(x, y, z));
+
+    }
+
+    private Color calculateColor(){
+
+        int adjFragility = Math.max(Math.min(fragility, 5), 1);
+        float adjWeight = Math.max(Math.min(weight, 10), 1);
+        float red = adjFragility/5f;
+        float blue = adjWeight/10f;
+
+        return new Color(red, 0f, blue, 0.1f);
 
     }
 
@@ -198,10 +215,12 @@ public class Box extends WorldObject {
 
     @Override
     protected void recalculateShapes() {
+        Color mycolor = calculateColor();
         hexahedron = new CubeMappedHexahedron(
                 width,
                 height,
-                length, this);
+                length, this, mycolor);
+
         hexahedron.setMap(myWorld.getCubeMapProgram().getBox());//the global box map
 
         //destination = new Vector(0f, 0f, 0f);
@@ -217,6 +236,10 @@ public class Box extends WorldObject {
 
     public String getDescription() {
         return description;
+    }
+
+    public float calcArea(){
+        return width * height * length;
     }
 
     public static boolean withinRange(float s, float e, float p) {

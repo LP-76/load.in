@@ -174,6 +174,24 @@ public class EmptySpace {
         return (this.width >= box.getWidth() ) &&(this.length >= box.getLength() ) && (this.height >= box.getHeight() );
     }
 
+    public int rankFit(Box box){
+
+        int numberOfMatchingDimensions = 0;
+
+        if(box.getWidth() == GetWidth())
+            numberOfMatchingDimensions++;
+
+        if(box.getHeight() == GetHeight())
+            numberOfMatchingDimensions++;
+
+        if(box.getLength() == GetLength())
+            numberOfMatchingDimensions++;
+
+        return numberOfMatchingDimensions;
+
+    }
+
+
     @Override
     public boolean equals(Object other)
     {

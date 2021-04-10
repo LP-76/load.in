@@ -9,27 +9,27 @@ import java.util.Arrays;
 import java.util.stream.Stream;
 
 public abstract class Hexahedron extends Shape {
-    private float mWidth, mHeight, mLength;
+    protected float width, height, length;
 
     public float getWidth() {
-        return mWidth;
+        return width;
     }
 
     public float getHeight() {
-        return mHeight;
+        return height;
     }
 
     public float getLength() {
-        return mLength;
+        return length;
     }
 
 
 
     public Hexahedron(float width, float height, float length, IPlaceable parent){
         super(parent);
-        mWidth = width;
-        mHeight = height;
-        mLength = length;
+        this.width = width;
+        this.height = height;
+        this.length = length;
 
 
 

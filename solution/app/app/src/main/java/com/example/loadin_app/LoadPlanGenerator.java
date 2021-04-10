@@ -133,29 +133,35 @@ public class LoadPlanGenerator
     private Box GenerateNewRandomBox()
     {
 //        //home dpot box sizes
-//        Box[] sizes =
-//                {
-//                        new Box(22,15,16),
-//                        new Box(28,16,15),
-//                        new Box(16,12,12),
-//                        new Box(22,21,22)
-//                };
-//
-//        Random rand = new Random();
-//        return sizes[rand.nextInt(sizes.length - 1)];
-
-        int minimumSize = 3;
-        int maximumSize = 7;
-
-        int length, width, height;
+        Box[] sizes =
+                {
+                        new Box(22,15,16),
+                        new Box(28,16,15),
+                        new Box(16,12,12),
+                        new Box(22,21,22)
+                };
 
         Random rand = new Random();
+        Box b =  sizes[rand.nextInt(sizes.length - 1)];
 
-        length = minimumSize + rand.nextInt(maximumSize - minimumSize);
-        width = minimumSize + rand.nextInt(maximumSize - minimumSize);
-        height = minimumSize + rand.nextInt(maximumSize - minimumSize);
+//        int minimumSize = 3;
+//        int maximumSize = 7;
+//
+//        int length, width, height;
+//
+//        Random rand = new Random();
+//
+//        length = minimumSize + rand.nextInt(maximumSize - minimumSize);
+//        width = minimumSize + rand.nextInt(maximumSize - minimumSize);
+//        height = minimumSize + rand.nextInt(maximumSize - minimumSize);
+//
+//        Box b = new Box(width * 6, height * 6, length * 6);
 
-        return new Box(width * 6, height * 6, length * 6);
+       // b.setFragility( 1 + rand.nextInt(4));
+        b.setFragility(1);
+        b.setWeight(1 + rand.nextInt(9));
+
+        return b;
     }
 
     private int getUserId(){
@@ -198,7 +204,7 @@ public class LoadPlanGenerator
 
         ArrayList<LoadPlan> availablePlans = processTrees();
 
-        plan = determineBestLoadPlan(availablePlans);
+        plan = availablePlans.size() > 0 ? availablePlans.get(0) : null;
 
         System.out.println("Finished");
 
@@ -337,7 +343,8 @@ public class LoadPlanGenerator
                  {
                      sizeAtLeastAsLargeAsBoxFound = true;
 
-                     int numberOfMatchingDimensions = CheckIfEmptySpaceMatchesBoxDimensions(input_Box, currentSpace);
+                     //int numberOfMatchingDimensions = CheckIfEmptySpaceMatchesBoxDimensions(input_Box, currentSpace);  //MOVED TO EMPTY SPACE
+                     int numberOfMatchingDimensions = currentSpace.rankFit(input_Box);
                      float distanceFromStart = currentSpace.GetOffset().GetDistanceFromOrigin();
 
                      if(numberOfMatchingDimensions > numberOfMatchingDimensionsInBestFit)
@@ -379,21 +386,22 @@ public class LoadPlanGenerator
         return answer;
     }
 
-    private int CheckIfEmptySpaceMatchesBoxDimensions(Box input_Box, EmptySpace input_Space)
-    {
-        int numberOfMatchingDimensions = 0;
-
-        if(input_Box.getWidth() == input_Space.GetWidth())
-            numberOfMatchingDimensions++;
-
-        if(input_Box.getHeight() == input_Space.GetHeight())
-            numberOfMatchingDimensions++;
-
-        if(input_Box.getLength() == input_Space.GetLength())
-            numberOfMatchingDimensions++;
-
-        return numberOfMatchingDimensions;
-    }
+    //MOVED TO SPACE CLASS
+//    private int CheckIfEmptySpaceMatchesBoxDimensions(Box input_Box, EmptySpace input_Space)
+//    {
+//        int numberOfMatchingDimensions = 0;
+//
+//        if(input_Box.getWidth() == input_Space.GetWidth())
+//            numberOfMatchingDimensions++;
+//
+//        if(input_Box.getHeight() == input_Space.GetHeight())
+//            numberOfMatchingDimensions++;
+//
+//        if(input_Box.getLength() == input_Space.GetLength())
+//            numberOfMatchingDimensions++;
+//
+//        return numberOfMatchingDimensions;
+//    }
 
 
 
@@ -467,33 +475,16 @@ public class LoadPlanGenerator
         return  false;
     }
 
-    public float score(LoadPlan plan)
-    {
-        float emptyVolume = plan.getSumOfEmptyVolumeInAllLoads();
 
-        return emptyVolume;
-    }
 
-    public LoadPlan determineBestLoadPlan(ArrayList<LoadPlan> allPlans){
 
-        LoadPlan bestScoredPlan = null;
-        float bestScore = Float.MAX_VALUE;
-
-        for(LoadPlan l : allPlans){
-            float score = score(l);
-            if(bestScoredPlan == null || score < bestScore){
-                bestScore = score;
-                bestScoredPlan = l;
-            }
-        }
-        return bestScoredPlan;
-
-    }
     private ArrayList<DecisionFrame> processBox(LoadPlan currentLoadPlan, int loadIndex,int emptySpaceIndex, EmptySpace aSpace, Box nextBox){
        ArrayList<DecisionFrame> results = new ArrayList<DecisionFrame>();
 
         //generate a new load plan from putting that box into every available space
         if(aSpace.canFit(nextBox)){
+            int rank = aSpace.rankFit(nextBox);
+
             Box copyOfNextBox = new Box(nextBox); //need to make a copy because it is going to be placed in a different location
 
             //duplicate the plan
@@ -514,6 +505,7 @@ public class LoadPlanGenerator
             if(!violatesConstraints(copyOfNextBox, copy, copyLoad)){  //does any of the load plans i've just generated violate a rule
                 DecisionFrame n = new DecisionFrame();
                 n.currentLoadPlan = copy;
+                n.priority = rank; //the heigher the rank the better the priority
                results.add(n);
 
             } //if so remove that load plan
@@ -586,9 +578,9 @@ public class LoadPlanGenerator
                 }
 
 
-              //  current.remainingBoxes.add(nextBox);
-
-           // }
+//                current.remainingBoxes.add(nextBox);
+//
+//            }
 
 
 
@@ -608,15 +600,18 @@ public class LoadPlanGenerator
         Stack<DecisionFrame> toProcess = new Stack<DecisionFrame>();  //we push on to this for processing
 
         DecisionFrame initial = new DecisionFrame();
+        moveInventory.sort( (o1, o2) -> o1.calcArea() == o2.calcArea() ? 0 : o1.calcArea() > o2.calcArea() ? -1 : 1 );
         initial.remainingBoxes = new LinkedList<Box>(moveInventory);
         initial.currentLoadPlan = new LoadPlan(movingTruck);  //create the initial plan
 
         toProcess.push(initial);
 
-        while(!toProcess.isEmpty() && finishedLoadPlans.size() < 100){
+        while(!toProcess.isEmpty() && finishedLoadPlans.size() < 1){
             DecisionFrame current = toProcess.pop(); //get the next frame to check on
 
             ArrayList<DecisionFrame> results = processFrame(current, finishedLoadPlans);
+
+            results.sort((o1, o2) -> o1.priority < o2.priority ? -1 : o1.priority == o2.priority ? 0 : 1);
 
             for(DecisionFrame f: results)
                 toProcess.push(f);
@@ -633,7 +628,7 @@ public class LoadPlanGenerator
     private class DecisionFrame{
         Queue<Box> remainingBoxes;
         LoadPlan currentLoadPlan;
-
+        int priority;
     }
 
 }
