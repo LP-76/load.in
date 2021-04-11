@@ -1,23 +1,10 @@
 package com.example.loadin_app;
 
-import android.util.Pair;
-
-import com.example.loadin_app.data.services.BoxServiceImpl;
-import com.example.loadin_app.data.services.UserServiceImpl;
 import com.example.loadin_app.ui.opengl.Camera;
 import com.example.loadin_app.ui.opengl.Vector;
 
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import odu.edu.loadin.common.BoxSize;
-import odu.edu.loadin.common.User;
 
 import static org.junit.Assert.*;
 
@@ -32,7 +19,7 @@ public class CameraTests {
 
 
         Vector center = new Vector(0f,0f,0f);
-        theCamera.placeCamera(center);
+        theCamera.place(center);
 
         for(int a= 0; a <= 360; a+= 15){
             double asRadians = Math.toRadians(a);
@@ -53,7 +40,7 @@ public class CameraTests {
         }
 
         Vector upCenter = new Vector(0, 30, 0); //moving up should not affect yaw
-        theCamera.placeCamera(upCenter);
+        theCamera.place(upCenter);
 
         for(int a= 0; a <= 360; a+= 15){
             double asRadians = Math.toRadians(a);
@@ -74,7 +61,7 @@ public class CameraTests {
         }
 
         Vector downCenter = new Vector(0, -30, 0); //moving up should not affect yaw
-        theCamera.placeCamera(upCenter);
+        theCamera.place(upCenter);
 
         for(int a= 0; a <= 360; a+= 15){
             double asRadians = Math.toRadians(a);
@@ -102,7 +89,7 @@ public class CameraTests {
         Camera theCamera = new Camera();
 
         Vector center = new Vector(0f,0f,0f);
-        theCamera.placeCamera(center);
+        theCamera.place(center);
 
         for(int a= 0; a <= 360; a+= 15){
 
@@ -148,10 +135,10 @@ public class CameraTests {
                     (float)Math.sin(asRadians)
             );
 
-            theCamera.placeCamera(placement);
-            Assert.assertTrue(within(theCamera.getLocation().getX(), placement.getX(), 0.01f));
-            Assert.assertTrue(within(theCamera.getLocation().getY(), placement.getY(), 0.01f));
-            Assert.assertTrue(within(theCamera.getLocation().getZ(), placement.getZ(), 0.01f));
+            theCamera.place(placement);
+            Assert.assertTrue(within(theCamera.getWorldOffset().getX(), placement.getX(), 0.01f));
+            Assert.assertTrue(within(theCamera.getWorldOffset().getY(), placement.getY(), 0.01f));
+            Assert.assertTrue(within(theCamera.getWorldOffset().getZ(), placement.getZ(), 0.01f));
             int a1 = 0;
 
 
@@ -170,7 +157,7 @@ public class CameraTests {
 
             //if we are looking toward the center, that is the oposite vector of the location
 
-            Vector expectedFront = theCamera.getLocation().multiply(-1f).normalize(); //reverse vector
+            Vector expectedFront = theCamera.getWorldOffset().multiply(-1f).normalize(); //reverse vector
             Vector normalFront = theCamera.getFront().normalize();
 
             assertTrue(within(expectedFront.getLength(), normalFront.getLength(), 0.001f));
@@ -191,10 +178,10 @@ public class CameraTests {
                     (float)Math.sin(asRadians)
             );
 
-            theCamera.placeCamera(placement);
-            Assert.assertTrue(within(theCamera.getLocation().getX(), placement.getX(), 0.01f));
-            Assert.assertTrue(within(theCamera.getLocation().getY(), placement.getY(), 0.01f));
-            Assert.assertTrue(within(theCamera.getLocation().getZ(), placement.getZ(), 0.01f));
+            theCamera.place(placement);
+            Assert.assertTrue(within(theCamera.getWorldOffset().getX(), placement.getX(), 0.01f));
+            Assert.assertTrue(within(theCamera.getWorldOffset().getY(), placement.getY(), 0.01f));
+            Assert.assertTrue(within(theCamera.getWorldOffset().getZ(), placement.getZ(), 0.01f));
             int a1 = 0;
 
 
@@ -213,7 +200,7 @@ public class CameraTests {
 
             //if we are looking toward the center, that is the oposite vector of the location
 
-            Vector expectedFront = theCamera.getLocation().multiply(-1f).normalize(); //reverse vector
+            Vector expectedFront = theCamera.getWorldOffset().multiply(-1f).normalize(); //reverse vector
             Vector normalFront = theCamera.getFront().normalize();
 
             assertTrue(within(expectedFront.getLength(), normalFront.getLength(), 0.001f));
@@ -233,10 +220,10 @@ public class CameraTests {
                     (float)Math.sin(asRadians)
             );
 
-            theCamera.placeCamera(placement);
-            Assert.assertTrue(within(theCamera.getLocation().getX(), placement.getX(), 0.01f));
-            Assert.assertTrue(within(theCamera.getLocation().getY(), placement.getY(), 0.01f));
-            Assert.assertTrue(within(theCamera.getLocation().getZ(), placement.getZ(), 0.01f));
+            theCamera.place(placement);
+            Assert.assertTrue(within(theCamera.getWorldOffset().getX(), placement.getX(), 0.01f));
+            Assert.assertTrue(within(theCamera.getWorldOffset().getY(), placement.getY(), 0.01f));
+            Assert.assertTrue(within(theCamera.getWorldOffset().getZ(), placement.getZ(), 0.01f));
             int a1 = 0;
 
 
@@ -255,7 +242,7 @@ public class CameraTests {
 
             //if we are looking toward the center, that is the oposite vector of the location
 
-            Vector expectedFront = theCamera.getLocation().multiply(-1f).normalize(); //reverse vector
+            Vector expectedFront = theCamera.getWorldOffset().multiply(-1f).normalize(); //reverse vector
             Vector normalFront = theCamera.getFront().normalize();
 
             assertTrue(within(expectedFront.getLength(), normalFront.getLength(), 0.001f));

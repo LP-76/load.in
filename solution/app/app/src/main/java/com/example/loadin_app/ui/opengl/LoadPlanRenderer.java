@@ -1,18 +1,13 @@
 package com.example.loadin_app.ui.opengl;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 
-import com.example.loadin_app.Load;
 import com.example.loadin_app.LoadPlan;
-import com.example.loadin_app.TestOpenGLActivity;
+import com.example.loadin_app.LoadPlanNavigatorActivity;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
-import com.example.loadin_app.extensions.ExtendedIterable;
-import com.example.loadin_app.extensions.IExtendedIterator;
 
 import java.time.Duration;
-import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 import javax.microedition.khronos.opengles.GL10;
@@ -43,8 +38,11 @@ public class LoadPlanRenderer extends BaseGLRenderer {
     private LoadPlanDisplayerState state;
     private InventoryServiceImpl inventoryService;
 
-    public LoadPlanRenderer(Bitmap source, Context ctx, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService) {
-        super(source, ctx, boxService);
+
+
+
+    public LoadPlanRenderer( Context ctx, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService, boolean colorCodeBoxModeOn) {
+        super( ctx, boxService, colorCodeBoxModeOn);
         this.inventoryService = inventoryService;
        // testBitmap = source;
         state = LoadPlanDisplayerState.Initial;
@@ -60,7 +58,7 @@ public class LoadPlanRenderer extends BaseGLRenderer {
             Vector pointOfView = boxCenter.add(new Vector(-2f*12, 0f, -6f*12f));
             pointOfView.setY(6f*12f); //fixed at eye height
 
-            theCamera.placeCamera(pointOfView);
+            theCamera.place(pointOfView);
             theCamera.lookAt(boxCenter);  //always look at the current box
         }
     }
@@ -70,7 +68,7 @@ public class LoadPlanRenderer extends BaseGLRenderer {
         super.onSurfaceChanged(unused, width, height);
         try
         {
-            theLoadPlan = new LoadPlan(boxService.getLoadPlan(TestOpenGLActivity.sp.getInt("loginID",0)));
+            theLoadPlan = new LoadPlan(boxService.getLoadPlan(LoadPlanNavigatorActivity.sp.getInt("loginID",0)));
         }
         catch (ExecutionException e)
         {
@@ -455,12 +453,7 @@ public class LoadPlanRenderer extends BaseGLRenderer {
 
 
         if(currentBox != null){
-            boxMessage = "Box #" + currentBox.getBoxId() + "\n"+
-                    "Contents:\n"+
-                    currentBox.getDescription() + "\n" +
-                    currentBox.getDestination().toString() + "\n"+
-                    currentBox.getWidth() + " x " + currentBox.getHeight() + " x " + currentBox.getLength()+ "\n" +
-                    "Weight: " + currentBox.getWeight() + " Fragility: " + currentBox.getFragility();
+            boxMessage = currentBox.getBoxMessage();
         }
 
         theHud.getStepDisplay().setMessage(stepMessage);

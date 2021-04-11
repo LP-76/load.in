@@ -2,6 +2,7 @@ package com.example.loadin_app.ui.opengl;
 
 import android.opengl.Matrix;
 
+import com.example.loadin_app.ui.opengl.programs.IMoveable;
 import com.example.loadin_app.ui.opengl.programs.IPlaceable;
 import com.example.loadin_app.ui.opengl.programs.OpenGLProgram;
 
@@ -11,7 +12,7 @@ import java.time.Duration;
 /**
  * An object that can be displayed in the world
  */
-public abstract class  WorldObject implements  IDrawable, IPlaceable {
+public abstract class  WorldObject implements  IDrawable, IPlaceable, IMoveable {
 
     private Vector offset;
 

@@ -1,48 +1,40 @@
 package com.example.loadin_app.ui.opengl;
 
+import com.example.loadin_app.ui.opengl.programs.IMoveable;
+import com.example.loadin_app.ui.opengl.programs.IPlaceable;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.function.Consumer;
 
 public class TransposeAnimation extends Animation {
+    private Vector startLocation;
     private Vector newLocation;
     private Vector transitPath;
     private Vector velocityVector;
     private boolean complete;
     private Consumer<TransposeAnimation> onComplete;
 
-    public TransposeAnimation(WorldObject theTarget, Duration targetCompletion, Duration tick, Vector newLocation, Consumer<TransposeAnimation> onComplete) {
+    public TransposeAnimation(IMoveable theTarget, Duration targetCompletion, Duration tick, Vector newLocation, Consumer<TransposeAnimation> onComplete) {
         super(theTarget, targetCompletion, tick);
         this.newLocation = newLocation;
+        this.startLocation = theTarget.getWorldOffset();
         updateTransitPath();
-        calculateVelocity();
         complete = false;
         this.onComplete = onComplete;
     }
 
     private void updateTransitPath(){
-        transitPath = target.getWorldOffset().add(newLocation.multiply(-1f)).multiply(-1f);
-    }
-
-    private void calculateVelocity(){
-        //how many ticks do we have to meet our timeline goal
-        long expectedNumberOfTicks = timeToCompleteAnimation.toNanos() / tick.toNanos();
-
-        //what is the
-        float velocity = transitPath.getLength() / expectedNumberOfTicks;  //the length we have to travel per tick
-
-        velocityVector = transitPath.normalize().multiply(velocity);  //this is the change in each direction we have to make
-
+        transitPath = startLocation.add(newLocation.multiply(-1f)).multiply(-1f);
     }
 
     @Override
     public void performOperationPerTick() {
-
-        Vector l = target.getWorldOffset().add(velocityVector);  //perform a move according to how much of a vector we need to do
+        float percentComplete = percentComplete();
+        Vector l = startLocation.add( transitPath.multiply(percentComplete));
         target.place(l);
-        updateTransitPath();
 
-        if(LocalDateTime.now().isAfter(end) || transitPath.getLength() <= 1f){
+        if(LocalDateTime.now().isAfter(end)){
             complete = true;
             target.place(newLocation);  //put it at the right spot
             onComplete.accept(this);
@@ -52,7 +44,6 @@ public class TransposeAnimation extends Animation {
 
     @Override
     public boolean isComplete() {
-
         return  complete;
     }
 }

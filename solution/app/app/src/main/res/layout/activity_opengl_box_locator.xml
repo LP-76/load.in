@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/load_in_gray"
     android:padding="@dimen/box_inset_layout_padding"
-    tools:context=".LoadPlanNavigatorActivity"
+    tools:context=".OpenGlBoxLocatorActivity"
     tools:deviceIds="wear">
 
     <FrameLayout

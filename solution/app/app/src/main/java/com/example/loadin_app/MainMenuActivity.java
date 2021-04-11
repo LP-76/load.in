@@ -8,7 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -16,7 +16,7 @@ import com.example.loadin_app.ui.login.LoginActivity;
 
 public class MainMenuActivity extends AppCompatActivity
 {
-    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, openGLTestButton, logisticsButton;
+    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, loadPlanNavigatorNoColorButton, logisticsButton, loadPlanNavigatorWithColorButton;
     public static SharedPreferences sp;
 
     @Override
@@ -96,18 +96,28 @@ public class MainMenuActivity extends AppCompatActivity
                 startActivity(switchToLogin);
             }
         });
-        openGLTestButton = (Button) findViewById(R.id.open_gl_test_button);
-        openGLTestButton.setOnClickListener(new View.OnClickListener()
+        loadPlanNavigatorNoColorButton = (Button) findViewById(R.id.load_plan_navigator_no_color_button);
+        loadPlanNavigatorNoColorButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Intent switchToLogin = new Intent(MainMenuActivity.this, TestOpenGLActivity.class);
-                startActivity(switchToLogin);
+                Intent switchToLoadPlanNavigator = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
+                startActivity(switchToLoadPlanNavigator);
             }
         });
 
-
+        loadPlanNavigatorWithColorButton = (Button) findViewById(R.id.load_plan_navigator_with_color_button);
+        loadPlanNavigatorWithColorButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent switchToLoadPlanNavigator = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
+                switchToLoadPlanNavigator.putExtra(LoadPlanNavigatorActivity.COLOR_CODE_PREFERNCE_KEY, true);
+                startActivity(switchToLoadPlanNavigator);
+            }
+        });
     }
 
     // Menu icons are inflated just as they were with actionbar

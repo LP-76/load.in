@@ -1,6 +1,5 @@
 package com.example.loadin_app;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -172,7 +171,7 @@ public class LoadPlanActivity extends AppCompatActivity
 
     private void GoTo3DRenderingActivity()
     {
-        Intent switchToLogin = new Intent(LoadPlanActivity.this, TestOpenGLActivity.class);
+        Intent switchToLogin = new Intent(LoadPlanActivity.this, LoadPlanNavigatorActivity.class);
         startActivity(switchToLogin);
     }
 }

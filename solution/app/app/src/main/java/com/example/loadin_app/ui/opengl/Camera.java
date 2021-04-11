@@ -1,12 +1,11 @@
 package com.example.loadin_app.ui.opengl;
 
-import android.icu.text.MessagePattern;
-import android.opengl.GLES20;
 import android.opengl.Matrix;
-import android.os.storage.StorageManager;
+
+import com.example.loadin_app.ui.opengl.programs.IMoveable;
 
 
-public class Camera {
+public class Camera implements IMoveable {
     private Vector up;  //what is the direction that we consider up
     private Vector location;
     private Vector front; //front of the camera
@@ -122,7 +121,7 @@ public class Camera {
 
         Vector gotoPlace = toFocusOn.add(new Vector(-distanceInInches, distanceInInches, -distanceInInches));  //two feet above, two feet back
 
-        placeCamera(gotoPlace);  //float above the location
+        place(gotoPlace);  //float above the location
         lookAt(toFocusOn); //look at that item
 
 
@@ -147,9 +146,7 @@ public class Camera {
         updateCameraVectors();
     }
 
-    public Vector getLocation() {
-        return location;
-    }
+
 
 
     public void move( Direction dir ){
@@ -220,10 +217,14 @@ public class Camera {
         return result;
     }
 
-    public void placeCamera(Vector location){
+    public void place(Vector location){
+
         this.location = location;
     }
+    public Vector getWorldOffset() {
 
+        return location;
+    }
 
 
 

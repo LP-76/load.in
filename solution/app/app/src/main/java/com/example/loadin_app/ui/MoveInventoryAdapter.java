@@ -15,6 +15,8 @@ import com.example.loadin_app.ItemViewActivity;
 import com.example.loadin_app.MoveInventoryActivity;
 import com.example.loadin_app.R;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import odu.edu.loadin.common.Inventory;
@@ -47,6 +49,7 @@ public class MoveInventoryAdapter extends ArrayAdapter<Inventory> {
         TextView item_room_value = view.findViewById(R.id.item_room_value);
         TextView item_status_value = view.findViewById(R.id.item_status_value);
         TextView item_boxID = view.findViewById(R.id.item_boxID_value);
+        TextView item_contents_value = view.findViewById(R.id.item_contents_value);
 
         Inventory newInventory = inventory.get(position);
         Integer boxID = newInventory.getBoxID();
@@ -55,6 +58,7 @@ public class MoveInventoryAdapter extends ArrayAdapter<Inventory> {
         item_room_value.setText(newInventory.getRoom());
         item_status_value.setText(newInventory.getStatus());
         item_boxID.setText(boxID.toString());
+        item_contents_value.setText(newInventory.getItemList());
 
         return view;
     }

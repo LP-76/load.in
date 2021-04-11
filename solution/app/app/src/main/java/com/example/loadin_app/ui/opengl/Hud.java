@@ -34,8 +34,15 @@ public class Hud implements IDrawable, IPlaceable {
     float screenWidth;
     float screenHeight;
 
+    boolean displayButtons;
+
     public Hud(World world) {
+        this(world,true);
+
+    }
+    public Hud(World world, boolean displayButtons){
         myWorld = world;
+        this.displayButtons = displayButtons;
         worldOffset = new Vector(0f, 0f, 0f); //i'll put myself in the center
         upperLeftScreenCorner = new Vector(0,0,0);
         upperRightScreenCorner = new Vector(0,0,0);
@@ -44,7 +51,6 @@ public class Hud implements IDrawable, IPlaceable {
 
         screenWidth = 1f;
         setupHudElements();
-
     }
 
     public Vector getUpperLeftScreenCorner() {
@@ -108,14 +114,20 @@ public class Hud implements IDrawable, IPlaceable {
         rightButton.setScale(new Vector(scale, scale, scale));
         rightButton.setYaw(180f);
 
-
-        elements = new IDrawable[]{
+        if(displayButtons)
+            elements = new IDrawable[]{
           stepDisplay,
                 loadDisplay,
                 boxDisplay,
                 leftButton,
                 rightButton
         };
+        else
+            elements = new IDrawable[]{
+                    stepDisplay,
+                    loadDisplay,
+                    boxDisplay
+            };
 
     }
 
@@ -131,6 +143,14 @@ public class Hud implements IDrawable, IPlaceable {
         return loadDisplay;
     }
 
+    public boolean isDisplayButtons() {
+        return displayButtons;
+    }
+
+    public void setDisplayButtons(boolean displayButtons) {
+        this.displayButtons = displayButtons;
+        setupHudElements();
+    }
 
     @Override
     public void draw(World worldContext, float[] view, float[] projection) {

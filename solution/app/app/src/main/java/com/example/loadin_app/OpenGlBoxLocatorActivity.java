@@ -6,15 +6,14 @@ import android.content.SharedPreferences;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
-import android.widget.TextView;
-
 import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
-import com.example.loadin_app.ui.opengl.TestGLSurfaceView;
+import com.example.loadin_app.ui.opengl.LoadPlanNavigatorSurfaceView;
+import com.example.loadin_app.ui.opengl.OpenGlBoxLocatorSurfaceView;
 
-public class TestOpenGLActivity extends Activity {
+public class OpenGlBoxLocatorActivity extends Activity {
 
     private GLSurfaceView glView;
     public static SharedPreferences sp;
@@ -26,7 +25,9 @@ public class TestOpenGLActivity extends Activity {
             Intent switchToLogin = new Intent(this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-
+        Bundle extras = getIntent().getExtras();
+        //int id = (sp.getInt("id",0));
+        int id = extras.getInt("id");
         LoadInApplication app = (LoadInApplication)getApplication();
         String username = app.getCurrentUser().getEmail();
         String password = app.getCurrentUser().getPassword();
@@ -34,7 +35,7 @@ public class TestOpenGLActivity extends Activity {
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
 
         super.onCreate(savedInstanceState);
-        glView  = new TestGLSurfaceView(this, boxService, inventoryService);
+        glView  = new OpenGlBoxLocatorSurfaceView(this, boxService, inventoryService,id);
         setContentView(glView);
 
     }

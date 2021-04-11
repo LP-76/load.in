@@ -103,6 +103,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
                 searchedInventory = searchForBox(inventory, s.toString());
                 updateListView(searchedInventory);
             }
+
         });
     }
 
@@ -135,17 +136,38 @@ public class MoveInventoryActivity extends AppCompatActivity {
         });
     }
 
-    // TODO: Finish search feature - Paul
     private ArrayList<Inventory> searchForBox(ArrayList<Inventory> originalInventory, String searchWord)
     {
         ArrayList<Inventory> searchedInventory = new ArrayList<>();
         try{
             for(int i = 0; i < originalInventory.size(); i++)
             {
-                if(originalInventory.get(i).getDescription().toLowerCase().contains(searchWord.toLowerCase()))
+                Inventory inventory = originalInventory.get(i);
+                String boxIDnum;
+                Integer boxID;
+                boxID = originalInventory.get(i).getBoxID();
+                boxIDnum = boxID.toString();
+                if(inventory.getDescription() != null&&inventory.getDescription().toLowerCase().contains(searchWord.toLowerCase()))
                 {
                     searchedInventory.add(originalInventory.get(i));
                 }
+                else if (inventory.getRoom() != null&&inventory.getRoom().toLowerCase().contains(searchWord.toLowerCase()))
+                {
+                    searchedInventory.add(originalInventory.get(i));
+                }
+                else if(inventory.getStatus() !=null&&inventory.getStatus().toLowerCase().contains(searchWord.toLowerCase()))
+                {
+                    searchedInventory.add(originalInventory.get(i));
+                }
+                else if(boxIDnum != null && boxIDnum.toLowerCase().contains(searchWord.toLowerCase()))
+                {
+                    searchedInventory.add(originalInventory.get(i));
+                }
+                else if(inventory.getItemList() != null && inventory.getItemList().toLowerCase().contains(searchWord.toLowerCase()))
+                {
+                    searchedInventory.add(originalInventory.get(i));
+                }
+
             }
         }
         catch(Exception ex){
