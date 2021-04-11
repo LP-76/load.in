@@ -177,9 +177,6 @@ public class InventoryServiceImpl implements InventoryService {
 
     }
 
-    public void deleteAllItem(int userId){
-        //TODO: finish implmentation
-    }
 
     public void deleteItem(int ID) {
 
