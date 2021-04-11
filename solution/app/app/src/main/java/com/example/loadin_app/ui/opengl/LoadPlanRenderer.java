@@ -38,8 +38,11 @@ public class LoadPlanRenderer extends BaseGLRenderer {
     private LoadPlanDisplayerState state;
     private InventoryServiceImpl inventoryService;
 
-    public LoadPlanRenderer( Context ctx, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService) {
-        super( ctx, boxService);
+
+
+
+    public LoadPlanRenderer( Context ctx, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService, boolean colorCodeBoxModeOn) {
+        super( ctx, boxService, colorCodeBoxModeOn);
         this.inventoryService = inventoryService;
        // testBitmap = source;
         state = LoadPlanDisplayerState.Initial;
@@ -450,12 +453,7 @@ public class LoadPlanRenderer extends BaseGLRenderer {
 
 
         if(currentBox != null){
-            boxMessage = "Box #" + currentBox.getBoxId() + "\n"+
-                    "Contents:\n"+
-                    currentBox.getDescription() + "\n" +
-                    currentBox.getDestination().toString() + "\n"+
-                    currentBox.getWidth() + " x " + currentBox.getHeight() + " x " + currentBox.getLength()+ "\n" +
-                    "Weight: " + currentBox.getWeight() + " Fragility: " + currentBox.getFragility();
+            boxMessage = currentBox.getBoxMessage();
         }
 
         theHud.getStepDisplay().setMessage(stepMessage);

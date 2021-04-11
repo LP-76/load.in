@@ -22,12 +22,12 @@ public class LoadPlanNavigatorSurfaceView extends GLSurfaceView {
 
 
     private final LoadPlanRenderer renderer;
-    public LoadPlanNavigatorSurfaceView(Context context, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService){
+    public LoadPlanNavigatorSurfaceView(Context context, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService, boolean colorCodeBoxModeOn){
         super(context);
         setEGLContextClientVersion(2);
 
 
-        renderer = new LoadPlanRenderer( context, boxService, inventoryService);
+        renderer = new LoadPlanRenderer( context, boxService, inventoryService, colorCodeBoxModeOn);
         setRenderer(renderer);
         panMode = true;
 

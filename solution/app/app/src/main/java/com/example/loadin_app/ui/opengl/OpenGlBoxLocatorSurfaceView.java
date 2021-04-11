@@ -27,7 +27,7 @@ public class OpenGlBoxLocatorSurfaceView extends GLSurfaceView {
         setEGLContextClientVersion(2);
 
         Box b = new Box( 24, 24, 24  );
-        b.setId(id); //some random box from bruce 6 inventory for now
+        b.setBoxId(id); //some random box from bruce 6 inventory for now
 
         renderer = new BoxLocatorRenderer( context, boxService, inventoryService, b);
         setRenderer(renderer);

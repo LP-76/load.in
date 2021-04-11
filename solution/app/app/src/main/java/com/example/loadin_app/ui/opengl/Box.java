@@ -66,7 +66,7 @@ public class Box extends WorldObject {
         this.destination = other.destination;
         this.hexahedron = other.hexahedron;
         this.room = other.room;
-
+        this.itemList = other.itemList;
     }
 
     public void setDestination(Vector destination) {
@@ -90,6 +90,7 @@ public class Box extends WorldObject {
         i.setStatus(status);
         i.setUserID(userID);
         i.setRoom(room);
+        i.setItemList(itemList);
         lpb.setxOffset(destination.getX());
         lpb.setyOffset(destination.getY());
         lpb.setzOffset(destination.getZ());
@@ -181,6 +182,9 @@ public class Box extends WorldObject {
 
     private Color calculateColor(){
 
+        if(!myWorld.isColorCodeBoxes())
+            return new Color(1,1,1,1); //white
+
         int adjFragility = Math.max(Math.min(fragility, 5), 1);
         float adjWeight = Math.max(Math.min(weight, 10), 1);
         float red = adjFragility/5f;
@@ -227,6 +231,12 @@ public class Box extends WorldObject {
         hexahedron.setMap(myWorld.getCubeMapProgram().getBox());//the global box map
 
         //destination = new Vector(0f, 0f, 0f);
+    }
+
+
+
+    public void setBoxId(int boxID) {
+        this.boxID = boxID;
     }
 
     public int getBoxId() {
@@ -306,5 +316,21 @@ public class Box extends WorldObject {
                 ) //overlap z
                 && myDestination.getY() > otherDestination.getY(); //add has to be above the other box
     }
+
+    private String nullChecker(String s){
+        return s != null ? s : "";
+    }
+
+    public String getBoxMessage(){
+       String boxMessage = "Box#: " + getBoxId() + "\n" +
+                "Contents: " + nullChecker(getDescription()) + "\n" +
+                "Room: " + nullChecker(getRoom()) + "\n" +
+                "Items: " + nullChecker(getItemList()) + "\n" +
+                "Dimensions: " + getWidth() + " x " + getHeight() + " x " + getLength() + "\n" +
+                "Weight: " + getWeight() + " Fragility: " + getFragility();
+
+       return boxMessage;
+    }
+
 
 }

@@ -41,7 +41,7 @@ public class BoxLocatorRenderer extends BaseGLRenderer {
 
 
     public BoxLocatorRenderer(Context ctx, LoadPlanBoxServiceImpl boxService, InventoryServiceImpl inventoryService, Box toLocate) {
-        super(ctx, boxService);
+        super(ctx, boxService, false);
         this.inventoryService = inventoryService;
         // testBitmap = source;
         state = LoadPlanDisplayerState.Initial;
@@ -102,7 +102,7 @@ public class BoxLocatorRenderer extends BaseGLRenderer {
     }
 
     private boolean isLocateBoxStep(Box box) {
-        return box.getId() == toLocate.getId();
+        return box.getBoxId() == toLocate.getBoxId();
     }
 
     private void initialize() {
@@ -329,12 +329,7 @@ public class BoxLocatorRenderer extends BaseGLRenderer {
 
 
         if (currentBox != null) {
-            boxMessage = "Box #" + currentBox.getBoxId() + "\n" +
-                    "Contents:\n" +
-                    currentBox.getDescription() + "\n" +
-                    currentBox.getDestination().toString() + "\n" +
-                    currentBox.getWidth() + " x " + currentBox.getHeight() + " x " + currentBox.getLength() + "\n" +
-                    "Weight: " + currentBox.getWeight() + " Fragility: " + currentBox.getFragility();
+            boxMessage = currentBox.getBoxMessage();
         }
 
         theHud.getStepDisplay().setMessage(stepMessage);

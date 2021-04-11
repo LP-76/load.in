@@ -33,9 +33,15 @@ public class World {
     private ArrayList<WorldObject> worldObjects;
     private Duration tick;
     private LocalDateTime lastDraw;
+    private boolean colorCodeBoxes;
 
     public World(Context context){
+       this(context, false);
+    }
+
+    public World(Context context, boolean colorCodeBoxes){
         this.context = context;
+        this.colorCodeBoxes = colorCodeBoxes;
         lightViewProgram = new AlternateLightViewProgram();
         lightViewProgram.load(context);
         textureProgram = new TextureCoordinateProgram();
@@ -48,6 +54,14 @@ public class World {
 
         worldObjects = new ArrayList<WorldObject>();
         animations = new ArrayList<Animation>();
+    }
+
+    public boolean isColorCodeBoxes() {
+        return colorCodeBoxes;
+    }
+
+    public void setColorCodeBoxes(boolean colorCodeBoxes) {
+        this.colorCodeBoxes = colorCodeBoxes;
     }
 
     public Context getContext() {

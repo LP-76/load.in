@@ -52,23 +52,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginTop="50dp">
 
 
 
     <Button
-        android:id="@+id/open_gl_test_button"
+        android:id="@+id/load_plan_navigator_no_color_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+
         android:text="Load Plan Navigator" />
 
         <Button
-            android:id="@+id/open_gl_box_locator_button"
+            android:id="@+id/load_plan_navigator_with_color_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:text="Box Locator" />
+
+            android:text="Load Plan Navigator with Color" />
 
     <Button
         android:id="@+id/tips_and_tricks_button"

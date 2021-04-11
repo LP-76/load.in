@@ -16,7 +16,7 @@ import com.example.loadin_app.ui.login.LoginActivity;
 
 public class MainMenuActivity extends AppCompatActivity
 {
-    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, openGLTestButton, logisticsButton, openGLBoxLocatorButton;
+    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, loadPlanNavigatorNoColorButton, logisticsButton, loadPlanNavigatorWithColorButton;
     public static SharedPreferences sp;
 
     @Override
@@ -96,25 +96,26 @@ public class MainMenuActivity extends AppCompatActivity
                 startActivity(switchToLogin);
             }
         });
-        openGLTestButton = (Button) findViewById(R.id.open_gl_test_button);
-        openGLTestButton.setOnClickListener(new View.OnClickListener()
+        loadPlanNavigatorNoColorButton = (Button) findViewById(R.id.load_plan_navigator_no_color_button);
+        loadPlanNavigatorNoColorButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Intent switchToLogin = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
-                startActivity(switchToLogin);
+                Intent switchToLoadPlanNavigator = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
+                startActivity(switchToLoadPlanNavigator);
             }
         });
 
-        openGLBoxLocatorButton = (Button) findViewById(R.id.open_gl_box_locator_button);
-        openGLBoxLocatorButton.setOnClickListener(new View.OnClickListener()
+        loadPlanNavigatorWithColorButton = (Button) findViewById(R.id.load_plan_navigator_with_color_button);
+        loadPlanNavigatorWithColorButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Intent switchToLogin = new Intent(MainMenuActivity.this, OpenGlBoxLocatorActivity.class);
-                startActivity(switchToLogin);
+                Intent switchToLoadPlanNavigator = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
+                switchToLoadPlanNavigator.putExtra(LoadPlanNavigatorActivity.COLOR_CODE_PREFERNCE_KEY, true);
+                startActivity(switchToLoadPlanNavigator);
             }
         });
     }

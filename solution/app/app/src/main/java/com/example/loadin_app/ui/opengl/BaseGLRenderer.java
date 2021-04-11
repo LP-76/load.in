@@ -22,7 +22,7 @@ public abstract class BaseGLRenderer implements GLSurfaceView.Renderer {
     int animationMillisecondsSeconds;
 
 
-
+    private boolean colorCodeBoxModeOn;
 
     public Camera getTheCamera(){
         return theCamera;
@@ -39,12 +39,12 @@ public abstract class BaseGLRenderer implements GLSurfaceView.Renderer {
 
 
 
-    public BaseGLRenderer(Context ctx, LoadPlanBoxServiceImpl boxService){
+    public BaseGLRenderer(Context ctx, LoadPlanBoxServiceImpl boxService, boolean colorCodeBoxModeOn){
 
         context = ctx;
         animationMillisecondsSeconds = 2 * 1000;
         this.boxService = boxService;
-
+        this.colorCodeBoxModeOn = colorCodeBoxModeOn;
     }
 
 
@@ -58,7 +58,7 @@ public abstract class BaseGLRenderer implements GLSurfaceView.Renderer {
 
 
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        theWorld = new World(context);
+        theWorld = new World(context, colorCodeBoxModeOn);
         theHud = new Hud(theWorld); //setup the hud
         theCamera = new Camera();
 

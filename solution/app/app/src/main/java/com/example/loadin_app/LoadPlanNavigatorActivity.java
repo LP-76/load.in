@@ -14,6 +14,8 @@ import com.example.loadin_app.ui.opengl.LoadPlanNavigatorSurfaceView;
 
 public class LoadPlanNavigatorActivity extends Activity {
 
+    public static final String COLOR_CODE_PREFERNCE_KEY = "colorCodeModeOn";
+
     private GLSurfaceView glView;
     public static SharedPreferences sp;
 
@@ -24,6 +26,10 @@ public class LoadPlanNavigatorActivity extends Activity {
             Intent switchToLogin = new Intent(this, LoginActivity.class);
             startActivity(switchToLogin);
         }
+        Bundle extras = getIntent().getExtras();
+        //int id = (sp.getInt("id",0));
+        boolean colorCode = extras != null ? extras.getBoolean(COLOR_CODE_PREFERNCE_KEY) : false;
+
 
         LoadInApplication app = (LoadInApplication)getApplication();
         String username = app.getCurrentUser().getEmail();
@@ -32,7 +38,7 @@ public class LoadPlanNavigatorActivity extends Activity {
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
 
         super.onCreate(savedInstanceState);
-        glView  = new LoadPlanNavigatorSurfaceView(this, boxService, inventoryService);
+        glView  = new LoadPlanNavigatorSurfaceView(this, boxService, inventoryService, colorCode);
         setContentView(glView);
 
     }
