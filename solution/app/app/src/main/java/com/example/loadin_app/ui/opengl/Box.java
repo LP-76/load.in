@@ -255,7 +255,7 @@ public class Box extends WorldObject {
     }
 
     public float calcArea(){
-        return width * height * length;
+        return width *  length;
     }
 
     public static boolean withinRange(float s, float e, float p) {

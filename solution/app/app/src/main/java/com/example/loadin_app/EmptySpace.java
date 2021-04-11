@@ -43,7 +43,7 @@ public class EmptySpace {
         widthHeightArea = width * height;
         volume = length * width * height;
 
-        this.offset = other.offset;
+        this.offset = new Vector(other.offset.getX(), other.offset.getY(), other.offset.getZ());
 
 
     }
