@@ -10,7 +10,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Queue;
+import java.util.Random;
 
 public class InventoryServiceImpl implements InventoryService {
 
@@ -187,4 +192,119 @@ public class InventoryServiceImpl implements InventoryService {
             System.out.println(ex);
         }
     }
+
+    public void insertRandomItem(int USER_ID){
+
+        System.out.println("-----invoking insertRandomItem");
+
+        ArrayList<Inventory> itemList = new ArrayList<>();
+        itemList.addAll(generateRandomItem());
+
+
+        for (Inventory inventory : itemList) {
+
+           String s =  "INSERT INTO USER_INVENTORY_ITEM (USER_ID, BOX_ID, BOX_WIDTH, BOX_LENGTH, BOX_HEIGHT, ITEM_DESCRIPTION, FRAGILITY, WEIGHT, CREATED_AT, UPDATED_AT, STATUS, ROOM, ITEM_LIST)\n" +
+                    "VALUES (" + "?" + ", " +  inventory.getBoxID()  + "," + inventory.getWidth() + "," + inventory.getLength() + "," + inventory.getHeight() + ","
+                   + "'" + inventory.getDescription() + "'" + "," + "'" + inventory.getFragility() + "'" + "," + inventory.getWeight() +", NOW(), NOW(), 'At Source'," +
+                   "'" + inventory.getRoom() + "'" + "," + "'" + inventory.getItemList() + "'" +");";
+
+            try (Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()) {
+
+                String query = s;
+
+                PreparedStatement insertStatement = conn.prepareStatement(query);
+                insertStatement.setInt(1, USER_ID);
+
+                System.out.println(insertStatement);
+                insertStatement.executeUpdate();
+
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+
+        }
+
+    }
+
+
+    public ArrayList<Inventory> generateRandomItem(){
+
+        ArrayList<Inventory> results = new ArrayList<>();
+
+        //list of items that is randomly selected
+        String[] itemDescription = {"Dishes", "Guitar", "Safe", "Lamp", "Wine Rack", "Stroller", "Miscellaneous",
+                "Bike Part", "Books", "Kettle Bell", "Tools", "Xbox", "PS4", "3D Printer", "Computer Parts", "Electronics",
+                "Tent", "Action Figures", "Manga Collection", "Switch", "Ammo Can", "Computer Monitor", "Skateboard", "Magazine Rack", "Mirror", "Garden Tools", "Crib" };
+
+        //list of rooms that are randomly selected
+        String[] room = {"Bedroom", "Dining Room", "Miscellaneous", "Garage", "Living Room", "Kitchen"};
+
+
+        Random random = new Random();
+
+        //TODO: COULD PASS A PARAM IN TO SELECT THE NUMBER OF ITEMS TO GENERATE
+        for (int i = 1; i < 10; i++) {
+
+            Inventory result = new Inventory();
+
+            result.setBoxID(i);
+            result.setWidth(random.nextInt((36 - 24) + 1) + 24);
+            result.setLength(random.nextInt((36 - 24) + 1) + 24);
+            result.setHeight(random.nextInt((36 - 24) + 1) + 24);
+            result.setDescription(itemDescription[random.nextInt(itemDescription.length)]);
+            result.setFragility(random.nextInt((5 - 1) + 1) + 1);
+            result.setWeight(random.nextInt((10 - 1) + 1) + 1);
+            result.setItemList(itemDescription[random.nextInt(itemDescription.length)] + ", " +
+                    itemDescription[random.nextInt(itemDescription.length)] + " , " +
+                    itemDescription[random.nextInt(itemDescription.length)]);
+            result.setStatus("At Source");
+            result.setRoom(room[random.nextInt(room.length)]);
+
+            results.add(result);
+        }
+
+        return results;
+    }
+
+    public void deleteAllItem(int USER_ID){
+
+        System.out.println("----invoking deleteAllItem");
+
+        //delete the items from the LOAN_PLAN table
+        try (Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()) {
+            String query = "DELETE\n" +
+                    "    LOAD_PLAN_BOX FROM LOAD_PLAN_BOX\n" +
+                    "    INNER JOIN\n" +
+                    "        USER_INVENTORY_ITEM UII on LOAD_PLAN_BOX.ID = UII.ID\n" +
+                    "WHERE\n" +
+                    "    UII.USER_ID = ?;";
+            PreparedStatement insertStatement = conn.prepareStatement(query);
+            insertStatement.setInt(1, USER_ID);
+
+            System.out.println(insertStatement);
+            insertStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+        //deletes all the items from the USER_INVENTORY_ITEM USER_ID passed in.
+        try (Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()) {
+            String query =
+                    "DELETE FROM\n" +
+                    "    USER_INVENTORY_ITEM\n" +
+                    "WHERE\n" +
+                    "    USER_INVENTORY_ITEM.USER_ID = ?;";
+            PreparedStatement insertStatement = conn.prepareStatement(query);
+            insertStatement.setInt(1, USER_ID);
+
+            System.out.println(insertStatement);
+            insertStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+    }
+
 }

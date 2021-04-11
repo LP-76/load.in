@@ -52,7 +52,11 @@ public interface InventoryService
     public void deleteItem(@PathParam("ID") int ID) throws SQLException;
 
     @POST
-    @Path("/inventory/delete/{USER_ID}")
+    @Path("/inventory/deleteAll/{USER_ID}")
     public void deleteAllItem(@PathParam("USER_ID") int USER_ID) throws SQLException;
+
+    @POST
+    @Path("/inventory/insertRandom/{USER_ID}")
+    public void insertRandomItem(@PathParam("USER_ID") int USER_ID) throws SQLException;
 
 }

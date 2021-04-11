@@ -48,11 +48,18 @@ public interface RetroInventoryService {
     })
     CompletableFuture<DataWrapper<List<Inventory>>> deleteItem(@Path("ID") int ID);
 
-    @POST("/inventoryservice/inventory/delete/{USER_ID}")
+    @POST("/inventoryservice/inventory/deleteAll/{USER_ID}")
     @Headers({
             "accept: application/json",
             "contentType: application/json"
     })
     CompletableFuture<DataWrapper<List<Inventory>>> deleteAllItem(@Path("USER_ID") int USER_ID);
+
+    @POST("/inventoryservice/inventory/insertRandom/{USER_ID}")
+    @Headers({
+            "accept: application/json",
+            "contentType: application/json"
+    })
+    CompletableFuture<DataWrapper<List<Inventory>>> insertRandomItem(@Path("USER_ID") int USER_ID);
 }
 

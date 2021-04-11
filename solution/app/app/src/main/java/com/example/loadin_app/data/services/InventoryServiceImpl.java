@@ -78,11 +78,16 @@ public class InventoryServiceImpl extends LoadInServiceWithAuthImpl{
         return null;
     }
 
-    //TODO: CHANGE METHOD TO PASS ITEM_ID AND USER_ID
 
     public Inventory deleteAllItem(int USER_ID) throws ExecutionException, InterruptedException{
         //CompletableFuture<DataWrapper<>>
         retroService.deleteAllItem(USER_ID);
+        return null;
+    }
+
+    public Inventory insertRandomItem(int USER_ID) throws ExecutionException, InterruptedException{
+        //CompletableFuture<DataWrapper<>>
+        retroService.insertRandomItem(USER_ID);
         return null;
     }
 }
