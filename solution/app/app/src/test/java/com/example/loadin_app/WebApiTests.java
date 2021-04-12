@@ -3,6 +3,7 @@ package com.example.loadin_app;
 
 
 import com.example.loadin_app.data.services.BoxServiceImpl;
+import com.example.loadin_app.data.services.MovingTruckServiceImpl;
 import com.example.loadin_app.data.services.UserServiceImpl;
 
 import org.junit.Assert;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import odu.edu.loadin.common.BoxSize;
+import odu.edu.loadin.common.MovingTruck;
 import odu.edu.loadin.common.User;
 
 import static org.junit.Assert.*;
@@ -36,7 +38,17 @@ public class WebApiTests {
         Assert.assertTrue(boxeSizes.size() > 0);
 
     }
+    @Test
+    public void TestBasicTruckSizes() throws ExecutionException, InterruptedException, SQLException {
 
+
+        MovingTruckServiceImpl tc = new MovingTruckServiceImpl(username, password);
+
+        List<MovingTruck> movingTruck = tc.getTrucks();
+
+        Assert.assertTrue(movingTruck.size() > 0);
+
+    }
     @Test
     public void TestAddBoxSize() throws ExecutionException, InterruptedException {
         BoxServiceImpl tc = new BoxServiceImpl(username, password);
