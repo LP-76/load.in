@@ -87,7 +87,10 @@ public class LogisticsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                calculateDistanceOfMove();
+                Double travelDistance = calculateDistanceOfMove();
+                Intent switchToLogTable = new Intent(LogisticsActivity.this, LogisticsTableActivity.class);
+                switchToLogTable.putExtra("milesTraveled", travelDistance);
+                startActivity(switchToLogTable);
             }
         });
 
@@ -120,7 +123,7 @@ public class LogisticsActivity extends AppCompatActivity {
 
         return completedURL;
     }
-    public void calculateDistanceOfMove()
+    public Double calculateDistanceOfMove()
     {
         String startAddress = startingAddress();
         String endAddress = endingAddress();
@@ -151,13 +154,14 @@ public class LogisticsActivity extends AppCompatActivity {
 
             TextView tripDistance = findViewById(R.id.logisticsTotalDistanceNumber);
             tripDistance.setText(roundedTravelDistance.toString());
+            return travelDistance;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         callSync.cancel();
 
 
-
+        return 0d;
     }
     public void getNumberOfLoads()
     {

@@ -42,12 +42,13 @@ public class LogisticsTableActivity extends AppCompatActivity {
     MovingTruckServiceImpl movingTruckService;
     LoadPlanBoxServiceImpl loadPlanBoxService;
     int userId;
-    float milesTraveled;
+    Float milesTraveled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logistics);
+        Bundle extras = getIntent().getExtras();
 
         // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
@@ -80,7 +81,9 @@ public class LogisticsTableActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        milesTraveled = 24; //TODO: wire this up to the geolocator stuff
+        if(extras != null){
+            milesTraveled = (float) extras.getDouble("milesTraveled");
+        }
 
        updateListView();
 

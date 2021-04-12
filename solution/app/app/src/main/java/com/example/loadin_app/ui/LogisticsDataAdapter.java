@@ -49,8 +49,8 @@ public class LogisticsDataAdapter extends ArrayAdapter<LogisticsResult> {
         TextView truck_dimensions_value = view.findViewById(R.id.truck_dimensions_header);
         TextView truck_cost_value = view.findViewById(R.id.truck_cost_header);
         TextView truck_mpg_value = view.findViewById(R.id.truck_mpg_header);
-        TextView item_boxID = view.findViewById(R.id.logistics_trips_header);
-        TextView totalMoveDistance = view.findViewById(R.id.logistics_distance_header);
+        TextView total_trips_value = view.findViewById(R.id.logistics_trips_header);
+        TextView total_move_distance = view.findViewById(R.id.logistics_distance_header);
 
         LogisticsResult logisticsResult = listOfLogisticsResults.get(position);
         MovingTruck newMovingTruck = logisticsResult.getMovingTruck();
@@ -66,7 +66,10 @@ public class LogisticsDataAdapter extends ArrayAdapter<LogisticsResult> {
         Integer numberOfLoads = logisticsResult.getLoadPlan().GetLoads().size();
         Integer numberOfTrips = numberOfLoads * 2;
         Float numberOfMiles = logisticsResult.getNumOfMiles() * numberOfTrips;
+        Float totalDistance = numberOfMiles * numberOfTrips;
 
+
+        String totalDistanceInString = totalDistance.toString();
         String truckBaseRentalCostInString = truckBaseRentalCost.toString();
         String truckMilesPerGallonInString = truckMilesPerGallon.toString();
         String truckCostPerMineInString = truckCostPerMile.toString();
@@ -78,6 +81,8 @@ public class LogisticsDataAdapter extends ArrayAdapter<LogisticsResult> {
         truck_dimensions_value.setText(combinedDimensionsInString);
         truck_cost_value.setText(truckCostPerMineInString);
         truck_mpg_value.setText(truckMilesPerGallonInString);
+        total_trips_value.setText(numberOfTrips.toString());
+        total_move_distance.setText(totalDistanceInString);
 
 
         return view;
