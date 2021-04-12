@@ -75,7 +75,21 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setEnabled(true);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-
+        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+            @Override
+            public void onChanged(@Nullable LoginFormState loginFormState) {
+                if (loginFormState == null) {
+                    return;
+                }
+                loginButton.setEnabled(loginFormState.isDataValid());
+                if (loginFormState.getUsernameError() != null) {
+                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
+                }
+                if (loginFormState.getPasswordError() != null) {
+                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                }
+            }
+        });
 
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
