@@ -19,6 +19,13 @@ import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
 import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
+import com.example.loadin_app.ui.opengl.Box;
+import com.example.loadin_app.ui.opengl.Truck;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import odu.edu.loadin.common.MovingTruck;
 
 public class LoadPlanActivity extends AppCompatActivity
 {
@@ -39,7 +46,8 @@ public class LoadPlanActivity extends AppCompatActivity
 
         //THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-        if(sp.getInt("loginID", 0) == 0){
+        int userId;
+        if( (userId = sp.getInt("loginID", 0)) == 0){
             Intent switchToLogin = new Intent(this, LoginActivity.class);
             startActivity(switchToLogin);
         }
@@ -49,8 +57,15 @@ public class LoadPlanActivity extends AppCompatActivity
         String password = app.getCurrentUser().getPassword();
         LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
         InventoryServiceImpl inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
-
-        generator = new LoadPlanGenerator(sp,  inventoryService, boxService);
+        ArrayList<Box> inventory = null;
+        try {
+             inventory = inventoryService.getInventoryAsBoxes(userId) ;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        generator = new LoadPlanGenerator(sp,  inventoryService, boxService, new Truck(), inventory);
 
         generator.setUseRandomBoxes(useRandomBoxes);
 
@@ -165,7 +180,9 @@ public class LoadPlanActivity extends AppCompatActivity
     {
         //LoadPlanGenerator will take it from here!
         generator.setUseRandomBoxes(useRandomBoxes);
-        generator.StartLoadPlan();
+        //TODO: wire up other steps here for generating fake data
+        LoadPlan plan = generator.GenerateLoadPlan();
+        generator.sendLoadPlanToDatabase();
 
     }
 

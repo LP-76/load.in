@@ -7,6 +7,8 @@ import com.example.loadin_app.ui.opengl.programs.OpenGLVariableHolder;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import odu.edu.loadin.common.MovingTruck;
+
 public class Truck extends WorldObject
 {
     private final Color FLOOR_COLOR = new Color(161f/255f, 119f/255f,93f/255f, 1f);
@@ -14,7 +16,7 @@ public class Truck extends WorldObject
 
 
     private float lengthInches,widthInches,heightInches;
-    private float costPerDayDollars, costPerMileDollars;
+
     private ArrayList<TexturedHexahedron> shapes;
 
     public float getLengthInches() {
@@ -39,13 +41,18 @@ public class Truck extends WorldObject
         lengthInches = 14f * 12f ;  //14foot 3 inches
         widthInches = 7f * 12f ;
         heightInches = 7f* 12f ;
-        costPerDayDollars = 39.95f;
-        costPerMileDollars = 0.99f;
+
 
         //TODO: Make a real constructor that takes real data from somewhere and doesn't hardwire random data from uhaul.com
         //detached by default
     }
 
+    public Truck(MovingTruck fromDb){
+        lengthInches = fromDb.getLengthInInches();
+        widthInches = fromDb.getWidthInInches();
+        heightInches = fromDb.getHeightInInches();
+
+    }
 
     @Override
     protected void recalculateShapes(){

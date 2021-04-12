@@ -11,8 +11,6 @@ public class LoadPlanGeneratorTests {
     @Test
     public void TestLoadPlanGenerator(){
 
-        LoadPlanGenerator lpg = new LoadPlanGenerator(null, null, null);
-        lpg.setUseRandomBoxes(true);
 
 
     }
