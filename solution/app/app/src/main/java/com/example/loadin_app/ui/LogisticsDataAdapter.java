@@ -1,0 +1,85 @@
+package com.example.loadin_app.ui;
+
+import android.content.Context;
+import android.content.Intent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.example.loadin_app.ItemViewActivity;
+import com.example.loadin_app.MoveInventoryActivity;
+import com.example.loadin_app.R;
+import com.example.loadin_app.data.model.LogisticsResult;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
+import odu.edu.loadin.common.Inventory;
+import odu.edu.loadin.common.MovingTruck;
+
+import static com.example.loadin_app.MoveInventoryActivity.sp;
+
+public class LogisticsDataAdapter extends ArrayAdapter<LogisticsResult> {
+
+    ArrayList<LogisticsResult> listOfLogisticsResults;
+
+    Context context;
+
+    int resource;
+
+    public LogisticsDataAdapter(Context context, int resource, ArrayList<LogisticsResult> listOfLogisticsResults){
+        super(context, resource, listOfLogisticsResults);
+        this.context = context;
+        this.resource = resource;
+        this.listOfLogisticsResults = listOfLogisticsResults;
+    }
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent){
+
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+
+        View view = layoutInflater.inflate(resource, null, false);
+
+
+        TextView truck_dimensions_value = view.findViewById(R.id.truck_dimensions_header);
+        TextView truck_cost_value = view.findViewById(R.id.truck_cost_header);
+        TextView truck_mpg_value = view.findViewById(R.id.truck_mpg_header);
+        TextView item_boxID = view.findViewById(R.id.logistics_trips_header);
+        TextView totalMoveDistance = view.findViewById(R.id.logistics_distance_header);
+
+        LogisticsResult logisticsResult = listOfLogisticsResults.get(position);
+        MovingTruck newMovingTruck = logisticsResult.getMovingTruck();
+        Float truckLengthInInches = newMovingTruck.getLengthInInches();
+        Float truckHeightInInches = newMovingTruck.getHeightInInches();
+        Float truckWidthInInches = newMovingTruck.getWidthInInches();
+        Float truckLengthInFeet = truckLengthInInches/12;
+        Float truckWidthInFeet = truckWidthInInches/12;
+        Float truckHeightInFeet = truckHeightInInches/12;
+        Float truckCostPerMile = newMovingTruck.getCostPerMile();
+        Float truckMilesPerGallon = newMovingTruck.getMilesPerGallon();
+        Float truckBaseRentalCost = newMovingTruck.getBaseRentalCost();
+        Integer numberOfLoads = logisticsResult.getLoadPlan().GetLoads().size();
+        Integer numberOfTrips = numberOfLoads * 2;
+        Float numberOfMiles = logisticsResult.getNumOfMiles() * numberOfTrips;
+
+        String truckBaseRentalCostInString = truckBaseRentalCost.toString();
+        String truckMilesPerGallonInString = truckMilesPerGallon.toString();
+        String truckCostPerMineInString = truckCostPerMile.toString();
+
+        String combinedDimensionsInString = truckLengthInFeet.toString() + "x" + truckWidthInFeet.toString() + "x" + truckHeightInFeet.toString();
+
+
+
+        truck_dimensions_value.setText(combinedDimensionsInString);
+        truck_cost_value.setText(truckCostPerMineInString);
+        truck_mpg_value.setText(truckMilesPerGallonInString);
+
+
+        return view;
+    }
+}

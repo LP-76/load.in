@@ -159,6 +159,10 @@ public class LogisticsActivity extends AppCompatActivity {
 
 
     }
+    public void getNumberOfLoads()
+    {
+
+    }
     // Menu icons are inflated just as they were with actionbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
