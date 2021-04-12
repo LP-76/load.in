@@ -88,9 +88,5 @@ public class MovingTruck {
         this.costPerMile = costPerMile;
     }
 
-    public float calculateRentalCost(int numberOfLoads, float totalMiles){
-        //TODO: fill out
-        return 0f;
-    }
 
 }

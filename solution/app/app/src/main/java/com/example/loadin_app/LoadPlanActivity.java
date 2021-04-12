@@ -65,7 +65,7 @@ public class LoadPlanActivity extends AppCompatActivity
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        generator = new LoadPlanGenerator(sp,  inventoryService, boxService, new Truck(), inventory);
+        generator = new LoadPlanGenerator(userId,  inventoryService, boxService, new Truck(), inventory);
 
         generator.setUseRandomBoxes(useRandomBoxes);
 
