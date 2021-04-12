@@ -18,6 +18,7 @@ import com.example.loadin_app.data.model.LogisticsResult;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import odu.edu.loadin.common.Inventory;
@@ -57,9 +58,9 @@ public class LogisticsDataAdapter extends ArrayAdapter<LogisticsResult> {
         Float truckLengthInInches = newMovingTruck.getLengthInInches();
         Float truckHeightInInches = newMovingTruck.getHeightInInches();
         Float truckWidthInInches = newMovingTruck.getWidthInInches();
-        Float truckLengthInFeet = truckLengthInInches/12;
-        Float truckWidthInFeet = truckWidthInInches/12;
-        Float truckHeightInFeet = truckHeightInInches/12;
+        String truckLengthInFeet = new DecimalFormat("0.00").format(truckLengthInInches/12);
+        String truckWidthInFeet = new DecimalFormat("0.00").format(truckWidthInInches/12);
+        String truckHeightInFeet = new DecimalFormat("0.00").format(truckHeightInInches/12);
         Float truckCostPerMile = newMovingTruck.getCostPerMile();
         Float truckMilesPerGallon = newMovingTruck.getMilesPerGallon();
         Float truckBaseRentalCost = newMovingTruck.getBaseRentalCost();
@@ -74,7 +75,7 @@ public class LogisticsDataAdapter extends ArrayAdapter<LogisticsResult> {
         String truckMilesPerGallonInString = truckMilesPerGallon.toString();
         String truckCostPerMineInString = truckCostPerMile.toString();
 
-        String combinedDimensionsInString = truckLengthInFeet.toString() + "x" + truckWidthInFeet.toString() + "x" + truckHeightInFeet.toString();
+        String combinedDimensionsInString = truckLengthInFeet + "x" + truckWidthInFeet + "x" + truckHeightInFeet;
 
 
 

@@ -6,11 +6,9 @@
     <TableRow>
         <TextView
             android:id="@+id/truck_dimensions_header"
-
             android:layout_width="100dp"
             android:gravity="center"
             android:textAlignment="gravity"
-
             android:layout_marginTop="5dp"
             android:text="Dimensions (LxWxH)"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -57,14 +55,5 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/load_in_green" />
     </TableRow>
-
-    <ListView
-
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/LogisticsTable">
-
-
-    </ListView>
 
 </TableLayout>

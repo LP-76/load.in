@@ -47,7 +47,7 @@ public class LogisticsTableActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_logistics);
+        setContentView(R.layout.activity_logistics_table);
         Bundle extras = getIntent().getExtras();
 
         // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
@@ -67,9 +67,9 @@ public class LogisticsTableActivity extends AppCompatActivity {
 
         LoadInApplication app = (LoadInApplication)getApplication();
         User currentUser = app.getCurrentUser();
-        inventoryService = new InventoryServiceImpl(currentUser.getEmail(), currentUser.getPassword());
-        movingTruckService = new MovingTruckServiceImpl(currentUser.getEmail(), currentUser.getPassword());
-        loadPlanBoxService = new LoadPlanBoxServiceImpl(currentUser.getEmail(), currentUser.getPassword());
+        inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
+        movingTruckService = new MovingTruckServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
+        loadPlanBoxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
         movingInventory = new ArrayList<Box>();
         movingTrucks = new ArrayList<MovingTruck>();
         try {
@@ -110,7 +110,7 @@ public class LogisticsTableActivity extends AppCompatActivity {
 
 
         ListView listView = findViewById(R.id.LogisticsTable);
-        LogisticsDataAdapter adapter = new LogisticsDataAdapter(this, R.layout.move_inventory_listview, results);
+        LogisticsDataAdapter adapter = new LogisticsDataAdapter(this, R.layout.truck_information_listview, results);
         listView.setAdapter(adapter);
 
     }
