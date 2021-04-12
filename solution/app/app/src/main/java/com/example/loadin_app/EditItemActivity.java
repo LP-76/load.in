@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.loadin_app.data.services.BaseServiceUrlProvider;
@@ -55,6 +56,29 @@ public class EditItemActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
+        EditText descH = (EditText) findViewById(R.id.BoxDescriptionField2);
+        descH.setHint(sp.getString("itemDescription", ""));
+
+        EditText fragH = (EditText) findViewById(R.id.FragilityField2);
+        fragH.setHint(sp.getString("itemFragility", ""));
+
+        EditText weightH = (EditText) findViewById(R.id.WeightField2);
+        weightH.setHint(sp.getString("itemWeight", ""));
+
+        EditText widthH = (EditText) findViewById(R.id.BoxWidthField2);
+        widthH.setHint(sp.getString("itemWidth", ""));
+
+        EditText lengthH = (EditText) findViewById(R.id.BoxDepthField2);
+        lengthH.setHint(sp.getString("itemLength", ""));
+
+        EditText heightH = (EditText) findViewById(R.id.BoxHeightField2);
+        heightH.setHint(sp.getString("itemHeight", ""));
+
+        EditText roomH = (EditText) findViewById(R.id.BoxRoom2);
+        roomH.setHint(sp.getString("itemRoom", ""));
+
+        EditText itemsH = (EditText) findViewById(R.id.BoxItemList2);
+        itemsH.setHint(sp.getString("itemList", ""));
 
         descriptionInput = (EditText) findViewById(R.id.BoxDescriptionField2);
         weightInput = (EditText) findViewById(R.id.WeightField2);

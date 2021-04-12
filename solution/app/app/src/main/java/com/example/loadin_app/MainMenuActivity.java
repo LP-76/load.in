@@ -17,6 +17,7 @@ import com.example.loadin_app.ui.login.LoginActivity;
 public class MainMenuActivity extends AppCompatActivity
 {
     private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, loadPlanNavigatorNoColorButton, logisticsButton, loadPlanNavigatorWithColorButton;
+    private Button testHarnessButton;
     public static SharedPreferences sp;
 
     @Override
@@ -116,6 +117,17 @@ public class MainMenuActivity extends AppCompatActivity
                 Intent switchToLoadPlanNavigator = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
                 switchToLoadPlanNavigator.putExtra(LoadPlanNavigatorActivity.COLOR_CODE_PREFERNCE_KEY, true);
                 startActivity(switchToLoadPlanNavigator);
+            }
+        });
+
+        testHarnessButton = (Button) findViewById(R.id.goto_test_harness_button);
+        testHarnessButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent switchToTestHarness = new Intent(MainMenuActivity.this, TestHarnessActivity.class);
+                startActivity(switchToTestHarness);
             }
         });
     }

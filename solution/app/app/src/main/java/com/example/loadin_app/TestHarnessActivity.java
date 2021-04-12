@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -27,21 +28,26 @@ import java.util.concurrent.ExecutionException;
 
 public class TestHarnessActivity extends AppCompatActivity {
 
-    private Button deleteItemButton;
+    private EditText randomItemsNumber;
+    private Button deleteAllItemButton, generateRandomInventoryButton;
     public static SharedPreferences sp;
-/*
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item_view);
+        setContentView(R.layout.activity_test_harness);
 
         // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-        /*
+
         if(sp.getInt("loginID", 0) == 0){
-            Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
+            Intent switchToLogin = new Intent(TestHarnessActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
+
+        LoadInApplication app = (LoadInApplication) getApplication();
+        String username = app.getCurrentUser().getEmail();
+        String password = app.getCurrentUser().getPassword();
 
 
         // Find the toolbar view inside the activity layout
@@ -52,53 +58,50 @@ public class TestHarnessActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
-        String dimensions = sp.getString("itemWidth", "") + " x " + sp.getString("itemLength", "") + " x " + sp.getString("itemHeight", "");
-
-        TextView descH = (TextView) findViewById(R.id.item_description_header);
-        descH.setText("Description:");
-        TextView descV = (TextView) findViewById(R.id.item_description_value);
-        descV.setText(sp.getString("itemDescription", ""));
 
 
-        TextView idH = (TextView) findViewById(R.id.item_boxID_header);
-        idH.setText("Box Number:");
-        TextView idV = (TextView) findViewById(R.id.item_boxID_value);
-        idV.setText(sp.getString("itemBoxID", ""));
-
-        TextView dimH = (TextView) findViewById(R.id.item_dimensions_header);
-        dimH.setText("Dimensions:");
-        TextView dimV = (TextView) findViewById(R.id.item_dimensions_value);
-        dimV.setText(dimensions);
-
-        TextView wH = (TextView) findViewById(R.id.item_weight_header);
-        wH.setText("Weight:");
-        TextView wV = (TextView) findViewById(R.id.item_weight_value);
-        wV.setText(sp.getString("itemWeight", ""));
-
-        TextView fH = (TextView) findViewById(R.id.item_fragility_header);
-        fH.setText("Fragility:");
-        TextView fV = (TextView) findViewById(R.id.item_fragility_value);
-        fV.setText(sp.getString("itemFragility", ""));
-
-        deleteItemButton = (Button) findViewById(R.id.deleteItemButton);
-
-        deleteItemButton.setOnClickListener(new View.OnClickListener() {
+        deleteAllItemButton = (Button) findViewById(R.id.delete_all_items);
+        deleteAllItemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                LoadInApplication app = (LoadInApplication) getApplication();
-                String username = app.getCurrentUser().getEmail();
-                String password = app.getCurrentUser().getPassword();
 
-                InventoryServiceImpl test = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
 
+                InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
 
 
                 try {
-                    //TODO: NEED TO PASS IN THE USER_ID + ITEM ID
-                    //test.deleteAllItem( USER_ID );
+                    service.deleteAllItem( sp.getInt("loginID", 0) );
 
-                    //Toast.makeText(ItemViewActivity.this, "Item Deleted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TestHarnessActivity.this, "Inventory Deleted", Toast.LENGTH_SHORT).show();
+                    //Intent switchToInventory = new Intent(ItemViewActivity.this, MoveInventoryActivity.class);
+                    //startActivity(switchToInventory);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+        generateRandomInventoryButton = (Button) findViewById(R.id.generate_random_inventory);
+        generateRandomInventoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                randomItemsNumber = (EditText) findViewById(R.id.number_of_random_boxes);
+                int randItems = Integer.parseInt(randomItemsNumber.getText().toString());
+
+                InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
+
+
+                try {
+                    //TODO: NEED TO PASS IN THE NUMBER OF ITEMS TO BE GENERATED PASS IN "randItems"
+                    service.insertRandomItem( sp.getInt("loginID", 0) );
+
+                    Toast.makeText(TestHarnessActivity.this, "Random Inventory Generated", Toast.LENGTH_SHORT).show();
                     //Intent switchToInventory = new Intent(ItemViewActivity.this, MoveInventoryActivity.class);
                     //startActivity(switchToInventory);
                 } catch (ExecutionException e) {
@@ -116,10 +119,72 @@ public class TestHarnessActivity extends AppCompatActivity {
 
 
     }
-*/
 
 
 
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_main_menu:
+                Intent switchToMainMenu = new Intent(TestHarnessActivity.this, MainMenuActivity.class);
+                startActivity(switchToMainMenu);
+                finish();
+                return true;
+
+            case R.id.action_tips_and_tricks:
+                Intent switchToTips = new Intent(TestHarnessActivity.this, TipsAndTricksActivity.class);
+                startActivity(switchToTips);
+                finish();
+                return true;
+
+            case R.id.action_box_input:
+                Intent switchToBoxInput = new Intent(TestHarnessActivity.this, BoxInputActivity.class);
+                startActivity(switchToBoxInput);
+                finish();
+                return true;
+
+            case R.id.action_move_inventory:
+                Intent switchToMoveInventory = new Intent(TestHarnessActivity.this, MoveInventoryActivity.class);
+                startActivity(switchToMoveInventory);
+                finish();
+                return true;
+
+            case R.id.action_load_plan:
+                Intent switchToLoadPlan = new Intent(TestHarnessActivity.this, LoadPlanActivity.class);
+                startActivity(switchToLoadPlan);
+                finish();
+                return true;
+
+            case R.id.action_feedback:
+
+                Intent switchToFeedback = new Intent(TestHarnessActivity.this, FeedbackActivity.class);
+                startActivity(switchToFeedback);
+                finish();
+
+                return true;
+
+            case R.id.action_account:
+
+                Intent switchToAccount = new Intent(TestHarnessActivity.this, AccountActivity.class);
+                startActivity(switchToAccount);
+                finish();
+
+                return true;
+
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 
 

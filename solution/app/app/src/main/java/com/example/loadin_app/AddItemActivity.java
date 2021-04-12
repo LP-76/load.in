@@ -94,7 +94,7 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                //newItemButton.setVisibility(View.VISIBLE);
+                newItemButton.setVisibility(View.VISIBLE);
 
                 addItemToDB(descriptionInput.getText().toString(), Float.parseFloat(widthInput.getText().toString()), Float.parseFloat(depthInput.getText().toString()),
                         Float.parseFloat(heightInput.getText().toString()), Float.parseFloat(weightInput.getText().toString()), Integer.parseInt(fragilityInput.getText().toString()),

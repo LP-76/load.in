@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoadIn_App"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ItemViewActivity"></activity>
+        <activity android:name=".ItemViewActivity" />
         <activity
             android:name=".LoadPlanNavigatorActivity"
             android:label="@string/title_activity_test_open_g_l">
@@ -106,9 +106,16 @@
         <activity
             android:name=".LogisticsActivity"
             android:label="Logistics">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-        </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".TestHarnessActivity"
+            android:label="Test Harness">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
         </activity>
     </application>
 
