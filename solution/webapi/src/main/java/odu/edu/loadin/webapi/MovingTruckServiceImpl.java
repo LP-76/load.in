@@ -46,29 +46,33 @@ public class MovingTruckServiceImpl implements MovingTruckService {
     public ArrayList<MovingTruck> getAllTrucks() throws SQLException {
         //we get a connection here
 
-//        try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
-//            //this will auto-close the connection
-//            PreparedStatement statement = conn.prepareStatement("SELECT * FROM BOX_SIZE");
-//
-//            //this is more of a transparent method.  person who is performing the query can decide how it gets mapped back to
-//            //individual objects
-//            ArrayList<MovingTruck> results = StatementHelper.getResults(statement, (ResultSet rs) -> {
-//                BoxSize s = new BoxSize();
-//                s.setId(rs.getInt("ID"));
-//                s.setDescription(rs.getString("DESCRIPTION"));
-//                s.setDimensions(rs.getString("DIMENSIONS"));
-//                s.setCreatedAt(rs.getDate("CREATED_AT"));
-//                s.setUpdatedAt(rs.getDate("UPDATED_AT"));
-//                return s;
-//            });
-//            return results;
-//        }
-//        catch (SQLException ex){
-//            //TODO: exception logging
-//            System.out.println(ex);
-//        }
+        try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
+            //this will auto-close the connection
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM TRUCK");
 
-        ArrayList<MovingTruck> test = new ArrayList<>();
+            //this is more of a transparent method.  person who is performing the query can decide how it gets mapped back to
+            //individual objects
+            ArrayList<MovingTruck> results = StatementHelper.getResults(statement, (ResultSet rs) -> {
+                MovingTruck t = new MovingTruck();
+                t.setId(rs.getInt("ID"));
+                t.setCompanyName(rs.getString("COMPANY_NAME"));
+                t.setTruckName(rs.getString("TRUCK_NAME"));
+                t.setWidthInInches(rs.getFloat("TRUCK_WIDTH"));
+                t.setHeightInInches(rs.getFloat("TRUCK_HEIGHT"));
+                t.setLengthInInches(rs.getFloat("TRUCK_LENGTH"));
+                t.setMilesPerGallon(rs.getInt("MILES_PER_GALLON"));
+                t.setBaseRentalCost(rs.getFloat("BASE_RENTAL_COST"));
+                t.setCostPerMile(rs.getFloat("COST_PER_MILE"));
+                return t;
+            });
+            return results;
+        }
+        catch (SQLException ex){
+            //TODO: exception logging
+            System.out.println(ex);
+        }
+        return new ArrayList<MovingTruck>();
+        /*ArrayList<MovingTruck> test = new ArrayList<>();
         MovingTruck t = new MovingTruck();
         t.setCompanyName("UHAUL");
         t.setTruckName("17 footer");
@@ -80,6 +84,6 @@ public class MovingTruckServiceImpl implements MovingTruckService {
         t.setMilesPerGallon(10);
         test.add(t);
 
-        return test;
+        return test;*/
     }
 }
