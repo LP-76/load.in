@@ -38,8 +38,6 @@ public class Server {
         BusFactory.setDefaultBus(bus);
 
 
-
-
     }
 
     protected Server() throws Exception {
@@ -50,15 +48,14 @@ public class Server {
         sf.getFeatures().add(logging);
 
 
-
-
-                sf.setResourceClasses(
+        sf.setResourceClasses(
                 BoxSizeServiceImpl.class,
                 UserServiceImpl.class,
                 InventoryServiceImpl.class,
                 ExpertArticleServiceImpl.class,
                 LoadPlanBoxServiceImpl.class,
-                FeedbackServiceImpl.class
+                FeedbackServiceImpl.class,
+                MovingTruckServiceImpl.class
         );
 
         sf.getInInterceptors().add(new LoadInAuthenticationInterceptor());
@@ -82,7 +79,7 @@ public class Server {
         sf.setAddress("https://localhost:9000/");
 
         //sf.setAddress("http://localhost:9000/");
-       sf.create();
+        sf.create();
         //server.getEndpoint().
 
     }

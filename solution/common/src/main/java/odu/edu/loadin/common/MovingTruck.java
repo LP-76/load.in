@@ -1,5 +1,8 @@
 package odu.edu.loadin.common;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "Data")
 public class MovingTruck {
     private int id;
     private String companyName;
