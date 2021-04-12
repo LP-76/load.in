@@ -30,16 +30,16 @@ public class LoadPlanGenerator
 
     private boolean useRandomBoxes = false;
 
-    SharedPreferences sp;
+   int userId;
     protected  InventoryServiceImpl inventoryService;
     protected LoadPlanBoxServiceImpl boxService;
 
-    public LoadPlanGenerator(SharedPreferences input_sp, InventoryServiceImpl inventoryService, LoadPlanBoxServiceImpl boxService, Truck movingTruck, ArrayList<Box> moveInventory)
+    public LoadPlanGenerator(int userId, InventoryServiceImpl inventoryService, LoadPlanBoxServiceImpl boxService, Truck movingTruck, ArrayList<Box> moveInventory)
     {
         this.moveInventory = moveInventory;
         this.inventoryService   = inventoryService;
         this.boxService = boxService;
-        sp = input_sp;
+        this.userId = userId;
         this.movingTruck = movingTruck;
     }
 
@@ -90,7 +90,7 @@ public class LoadPlanGenerator
             item.setLength(b.getLength());
             item.setFragility(b.getFragility());
             item.setWeight(b.getWeight());
-            item.setUserID(getUserId());
+            item.setUserID(userId);
             items.add(item);
         }
 
@@ -173,9 +173,9 @@ public class LoadPlanGenerator
         return b;
     }
 
-    private int getUserId(){
-        return sp.getInt("loginID", 0);
-    }
+//    private int getUserId(){
+//        return sp.getInt("loginID", 0);
+//    }
 
 //    private void GetMoveInventory()
 //    {
@@ -428,7 +428,7 @@ public class LoadPlanGenerator
 
         try
         {
-            boxService.addLoadPlan(sp.getInt("loginID", 0), data);
+            boxService.addLoadPlan(userId, data);
         }
         catch (ExecutionException e)
         {

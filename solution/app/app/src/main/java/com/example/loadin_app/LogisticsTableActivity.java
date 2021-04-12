@@ -15,18 +15,34 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.loadin_app.data.model.LogisticsResult;
 import com.example.loadin_app.data.services.BaseServiceUrlProvider;
+import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
+import com.example.loadin_app.data.services.MovingTruckServiceImpl;
 import com.example.loadin_app.ui.LogisticsDataAdapter;
 import com.example.loadin_app.ui.MoveInventoryAdapter;
 import com.example.loadin_app.ui.login.LoginActivity;
+import com.example.loadin_app.ui.opengl.Box;
+import com.example.loadin_app.ui.opengl.Truck;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import odu.edu.loadin.common.MovingTruck;
+import odu.edu.loadin.common.User;
 
 public class LogisticsTableActivity extends AppCompatActivity {
 
     public static SharedPreferences sp;
+
+    ArrayList<Box> movingInventory;
+    ArrayList<MovingTruck> movingTrucks;
+    InventoryServiceImpl inventoryService;
+    MovingTruckServiceImpl movingTruckService;
+    LoadPlanBoxServiceImpl loadPlanBoxService;
+    int userId;
+    float milesTraveled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +51,7 @@ public class LogisticsTableActivity extends AppCompatActivity {
 
         // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-        if (sp.getInt("loginID", 0) == 0) {
+        if ((userId = sp.getInt("loginID", 0)) == 0) {
             Intent switchToLogin = new Intent(LogisticsTableActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
@@ -48,15 +64,51 @@ public class LogisticsTableActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
+        LoadInApplication app = (LoadInApplication)getApplication();
+        User currentUser = app.getCurrentUser();
+        inventoryService = new InventoryServiceImpl(currentUser.getEmail(), currentUser.getPassword());
+        movingTruckService = new MovingTruckServiceImpl(currentUser.getEmail(), currentUser.getPassword());
+        loadPlanBoxService = new LoadPlanBoxServiceImpl(currentUser.getEmail(), currentUser.getPassword());
+        movingInventory = new ArrayList<Box>();
+        movingTrucks = new ArrayList<MovingTruck>();
+        try {
+            movingInventory = inventoryService.getInventoryAsBoxes(userId);
+            movingTrucks = new ArrayList<>(movingTruckService.getTrucks());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        milesTraveled = 24; //TODO: wire this up to the geolocator stuff
+
+       updateListView();
+
     }
 
 
-    private void updateListView(ArrayList<MovingTruck> listOfMovingTrucks)
+    private void updateListView()
     {
 
-      //  ListView listView = findViewById(R.id.LogisticsTable);
-       // LogisticsDataAdapter adapter = new LogisticsDataAdapter(this, R.layout.move_inventory_listview, listOfMovingTrucks);
-        //listView.setAdapter(adapter);
+        ArrayList<LogisticsResult> results = new ArrayList<>();
+
+       for(MovingTruck t: movingTrucks){
+           Truck t2 = new Truck(t);
+            LoadPlanGenerator generator = new LoadPlanGenerator(userId, inventoryService, loadPlanBoxService,  t2, movingInventory );
+            LoadPlan plan = generator.GenerateLoadPlan();
+            LogisticsResult lr = new LogisticsResult(t);
+            lr.setLoadPlan(plan);
+            lr.setLpg(generator);
+            lr.setNumOfMiles(milesTraveled);
+
+            results.add(lr);
+
+       }
+
+
+        ListView listView = findViewById(R.id.LogisticsTable);
+        LogisticsDataAdapter adapter = new LogisticsDataAdapter(this, R.layout.move_inventory_listview, results);
+        listView.setAdapter(adapter);
 
     }
 

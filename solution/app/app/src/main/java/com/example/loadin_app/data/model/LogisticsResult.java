@@ -1,6 +1,7 @@
 package com.example.loadin_app.data.model;
 
 import com.example.loadin_app.LoadPlan;
+import com.example.loadin_app.LoadPlanGenerator;
 
 import odu.edu.loadin.common.MovingTruck;
 
@@ -9,8 +10,9 @@ public class LogisticsResult {
     private MovingTruck movingTruck;
     private LoadPlan loadPlan;
     private float numOfMiles;
+    private LoadPlanGenerator lpg;
 
-    LogisticsResult(MovingTruck movingTruck)
+    public LogisticsResult(MovingTruck movingTruck)
     {
         this.movingTruck = movingTruck;
     }
@@ -37,5 +39,13 @@ public class LogisticsResult {
 
     public void setNumOfMiles(float numOfMiles) {
         this.numOfMiles = numOfMiles;
+    }
+
+    public LoadPlanGenerator getLpg() {
+        return lpg;
+    }
+
+    public void setLpg(LoadPlanGenerator lpg) {
+        this.lpg = lpg;
     }
 }
