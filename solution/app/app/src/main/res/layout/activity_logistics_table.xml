@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/load_in_gray"
+    tools:context=".LogisticsActivity">
+
+        <LinearLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:minHeight="?attr/actionBarSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:titleTextColor="@android:color/white"
+                android:background="?attr/colorPrimary"
+                android:orientation="vertical"
+                tools:ignore="MissingConstraints">
+
+                <ImageView
+                    android:id="@+id/loadinLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/loadin_logo"
+                    android:layout_gravity="left">
+                </ImageView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Logistics"
+                    android:textSize="24sp"
+                    android:textColor="@color/white"
+                    android:gravity="center">
+                </TextView>
+            </androidx.appcompat.widget.Toolbar>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativelayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="55dp"
+            android:fitsSystemWindows="true"
+            >
+        <TextView
+            android:id="@+id/logisticsSizeOfMoveInventory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:gravity="center"
+            android:text="Items In Move Inventory"
+            android:textSize="20sp"
+            android:textColor="@color/load_in_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/logisticsSizeOfMoveInventoryNumber"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:text="0"
+            android:layout_marginBottom="12dp"
+            android:layout_toRightOf="@id/logisticsSizeOfMoveInventory"
+            android:ems="10"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/load_in_green"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logisticsSizeOfMoveInventory">
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/box_name_header"
+
+                    android:layout_width="100dp"
+                    android:gravity="center"
+                    android:textAlignment="gravity"
+
+                    android:layout_marginTop="5dp"
+                    android:text="Dimensions (LxWxH)"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/load_in_green" />
+
+                <TextView
+                    android:id="@+id/truck_dimensions_header"
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:textAlignment="gravity"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/item_name_header"
+                    android:text="Cost"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/load_in_green" />
+
+                <TextView
+                    android:id="@+id/truck_mpg_header"
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:textAlignment="gravity"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/item_boxID_header"
+                    android:text="MPG"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/load_in_green" />
+
+                <TextView
+                    android:id="@+id/item_cost_header"
+                    android:layout_width="50dp"
+                    android:gravity="center"
+                    android:textAlignment="gravity"
+
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/item_room_header"
+                    android:text="Trips"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/load_in_green" />
+
+                <TextView
+                    android:id="@+id/logistics_time_header"
+                    android:layout_width="75dp"
+                    android:gravity="center"
+                    android:textAlignment="gravity"
+
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/item_room_header"
+                    android:text="Time"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/load_in_green" />
+
+                <TextView
+                    android:id="@+id/logistics_distance_header"
+                    android:layout_width="75dp"
+                    android:gravity="center"
+                    android:textAlignment="gravity"
+
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@id/item_room_header"
+                    android:text="Distance"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/load_in_green" />
+            </TableRow>
+
+        </TableLayout>
+
+        <ListView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/InventoryListView">
+
+
+        </ListView>
+        </RelativeLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
