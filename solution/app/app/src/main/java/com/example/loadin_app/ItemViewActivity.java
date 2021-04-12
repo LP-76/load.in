@@ -31,7 +31,7 @@ import odu.edu.loadin.common.ExpertArticle;
 public class ItemViewActivity extends AppCompatActivity {
 
     public static SharedPreferences sp;
-    private String keyword;
+    private String keyword, activityTitle;
     private TableLayout table;
     private Button deleteItemButton;
     private Button boxLocatorButton;
@@ -43,12 +43,12 @@ public class ItemViewActivity extends AppCompatActivity {
 
         // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-        /*
+
         if(sp.getInt("loginID", 0) == 0){
-            Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
+            Intent switchToLogin = new Intent(ItemViewActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-        */
+
 
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -71,6 +71,10 @@ public class ItemViewActivity extends AppCompatActivity {
         idH.setText("Box Number:");
         TextView idV = (TextView) findViewById(R.id.item_boxID_value);
         idV.setText(sp.getString("itemBoxID", ""));
+
+        activityTitle = "Box #" + sp.getString("itemBoxID", "");
+        TextView title = (TextView) findViewById(R.id.BoxViewTitle);
+        title.setText(activityTitle);
 
         TextView dimH = (TextView) findViewById(R.id.item_dimensions_header);
         dimH.setText("Dimensions:");

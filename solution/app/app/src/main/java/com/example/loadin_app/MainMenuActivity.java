@@ -16,7 +16,7 @@ import com.example.loadin_app.ui.login.LoginActivity;
 
 public class MainMenuActivity extends AppCompatActivity
 {
-    private Button tipsAndTricksButton, moveInventoryButton, loadPlanButton, gotoLoginButton, loadPlanNavigatorNoColorButton, logisticsButton, loadPlanNavigatorWithColorButton;
+    private Button tipsAndTricksButton, feedbackButton, moveInventoryButton, moveInventoryButton2, loadPlanButton, gotoLoginButton, loadPlanNavigatorNoColorButton, logisticsButton, loadPlanNavigatorWithColorButton;
     private Button testHarnessButton;
     public static SharedPreferences sp;
 
@@ -26,13 +26,13 @@ public class MainMenuActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        /* THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
+        // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         if(sp.getInt("loginID", 0) == 0){
             Intent switchToLogin = new Intent(MainMenuActivity.this, LoginActivity.class);
             startActivity(switchToLogin);
         }
-        */
+
 
 
         // Find the toolbar view inside the activity layout
@@ -54,6 +54,7 @@ public class MainMenuActivity extends AppCompatActivity
             }
         });
 
+        //this is actually to add item
         moveInventoryButton = (Button) findViewById(R.id.move_inventory_button);
         moveInventoryButton.setOnClickListener(new View.OnClickListener()
         {
@@ -62,6 +63,28 @@ public class MainMenuActivity extends AppCompatActivity
             {
                 Intent switchToMoveInventory = new Intent(MainMenuActivity.this, AddItemActivity.class);
                 startActivity(switchToMoveInventory);
+            }
+        });
+
+        moveInventoryButton2 = (Button) findViewById(R.id.goto_move_inventory_button);
+        moveInventoryButton2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent switchToMoveInventory = new Intent(MainMenuActivity.this, MoveInventoryActivity.class);
+                startActivity(switchToMoveInventory);
+            }
+        });
+
+        feedbackButton = (Button) findViewById(R.id.feedback_button);
+        feedbackButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent switchToFeedback = new Intent(MainMenuActivity.this, FeedbackActivity.class);
+                startActivity(switchToFeedback);
             }
         });
 
@@ -76,16 +99,6 @@ public class MainMenuActivity extends AppCompatActivity
             }
         });
 
-        loadPlanButton = (Button) findViewById(R.id.load_plan_button);
-        loadPlanButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent switchToLoadPlan = new Intent(MainMenuActivity.this, LoadPlanActivity.class);
-                startActivity(switchToLoadPlan);
-            }
-        });
 
         gotoLoginButton = (Button) findViewById(R.id.goto_login_button);
         gotoLoginButton.setOnClickListener(new View.OnClickListener()

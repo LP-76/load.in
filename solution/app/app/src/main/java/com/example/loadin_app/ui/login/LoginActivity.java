@@ -75,25 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setEnabled(true);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
-        //button to skip login and registration
-        final Button skipButton = findViewById(R.id.skip);
-        skipButton.setEnabled(true);
 
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-            @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
-            }
-        });
 
         loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
             @Override
@@ -168,14 +150,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //button to skip login so you dont have to do it for testing
-        skipButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent switchToMainMenu = new Intent(LoginActivity.this, MainMenuActivity.class);
-                startActivity(switchToMainMenu);
-            }
-        });
+
     }
 
     // Menu icons are inflated just as they were with actionbar

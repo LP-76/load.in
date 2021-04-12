@@ -82,16 +82,9 @@ public class AccountActivity extends AppCompatActivity {
 
     }
 
-    public void editAccount(View view){
-        Intent switchToEditItem = new Intent(AccountActivity.this, MainMenuActivity.class);
-        startActivity(switchToEditItem);
-        finish();
-    }
-
-
     public void changePassword(View view){
-        Intent switchToAddItem = new Intent(AccountActivity.this, MainMenuActivity.class);
-        startActivity(switchToAddItem);
+        Intent logout = new Intent(AccountActivity.this, LoginActivity.class);
+        startActivity(logout);
         finish();
     }
 

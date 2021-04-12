@@ -119,7 +119,6 @@
 
             <TableRow>
                 <TextView
-                    android:text="Change Password"
                     android:textColor="@color/load_in_green"
                     android:textStyle="bold"
                     android:textSize="20sp"
@@ -128,7 +127,7 @@
                     android:clickable="true"
                     android:onClick="changePassword"/>
                 <TextView
-                    android:text="Edit Account"
+                    android:text="Logout"
                     android:textColor="@color/load_in_green"
                     android:textStyle="bold"
                     android:textSize="20sp"

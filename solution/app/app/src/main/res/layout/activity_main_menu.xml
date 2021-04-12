@@ -52,85 +52,163 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginTop="50dp">
-
-
-
-    <Button
-        android:id="@+id/load_plan_navigator_no_color_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:text="Load Plan Navigator" />
+        android:padding="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/load_plan_navigator_with_color_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:text="Load Plan Navigator with Color" />
-
-    <Button
-        android:id="@+id/tips_and_tricks_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tips And Tricks"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/move_inventory_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add Item"
-        />
-
-    <Button
-        android:id="@+id/load_plan_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Load Plan"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/move_inventory_button" />
-
-        <Button
-            android:id="@+id/logistics_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Logistics"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/move_inventory_button" />
-
-
-        <Button
-            android:id="@+id/goto_login_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Login"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/load_plan_button" />
-
-        <Button
-            android:id="@+id/goto_test_harness_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Test Harness"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/load_plan_button" />
+            android:id="@+id/tips_and_tricks_button"
+            android:layout_width="116dp"
+            android:layout_height="96dp"
+            android:layout_gravity="left"
+            android:text="Tips And Tricks" >
+        </Button>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/goto_move_inventory_button"
+            android:layout_width="120dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:text="Inventory" >
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/move_inventory_button"
+            android:layout_width="116dp"
+            android:layout_height="96dp"
+            android:layout_gravity="right"
+            android:text="Add New Box" >
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="180dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/logistics_button"
+            android:layout_width="120dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center"
+            android:text="Logistics" >
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="180dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/goto_test_harness_button"
+            android:layout_width="116dp"
+            android:layout_height="96dp"
+            android:layout_gravity="right"
+            android:text="Test Harness" >
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:layout_marginTop="180dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/feedback_button"
+            android:layout_width="116dp"
+            android:layout_height="96dp"
+            android:layout_gravity="left"
+            android:text="Feedback" >
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp"
+        android:layout_marginTop="310dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/load_plan_navigator_with_color_button"
+            android:layout_width="160dp"
+            android:layout_height="96dp"
+            android:layout_gravity="right"
+            android:text="Load Plan Color Coded" >
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="30dp"
+        android:layout_marginTop="310dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/load_plan_navigator_no_color_button"
+            android:layout_width="160dp"
+            android:layout_height="96dp"
+            android:layout_gravity="left"
+            android:text="Load Plan" >
+        </Button>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginTop="600dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/goto_login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Logout" >
+        </Button>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
