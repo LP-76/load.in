@@ -50,14 +50,15 @@ public class LogisticsResult {
     }
     public float calculateTotalCost(float baseRentalFee, float totalCostOfDistance)
     {
-        return baseRentalFee * totalCostOfDistance;
+        return baseRentalFee + totalCostOfDistance;
     }
-    public float calculateTotalCostOfDistance(float numOfMiles, float costPerMile)
+    public float calculateTotalCostOfDistance(float totalDistance, float costPerMile)
     {
         return numOfMiles * costPerMile;
     }
-    public Integer calculateTotalDaysNeeded()
+    public float calculateTotalDistance(float numOfMiles, Integer numOfTrips)
     {
-        return 0;
+        return numOfMiles * numOfTrips;
     }
+
 }

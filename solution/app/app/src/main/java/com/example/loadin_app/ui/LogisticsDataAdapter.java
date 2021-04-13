@@ -47,47 +47,61 @@ public class LogisticsDataAdapter extends ArrayAdapter<LogisticsResult> {
         View view = layoutInflater.inflate(resource, null, false);
 
 
+        // Sets all of our textviews so we can update the values.
         TextView truck_dimensions_value = view.findViewById(R.id.item_contents_value);
         TextView truck_cost_value = view.findViewById(R.id.truck_cost_header);
         TextView truck_mpg_value = view.findViewById(R.id.truck_mpg_header);
         TextView total_trips_value = view.findViewById(R.id.logistics_trips_header);
         TextView total_move_distance = view.findViewById(R.id.logistics_distance_header);
 
+        // Gets the LogisticsResults object.
         LogisticsResult logisticsResult = listOfLogisticsResults.get(position);
+
+        // Gets the MovingTruck object contained within the LogisticsResult object.
         MovingTruck newMovingTruck = logisticsResult.getMovingTruck();
 
+        // Gets the dimensions of the truck in inches.
         Float truckLengthInInches = newMovingTruck.getLengthInInches();
         Float truckHeightInInches = newMovingTruck.getHeightInInches();
         Float truckWidthInInches = newMovingTruck.getWidthInInches();
+
+        // Converts the dimensions from inches to feet, and from Floats to Strings.
         String truckLengthInFeet = new DecimalFormat("0.00").format(truckLengthInInches/12);
         String truckWidthInFeet = new DecimalFormat("0.00").format(truckWidthInInches/12);
         String truckHeightInFeet = new DecimalFormat("0.00").format(truckHeightInInches/12);
+
+        // Gets the truck company name, truck name, and concats them into one String.
         String truckCompanyName = newMovingTruck.getCompanyName();
         String truckTruckName = newMovingTruck.getTruckName();
         String truckCompanyNameConcat = truckCompanyName + " " + truckTruckName;
 
+
+        // Gets the truck costPerMile, numberOfLoads, and calculates the numberOfTrips.
         Float truckCostPerMile = newMovingTruck.getCostPerMile();
-        Float truckMilesPerGallon = newMovingTruck.getMilesPerGallon();
         Integer numberOfLoads = logisticsResult.getLoadPlan().GetLoads().size();
         Integer numberOfTrips = numberOfLoads * 2;
+
+        // Rough check to estimate number of days needed. Used 3 to avoid extremely complex time calculation.
         Integer numOfDays = 1;
         if(numberOfTrips != null && numberOfTrips > 3)
         {
-            numOfDays = numberOfTrips / 3;
+            numOfDays = (int) Math.ceil((double)numberOfTrips / 3);
         }
-        Float totalDistance = logisticsResult.getNumOfMiles() * numberOfTrips;
 
-        Float totalCostOfDistance = logisticsResult.calculateTotalCostOfDistance(logisticsResult.getNumOfMiles(), truckCostPerMile);
+
+        // Calculates the total distance, total cost of the distance, and finally total cost of move.
+        // Formula for total cost of move = ((base rental cost * number of days) + (total miles * cost per mile)).
+        Float totalDistance = logisticsResult.calculateTotalDistance(logisticsResult.getNumOfMiles(), numberOfTrips);
+        Float totalCostOfDistance = logisticsResult.calculateTotalCostOfDistance(totalDistance, truckCostPerMile);
         Float totalCostOfMove = logisticsResult.calculateTotalCost(newMovingTruck.getBaseRentalCost() * numOfDays, totalCostOfDistance);
 
 
+        // Converts all of our calculations into Strings.
         String totalDistanceInString = new DecimalFormat("0.00").format(totalDistance) + " miles";
         String truckCostOfMoveInString = "$" + new DecimalFormat("0").format(totalCostOfMove);
-
         String combinedDimensionsInString = truckLengthInFeet + "'" + " x " + truckWidthInFeet + "'" + " x " + truckHeightInFeet + "'";
 
-
-
+        // Passes all of our calculated values into the textViews.
         truck_dimensions_value.setText(combinedDimensionsInString);
         truck_mpg_value.setText(truckCompanyNameConcat);
         truck_cost_value.setText(truckCostOfMoveInString);
