@@ -102,8 +102,8 @@ public class LogisticsTableActivity extends AppCompatActivity {
         results = new ArrayList<>();
 
        for(MovingTruck t: movingTrucks){
-           Truck t2 = new Truck(t);
-            LoadPlanGenerator generator = new LoadPlanGenerator(userId, inventoryService, loadPlanBoxService,  t2, movingInventory );
+
+            LoadPlanGenerator generator = new LoadPlanGenerator(userId, inventoryService, loadPlanBoxService,  t, movingInventory );
             LoadPlan plan = generator.GenerateLoadPlan();
             LogisticsResult lr = new LogisticsResult(t);
             lr.setLoadPlan(plan);

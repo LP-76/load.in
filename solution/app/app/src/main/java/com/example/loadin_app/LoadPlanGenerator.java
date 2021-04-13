@@ -9,6 +9,7 @@ import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 
 import odu.edu.loadin.common.Inventory;
 import odu.edu.loadin.common.LoadPlanBox;
+import odu.edu.loadin.common.MovingTruck;
 
 import com.example.loadin_app.extensions.IExtendedIterator;
 import com.example.loadin_app.ui.opengl.Box;
@@ -22,7 +23,7 @@ import java.util.concurrent.ExecutionException;
 
 public class LoadPlanGenerator
 {
-    private Truck movingTruck;
+    private MovingTruck movingTruck;
 
     private ArrayList<Box> moveInventory = new ArrayList<Box>();
 
@@ -34,7 +35,7 @@ public class LoadPlanGenerator
     protected  InventoryServiceImpl inventoryService;
     protected LoadPlanBoxServiceImpl boxService;
 
-    public LoadPlanGenerator(int userId, InventoryServiceImpl inventoryService, LoadPlanBoxServiceImpl boxService, Truck movingTruck, ArrayList<Box> moveInventory)
+    public LoadPlanGenerator(int userId, InventoryServiceImpl inventoryService, LoadPlanBoxServiceImpl boxService, MovingTruck movingTruck, ArrayList<Box> moveInventory)
     {
         this.moveInventory = moveInventory;
         this.inventoryService   = inventoryService;
@@ -456,7 +457,9 @@ public class LoadPlanGenerator
             {
                 System.out.println("    in hasNextBox");
                 Box b = curLoad.GetNextBox();
-                dataModel.add(new LoadPlanBox(b.getId(), b.getLength(), b.getWidth(), b.getHeight(), b.getDestination().getX(), b.getDestination().getY(), b.getDestination().getZ(), b.getWeight(), b.getFragility(), b.getDescription(), loadIndex, boxIndex, b.getBoxId()) );
+                LoadPlanBox lpd =new LoadPlanBox(b.getId(), b.getLength(), b.getWidth(), b.getHeight(), b.getDestination().getX(), b.getDestination().getY(), b.getDestination().getZ(), b.getWeight(), b.getFragility(), b.getDescription(), loadIndex, boxIndex, b.getBoxId());
+                lpd.setTruck(movingTruck);
+                dataModel.add(lpd);
                 boxIndex++;
             }
 
@@ -652,7 +655,7 @@ public class LoadPlanGenerator
 
         });
         initial.remainingBoxes = new LinkedList<Box>(moveInventory);
-        initial.currentLoadPlan = new LoadPlan(movingTruck);  //create the initial plan
+        initial.currentLoadPlan = new LoadPlan(new Truck(movingTruck));  //create the initial plan
 
         toProcess.push(initial);
 

@@ -43,73 +43,73 @@ public class LoadPlanActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_plan);
-
-        //THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
-        sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
-        int userId;
-        if( (userId = sp.getInt("loginID", 0)) == 0){
-            Intent switchToLogin = new Intent(this, LoginActivity.class);
-            startActivity(switchToLogin);
-        }
-
-        LoadInApplication app = (LoadInApplication)getApplication();
-        String username = app.getCurrentUser().getEmail();
-        String password = app.getCurrentUser().getPassword();
-        LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
-        InventoryServiceImpl inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
-        ArrayList<Box> inventory = null;
-        try {
-             inventory = inventoryService.getInventoryAsBoxes(userId) ;
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        generator = new LoadPlanGenerator(userId,  inventoryService, boxService, new Truck(), inventory);
-
-        generator.setUseRandomBoxes(useRandomBoxes);
-
-        // Find the toolbar view inside the activity layout
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitleTextColor(Color.WHITE);
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(null);
-
-        mTextView = (TextView) findViewById(R.id.text);
-
-        generateLoadPlanButton = (Button) findViewById(R.id.generate_load_plan);
-        generateLoadPlanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                StartLoadPlan();
-                Toast.makeText(LoadPlanActivity.this, "Load Plan Generated", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        viewLoadPlanButton = (Button) findViewById(R.id.ViewLoadPlanButton);
-        viewLoadPlanButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                GoTo3DRenderingActivity();
-            }
-        });
-        useMoveInventoryRadioButton = (RadioButton) findViewById(R.id.UseMoveInventoryRadioButton);
-        useMoveInventoryRadioButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {useRandomBoxes = false;}
-        });
-
-        useRandomBoxesRadioButton = (RadioButton) findViewById(R.id.UseRandomBoxesRadioButton);
-        useRandomBoxesRadioButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {useRandomBoxes = true;}
-        });
+//
+//        //THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
+//        sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+//        int userId;
+//        if( (userId = sp.getInt("loginID", 0)) == 0){
+//            Intent switchToLogin = new Intent(this, LoginActivity.class);
+//            startActivity(switchToLogin);
+//        }
+//
+//        LoadInApplication app = (LoadInApplication)getApplication();
+//        String username = app.getCurrentUser().getEmail();
+//        String password = app.getCurrentUser().getPassword();
+//        LoadPlanBoxServiceImpl boxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
+//        InventoryServiceImpl inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
+//        ArrayList<Box> inventory = null;
+//        try {
+//             inventory = inventoryService.getInventoryAsBoxes(userId) ;
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        generator = new LoadPlanGenerator(userId,  inventoryService, boxService, new Truck(), inventory);
+//
+//        generator.setUseRandomBoxes(useRandomBoxes);
+//
+//        // Find the toolbar view inside the activity layout
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitleTextColor(Color.WHITE);
+//        // Sets the Toolbar to act as the ActionBar for this Activity window.
+//        // Make sure the toolbar exists in the activity and is not null
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle(null);
+//
+//        mTextView = (TextView) findViewById(R.id.text);
+//
+//        generateLoadPlanButton = (Button) findViewById(R.id.generate_load_plan);
+//        generateLoadPlanButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                StartLoadPlan();
+//                Toast.makeText(LoadPlanActivity.this, "Load Plan Generated", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//        viewLoadPlanButton = (Button) findViewById(R.id.ViewLoadPlanButton);
+//        viewLoadPlanButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                GoTo3DRenderingActivity();
+//            }
+//        });
+//        useMoveInventoryRadioButton = (RadioButton) findViewById(R.id.UseMoveInventoryRadioButton);
+//        useMoveInventoryRadioButton.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v) {useRandomBoxes = false;}
+//        });
+//
+//        useRandomBoxesRadioButton = (RadioButton) findViewById(R.id.UseRandomBoxesRadioButton);
+//        useRandomBoxesRadioButton.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v) {useRandomBoxes = true;}
+//        });
     }
 
     // Menu icons are inflated just as they were with actionbar

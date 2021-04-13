@@ -10,10 +10,11 @@ public class LoadPlanBox
     private int  loadNumber,stepNumber;
 
     private Inventory box;
-
+    private MovingTruck truck;
 
     public LoadPlanBox(){
         box = new Inventory();
+        truck = new MovingTruck();
     };
 
     public LoadPlanBox(int id, float length, float width, float height, float xOffset, float yOffset, float zOffset, float weight, int fragility, String description, int loadNumber, int stepNumber, int boxId)
@@ -38,6 +39,14 @@ public class LoadPlanBox
         this.loadNumber = loadNumber;
         this.stepNumber = stepNumber;
         box.setBoxID(boxId);
+    }
+
+    public MovingTruck getTruck() {
+        return truck;
+    }
+
+    public void setTruck(MovingTruck truck) {
+        this.truck = truck;
     }
 
     public float getxOffset() {

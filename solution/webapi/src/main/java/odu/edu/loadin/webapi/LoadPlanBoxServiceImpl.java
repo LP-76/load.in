@@ -10,6 +10,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import com.mysql.cj.x.protobuf.MysqlxPrepare;
 
+import odu.edu.loadin.common.MovingTruck;
 import odu.edu.loadin.helpers.*;
 
 public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
@@ -20,9 +21,10 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
         System.out.println("--invoking getLoadPlan");
         try (Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()) { //this is called a try with resources and with java 1.8
             //this will auto-close the connection
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM USER_INVENTORY_ITEM i\n" +
-                    "    JOIN LOAD_PLAN_BOX LPB on i.ID = LPB.ID\n" +
-                    "    WHERE USER_ID = ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM USER_INVENTORY_ITEM as i\n" +
+                    "                    JOIN LOAD_PLAN_BOX LPB on i.ID = LPB.ID\n" +
+                    "                    JOIN TRUCK as t on t.ID = LPB.TRUCK_ID\n" +
+                    "                    WHERE USER_ID = ?");
             statement.setInt(1, userId);
 
             //this is more of a transparent method.  person who is performing the query can decide how it gets mapped back to
@@ -30,6 +32,7 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
             ArrayList<LoadPlanBox> results = StatementHelper.getResults(statement, (ResultSet rs) -> {
                 LoadPlanBox s = new LoadPlanBox();
                 Inventory b = s.getBox();
+                MovingTruck truck = s.getTruck();
                 b.setId(rs.getInt("ID"));
                 b.setUserID(rs.getInt("USER_ID"));
                 b.setBoxID(rs.getInt("BOX_ID"));
@@ -51,6 +54,10 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
 
                 s.setStepNumber(rs.getInt("BOX_STEP"));
                 s.setLoadNumber(rs.getInt("LOAD_NUMBER"));
+
+                truck.setWidthInInches(rs.getFloat("TRUCK_WIDTH"));
+                truck.setHeightInInches(rs.getFloat("TRUCK_HEIGHT"));
+                truck.setLengthInInches(rs.getFloat("TRUCK_LENGTH"));
 
 
                 return s;
@@ -101,8 +108,8 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
         }
     }
     private void saveLoadPlanBox(Connection conn, LoadPlanBox box) throws SQLException {
-        String query = "INSERT INTO LOAD_PLAN_BOX(ID, X_OFFSET, Y_OFFSET, Z_OFFSET, BOX_STEP, LOAD_NUMBER)\n" +
-                "VALUES (?, ?, ?, ?, ?, ?);";
+        String query = "INSERT INTO LOAD_PLAN_BOX(ID, X_OFFSET, Y_OFFSET, Z_OFFSET, BOX_STEP, LOAD_NUMBER, TRUCK_ID)\n" +
+                "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
         PreparedStatement insertStatement = conn.prepareStatement(query);
         insertStatement.setInt(1, box.getBox().getId());
@@ -111,6 +118,7 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
         insertStatement.setFloat(4, box.getzOffset());
         insertStatement.setInt(5, box.getStepNumber());
         insertStatement.setInt(6, box.getLoadNumber());
+        insertStatement.setInt(7, box.getTruck().getId());
         System.out.println(insertStatement);
         insertStatement.executeUpdate();
     }

@@ -42,12 +42,13 @@ public class Truck extends WorldObject
         widthInches = 7f * 12f ;
         heightInches = 7f* 12f ;
 
-
-        //TODO: Make a real constructor that takes real data from somewhere and doesn't hardwire random data from uhaul.com
-        //detached by default
     }
 
     public Truck(MovingTruck fromDb){
+        super();
+        shapes = new ArrayList<TexturedHexahedron>();
+
+        place(new Vector(3f * 12f, 0f, 3f*12f ));
         lengthInches = fromDb.getLengthInInches();
         widthInches = fromDb.getWidthInInches();
         heightInches = fromDb.getHeightInInches();
