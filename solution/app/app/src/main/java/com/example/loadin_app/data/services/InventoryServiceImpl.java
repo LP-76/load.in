@@ -85,9 +85,9 @@ public class InventoryServiceImpl extends LoadInServiceWithAuthImpl{
         return null;
     }
 
-    public Inventory insertRandomItem(int USER_ID) throws ExecutionException, InterruptedException{
+    public Inventory insertRandomItem(int USER_ID, int numOfBoxes) throws ExecutionException, InterruptedException{
         //CompletableFuture<DataWrapper<>>
-        retroService.insertRandomItem(USER_ID);
+        retroService.insertRandomItem(USER_ID, numOfBoxes);
         return null;
     }
 }

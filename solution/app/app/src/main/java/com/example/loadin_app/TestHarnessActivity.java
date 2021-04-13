@@ -99,7 +99,7 @@ public class TestHarnessActivity extends AppCompatActivity {
 
                 try {
                     //TODO: NEED TO PASS IN THE NUMBER OF ITEMS TO BE GENERATED PASS IN "randItems"
-                    service.insertRandomItem( sp.getInt("loginID", 0) );
+                    service.insertRandomItem( sp.getInt("loginID", 0), randItems + 1 );
 
                     Toast.makeText(TestHarnessActivity.this, "Random Inventory Generated", Toast.LENGTH_SHORT).show();
                     //Intent switchToInventory = new Intent(ItemViewActivity.this, MoveInventoryActivity.class);

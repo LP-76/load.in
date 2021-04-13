@@ -194,12 +194,12 @@ public class InventoryServiceImpl implements InventoryService {
         }
     }
 
-    public void insertRandomItem(int USER_ID){
+    public void insertRandomItem(int USER_ID, int boxesToGenerate){
 
         System.out.println("-----invoking insertRandomItem");
 
         ArrayList<Inventory> itemList = new ArrayList<>();
-        itemList.addAll(generateRandomItem());
+        itemList.addAll(generateRandomItem(boxesToGenerate));
 
 
         for (Inventory inventory : itemList) {
@@ -228,7 +228,7 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
 
-    public ArrayList<Inventory> generateRandomItem(){
+    public ArrayList<Inventory> generateRandomItem(int numOfBoxes){
 
         ArrayList<Inventory> results = new ArrayList<>();
 
@@ -244,7 +244,7 @@ public class InventoryServiceImpl implements InventoryService {
         Random random = new Random();
 
         //TODO: COULD PASS A PARAM IN TO SELECT THE NUMBER OF ITEMS TO GENERATE
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < numOfBoxes; i++) {
 
             Inventory result = new Inventory();
 
