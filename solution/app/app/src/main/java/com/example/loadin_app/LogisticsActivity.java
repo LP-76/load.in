@@ -150,12 +150,7 @@ public class LogisticsActivity extends AppCompatActivity {
             Example example = response.body();
             List<ResourceSet> apiResponse = example.getResourceSets();
             List<Resource> resource = apiResponse.get(0).getResources();
-            Integer travelDuration = resource.get(0).getTravelDuration();
             double travelDistance = resource.get(0).getTravelDistance();
-            Long roundedTravelDistance = Math.round(travelDistance);
-
-            TextView tripDistance = findViewById(R.id.logisticsTotalDistanceNumber);
-            tripDistance.setText(roundedTravelDistance.toString());
             return travelDistance;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -164,10 +159,6 @@ public class LogisticsActivity extends AppCompatActivity {
 
 
         return 0d;
-    }
-    public void getNumberOfLoads()
-    {
-
     }
     // Menu icons are inflated just as they were with actionbar
     @Override
