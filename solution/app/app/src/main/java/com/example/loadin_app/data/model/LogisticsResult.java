@@ -54,7 +54,7 @@ public class LogisticsResult {
     }
     public float calculateTotalCostOfDistance(float totalDistance, float costPerMile)
     {
-        return numOfMiles * costPerMile;
+        return totalDistance * costPerMile;
     }
     public float calculateTotalDistance(float numOfMiles, Integer numOfTrips)
     {
