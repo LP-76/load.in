@@ -76,7 +76,7 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
 //
             clearLoadPlan(conn, userId);
             saveLoadPlan(conn, boxes);
-
+            resetStatusForInventoryItemsFromCurrentUserLoadPlan(conn, userId);
 
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -114,4 +114,17 @@ public class LoadPlanBoxServiceImpl implements LoadPlanBoxService
         System.out.println(insertStatement);
         insertStatement.executeUpdate();
     }
+
+    private void resetStatusForInventoryItemsFromCurrentUserLoadPlan(Connection conn, int userId) throws SQLException {
+        String query = "UPDATE USER_INVENTORY_ITEM\n" +
+                "JOIN LOAD_PLAN_BOX LPB on USER_INVENTORY_ITEM.ID = LPB.ID\n" +
+                "SET STATUS = 'At Source'\n" +
+                "where USER_ID = ?";
+
+        PreparedStatement updateStatement = conn.prepareStatement(query);
+        updateStatement.setInt(1, userId);
+        System.out.println(updateStatement);
+        updateStatement.executeUpdate();
+    }
+
 }

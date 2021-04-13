@@ -38,6 +38,7 @@ public class LogisticsTableActivity extends AppCompatActivity {
 
     ArrayList<Box> movingInventory;
     ArrayList<MovingTruck> movingTrucks;
+    ArrayList<LogisticsResult> results;
     InventoryServiceImpl inventoryService;
     MovingTruckServiceImpl movingTruckService;
     LoadPlanBoxServiceImpl loadPlanBoxService;
@@ -98,7 +99,7 @@ public class LogisticsTableActivity extends AppCompatActivity {
     private void updateListView()
     {
 
-        ArrayList<LogisticsResult> results = new ArrayList<>();
+        results = new ArrayList<>();
 
        for(MovingTruck t: movingTrucks){
            Truck t2 = new Truck(t);
@@ -117,19 +118,21 @@ public class LogisticsTableActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.LogisticsTable);
         LogisticsDataAdapter adapter = new LogisticsDataAdapter(this, R.layout.truck_information_listview, results);
         listView.setAdapter(adapter);
-/*
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogisticsResult result = results.get(position);
 
-                Truck t3 = new Truck(movingTrucks.get(position));
-                LoadPlanGenerator generator = new LoadPlanGenerator(userId, inventoryService, loadPlanBoxService, t3, movingInventory);
-                Intent switchToItemView = new Intent(LogisticsTableActivity.this, LoadPlanActivity.class);
-                switchToItemView.putExtra("loadPlan", generator);
+                result.getLpg().sendLoadPlanToDatabase();
+
+
+                Intent switchToItemView = new Intent(LogisticsTableActivity.this, LoadPlanNavigatorActivity.class);
+               // switchToItemView.putExtra("loadPlan", generator);
                 startActivity(switchToItemView);
             }
         });
-*/
+
     }
 
     // Menu icons are inflated just as they were with actionbar
