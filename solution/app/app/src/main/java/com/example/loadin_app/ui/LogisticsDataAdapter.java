@@ -47,7 +47,7 @@ public class LogisticsDataAdapter extends ArrayAdapter<LogisticsResult> {
         View view = layoutInflater.inflate(resource, null, false);
 
 
-        TextView truck_dimensions_value = view.findViewById(R.id.truck_dimensions_header);
+        TextView truck_dimensions_value = view.findViewById(R.id.item_contents_value);
         TextView truck_cost_value = view.findViewById(R.id.truck_cost_header);
         TextView truck_mpg_value = view.findViewById(R.id.truck_mpg_header);
         TextView total_trips_value = view.findViewById(R.id.logistics_trips_header);
@@ -55,33 +55,42 @@ public class LogisticsDataAdapter extends ArrayAdapter<LogisticsResult> {
 
         LogisticsResult logisticsResult = listOfLogisticsResults.get(position);
         MovingTruck newMovingTruck = logisticsResult.getMovingTruck();
+
         Float truckLengthInInches = newMovingTruck.getLengthInInches();
         Float truckHeightInInches = newMovingTruck.getHeightInInches();
         Float truckWidthInInches = newMovingTruck.getWidthInInches();
         String truckLengthInFeet = new DecimalFormat("0.00").format(truckLengthInInches/12);
         String truckWidthInFeet = new DecimalFormat("0.00").format(truckWidthInInches/12);
         String truckHeightInFeet = new DecimalFormat("0.00").format(truckHeightInInches/12);
+        String truckCompanyName = newMovingTruck.getCompanyName();
+        String truckTruckName = newMovingTruck.getTruckName();
+        String truckCompanyNameConcat = truckCompanyName + " " + truckTruckName;
+
         Float truckCostPerMile = newMovingTruck.getCostPerMile();
         Float truckMilesPerGallon = newMovingTruck.getMilesPerGallon();
-        Float truckBaseRentalCost = newMovingTruck.getBaseRentalCost();
         Integer numberOfLoads = logisticsResult.getLoadPlan().GetLoads().size();
         Integer numberOfTrips = numberOfLoads * 2;
-        Float numberOfMiles = logisticsResult.getNumOfMiles() * numberOfTrips;
-        Float totalDistance = numberOfMiles * numberOfTrips;
+        Integer numOfDays = 1;
+        if(numberOfTrips != null && numberOfTrips > 3)
+        {
+            numOfDays = numberOfTrips / 3;
+        }
+        Float totalDistance = logisticsResult.getNumOfMiles() * numberOfTrips;
+
+        Float totalCostOfDistance = logisticsResult.calculateTotalCostOfDistance(logisticsResult.getNumOfMiles(), truckCostPerMile);
+        Float totalCostOfMove = logisticsResult.calculateTotalCost(newMovingTruck.getBaseRentalCost() * numOfDays, totalCostOfDistance);
 
 
-        String totalDistanceInString = totalDistance.toString();
-        String truckBaseRentalCostInString = truckBaseRentalCost.toString();
-        String truckMilesPerGallonInString = truckMilesPerGallon.toString();
-        String truckCostPerMineInString = truckCostPerMile.toString();
+        String totalDistanceInString = new DecimalFormat("0.00").format(totalDistance) + " miles";
+        String truckCostOfMoveInString = "$" + new DecimalFormat("0").format(totalCostOfMove);
 
-        String combinedDimensionsInString = truckLengthInFeet + "x" + truckWidthInFeet + "x" + truckHeightInFeet;
+        String combinedDimensionsInString = truckLengthInFeet + "'" + " x " + truckWidthInFeet + "'" + " x " + truckHeightInFeet + "'";
 
 
 
         truck_dimensions_value.setText(combinedDimensionsInString);
-        truck_cost_value.setText(truckCostPerMineInString);
-        truck_mpg_value.setText(truckMilesPerGallonInString);
+        truck_mpg_value.setText(truckCompanyNameConcat);
+        truck_cost_value.setText(truckCostOfMoveInString);
         total_trips_value.setText(numberOfTrips.toString());
         total_move_distance.setText(totalDistanceInString);
 

@@ -87,9 +87,11 @@ public class LogisticsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                Double travelDistance = calculateDistanceOfMove();
+                double travelDistance = calculateDistanceOfMove();
+                float travelDistanceConversion = (float)travelDistance;
                 Intent switchToLogTable = new Intent(LogisticsActivity.this, LogisticsTableActivity.class);
-                switchToLogTable.putExtra("milesTraveled", travelDistance);
+                switchToLogTable.putExtra("milesTraveled", travelDistanceConversion);
+                switchToLogTable.putExtra("sizeOfMoveInt", moveInvSizeStr);
                 startActivity(switchToLogTable);
             }
         });
@@ -123,7 +125,7 @@ public class LogisticsActivity extends AppCompatActivity {
 
         return completedURL;
     }
-    public Double calculateDistanceOfMove()
+    public double calculateDistanceOfMove()
     {
         String startAddress = startingAddress();
         String endAddress = endingAddress();
@@ -149,7 +151,7 @@ public class LogisticsActivity extends AppCompatActivity {
             List<ResourceSet> apiResponse = example.getResourceSets();
             List<Resource> resource = apiResponse.get(0).getResources();
             Integer travelDuration = resource.get(0).getTravelDuration();
-            Double travelDistance = resource.get(0).getTravelDistance();
+            double travelDistance = resource.get(0).getTravelDistance();
             Long roundedTravelDistance = Math.round(travelDistance);
 
             TextView tripDistance = findViewById(R.id.logisticsTotalDistanceNumber);

@@ -43,12 +43,17 @@ public class LogisticsTableActivity extends AppCompatActivity {
     LoadPlanBoxServiceImpl loadPlanBoxService;
     int userId;
     Float milesTraveled;
+    String sizeOfMoveInventoryString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logistics_table);
         Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            milesTraveled = extras.getFloat("milesTraveled");
+            sizeOfMoveInventoryString = extras.getString("sizeOfMoveInt");
+        }
 
         // THIS IS THE PERSISTENT LOGIN STUFF, UNCOMMENT FOR LOGIN REQUIREMENT
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
@@ -57,6 +62,8 @@ public class LogisticsTableActivity extends AppCompatActivity {
             startActivity(switchToLogin);
         }
 
+        TextView sizeOfMoveInventory = findViewById(R.id.logisticsSizeOfMoveInventoryNumber);
+        sizeOfMoveInventory.setText(sizeOfMoveInventoryString);
         // Find the toolbar view inside the activity layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
@@ -70,6 +77,8 @@ public class LogisticsTableActivity extends AppCompatActivity {
         inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
         movingTruckService = new MovingTruckServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
         loadPlanBoxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
+
+
         movingInventory = new ArrayList<Box>();
         movingTrucks = new ArrayList<MovingTruck>();
         try {
@@ -79,10 +88,6 @@ public class LogisticsTableActivity extends AppCompatActivity {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-
-        if(extras != null){
-            milesTraveled = (float) extras.getDouble("milesTraveled");
         }
 
        updateListView();
@@ -112,7 +117,19 @@ public class LogisticsTableActivity extends AppCompatActivity {
         ListView listView = findViewById(R.id.LogisticsTable);
         LogisticsDataAdapter adapter = new LogisticsDataAdapter(this, R.layout.truck_information_listview, results);
         listView.setAdapter(adapter);
+/*
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                Truck t3 = new Truck(movingTrucks.get(position));
+                LoadPlanGenerator generator = new LoadPlanGenerator(userId, inventoryService, loadPlanBoxService, t3, movingInventory);
+                Intent switchToItemView = new Intent(LogisticsTableActivity.this, LoadPlanActivity.class);
+                switchToItemView.putExtra("loadPlan", generator);
+                startActivity(switchToItemView);
+            }
+        });
+*/
     }
 
     // Menu icons are inflated just as they were with actionbar

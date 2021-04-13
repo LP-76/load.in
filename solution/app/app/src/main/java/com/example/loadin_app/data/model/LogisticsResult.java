@@ -48,4 +48,16 @@ public class LogisticsResult {
     public void setLpg(LoadPlanGenerator lpg) {
         this.lpg = lpg;
     }
+    public float calculateTotalCost(float baseRentalFee, float totalCostOfDistance)
+    {
+        return baseRentalFee * totalCostOfDistance;
+    }
+    public float calculateTotalCostOfDistance(float numOfMiles, float costPerMile)
+    {
+        return numOfMiles * costPerMile;
+    }
+    public Integer calculateTotalDaysNeeded()
+    {
+        return 0;
+    }
 }

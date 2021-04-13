@@ -4,39 +4,21 @@
     android:layout_height="match_parent"
     android:stretchColumns="1">
     <TableRow>
+
         <TextView
-            android:id="@+id/truck_dimensions_header"
+            android:id="@+id/truck_mpg_header"
             android:layout_width="100dp"
             android:gravity="center"
             android:textAlignment="gravity"
             android:layout_marginTop="5dp"
-            android:text="Dimensions (LxWxH)"
+            android:text="Company"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/load_in_green" />
 
-        <TextView
-            android:id="@+id/truck_cost_header"
-            android:layout_width="50dp"
-            android:gravity="center"
-            android:textAlignment="gravity"
-            android:layout_marginTop="5dp"
-            android:text="Cost"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/load_in_green" />
-
-        <TextView
-            android:id="@+id/truck_mpg_header"
-            android:layout_width="50dp"
-            android:gravity="center"
-            android:textAlignment="gravity"
-            android:layout_marginTop="5dp"
-            android:text="MPG"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/load_in_green" />
 
         <TextView
             android:id="@+id/logistics_trips_header"
-            android:layout_width="50dp"
+            android:layout_width="100dp"
             android:gravity="center"
             android:textAlignment="gravity"
             android:layout_marginTop="5dp"
@@ -46,7 +28,7 @@
 
         <TextView
             android:id="@+id/logistics_distance_header"
-            android:layout_width="75dp"
+            android:layout_width="100dp"
             android:gravity="center"
             android:textAlignment="gravity"
             android:layout_marginTop="5dp"
@@ -54,6 +36,47 @@
             android:text="Distance"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/load_in_green" />
+
+        <TextView
+            android:id="@+id/truck_cost_header"
+            android:layout_width="100dp"
+            android:gravity="center"
+            android:textAlignment="gravity"
+            android:layout_marginTop="5dp"
+            android:text="Cost"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/load_in_green" />
     </TableRow>
 
+    <TableRow>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_span="4"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/item_contents_header"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|left"
+                android:padding="3dip"
+                android:text="Dimensions:"
+
+                android:textColor="@color/load_in_green" />
+
+            <TextView
+                android:id="@+id/item_contents_value"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal|left"
+                android:padding="3dip"
+                android:text="Dimensions:"
+
+                android:textColor="@color/load_in_green" />
+
+        </LinearLayout>
+    </TableRow>
 </TableLayout>

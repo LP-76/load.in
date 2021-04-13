@@ -23,7 +23,12 @@ VALUES
      ,('Eric','LET ERIC IN', 'HE NEEDS TO SCREAMMMMMMMMMMM', NULL,'https://loadinvideohost.s3.amazonaws.com/eric.mp4', 'THIS TIP SUCKS', NOW(), NOW())
      ,('Star Wars','May the force be with you', 'I have brought peace and freedom to my new empire', NULL, 'https://loadinvideohost.s3.amazonaws.com/starwars.mp4', 'THIS TIP SUCKS', NOW(), NOW())
      ,('Janet','Check to see if you have original boxes for your electronics', 'Check to see if you stashed these boxes somewhere — attic? Garage? If you don’t have them, make a list of what you’ll need to buy or borrow to properly cushion your stuff.', NULL, 'https://loadinvideohost.s3.amazonaws.com/janet.mp4', 'THIS TIP SUCKS', NOW(), NOW())
-     ,('Grinch','Im Janet and I love Load.In and Grinch Green', 'Using Load.In Green is how you secure an A in CS411W', NULL, 'https://loadinvideohost.s3.amazonaws.com/janetgrinch.mp4', 'THIS TIP SUCKS', NOW(), NOW());
+     ,('Grinch','Im Janet and I love Load.In and Grinch Green', 'Using Load.In Green is how you secure an A in CS411W', NULL, 'https://loadinvideohost.s3.amazonaws.com/grinchEditted.mp4', 'THIS TIP SUCKS', NOW(), NOW())
+     ,('Pack a Box', 'How to pack a box', 'Ensure that all heavy items are at the bottom of the box. Make sure that you do not overload the box.', NULL, 'https://loadinvideohost.s3.amazonaws.com/prep_box.mp4', 'THIS TIP SUCKS', NOW(), NOW())
+     ,('Fine China', 'How to pack fine china' , 'Ensure that the fine china is in a box with proper amount of packing material. Make sure that you do not overload the box.', NULL, 'https://loadinvideohost.s3.amazonaws.com/fine_china.mp4', 'THIS TIP SUCKS', NOW(), NOW())
+     ,('Heavy', 'How to lift a heavy item', 'Ensure that you lift with your back. Make sure that you do not overload the box.', NULL, 'https://loadinvideohost.s3.amazonaws.com/heavy_real.mp4', 'THIS TIP SUCKS', NOW(), NOW());
+
+
 
 INSERT INTO USER_FEEDBACK( ID, USER_ID, ACCOUNT_CREATION_COMMENT, ACCOUNT_CREATION_RATING, ITEM_INPUT_COMMENT, ITEM_INPUT_RATING, LOAD_PLAN_COMMENT, LOAD_PLAN_RATING, EXPERT_TIPS_COMMENT, EXPERT_TIPS_RATING, OVERALL_EXPERIENCE_COMMENT, OVERALL_EXPERIENCE_RATING, CREATED_AT, UPDATED_AT) VALUES (1,1,'LOVE IT',5,'LOVE IT',5,'LOVE IT',5,'LOVE IT',5,'LOVE IT',5,NOW(),NOW());
 
