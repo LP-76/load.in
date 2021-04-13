@@ -21,7 +21,7 @@ VALUES (2, 1, 18, 18, 16, 'Moms Winter Clothes', '1', 2, NOW(), NOW(), 'At Sourc
               (2, 5, 24, 24, 24, 'Parents Bedding', '1', 1, NOW(), NOW(), 'At Source', 'parents bedroom', 'sheets, pillow cases, comforter'),
               (2, 6, 24, 24, 24, 'Parents Pillows', '1', 1, NOW(), NOW(),'At Source', 'parents bedroom', 'pillows'),
               (2, 7, 60, 20, 34, 'Parents Dresser', '1', 5, NOW(), NOW(), 'At Source', 'parents bedroom', 'clothing dresser'),
-              (2, 8, 70, 80, 11, 'Parents Mattress', '1', 2, NOW(), NOW(), 'At Source', 'parents bedroom', 'king mattress'),
+              (2, 8, 11, 80, 70, 'Parents Mattress', '1', 2, NOW(), NOW(), 'At Source', 'parents bedroom', 'king mattress'),
               (2, 9, 18, 18, 24, 'Parents Desk Lamp', '5', 2, NOW(), NOW(), 'At Source', 'parents bedroom', 'lamp base, lamp shade'),
               (2, 10, 45, 4, 24, 'Bedroom TV', '5', 3, NOW(), NOW(), 'At Source', 'parents bedroom', 'flatscreen TV'),
               (2, 11, 18, 18, 16, 'Dads Winter Clothes', '1', 2, NOW(), NOW(), 'At Source', 'parents bedroom', 'khaki pants, sweatshirts'),
@@ -36,7 +36,7 @@ VALUES (2, 1, 18, 18, 16, 'Moms Winter Clothes', '1', 2, NOW(), NOW(), 'At Sourc
               (2, 19, 24, 24, 24, 'Sallys Bedding', '1', 1, NOW(), NOW(), 'At Source', 'Sallys bedroom', 'sheets, pillow cases, comforter'),
               (2, 20, 24, 24, 24, 'Sallys Pillows', '1', 1, NOW(), NOW(),'At Source', 'Sallys bedroom', 'pillows'),
               (2, 21, 60, 20, 34, 'Sallys Dresser', '1', 5, NOW(), NOW(), 'At Source', 'Sallys bedroom', 'clothing dresser'),
-              (2, 22, 50, 75, 11, 'Sallys Mattress', '1', 2, NOW(), NOW(), 'At Source', 'Sallys bedroom', 'king mattress'),
+              (2, 22, 11, 75, 50, 'Sallys Mattress', '1', 2, NOW(), NOW(), 'At Source', 'Sallys bedroom', 'king mattress'),
               (2, 23, 18, 18, 24, 'Sallys Desk Lamp', '5', 2, NOW(), NOW(), 'At Source', 'Sallys bedroom', 'lamp base, lamp shade'),
 
               (2, 24, 36, 30, 70, 'Refrigerator', '1', 5, NOW(), NOW(), 'At Source', 'kitchen', 'empty fridge'),
@@ -58,7 +58,7 @@ VALUES (2, 1, 18, 18, 16, 'Moms Winter Clothes', '1', 2, NOW(), NOW(), 'At Sourc
               (2, 39, 24, 24, 24, 'Guest Room Bedding', '1', 1, NOW(), NOW(), 'At Source', 'guest bedroom', 'sheets, pillow cases, comforter'),
               (2, 40, 24, 24, 24, 'Guest Room Pillows', '1', 1, NOW(), NOW(),'At Source', 'guest bedroom', 'pillows'),
               (2, 41, 60, 20, 34, 'Guest Room Dresser', '1', 5, NOW(), NOW(), 'At Source', 'guest bedroom', 'clothing dresser'),
-              (2, 42, 70, 80, 11, 'Guest Room Mattress', '1', 2, NOW(), NOW(), 'At Source', 'guest bedroom', 'king mattress'),
+              (2, 42, 11, 80, 70, 'Guest Room Mattress', '1', 2, NOW(), NOW(), 'At Source', 'guest bedroom', 'king mattress'),
               (2, 43, 18, 18, 24, 'Guest Room Desk Lamp', '5', 2, NOW(), NOW(), 'At Source', 'guest bedroom', 'lamp base, lamp shade'),
               (2, 44, 45, 4, 24, 'Guest Room TV', '5', 3, NOW(), NOW(), 'At Source', 'guest bedroom', 'flatscreen TV'),
 
