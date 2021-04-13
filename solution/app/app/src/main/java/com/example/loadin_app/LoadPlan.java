@@ -30,8 +30,9 @@ public class LoadPlan implements ExtendedIterable<Load>
 
     public LoadPlan(ArrayList<LoadPlanBox> input)
     {
-        movingTruck = new Truck();
-        AddLoad();
+        //movingTruck = new Truck();
+        //movingTruck = null;
+        //AddLoad();
 
         //persons.sort(Comparator.comparing(Person::getName).thenComparing(Person::getAge));
 
@@ -39,6 +40,10 @@ public class LoadPlan implements ExtendedIterable<Load>
 
         for(LoadPlanBox b : input)
         {
+            if(movingTruck == null){
+                movingTruck = new Truck(b.getTruck());  //we only need to set this once from the first box
+            }
+
             if(b.getLoadNumber() >= loads.size())
                 AddLoad();
 

@@ -94,7 +94,7 @@ public class LoadPlanRenderer extends BaseGLRenderer {
 
         boxStagingArea = new Vector(0f, 0f, 0f);
 
-        requestAdvance();
+
     }
 
     private  SignalState getSignal() {
@@ -174,6 +174,7 @@ public class LoadPlanRenderer extends BaseGLRenderer {
         }
         switch(state){
             case Initial:
+
                 if(lpiter.hasNext()) {
 
                     while (lpiter.hasNext() && shouldSkipStep(lpiter.next())) {
@@ -191,11 +192,27 @@ public class LoadPlanRenderer extends BaseGLRenderer {
                                 Vector destination = theTruck.getWorldOffset().add(b.getDestination());
                                 b.place(destination);
                                 break;
+
                         }
                     }
-                    lpiter.previous(); //reverse one
 
-                    state = LoadPlanDisplayerState.Advancing;
+                    Box b = lpiter.current().currentBox;
+                    if(b.getMyWorld() == null)
+                        b.setMyWorld(theWorld);
+                    b.setVisible(true);
+                    switch(b.getStatus()){
+                        case Inventory.ON_TRUCK:
+                            Vector destination = theTruck.getWorldOffset().add(b.getDestination());
+                            b.place(destination);
+                            state = LoadPlanDisplayerState.BoxOnTruck;
+                            break;
+                        case Inventory.AT_SOURCE:
+                        case Inventory.AT_DESTINATION:
+                            b.place(boxStagingArea);
+                            state = LoadPlanDisplayerState.BoxStaged;
+                            break;
+                    }
+
                 }
                 else
                     state = LoadPlanDisplayerState.EndOfLoadPlan;
@@ -210,6 +227,9 @@ public class LoadPlanRenderer extends BaseGLRenderer {
                     current = currentStep != null ? currentStep.currentBox : null;
                     current.setVisible(true);
 
+                    if(previousStep != null && previousStep.loading != currentStep.loading && getSignal() == SignalState.FastForward){
+                        setSignal(SignalState.None); //clear it on transitioning between loads
+                    }
 
 
                     if(currentStep.loading){
@@ -247,6 +267,10 @@ public class LoadPlanRenderer extends BaseGLRenderer {
                     currentStep = lpiter.previous();
                     current = currentStep != null ? currentStep.currentBox : null;
                     current.setVisible(true);
+
+                    if(previousStep != null && previousStep.loading != currentStep.loading && getSignal() == SignalState.FastReverse){
+                        setSignal(SignalState.None); //clear it on transitioning between loads
+                    }
 
                     if(currentStep.loading){
                         if(previous != current)
