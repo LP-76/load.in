@@ -224,7 +224,7 @@ public class FeedbackActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_box_input:
-                Intent switchToBoxInput = new Intent(FeedbackActivity.this, BoxInputActivity.class);
+                Intent switchToBoxInput = new Intent(FeedbackActivity.this, AddItemActivity.class);
                 startActivity(switchToBoxInput);
                 finish();
                 return true;
@@ -235,9 +235,15 @@ public class FeedbackActivity extends AppCompatActivity {
                 finish();
                 return true;
 
+            case R.id.action_logistics:
+                Intent switchToLogistics = new Intent(FeedbackActivity.this, LogisticsActivity.class);
+                startActivity(switchToLogistics);
+                finish();
+                return true;
+
             case R.id.action_load_plan:
-                Intent switchToLoadPlan = new Intent(FeedbackActivity.this, LoadPlanActivity.class);
-                startActivity(switchToLoadPlan);
+                Intent switchToLoadPlanNavigator = new Intent(FeedbackActivity.this, LoadPlanNavigatorActivity.class);
+                startActivity(switchToLoadPlanNavigator);
                 finish();
                 return true;
 

@@ -126,7 +126,6 @@ public class LogisticsTableActivity extends AppCompatActivity {
 
                 result.getLpg().sendLoadPlanToDatabase();
 
-
                 Intent switchToItemView = new Intent(LogisticsTableActivity.this, LoadPlanNavigatorActivity.class);
                // switchToItemView.putExtra("loadPlan", generator);
                 startActivity(switchToItemView);
@@ -160,7 +159,7 @@ public class LogisticsTableActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_box_input:
-                Intent switchToBoxInput = new Intent(LogisticsTableActivity.this, BoxInputActivity.class);
+                Intent switchToBoxInput = new Intent(LogisticsTableActivity.this, AddItemActivity.class);
                 startActivity(switchToBoxInput);
                 finish();
                 return true;
@@ -171,9 +170,15 @@ public class LogisticsTableActivity extends AppCompatActivity {
                 finish();
                 return true;
 
+            case R.id.action_logistics:
+                Intent switchToLogistics = new Intent(LogisticsTableActivity.this, LogisticsActivity.class);
+                startActivity(switchToLogistics);
+                finish();
+                return true;
+
             case R.id.action_load_plan:
-                Intent switchToLoadPlan = new Intent(LogisticsTableActivity.this, LoadPlanActivity.class);
-                startActivity(switchToLoadPlan);
+                Intent switchToLoadPlanNavigator = new Intent(LogisticsTableActivity.this, LoadPlanNavigatorActivity.class);
+                startActivity(switchToLoadPlanNavigator);
                 finish();
                 return true;
 

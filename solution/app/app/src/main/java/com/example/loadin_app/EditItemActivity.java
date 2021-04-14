@@ -202,7 +202,7 @@ public class EditItemActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_box_input:
-                Intent switchToBoxInput = new Intent(EditItemActivity.this, BoxInputActivity.class);
+                Intent switchToBoxInput = new Intent(EditItemActivity.this, AddItemActivity.class);
                 startActivity(switchToBoxInput);
                 finish();
                 return true;
@@ -213,9 +213,15 @@ public class EditItemActivity extends AppCompatActivity {
                 finish();
                 return true;
 
+            case R.id.action_logistics:
+                Intent switchToLogistics = new Intent(EditItemActivity.this, LogisticsActivity.class);
+                startActivity(switchToLogistics);
+                finish();
+                return true;
+
             case R.id.action_load_plan:
-                Intent switchToLoadPlan = new Intent(EditItemActivity.this, LoadPlanActivity.class);
-                startActivity(switchToLoadPlan);
+                Intent switchToLoadPlanNavigator = new Intent(EditItemActivity.this, LoadPlanNavigatorActivity.class);
+                startActivity(switchToLoadPlanNavigator);
                 finish();
                 return true;
 

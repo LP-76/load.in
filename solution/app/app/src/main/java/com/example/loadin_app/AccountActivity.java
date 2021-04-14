@@ -82,7 +82,7 @@ public class AccountActivity extends AppCompatActivity {
 
     }
 
-    public void changePassword(View view){
+    public void logout(View view){
         Intent logout = new Intent(AccountActivity.this, LoginActivity.class);
         startActivity(logout);
         finish();
@@ -113,7 +113,7 @@ public class AccountActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_box_input:
-                Intent switchToBoxInput = new Intent(AccountActivity.this, BoxInputActivity.class);
+                Intent switchToBoxInput = new Intent(AccountActivity.this, AddItemActivity.class);
                 startActivity(switchToBoxInput);
                 finish();
                 return true;
@@ -124,9 +124,15 @@ public class AccountActivity extends AppCompatActivity {
                 finish();
                 return true;
 
+            case R.id.action_logistics:
+                Intent switchToLogistics = new Intent(AccountActivity.this, LogisticsActivity.class);
+                startActivity(switchToLogistics);
+                finish();
+                return true;
+
             case R.id.action_load_plan:
-                Intent switchToLoadPlan = new Intent(AccountActivity.this, LoadPlanActivity.class);
-                startActivity(switchToLoadPlan);
+                Intent switchToLoadPlanNavigator = new Intent(AccountActivity.this, LoadPlanNavigatorActivity.class);
+                startActivity(switchToLoadPlanNavigator);
                 finish();
                 return true;
 

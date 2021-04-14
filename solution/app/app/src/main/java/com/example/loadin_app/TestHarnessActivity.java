@@ -147,7 +147,7 @@ public class TestHarnessActivity extends AppCompatActivity {
                 return true;
 
             case R.id.action_box_input:
-                Intent switchToBoxInput = new Intent(TestHarnessActivity.this, BoxInputActivity.class);
+                Intent switchToBoxInput = new Intent(TestHarnessActivity.this, AddItemActivity.class);
                 startActivity(switchToBoxInput);
                 finish();
                 return true;
@@ -158,9 +158,15 @@ public class TestHarnessActivity extends AppCompatActivity {
                 finish();
                 return true;
 
+            case R.id.action_logistics:
+                Intent switchToLogistics = new Intent(TestHarnessActivity.this, LogisticsActivity.class);
+                startActivity(switchToLogistics);
+                finish();
+                return true;
+
             case R.id.action_load_plan:
-                Intent switchToLoadPlan = new Intent(TestHarnessActivity.this, LoadPlanActivity.class);
-                startActivity(switchToLoadPlan);
+                Intent switchToLoadPlanNavigator = new Intent(TestHarnessActivity.this, LoadPlanNavigatorActivity.class);
+                startActivity(switchToLoadPlanNavigator);
                 finish();
                 return true;
 

@@ -17,12 +17,16 @@
                 android:icon="@drawable/tips_logo"/>
             <item
                 android:id="@+id/action_box_input"
-                android:title="@string/title_activity_box_input"
+                android:title="Add New Box"
                 android:icon="@drawable/box_input_logo"/>
             <item
                 android:id="@+id/action_move_inventory"
                 android:title="@string/title_activity_move_inventory"
                 android:icon="@drawable/move_inventory_logo"/>
+            <item
+                android:id="@+id/action_logistics"
+                android:title="Logistics"
+                android:icon="@drawable/logistics_logo"/>
             <item
                 android:id="@+id/action_load_plan"
                 android:title="@string/title_activity_load_plan"

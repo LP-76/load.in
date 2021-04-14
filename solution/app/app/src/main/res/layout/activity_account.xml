@@ -124,8 +124,7 @@
                     android:textSize="20sp"
                     android:background="@drawable/cell_shape"
                     android:padding="3dip"
-                    android:clickable="true"
-                    android:onClick="changePassword"/>
+                    android:clickable="true" />
                 <TextView
                     android:text="Logout"
                     android:textColor="@color/load_in_green"
@@ -135,7 +134,7 @@
                     android:background="@drawable/cell_shape"
                     android:padding="3dip"
                     android:clickable="true"
-                    android:onClick="editAccount"/>
+                    android:onClick="logout"/>
             </TableRow>
 
 
