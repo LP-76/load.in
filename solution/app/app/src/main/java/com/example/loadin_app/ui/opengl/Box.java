@@ -183,14 +183,14 @@ public class Box extends WorldObject {
     private Color calculateColor(){
 
         if(!myWorld.isColorCodeBoxes())
-            return new Color(1,1,1,1); //white
+            return new Color(0,0,0,0); //nothing, we changed to addition
 
         int adjFragility = Math.max(Math.min(fragility, 5), 1);
         float adjWeight = Math.max(Math.min(weight, 10), 1);
-        float red = adjFragility/5f;
+        float red = ((float)adjFragility)/5f;
         float blue = adjWeight/10f;
 
-        return new Color(red, 0f, blue, 0.1f);
+        return new Color(red, 0f, blue, 0f);
 
     }
 
