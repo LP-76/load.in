@@ -57,11 +57,14 @@ public class RegistrationActivity extends AppCompatActivity {
                 sLastName = lNameInput.getText().toString();
                 sPhoneNumber = phoneInput.getText().toString();
                 //checks to ensure all fields are filled out, pretty ugly but works
-                if (sUsername.matches("") || sPassword.matches("") || sFirstName.matches("") ||
+                if(passwordInput.length() < 6)
+                {
+                    Toast.makeText(RegistrationActivity.this, "Error: Password must be at least 6 characters long", Toast.LENGTH_LONG).show();
+                }
+                else if(sUsername.matches("") || sPassword.matches("") || sFirstName.matches("") ||
                         sLastName.matches("")|| sPhoneNumber.matches("")) {
                     Toast.makeText(RegistrationActivity.this, "Please Fill Each Category", Toast.LENGTH_SHORT).show();
                 }
-
                 else{
                     addRegistrationToDB(sUsername, sPassword, sFirstName, sLastName, sPhoneNumber);
                     Intent switchToLogin = new Intent(RegistrationActivity.this, LoginActivity.class);
