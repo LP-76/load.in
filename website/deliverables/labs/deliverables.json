@@ -117,6 +117,12 @@
         "description": "",
         "thumbnail": "deliverables/labs/jmora_lab1v3image.PNG",
         "downloadTarget": "deliverables/labs/JMORA_Lab1v3.pdf"
+      },
+      {
+        "name": "Greg",
+        "description": "",
+        "thumbnail": "deliverables/labs/Lab1V3_GregSC.png",
+        "downloadTarget": "deliverables/labs/Lab1V3_GregoryKukanich.pdf"
       }
     ]
   },
@@ -153,7 +159,14 @@
         "description": "",
         "thumbnail": "deliverables/labs/cmiller_lab2_V1.png",
         "downloadTarget": "deliverables/labs/cmiller_lab2_V1.pdf"
+      },
+      {
+        "name": "Greg",
+        "description": "",
+        "thumbnail": "deliverables/labs/Lab2_GregSC.png",
+        "downloadTarget": "deliverables/labs/Lab2_GregoryKukanich.pdf"
       }
+
     ]
   },
   {
