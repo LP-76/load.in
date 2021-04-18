@@ -137,5 +137,17 @@
         "downloadTarget": "deliverables/labs/ByronAquilino_Lab2_V1.pdf"
       }
     ]
+  },
+  {
+    "section": "Lab 4",
+    "id": "lab-4",
+    "deliverables": [
+      {
+        "name": "Lab 4 Outline",
+        "description": "",
+        "thumbnail": "deliverables/labs/UserManualOutline.PNG",
+        "downloadTarget": "deliverables/labs/UserManualOutline.pdf"
+      }
+    ]
   }
 ]
