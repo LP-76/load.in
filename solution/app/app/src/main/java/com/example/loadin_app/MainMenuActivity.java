@@ -8,14 +8,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.loadin_app.data.services.BaseServiceUrlProvider;
+import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
+import com.example.loadin_app.data.services.MovingTruckServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import odu.edu.loadin.common.LoadPlanBox;
+import odu.edu.loadin.common.User;
 
 public class MainMenuActivity extends AppCompatActivity
 {
+
+    private ArrayList<LoadPlanBox> loadPlanBoxes;
     private Button tipsAndTricksButton, feedbackButton, moveInventoryButton, moveInventoryButton2, loadPlanButton, gotoLoginButton, loadPlanNavigatorNoColorButton, logisticsButton, loadPlanNavigatorWithColorButton;
     private Button testHarnessButton;
     public static SharedPreferences sp;
@@ -42,6 +55,17 @@ public class MainMenuActivity extends AppCompatActivity
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+
+        LoadInApplication app = (LoadInApplication)getApplication();
+        User currentUser = app.getCurrentUser();
+        LoadPlanBoxServiceImpl loadPlanBoxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
+        try {
+            loadPlanBoxes = loadPlanBoxService.getLoadPlan(sp.getInt("loginID",0));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         tipsAndTricksButton = (Button) findViewById(R.id.tips_and_tricks_button);
         tipsAndTricksButton.setOnClickListener(new View.OnClickListener()
@@ -116,8 +140,14 @@ public class MainMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Intent switchToLoadPlanNavigator = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
-                startActivity(switchToLoadPlanNavigator);
+                if(loadPlanBoxes.size() == 0)
+                {
+                    Toast.makeText(MainMenuActivity.this, "Error: No Load Plan has been found. Please use the Logistics Page.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent switchToLoadPlanNavigator = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
+                    startActivity(switchToLoadPlanNavigator);
+                }
             }
         });
 
@@ -127,10 +157,15 @@ public class MainMenuActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
+                if(loadPlanBoxes.size() == 0)
+                {
+                    Toast.makeText(MainMenuActivity.this, "Error: No Load Plan has been found. Please use the Logistics Page.", Toast.LENGTH_LONG).show();
+                }
+                else {
                 Intent switchToLoadPlanNavigator = new Intent(MainMenuActivity.this, LoadPlanNavigatorActivity.class);
                 switchToLoadPlanNavigator.putExtra(LoadPlanNavigatorActivity.COLOR_CODE_PREFERNCE_KEY, true);
                 startActivity(switchToLoadPlanNavigator);
-            }
+            }}
         });
 
         testHarnessButton = (Button) findViewById(R.id.goto_test_harness_button);

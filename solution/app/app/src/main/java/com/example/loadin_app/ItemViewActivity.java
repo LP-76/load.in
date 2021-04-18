@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.loadin_app.data.services.BaseServiceUrlProvider;
 import com.example.loadin_app.data.services.ExpertArticleImpl;
 import com.example.loadin_app.data.services.InventoryServiceImpl;
+import com.example.loadin_app.data.services.LoadPlanBoxServiceImpl;
 import com.example.loadin_app.ui.login.LoginActivity;
 
 import org.w3c.dom.Text;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import odu.edu.loadin.common.ExpertArticle;
+import odu.edu.loadin.common.LoadPlanBox;
+import odu.edu.loadin.common.User;
 
 public class ItemViewActivity extends AppCompatActivity {
 
@@ -130,12 +133,30 @@ public class ItemViewActivity extends AppCompatActivity {
             public void onClick(View v)
             {
 
-                Intent switchToBoxLocatorActivity = new Intent(ItemViewActivity.this, OpenGlBoxLocatorActivity.class);
-                int id = Integer.parseInt(sp.getString("itemBoxID",""));
-                //sp.edit().putInt("id",id).apply();
-                switchToBoxLocatorActivity.putExtra("id",id);
-                startActivity(switchToBoxLocatorActivity);
-                finish();
+                LoadInApplication app = (LoadInApplication)getApplication();
+                User currentUser = app.getCurrentUser();
+                LoadPlanBoxServiceImpl loadPlanBoxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
+                ArrayList<LoadPlanBox> loadPlanBoxes = new ArrayList<>();
+                try {
+                    loadPlanBoxes = loadPlanBoxService.getLoadPlan(sp.getInt("loginID",0));
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(loadPlanBoxes.size() == 0)
+                {
+                    Toast.makeText(ItemViewActivity.this, "Error: No Load Plan has been found. Please use the Logistics Page.", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Intent switchToBoxLocatorActivity = new Intent(ItemViewActivity.this, OpenGlBoxLocatorActivity.class);
+                    int id = Integer.parseInt(sp.getString("itemBoxID",""));
+                    //sp.edit().putInt("id",id).apply();
+                    switchToBoxLocatorActivity.putExtra("id",id);
+                    startActivity(switchToBoxLocatorActivity);
+                    finish();
+                }
 
             }
         });
