@@ -159,8 +159,13 @@
         "description": "",
         "thumbnail": "deliverables/labs/Lab2_GregSC.png",
         "downloadTarget": "deliverables/labs/Lab2_GregoryKukanich.pdf"
+      },
+      {
+        "name": "Jason",
+        "description": "",
+        "thumbnail": "deliverables/labs/jmora_Lab2v1_image.PNG",
+        "downloadTarget": "deliverables/labs/JMORA_Lab2v1.pdf"
       }
-
     ]
   },
   {
