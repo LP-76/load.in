@@ -48,15 +48,11 @@ public class TipsAndTricksActivity extends AppCompatActivity {
 
     private String videoLink = "cardboard.mp4";
     private Button searchForArticle;
-    private ImageView imageView;
     private String keyword;
     private EditText articleKeyword;
     private String value;
     private PlayerView playerView;
     private SimpleExoPlayer player;
-    private long playbackPosition = 0;
-    private int currentWindow = 0;
-    private boolean playWhenReady = true;
     private TextView mArticleContent;
     private TextView mArticleTitle;
     private ListView listView;
@@ -94,23 +90,6 @@ public class TipsAndTricksActivity extends AppCompatActivity {
             }
         });
 
-
-        /*
-        Checks the file extension of media file to see if it is an image or video.
-        At the moment this is a very janky approach as only .jpg or .mp4 will be accepted.
-        Depending on what media type is found it will set their respective view to visible
-        If a video is detected then it will also start the mediaplayer activity.
-         */
-        if (videoLink.toString().endsWith(".jpg"))
-        {
-            imageView = findViewById(R.id.articleImage);
-            imageView.setVisibility(View.VISIBLE);
-            imageView.setImageResource(R.drawable.cardboard);
-        }
-        else if (videoLink.toString().endsWith(".mp4"))
-        {
-            initializePlayer(videoLink);
-        }
     }
 
     // Menu icons are inflated just as they were with actionbar
@@ -190,7 +169,6 @@ public class TipsAndTricksActivity extends AppCompatActivity {
     private void searchForArticle(String keyword)
     {
         releasePlayer();
-        System.out.println("Searching for an article with keyword: " + keyword + "!");
         LoadInApplication app = (LoadInApplication) getApplication();
         String username = app.getCurrentUser().getEmail();
         String password = app.getCurrentUser().getPassword();
@@ -333,14 +311,23 @@ public class TipsAndTricksActivity extends AppCompatActivity {
 
     private void releasePlayer() {
         if (player != null) {
-            playWhenReady = player.getPlayWhenReady();
-            playbackPosition = player.getCurrentPosition();
-            currentWindow = player.getCurrentWindowIndex();
             player.release();
             player = null;
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        initializePlayer("");
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        releasePlayer();
+    }
     @Override
     protected void onPause()
     {
