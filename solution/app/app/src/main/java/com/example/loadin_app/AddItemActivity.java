@@ -76,7 +76,10 @@ public class AddItemActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                searchForArticle(s.toString());
+                if(s.toString().contains(" ") || (s.toString().contains("*")))
+                {
+                    searchForArticle(s.toString());
+                }
             }
         };
         descriptionInput.addTextChangedListener(afterTextChangedListener);

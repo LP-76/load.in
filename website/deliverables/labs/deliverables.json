@@ -127,7 +127,7 @@
     ]
   },
   {
-    "section": "Lab 2",
+    "section": "Lab 2 - Sections 1&2",
     "id": "lab-2",
     "deliverables": [
       {
@@ -145,7 +145,7 @@
       {
         "name": "Lance",
         "description": "",
-        "thumbnail": "deliverables/labs/lperdue_lab2.PNG",
+        "thumbnail": "deliverables/labs/lperdue_lab2.png",
         "downloadTarget": "deliverables/labs/lperdue_Lab2_ver1.pdf"
       },
       {
@@ -159,6 +159,30 @@
         "description": "",
         "thumbnail": "deliverables/labs/cmiller_lab2_V1.png",
         "downloadTarget": "deliverables/labs/cmiller_lab2_V1.pdf"
+      },
+      {
+        "name": "Greg",
+        "description": "",
+        "thumbnail": "deliverables/labs/Lab2_GregSC.png",
+        "downloadTarget": "deliverables/labs/Lab2_GregoryKukanich.pdf"
+      },
+      {
+        "name": "Jason",
+        "description": "",
+        "thumbnail": "deliverables/labs/jmora_Lab2v1_image.PNG",
+        "downloadTarget": "deliverables/labs/JMORA_Lab2v1.pdf"
+      }
+    ]
+  },
+  {
+    "section": "Lab 2 - Section 3",
+    "id": "lab-2-3",
+    "deliverables": [
+      {
+        "name": "Lab 2 - Section 3",
+        "description": "",
+        "thumbnail": "deliverables/labs/Lab2_Section_3.PNG",
+        "downloadTarget": "deliverables/labs/Lab2_Section_3.pdf"
       }
     ]
   },

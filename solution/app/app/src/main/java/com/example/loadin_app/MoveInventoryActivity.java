@@ -118,12 +118,13 @@ public class MoveInventoryActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+                int temp = (int) searchedInventory.get(position).getWeight();
                 sp.edit().putString("itemDescription", searchedInventory.get(position).getDescription()).apply();
                 sp.edit().putString("itemBoxID", Integer.toString(searchedInventory.get(position).getBoxID())).apply();
                 sp.edit().putString("itemWidth", Float.toString(searchedInventory.get(position).getWidth())).apply();
                 sp.edit().putString("itemLength", Float.toString(searchedInventory.get(position).getLength())).apply();
                 sp.edit().putString("itemHeight", Float.toString(searchedInventory.get(position).getHeight())).apply();
-                sp.edit().putString("itemWeight", Double.toString(searchedInventory.get(position).getWeight())).apply();
+                sp.edit().putString("itemWeight", Integer.toString(temp)).apply();
                 sp.edit().putString("itemFragility", Integer.toString(searchedInventory.get(position).getFragility())).apply();
                 sp.edit().putString("itemStatus", searchedInventory.get(position).getStatus()).apply();
                 sp.edit().putString("itemList", searchedInventory.get(position).getItemList()).apply();
@@ -132,6 +133,7 @@ public class MoveInventoryActivity extends AppCompatActivity {
 
                 Intent switchToItemView = new Intent(MoveInventoryActivity.this, ItemViewActivity.class);
                 startActivity(switchToItemView);
+                finish();
             }
         });
     }
