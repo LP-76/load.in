@@ -69,12 +69,13 @@ VALUES (2, 1, 18, 18, 16, 'Moms Winter Clothes', '1', 4, NOW(), NOW(), 'At Sourc
               (2, 49, 16, 12, 12, 'Books', '2', 6, NOW(), NOW(), 'At Source', 'living room', 'Harry Potter, Fahrenheit 451'),
               (2, 50, 16, 12, 12, 'More Books', '2', 6, NOW(), NOW(), 'At Source', 'living room', 'Tom Jones, Pride and Prejudice, Mrs Dalloway'),
               (2, 51, 16, 12, 12, 'More Books', '2', 6, NOW(), NOW(), 'At Source', 'living room', 'Great Expectations, Jane Eyre, Bleak House'),
+
               (2, 52, 16, 12, 12, 'More Books', '2', 6, NOW(), NOW(), 'At Source', 'living room', 'Wuthering Heights, Oryx and Crake, Atonement'),
               (2, 53, 16, 12, 12, 'More Books', '2', 6, NOW(), NOW(), 'At Source', 'living room', 'MaddAddam, The Year of the Flood, Nineteen Eighty-four'),
               (2, 54, 36, 36, 4, 'Dog bed', '1', 3, NOW(), NOW(), 'At Source', 'living room', 'dog bed'),
               (2, 55, 16, 12, 12, 'Dog bowls', '1', 3, NOW(), NOW(), 'At Source', 'living room', 'water bowl, food bowl'),
               (2, 56, 24, 18, 24, 'Dog food', '1', 6, NOW(), NOW(), 'At Source', 'living room', 'dog food'),
-              (2, 57, 18, 18, 24, 'Dog toys', '1', 4, NOW(), NOW(), 'At Source', 'living room', 'ducky, leash, Gumby'),
+              (2, 57, 18, 18, 12, 'Dog toys', '1', 2, NOW(), NOW(), 'At Source', 'living room', 'ducky, leash, Gumby'),
 
               (2, 58, 16, 12, 12, 'Toiletries', '2', 4, NOW(), NOW(), 'At Source', 'parents bathroom', 'toilet paper, soap, shampoo, toothpaste'),
               (2, 59, 16, 12, 12, 'Toiletries', '2', 4, NOW(), NOW(), 'At Source', 'Sallys bathroom', 'toilet paper, soap, shampoo, toothpaste'),
@@ -83,14 +84,14 @@ VALUES (2, 1, 18, 18, 16, 'Moms Winter Clothes', '1', 4, NOW(), NOW(), 'At Sourc
               (2, 62, 16, 12, 12, 'Laundry Supplies', '4', 2, NOW(), NOW(), 'At Source', 'utility room', 'detergent, drier sheets'),
 
               (2, 63, 16, 12, 12, 'Parents electronics', '4', 2, NOW(), NOW(), 'At Source', 'miscellaneous', 'laptop, chargers, keyboard'),
-              (2, 64, 16, 12, 12, 'Sallys electronics', '4', 2, NOW(), NOW(), 'At Source', 'miscellaneous', 'laptop, chargers, speakers'),
-              (2, 65, 24, 18, 24, 'Printer', '4', 6, NOW(), NOW(), 'At Source', 'miscellaneous', 'printer, ink'),
+              (2, 64, 16, 12, 24, 'Sallys electronics', '4', 3, NOW(), NOW(), 'At Source', 'miscellaneous', 'laptop, chargers, speakers'),
+              (2, 65, 24, 18, 24, 'Printer', '4', 4, NOW(), NOW(), 'At Source', 'miscellaneous', 'printer, ink'),
 
-              (2, 66, 16, 12, 12, 'Tools', '1', 5, NOW(), NOW(), 'At Source', 'garage', 'ratchets, nails, bolts, nuts'),
-              (2, 67, 16, 12, 12, 'Tools', '1', 5, NOW(), NOW(), 'At Source', 'garage', 'wrenches, screws, drill bits, hammer'),
-              (2, 68, 16, 12, 12, 'Tools', '1', 5, NOW(), NOW(), 'At Source', 'garage', 'drill, spade, shears'),
+              (2, 66, 24, 18, 24, 'Tools', '1', 6, NOW(), NOW(), 'At Source', 'garage', 'ratchets, nails, bolts, nuts'),
+              (2, 67, 24, 18, 24, 'Tools', '1', 6, NOW(), NOW(), 'At Source', 'garage', 'wrenches, screws, drill bits, hammer'),
+              (2, 68, 24, 18, 24, 'Tools', '1', 7, NOW(), NOW(), 'At Source', 'garage', 'drill, spade, shears'),
 
-              (2, 69, 18, 18, 24, 'Holiday Decorations', '5', 3, NOW(), NOW(), 'At Source', 'miscellaneous', 'Christmas decorations'),
+              (2, 69, 18, 18, 24, 'Holiday Decorations', '2', 4, NOW(), NOW(), 'At Source', 'miscellaneous', 'Christmas decorations'),
               (2, 70, 18, 18, 24, 'Holiday Decorations', '2', 4, NOW(), NOW(), 'At Source', 'miscellaneous', 'Halloween decorations'),
               (2, 71, 18, 18, 24, 'Odds and ends', '1', 3, NOW(), NOW(), 'At Source', 'miscellaneous', 'towels, slippers, nerf ball'),
 
@@ -109,11 +110,15 @@ VALUES (2, 1, 18, 18, 16, 'Moms Winter Clothes', '1', 4, NOW(), NOW(), 'At Sourc
               (2, 82, 18, 18, 16, 'Sallys Other Clothes', '1', 4, NOW(), NOW(), 'At Source', 'Sallys bedroom', 'other clothes'),
               (2, 83, 18, 18, 16, 'Sallys Everyday Clothes', '1', 4, NOW(), NOW(), 'At Source', 'Sallys bedroom', 'jeans, socks'),
 
-              (2, 84, 16, 12, 12, 'Legos', '1', 5, NOW(), NOW(), 'At Source', 'miscellaneous', 'red, blue, yellow legos'),
-              (2, 85, 16, 12, 12, 'Legos', '1', 5, NOW(), NOW(), 'At Source', 'miscellaneous', 'orange, purple, green legos'),
-              (2, 86, 16, 12, 12, 'Legos', '1', 5, NOW(), NOW(), 'At Source', 'miscellaneous', 'black, white, gray legos'),
-              (2, 87, 16, 12, 12, 'Legos', '1', 5, NOW(), NOW(), 'At Source', 'miscellaneous', 'random color legos'),
-              (2, 88, 16, 12, 12, 'Movie Collection', '4', 3, NOW(), NOW(), 'At Source', 'miscellaneous', 'Lord of the Rings, Star Wars, Shawshank Redemption');
+              (2, 84, 16, 12, 12, 'LEGO', '1', 5, NOW(), NOW(), 'At Source', 'miscellaneous', 'red, blue, yellow lego'),
+              (2, 85, 16, 12, 12, 'LEGO', '1', 5, NOW(), NOW(), 'At Source', 'miscellaneous', 'orange, purple, green lego'),
+              (2, 86, 16, 12, 12, 'LEGO', '1', 5, NOW(), NOW(), 'At Source', 'miscellaneous', 'black, white, gray lego'),
+              (2, 87, 16, 12, 12, 'LEGO', '1', 5, NOW(), NOW(), 'At Source', 'miscellaneous', 'random color lego');
+
+
+
+
+
 
 
 

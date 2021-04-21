@@ -42,6 +42,8 @@ public class LogisticsActivity extends AppCompatActivity {
 
 
     public static SharedPreferences sp;
+    public EditText startAddressStreet, startAddressCityAndState, endAddressStreet, endAddressCityAndState;
+    public String startSA, startCS, endSA, endCS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,25 @@ public class LogisticsActivity extends AppCompatActivity {
         LoadInApplication app = (LoadInApplication)getApplication();
         String username = app.getCurrentUser().getEmail();
         String password = app.getCurrentUser().getPassword();
+
+        //TODO set these to pull values from user table in DB default values to empty strings
+        /*
+        sp.edit().putString("startStreet", pull start street from DB).apply();
+        sp.edit().putString("startCityState", pull start CityState from DB).apply();
+        sp.edit().putString("endStreet", pull end street from DB).apply();
+        sp.edit().putString("endCityState", pull end CityState from DB).apply();
+        */
+        startAddressStreet = findViewById(R.id.logisticsStartingAddressStreet);
+        startAddressStreet.setText(sp.getString("startStreet", ""));
+
+        startAddressCityAndState = findViewById(R.id.logisticsStartingAddressCityAndState);
+        startAddressCityAndState.setText(sp.getString("startCityState", ""));
+
+        endAddressStreet = findViewById(R.id.logisticsEndingAddressStreet);
+        endAddressStreet.setText(sp.getString("endStreet", ""));
+
+        endAddressCityAndState = findViewById(R.id.logisticsEndingAddressCityAndState);
+        endAddressCityAndState.setText(sp.getString("endCityState", ""));
 
         InventoryServiceImpl newInv = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
         ArrayList<Inventory> inventory = new ArrayList<Inventory>();
@@ -99,16 +120,20 @@ public class LogisticsActivity extends AppCompatActivity {
     }
     public String startingAddress()
     {
-        EditText startAddressStreet = findViewById(R.id.logisticsStartingAddressStreet);
-        EditText startAddressCityAndState = findViewById(R.id.logisticsStartingAddressCityAndState);
+
+        sp.edit().putString("startStreet", startAddressStreet.getText().toString()).apply();
+        sp.edit().putString("startCityState", startAddressCityAndState.getText().toString()).apply();
+
         String startingAddress = "Driving?wp.0=" + startAddressStreet.getText().toString() + startAddressCityAndState.getText().toString();
 
         return startingAddress;
     }
     public String endingAddress()
     {
-        EditText endAddressStreet = findViewById(R.id.logisticsEndingAddressStreet);
-        EditText endAddressCityAndState = findViewById(R.id.logisticsEndingAddressCityAndState);
+
+        sp.edit().putString("endStreet", endAddressStreet.getText().toString()).apply();
+        sp.edit().putString("endCityState", endAddressCityAndState.getText().toString()).apply();
+
         String endingAddress = "&wp.1=" + endAddressStreet.getText().toString() + endAddressCityAndState.getText().toString();
 
         return endingAddress;

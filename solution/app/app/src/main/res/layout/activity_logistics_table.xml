@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/load_in_gray"
-    tools:context=".LogisticsActivity">
+    tools:context=".LogisticsTableActivity">
 
         <LinearLayout
             android:id="@+id/topbar"

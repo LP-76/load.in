@@ -75,6 +75,7 @@ public class LogisticsTableActivity extends AppCompatActivity {
 
         LoadInApplication app = (LoadInApplication)getApplication();
         User currentUser = app.getCurrentUser();
+
         inventoryService = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
         movingTruckService = new MovingTruckServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
         loadPlanBoxService = new LoadPlanBoxServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), currentUser.getEmail(), currentUser.getPassword());
@@ -99,7 +100,7 @@ public class LogisticsTableActivity extends AppCompatActivity {
     private void updateListView()
     {
 
-        results = new ArrayList<>();
+       results = new ArrayList<>();
 
        for(MovingTruck t: movingTrucks){
 
