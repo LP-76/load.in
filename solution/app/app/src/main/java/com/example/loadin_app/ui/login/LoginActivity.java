@@ -65,6 +65,12 @@ public class LoginActivity extends AppCompatActivity {
         sp = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         sp.edit().putInt("loginID", 0).apply();
 
+        sp.edit().putString("startStreet", "").apply();
+        sp.edit().putString("startCityState", "").apply();
+
+        sp.edit().putString("endStreet", "").apply();
+        sp.edit().putString("endCityState", "").apply();
+
         loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 

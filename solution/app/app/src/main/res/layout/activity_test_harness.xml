@@ -91,6 +91,14 @@
             android:layout_marginTop="20dp"
 
             android:text="Delete Entire Inventory" />
+
+        <Button
+            android:id="@+id/reset_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:text="Reset Box Status" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -29,7 +29,7 @@ import java.util.concurrent.ExecutionException;
 public class TestHarnessActivity extends AppCompatActivity {
 
     private EditText randomItemsNumber;
-    private Button deleteAllItemButton, generateRandomInventoryButton;
+    private Button deleteAllItemButton, generateRandomInventoryButton, resetItemStatus;
     public static SharedPreferences sp;
 
     @Override
@@ -102,6 +102,32 @@ public class TestHarnessActivity extends AppCompatActivity {
                     service.insertRandomItem( sp.getInt("loginID", 0), randItems + 1 );
 
                     Toast.makeText(TestHarnessActivity.this, "Random Inventory Generated", Toast.LENGTH_SHORT).show();
+                    //Intent switchToInventory = new Intent(ItemViewActivity.this, MoveInventoryActivity.class);
+                    //startActivity(switchToInventory);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+
+        resetItemStatus = (Button) findViewById(R.id.reset_status);
+        resetItemStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+
+
+                InventoryServiceImpl service = new InventoryServiceImpl(BaseServiceUrlProvider.getCurrentConfig(), username, password);
+
+
+                try {
+                    service.setUserInventoryStatus( sp.getInt("loginID", 0) );
+
+                    Toast.makeText(TestHarnessActivity.this, "Status Reset", Toast.LENGTH_SHORT).show();
                     //Intent switchToInventory = new Intent(ItemViewActivity.this, MoveInventoryActivity.class);
                     //startActivity(switchToInventory);
                 } catch (ExecutionException e) {
