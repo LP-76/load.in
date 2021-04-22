@@ -228,6 +228,29 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
 
+    public void setUserInventoryStatus(int userID){
+
+        System.out.println("----invoking setUserInventoryStatus");
+
+        try (Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()) {
+            String query = "UPDATE USER_INVENTORY_ITEM\n" +
+                    "SET\n" +
+                    "    STATUS = 'At Source'\n" +
+                    "WHERE\n" +
+                    "    USER_ID = ?;";
+            PreparedStatement insertStatement = conn.prepareStatement(query);
+            insertStatement.setInt(1, userID);
+            System.out.println(insertStatement);
+            insertStatement.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+
+
+
+    }
+
     public ArrayList<Inventory> generateRandomItem(int numOfBoxes){
 
         ArrayList<Inventory> results = new ArrayList<>();

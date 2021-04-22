@@ -90,4 +90,9 @@ public class InventoryServiceImpl extends LoadInServiceWithAuthImpl{
         retroService.insertRandomItem(USER_ID, numOfBoxes);
         return null;
     }
+
+    public void setUserInventoryStatus(int USER_ID) throws ExecutionException, InterruptedException{
+        //CompletableFuture<DataWrapper<>>
+        retroService.setUserInventoryStatus(USER_ID);
+    }
 }

@@ -61,5 +61,12 @@ public interface RetroInventoryService {
             "contentType: application/json"
     })
     CompletableFuture<DataWrapper<List<Inventory>>> insertRandomItem(@Path("USER_ID") int USER_ID, @Path("numOfBoxes") int numOfBoxes);
+
+    @POST("/inventory/insert/{USER_ID}")
+    @Headers({
+            "accept: application/json",
+            "contentType: application/json"
+    })
+    CompletableFuture<DataWrapper<List<Inventory>>> setUserInventoryStatus(@Path("USER_ID") int USER_ID);
 }
 
