@@ -89,7 +89,7 @@ public class Server {
         System.out.println("Server ready...");
 
 
-        Thread.sleep(30 * 60 * 1000);  //will run for 30 minutes
+        Thread.sleep(120 * 60 * 1000);  //will run for 30 minutes
         System.out.println("Server exiting");
         System.exit(0);
     }

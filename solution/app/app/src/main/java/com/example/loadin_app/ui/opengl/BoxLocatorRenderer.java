@@ -217,7 +217,7 @@ public class BoxLocatorRenderer extends BaseGLRenderer {
 
                     Vector move = new Vector(-theTruck.getWidthInches() - (1f * 12f), 0f, 0f);
                     Vector newDestination = b.currentBox.getWorldOffset().add(move);
-                    animateMovable(b.currentBox, newDestination, 500 + ((betweenCurrentStepAndLocatedBox.size() - index++) * 500));
+                    animateMovable(b.currentBox, newDestination, 150 + ((betweenCurrentStepAndLocatedBox.size() - index++) * 75));
                     // b.currentBox.setVisible(false);
 
 

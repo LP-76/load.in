@@ -1,21 +1,34 @@
 [
   {
-    "section": "Presentations",
-    "id": "prototype-presentations",
+    "section": "Planning",
+    "id": "prototype-planning",
     "deliverables": [
       {
-        "name": "Presentation",
+        "name": "Prototype Planning Presentation",
         "description": "",
         "thumbnail": "deliverables/prototype/Load_In_Prototype_Presentation.PNG",
         "downloadTarget": "deliverables/prototype/Load_In_Prototype_Presentation.pptx",
         "template": null
-
       },
       {
-        "name": "Presentation Handout",
+        "name": "Prototype Planning Presentation Handout",
         "description": "",
         "thumbnail": "deliverables/prototype/Load_In_Prototype_Presentation_Handout.PNG",
         "downloadTarget": "deliverables/prototype/Load_In_Prototype_Presentation.pdf",
+        "template": null
+      },
+      {
+        "name": "User Stories",
+        "description": "",
+        "thumbnail": "deliverables/prototype/UserStories.png",
+        "downloadTarget": "deliverables/prototype/UserRolesandUserStoriesV5.docx",
+        "template": null
+      },
+      {
+        "name": "Prototype Sprint Plan",
+        "description": "",
+        "thumbnail": "deliverables/prototype/Load_in_prototype_sprint_plan.png",
+        "downloadTarget": "deliverables/prototype/Load_in_prototype_sprint_plan.png",
         "template": null
       }
     ]
@@ -31,26 +44,6 @@
         "template": "features-table",
         "thumbnail": null,
         "downloadTarget": null
-      }
-    ]
-  },
-  {
-    "section": "Main Deliverables",
-    "id": "prototype-main",
-    "deliverables": [
-      {
-        "name": "User Stories",
-        "description": "",
-        "thumbnail": "deliverables/prototype/UserStories.png",
-        "downloadTarget": "deliverables/prototype/UserRolesandUserStoriesV5.docx",
-        "template": null
-      },
-      {
-        "name": "Prototype Sprint Plan",
-        "description": "",
-        "thumbnail": "deliverables/prototype/Load_in_prototype_sprint_plan.png",
-        "downloadTarget": "deliverables/prototype/Load_in_prototype_sprint_plan.png",
-        "template": null
       }
     ]
   },
@@ -151,6 +144,61 @@
       }
 
 
+    ]
+  },
+  {
+    "section": "Demonstration",
+    "id": "prototype-demonstration",
+    "deliverables": [
+      {
+        "name": "Prototype Demonstration Powerpoint",
+        "description": "",
+        "thumbnail": "deliverables/prototype/Placeholder.PNG",
+        "downloadTarget": "deliverables/prototype/Placeholder.PNG",
+        "template": null
+      },
+      {
+        "name": "Prototype Demonstration Handout",
+        "description": "",
+        "thumbnail": "deliverables/prototype/Placeholder.PNG",
+        "downloadTarget": "deliverables/prototype/Placeholder.PNG",
+        "template": null
+      },
+      {
+        "name": "Prototype Solution Flow: Pre-Move",
+        "description": "",
+        "thumbnail": "deliverables/prototype/Solution_Flow_PROTOTYPE-Pre-Move.png",
+        "downloadTarget": "deliverables/prototype/Solution_Flow_PROTOTYPE-Pre-Move.png",
+        "template": null
+      },
+      {
+        "name": "Prototype Solution Flow: Packing",
+        "description": "",
+        "thumbnail": "deliverables/prototype/Solution_Flow_PROTOTYPE-Packing.png",
+        "downloadTarget": "deliverables/prototype/Solution_Flow_PROTOTYPE-Packing.png",
+        "template": null
+      },
+      {
+        "name": "Prototype Solution Flow: Move",
+        "description": "",
+        "thumbnail": "deliverables/prototype/Solution_Flow_PROTOTYPE-Move.png",
+        "downloadTarget": "deliverables/prototype/Solution_Flow_PROTOTYPE-Move.png",
+        "template": null
+      },
+      {
+        "name": "Prototype Solution Flow: Post-Move",
+        "description": "",
+        "thumbnail": "deliverables/prototype/Solution_Flow_PROTOTYPE-Post-Move.png",
+        "downloadTarget": "deliverables/prototype/Solution_Flow_PROTOTYPE-Post-Move.png",
+        "template": null
+      },
+      {
+        "name": "Prototype Algorithms: OpenGl Load Plan Navigator",
+        "description": "",
+        "thumbnail": "deliverables/prototype/OpenGl_Load_Navigator.png",
+        "downloadTarget": "deliverables/prototype/OpenGl_Load_Navigator.png",
+        "template": null
+      }
     ]
   }
 ]
