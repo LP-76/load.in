@@ -198,6 +198,13 @@
         "thumbnail": "deliverables/prototype/OpenGl_Load_Navigator.png",
         "downloadTarget": "deliverables/prototype/OpenGl_Load_Navigator.png",
         "template": null
+      },
+      {
+        "name": "Prototype Cost Estimates",
+        "description": "",
+        "thumbnail": "deliverables/prototype/CostEstimates.png",
+        "downloadTarget": "deliverables/prototype/CostEstimates.png",
+        "template": null
       }
     ]
   }
