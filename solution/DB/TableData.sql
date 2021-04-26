@@ -131,7 +131,8 @@ VALUES
      ,('Grinch','Im Janet and I love Load.In and Grinch Green', 'Using Load.In Green is how you secure an A in CS411W', NULL, 'https://loadinvideohost.s3.amazonaws.com/grinchEditted.mp4', 'THIS TIP SUCKS', NOW(), NOW())
      ,('Pack a Box', 'How to pack a box', 'Ensure that all heavy items are at the bottom of the box. Make sure that you do not overload the box.', NULL, 'https://loadinvideohost.s3.amazonaws.com/prep_box.mp4', 'THIS TIP SUCKS', NOW(), NOW())
      ,('Fine China', 'How to pack fine china' , 'Ensure that the fine china is in a box with proper amount of packing material. Make sure that you do not overload the box.', NULL, 'https://loadinvideohost.s3.amazonaws.com/fine_china.mp4', 'THIS TIP SUCKS', NOW(), NOW())
-     ,('Heavy', 'How to lift a heavy item', 'Ensure that you lift with your back. Make sure that you do not overload the box.', NULL, 'https://loadinvideohost.s3.amazonaws.com/heavy_real.mp4', 'THIS TIP SUCKS', NOW(), NOW());
+     ,('Heavy', 'How to lift a heavy item', 'Ensure that you lift with your back. Make sure that you do not overload the box.', NULL, 'https://loadinvideohost.s3.amazonaws.com/heavy_real.mp4', 'THIS TIP SUCKS', NOW(), NOW())
+     ,('Christmas Ornaments', 'How to pack your christmas ornaments', 'Ensure that you properly package the ornaments. Use spare newspaper and pack the ornaments so that they are at the top of the box.', NULL, 'https://loadinvideohost.s3.amazonaws.com/packornament.mp4', 'LOADINNUMBA1', NOW(), NOW());
 
 
 
