@@ -153,15 +153,15 @@
       {
         "name": "Prototype Demonstration Powerpoint",
         "description": "",
-        "thumbnail": "deliverables/prototype/Placeholder.PNG",
-        "downloadTarget": "deliverables/prototype/Placeholder.PNG",
+        "thumbnail": "deliverables/prototype/LOAD_IN_Demo_Presentation.PNG",
+        "downloadTarget": "deliverables/prototype/LOAD_IN_Demo_Presentation.pptx",
         "template": null
       },
       {
         "name": "Prototype Demonstration Handout",
         "description": "",
-        "thumbnail": "deliverables/prototype/Placeholder.PNG",
-        "downloadTarget": "deliverables/prototype/Placeholder.PNG",
+        "thumbnail": "deliverables/prototype/LOAD_IN_Demo_Presentation_Handout.PNG",
+        "downloadTarget": "deliverables/prototype/LOAD_IN_Demo_Presentation_Handout.pdf",
         "template": null
       },
       {
@@ -204,6 +204,20 @@
         "description": "",
         "thumbnail": "deliverables/prototype/CostEstimates.png",
         "downloadTarget": "deliverables/prototype/CostEstimates.png",
+        "template": null
+      },
+      {
+        "name": "Prototype Database Diagram",
+        "description": "",
+        "thumbnail": "deliverables/prototype/database.png",
+        "downloadTarget": "deliverables/prototype/database.png",
+        "template": null
+      },
+      {
+        "name": "Logistics Planner Flow Diagram",
+        "description": "",
+        "thumbnail": "deliverables/prototype/logistics_flow_diagram.png",
+        "downloadTarget": "deliverables/prototype/logistics_flow_diagram.png",
         "template": null
       }
     ]
