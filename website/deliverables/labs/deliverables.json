@@ -181,6 +181,18 @@
     ]
   },
   {
+    "section": "Lab 2 - Sections 1&2 - V2",
+    "id": "lab-2-v2",
+    "deliverables": [
+      {
+        "name": "Byron",
+        "description": "",
+        "thumbnail": "deliverables/labs/ByronAquilino_Lab2_V2.PNG",
+        "downloadTarget": "deliverables/labs/ByronAquilino_Lab2_V2.pdf"
+      }
+    ]
+  },
+  {
     "section": "Lab 2 - Section 3",
     "id": "lab-2-3",
     "deliverables": [
