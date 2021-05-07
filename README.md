@@ -1,3 +1,3 @@
 # Load.In-website
 
-This is the website! or is it ? The world may never know.... okay. I think it works.... 5TH TIMES A CHARM!
+The Load.In application is an implementation of the move process that helps the DIY mover to become a professional mover. The measurement of boxes, 3D model generation, load plan, and feedback will be reduced to partial implementation. The box locater, estimated trips, packing tips, tips search, and expert articles will have full functionality. The features that will be removed are weight, fragility, unloading instructions, chatbot, live expert, web scraper, vendor web API, truck sizes, truck availability, location data, move data, heatmap, and rental interest statistics.
