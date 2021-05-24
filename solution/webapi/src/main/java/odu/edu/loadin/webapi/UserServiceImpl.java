@@ -7,6 +7,8 @@ import odu.edu.loadin.common.UserService;
 import odu.edu.loadin.helpers.StatementHelper;
 
 import javax.ws.rs.core.Response;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,6 +48,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response login(UserLoginRequest userLoginRequest) {
 
+        System.out.println("----invoking login");
+
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){ //this is called a try with resources and with java 1.8
             //this will auto-close the connection
             PreparedStatement statement = conn.prepareStatement("SELECT * FROM USER where EMAIL = ?");
@@ -55,15 +59,17 @@ public class UserServiceImpl implements UserService {
             //individual objects
             User results = StatementHelper.getResults(statement, (ResultSet rs) -> {
                User u =  mapStandardUserResult(rs);
-               u.setPassword(rs.getString("PASSWORD"));
+               u.setPassword( rs.getString("PASSWORD") );
                return u;
             }).stream().findFirst().orElse(null);
 
             //confirm that the password is correct
 
-            //TODO: implement hashing and salting here!
+            PasswordEncryption passwordEncryption = new PasswordEncryption();
 
-            if(results != null && results.getPassword() != null && results.getPassword().equals(userLoginRequest.getPassword())){
+            String salting = results.getSalt();
+
+            if(results != null && results.getPassword() != null && results.getPassword().equals( passwordEncryption.getSecurePassword(userLoginRequest.getPassword(), salting) )){
                 //we have an authenticated user
                 results.setPassword(null);  //clear password
                 return Response.ok(results).build();
@@ -71,8 +77,6 @@ public class UserServiceImpl implements UserService {
             }else{
                 return Response.status(Response.Status.FORBIDDEN).build();
             }
-
-
         }
         catch (SQLException ex){
             //TODO: exception logging
@@ -90,14 +94,21 @@ public class UserServiceImpl implements UserService {
 
         System.out.println("----invoking addUser");
 
+        PasswordEncryption passwordEncryption = new PasswordEncryption();
+
         try(Connection conn = DatabaseConnectionProvider.getLoadInSqlConnection()){
             Integer lastId = StatementHelper.getResults(conn.prepareStatement("SELECT * FROM USER ORDER BY ID DESC LIMIT 1"),
                     (ResultSet rs) -> {  return rs.getInt("ID"); }).stream().findFirst().orElse(0);
 
             user.setId(lastId + 1);  //set the new id here
             //user.setMovePlanId(user.getId());
-            String query = "INSERT INTO USER( ID , EMAIL, FIRST_NAME, LAST_NAME, PHONE_NUMBER, PASSWORD, CREATED_AT, UPDATED_AT)"
-                    +" VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW() )";
+            String query = "INSERT INTO USER( ID , EMAIL, FIRST_NAME, LAST_NAME, PHONE_NUMBER, PASSWORD, SALT, CREATED_AT, UPDATED_AT)"
+                    +" VALUES (?, ?, ?, ?, ?, ?, ?, NOW(), NOW() )";
+
+
+            String salting = passwordEncryption.getSalt();
+
+            System.out.println(salting);
 
             PreparedStatement insertStatement = conn.prepareStatement(query);
             insertStatement.setInt(1, user.getId());
@@ -106,13 +117,18 @@ public class UserServiceImpl implements UserService {
             insertStatement.setString(3, user.getFirstName());
             insertStatement.setString(4, user.getLastName());
             insertStatement.setString(5, user.getPhoneNumber());
-            insertStatement.setString(6, user.getPassword());
+            insertStatement.setString(6, passwordEncryption.getSecurePassword(user.getPassword(), salting)  );
+            insertStatement.setString(7, salting);
             System.out.println(insertStatement);
             insertStatement.executeUpdate();
 
         }
         catch (SQLException ex){
 
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchProviderException e) {
+            e.printStackTrace();
         }
 
         return Response.ok(user).build();
@@ -124,6 +140,7 @@ public class UserServiceImpl implements UserService {
         r.setId(rs.getInt("ID"));
         r.setFirstName(rs.getString("FIRST_NAME"));
         r.setLastName(rs.getString("LAST_NAME"));
+        r.setSalt(rs.getString("SALT"));
         r.setCreatedAt(rs.getDate("CREATED_AT"));
         r.setUpdatedAt(rs.getDate("UPDATED_AT"));
         r.setEmail(rs.getString("EMAIL"));

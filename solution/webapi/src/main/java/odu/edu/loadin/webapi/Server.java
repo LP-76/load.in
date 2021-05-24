@@ -40,6 +40,11 @@ public class Server {
 
     }
 
+    /**
+     * Creates a Server inside CXF which starts listening for requests on the URL specified.
+     *
+     * @throws Exception
+     */
     protected Server() throws Exception {
         JAXRSServerFactoryBean sf = new JAXRSServerFactoryBean();
 
@@ -48,6 +53,7 @@ public class Server {
         sf.getFeatures().add(logging);
 
 
+        //setResourceClasses() is for root resources only
         sf.setResourceClasses(
                 BoxSizeServiceImpl.class,
                 UserServiceImpl.class,
@@ -83,6 +89,15 @@ public class Server {
         //server.getEndpoint().
 
     }
+
+
+    /**
+     *
+     * Server boot up
+     *
+     * @param args
+     * @throws Exception
+     */
 
     public static void main(String[] args) throws Exception {
         new Server();

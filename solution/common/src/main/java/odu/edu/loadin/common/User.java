@@ -16,6 +16,7 @@ public class User {
     private String email;
     private String phoneNumber;
     private String password;
+    private String salt;
     private Date createdAt;
     private Date updatedAt;
 
@@ -81,5 +82,13 @@ public class User {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }
